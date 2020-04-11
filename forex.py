@@ -25,7 +25,7 @@ print('\t\tTime now:-> %s\n' % time.ctime())
 # Retrieve realtime United States Dollar to Ghana Cedi (USD/GHS),
 # Cameroon Central African CFA Franc BEAC, Chinese Yuan, Japanese Yen, etc. 
 # exchange rates and multiple other Bitcoin exchange rate pairs:
-forex = pdr.DataReader(["USD/GHS", "USD/XAF", "USD/CNY", "USD/JPY",
+forex = pdr.DataReader(["USD/XAF", "USD/GHS", "USD/CNY",
                         "BTC/CNY", "BTC/USD"], "av-forex", 
                         api_key=os.getenv('ALPHAVANTAGE_API_KEY'))
 print(forex)
