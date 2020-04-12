@@ -52,6 +52,8 @@ print("5. Last Refreshed: ", meta_data['5. Last Refreshed'])
 print("6. Time Zone: ", meta_data['6. Time Zone'])
 print()
 
+# Caution: Nuertey Odzeyem, 4/12/2020; watch out for the 'secondary_y=True,'
+# variable. Do not set it if the two time series are in different ranges.
 plt.title('Forex Daily Prices - US Dollars to Ghanaian Cedis')
 ax1 = data['3. low'].plot(color='blue', grid=True, label='low')
 ax2 = data['2. high'].plot(color='red', grid=True, secondary_y=True, label='high')
