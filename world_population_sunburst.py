@@ -1,24 +1,15 @@
-# ---
-# jupyter:
-#   jupytext:
-#     formats: ipynb,py:light
-#     text_representation:
-#       extension: .py
-#       format_name: light
-#       format_version: '1.4'
-#       jupytext_version: 1.2.0-rc1
-#   kernelspec:
-#     display_name: Python 3
-#     language: python
-#     name: python3
-# ---
-
-# In this notebook we use the new Sunburst plot by [plotly](http://plot.ly/) to illustrate how the World population
-# is splitted among regions and countries. The data set illustrated here originates from the
-# [World Bank](https://data.worldbank.org). This notebook is also a quick demo for the 
-# [world_bank_data](https://github.com/mwouts/world_bank_data/blob/master/README.md) Python package.
-
-# +
+#***********************************************************************
+# @file
+#
+# Python script for generating world population sunburst plot.
+#
+# @note 
+#
+# @warning  None
+#
+#  Created: April 12, 2020
+#   Author: Nuertey Odzeyem
+#**********************************************************************/
 import pandas as pd
 import plotly
 import plotly.offline as offline
@@ -37,10 +28,7 @@ countries = wb.get_countries()
 #print()
 
 # Population dataset, by the World Bank (most recent value)
-population = wb.get_series('SP.POP.TOTL', mrv=1)
-population
-
-# Same data set, indexed with the country code
+# The data set is indexed with the country code
 population = wb.get_series('SP.POP.TOTL', id_or_value='id', simplify_index=True, mrv=1)
 #print(population)
 #print()

@@ -10,15 +10,13 @@
 #  Created: April 12, 2020
 #   Author: Nuertey Odzeyem
 #**********************************************************************/  
-#import time
-#import pandas as pd
-#import pandas_datareader as wb
-#import matplotlib.pyplot as plt
-
+import time
 import pandas as pd
 import plotly
 import plotly.offline as offline
-import world_bank_data as wb
+import world_bank_data as world_bank
+from pandas_datareader import wb
+import matplotlib.pyplot as plt
 
 def version_to_int_list(version):
     return [int(s) for s in version.split('.')]
@@ -27,37 +25,56 @@ assert version_to_int_list(plotly.__version__) >= version_to_int_list('3.8.0'), 
 
 pd.set_option('display.max_rows', 100)
 
-#topics = wb.get_topics()
-#print(topics)
-#print()
-#
-#sources = wb.get_sources()
-#print(sources)
-#print()
-#
-#indicators = wb.get_indicators(topic=3, source=2)
-#print(indicators)
-#print()
-
-#deaths = wb.search_indicators('deaths')
-#print(deaths)
-#print()
-
-# Birth rate, crude (per 1,000 people)
-#births = wb.search_indicators('births')
+# Birth rate, crude (per 1,000 people) indexed with the country code:
+births = world_bank.get_series('SP.DYN.CBRT.IN', id_or_value='id', simplify_index=True, mrv=1)
 #print(births)
 #print()
 
-#covid19_indicators = wb.search_indicators('COVID-19 Cases')
-#print(covid19_indicators)
+# Death rate, crude (per 1,000 people) indexed with the country code:
+deaths = world_bank.get_series('SP.DYN.CDRT.IN', id_or_value='id', simplify_index=True, mrv=1)
+#print(deaths)
 #print()
 
-# Population dataset, by the World Bank (most recent value) indexed with the country code:
-#population = wb.get_series('SP.POP.TOTL', id_or_value='id', simplify_index=True, mrv=1)
-#print(population)
-#print()
+# Population ages 15-64 (% of total population)
+# SP.POP.1564.TO.ZS
+pop64 = wb.download(indicator='SP.POP.1564.TO.ZS', country=['US'], start=1990, end=2020)
+print(pop64)
+print()
 
-# Countries and associated regions
-#countries = wb.get_countries()
-#print(countries)
-#print()
+# Population ages 65 and above (% of total population)
+# SP.POP.65UP.TO.ZS
+pop65 = wb.download(indicator='SP.POP.65UP.TO.ZS', country=['US'], start=1990, end=2020)
+print(pop65)
+print()
+
+# Population ages 15-64 (% of total population)
+# SP.POP.1564.TO.ZS
+pop64_gh = wb.download(indicator='SP.POP.1564.TO.ZS', country=['GH'], start=1990, end=2020)
+print(pop64_gh)
+print()
+
+# Population ages 65 and above (% of total population)
+# SP.POP.65UP.TO.ZS
+pop65_gh = wb.download(indicator='SP.POP.65UP.TO.ZS', country=['GH'], start=1990, end=2020)
+print(pop65_gh)
+print()
+
+plt.figure()
+plt.title('US Population - Ages 15-64 vs. Ages 65 and above (% of total population)', fontweight='bold')
+ax1 = pop64['SP.POP.1564.TO.ZS'].plot(color='blue', grid=True, label='Ages 15-64 (% of total population)')
+ax2 = pop65['SP.POP.65UP.TO.ZS'].plot(color='red', grid=True, label='Ages 65 and above (% of total population)')
+ax1.legend(loc=1)
+ax2.legend(loc=2)
+plt.xlabel('Year')
+plt.ylabel('% of total population')
+plt.show()
+
+plt.figure()
+plt.title('Ghana Population - Ages 15-64 vs. Ages 65 and above (% of total population)', fontweight='bold')
+ax1 = pop64_gh['SP.POP.1564.TO.ZS'].plot(color='blue', grid=True, label='Ages 15-64 (% of total population)')
+ax2 = pop65_gh['SP.POP.65UP.TO.ZS'].plot(color='red', grid=True, label='Ages 65 and above (% of total population)')
+ax1.legend(loc=1)
+ax2.legend(loc=2)
+plt.xlabel('Year')
+plt.ylabel('% of total population')
+plt.show()
