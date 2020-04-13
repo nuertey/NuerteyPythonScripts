@@ -19,39 +19,44 @@ from covid import Covid
 
 pd.set_option('display.max_rows', 100)
 
+source="worldometers"
 #cov_19 = Covid("worldometers")
-cov_19 = Covid() # Default is John Hopkins data.
+#cov_19 = Covid() # Default is John Hopkins data.
+cov_19 = Covid(source)
 #data = cov_19.get_data()
-#countries = cov_19.list_countries()
-#print(countries)
-#print()
-
-data = cov_19.get_status_by_country_name("US")
-print(data)
+countries = cov_19.list_countries()
+print(countries)
 print()
 
-data = cov_19.get_status_by_country_name("Ghana")
-print(data)
-print()
-
-data = cov_19.get_status_by_country_name("Cameroon")
-print(data)
-print()
-
-data = cov_19.get_status_by_country_name("Central African Republic")
-print(data)
-print()
-
-#us_cases = cov_19.get_status_by_country_name("US")
-#ghana_cases = cov_19.get_status_by_country_name("Ghana")
-#cameroon_cases = cov_19.get_status_by_country_name("Cameroon")
-#caf_cases = cov_19.get_status_by_country_name("Central African Republic")
-
-#print(us_cases)
-#print()
-#print(ghana_cases)
-#print()
-#print(cameroon_cases)
-#print()
-#print(caf_cases)
-#print()
+if source == "worldometers":
+    data = cov_19.get_status_by_country_name("USA")
+    print(data)
+    print()
+    
+    data = cov_19.get_status_by_country_name("Ghana")
+    print(data)
+    print()
+    
+    data = cov_19.get_status_by_country_name("Cameroon")
+    print(data)
+    print()
+    
+    data = cov_19.get_status_by_country_name("car")
+    print(data)
+    print()
+else:
+    data = cov_19.get_status_by_country_name("US")
+    print(data)
+    print()
+    
+    data = cov_19.get_status_by_country_name("Ghana")
+    print(data)
+    print()
+    
+    data = cov_19.get_status_by_country_name("Cameroon")
+    print(data)
+    print()
+    
+    data = cov_19.get_status_by_country_name("Central African Republic")
+    print(data)
+    print()
