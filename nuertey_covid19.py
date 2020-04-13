@@ -19,7 +19,7 @@ import pandas as pd
 import plotly
 import plotly.offline as offline
 import matplotlib.pyplot as plt
-import pydantic
+#import pydantic
 from covid import Covid
 
 #help(covid)
@@ -52,8 +52,8 @@ if r.ok:
 else:
     print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
 
-cov = covid.Covid(source="worldometers")
-#covid = covid.Covid()
-data = cov.get_data()
+#cov_19 = Covid("worldometers")
+cov_19 = Covid() # Default is John Hopkins data.
+data = cov_19.get_data()
 print(data)
 print()
