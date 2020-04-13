@@ -20,10 +20,11 @@ import plotly
 import plotly.offline as offline
 import matplotlib.pyplot as plt
 import pydantic
-#import covid
-#from covid import Covid
-import pytest
 from covid import Covid
+
+#help(covid)
+#print()
+#dir(covid)
 
 # type: "GET",
 # dataType:"json",
@@ -51,8 +52,8 @@ if r.ok:
 else:
     print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
 
-covid = Covid(source="worldometers")
+cov = covid.Covid(source="worldometers")
 #covid = covid.Covid()
-data = covid.get_data()
+data = cov.get_data()
 print(data)
 print()
