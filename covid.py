@@ -2,7 +2,7 @@
 # @file
 #
 # Python script for querying COVID-19 statistics via several publicly
-# aailable APIs.
+# available APIs.
 #
 # @note 
 #
@@ -19,6 +19,11 @@ import pandas as pd
 import plotly
 import plotly.offline as offline
 import matplotlib.pyplot as plt
+import pydantic
+#import covid
+#from covid import Covid
+import pytest
+from covid import Covid
 
 # type: "GET",
 # dataType:"json",
@@ -29,9 +34,9 @@ COVID_19_API_1 = 'https://thevirustracker.com/free-api?countryTotals=ALL'
 # api/ncov/all                  GET     get all country data
 # api/ncov/countrylist          GET     get all list of country affected by NCOV
 # api/ncov/country/{country}    GET     get data by country
-COVID_19_API_2 = 'https://www.worldometers.info/coronavirus/api/ncov/country/ghana'
+COVID_19_API_2 = 'https://www.worldometers.info/coronavirus/country/ghana'
 
-r = requests.get(COVID_19_API_2)
+r = requests.get(COVID_19_API_1)
 
 if r.ok:
     print("HTTP Response Status Code:-> ", r.status_code)
@@ -40,7 +45,14 @@ if r.ok:
     print()
 
     data = pandas.DataFrame.from_dict(r.json())
+    #print(r.text)
     print(data)
-
+    print()
 else:
     print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
+
+covid = Covid(source="worldometers")
+#covid = covid.Covid()
+data = covid.get_data()
+print(data)
+print()
