@@ -11,49 +11,47 @@
 #  Created: April 12, 2020
 #   Author: Nuertey Odzeyem
 #**********************************************************************/  
-import time
-import requests
-import pandas
-import pandas_datareader as pdr
-import pandas as pd
 import plotly
 import plotly.offline as offline
 import matplotlib.pyplot as plt
-#import pydantic
+import pandas as pd
 from covid import Covid
 
-#help(covid)
-#print()
-#dir(covid)
-
-# type: "GET",
-# dataType:"json",
-COVID_19_API_1 = 'https://thevirustracker.com/free-api?countryTotals=ALL'
-
-# End point:
-# URL                           Method  Description
-# api/ncov/all                  GET     get all country data
-# api/ncov/countrylist          GET     get all list of country affected by NCOV
-# api/ncov/country/{country}    GET     get data by country
-COVID_19_API_2 = 'https://www.worldometers.info/coronavirus/country/ghana'
-
-r = requests.get(COVID_19_API_1)
-
-if r.ok:
-    print("HTTP Response Status Code:-> ", r.status_code)
-    print("HTTP Response Content Type:-> ", r.headers['content-type'])
-    print("HTTP Response Encoding:-> ", r.encoding)
-    print()
-
-    data = pandas.DataFrame.from_dict(r.json())
-    #print(r.text)
-    print(data)
-    print()
-else:
-    print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
+pd.set_option('display.max_rows', 100)
 
 #cov_19 = Covid("worldometers")
 cov_19 = Covid() # Default is John Hopkins data.
-data = cov_19.get_data()
+#data = cov_19.get_data()
+#countries = cov_19.list_countries()
+#print(countries)
+#print()
+
+data = cov_19.get_status_by_country_name("US")
 print(data)
 print()
+
+data = cov_19.get_status_by_country_name("Ghana")
+print(data)
+print()
+
+data = cov_19.get_status_by_country_name("Cameroon")
+print(data)
+print()
+
+data = cov_19.get_status_by_country_name("Central African Republic")
+print(data)
+print()
+
+#us_cases = cov_19.get_status_by_country_name("US")
+#ghana_cases = cov_19.get_status_by_country_name("Ghana")
+#cameroon_cases = cov_19.get_status_by_country_name("Cameroon")
+#caf_cases = cov_19.get_status_by_country_name("Central African Republic")
+
+#print(us_cases)
+#print()
+#print(ghana_cases)
+#print()
+#print(cameroon_cases)
+#print()
+#print(caf_cases)
+#print()
