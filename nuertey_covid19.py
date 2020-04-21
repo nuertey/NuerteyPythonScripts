@@ -25,8 +25,10 @@ source="worldometers"
 cov_19 = Covid(source)
 #data = cov_19.get_data()
 countries = cov_19.list_countries()
-print(countries)
-print()
+#print(countries)
+#print()
+
+
 
 if source == "worldometers":
     data = cov_19.get_status_by_country_name("USA")
@@ -44,6 +46,14 @@ if source == "worldometers":
     data = cov_19.get_status_by_country_name("car")
     print(data)
     print()
+
+    data = cov_19.get_status_by_country_name("Ecuador")
+    print(data)
+    print()
+
+    data = cov_19.get_status_by_country_name("Greece")
+    print(data)
+    print()
 else:
     data = cov_19.get_status_by_country_name("US")
     print(data)
@@ -58,5 +68,13 @@ else:
     print()
     
     data = cov_19.get_status_by_country_name("Central African Republic")
+    print(data)
+    print()
+
+    data = cov_19.get_status_by_country_name("Ecuador")
+    print(data)
+    print()
+
+    data = cov_19.get_status_by_country_name("Greece")
     print(data)
     print()

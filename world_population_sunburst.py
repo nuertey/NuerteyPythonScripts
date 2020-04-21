@@ -30,8 +30,8 @@ countries = wb.get_countries()
 # Population dataset, by the World Bank (most recent value)
 # The data set is indexed with the country code
 population = wb.get_series('SP.POP.TOTL', id_or_value='id', simplify_index=True, mrv=1)
-#print(population)
-#print()
+print(population)
+print()
 
 # Aggregate region, country and population
 df = countries[['region', 'name']].rename(columns={'name': 'country'}).loc[countries.region != 'Aggregates']
