@@ -12,8 +12,11 @@
 #
 #  Created: Twilight of April 22, 2020
 #   Author: Nuertey Odzeyem
-#**********************************************************************/ 
-import plotly.express as px
+#**********************************************************************/
+import subprocess 
+import plotly.express as px # Plotly Express is the easy-to-use, high-level
+                            # interface to Plotly, which operates on "tidy"
+                            # data and produces easy-to-style figures.
 
 # Illustrating one way to achieve bash command execution from python:
 external_bash_command = 'df'
@@ -56,9 +59,18 @@ with open('example_hosts.txt') as hosts:
                  print('{}: {}'.format(host, line))
 print()
 
+# ============================================================
 # Actual purpose of this script follows:
+# ============================================================
+
+# To plot on Mapbox maps with Plotly, a Mapbox account and a public 
+# Mapbox Access Token is needed. Let's just use mine:
 px.set_mapbox_access_token(open(".mapbox_token").read())
-df = px.data.carshare()
-fig = px.scatter_mapbox(df, lat="centroid_lat", lon="centroid_lon",     color="peak_hour", size="car_hours",
-                  color_continuous_scale=px.colors.cyclical.IceFire, size_max=15, zoom=10)
-fig.show()
+
+
+data = px.data.carshare()
+figure = px.scatter_mapbox(data, lat="centroid_lat", lon="centroid_lon",
+    color="peak_hour", size="car_hours",
+    color_continuous_scale=px.colors.cyclical.IceFire, size_max=15, 
+    zoom=10)
+figure.show()
