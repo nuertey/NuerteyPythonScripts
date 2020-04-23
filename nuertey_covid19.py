@@ -29,27 +29,11 @@ country_list = cov_19.list_countries()
 print(country_list)
 print()
 
-# Workaround for bug:
-#
-# https://stackoverflow.com/questions/25610592/how-to-set-dtypes-by-column-in-pandas-dataframe
-#data = pd.DataFrame.from_dict(countries).astype({0: int, 1:str})
-#data = pd.DataFrame({'id':pd.Series(countries['id'], dtype='int'),
-#                   'name':pd.Series(countries['name'], dtype='string')})
-#json_dict = json.loads(countries)
-print(country_list[1])
-print()
-
-#countries = []
-#for country in country_list:
-#    countries.append(country['name'])
-#print(countries)
-
 data = pd.DataFrame(country_list)
-#data = pd.DataFrame.from_dict(country_list)
 print(data)
 print()
 
-sorted_data = data.sort_values(by=['id'], ascending=True)
+sorted_data = data.sort_values(by=['id'], ascending=True, ignore_index=True)
 print(sorted_data)
 print()
 
