@@ -19,16 +19,14 @@ from covid import Covid
 
 pd.set_option('display.max_rows', 100)
 
-source="worldometers"
-#cov_19 = Covid("worldometers")
+#source="worldometers"
+source="john_hopkins"
 #cov_19 = Covid() # Default is John Hopkins data.
 cov_19 = Covid(source)
 #data = cov_19.get_data()
 countries = cov_19.list_countries()
-#print(countries)
-#print()
-
-
+print(countries)
+print()
 
 if source == "worldometers":
     data = cov_19.get_status_by_country_name("USA")
@@ -51,7 +49,23 @@ if source == "worldometers":
     print(data)
     print()
 
+    data = cov_19.get_status_by_country_name("Brazil")
+    print(data)
+    print()
+
+    data = cov_19.get_status_by_country_name("Cuba")
+    print(data)
+    print()
+
+    data = cov_19.get_status_by_country_name("Jamaica")
+    print(data)
+    print()
+
     data = cov_19.get_status_by_country_name("Greece")
+    print(data)
+    print()
+
+    data = cov_19.get_status_by_country_name("New Zealand")
     print(data)
     print()
 else:
@@ -75,6 +89,22 @@ else:
     print(data)
     print()
 
+    data = cov_19.get_status_by_country_name("Brazil")
+    print(data)
+    print()
+
+    data = cov_19.get_status_by_country_name("Cuba")
+    print(data)
+    print()
+
+    data = cov_19.get_status_by_country_name("Jamaica")
+    print(data)
+    print()
+
     data = cov_19.get_status_by_country_name("Greece")
+    print(data)
+    print()
+
+    data = cov_19.get_status_by_country_name("New Zealand")
     print(data)
     print()
