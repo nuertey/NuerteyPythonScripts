@@ -11,11 +11,11 @@
 #  Created: April 12, 2020
 #   Author: Nuertey Odzeyem
 #**********************************************************************/  
+import json
 import plotly
 import plotly.offline as offline
 import matplotlib.pyplot as plt
 import pandas as pd
-import world_bank_data as wb
 from covid import Covid
 
 pd.set_option('display.max_rows', 100)
@@ -25,9 +25,9 @@ source="john_hopkins"
 #cov_19 = Covid() # Default is John Hopkins data.
 cov_19 = Covid(source)
 #data = cov_19.get_data()
-#country_list = cov_19.list_countries()
-#print(countries)
-#print()
+country_list = cov_19.list_countries()
+print(country_list)
+print()
 
 # Workaround for bug:
 #
@@ -39,12 +39,13 @@ cov_19 = Covid(source)
 print(country_list[1])
 print()
 
-countries = []
-for country in country_list:
-    countries.append(country['name'])
-print(countries)
+#countries = []
+#for country in country_list:
+#    countries.append(country['name'])
+#print(countries)
 
-data = pd.DataFrame.from_dict(country_list)
+data = pd.DataFrame(country_list)
+#data = pd.DataFrame.from_dict(country_list)
 print(data)
 print()
 
