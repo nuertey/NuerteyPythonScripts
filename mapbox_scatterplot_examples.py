@@ -29,21 +29,21 @@ print(normal.stdout)
 print()
 
 # Illustrating another way to achieve bash command execution from python:
-correct = subprocess.run(['dig', '+answer +besteffort', 'stackoverflow.com'],
+correct = subprocess.run(['dig', '+noshort', 'stackoverflow.com'],
     check=True, text=True)
 print(correct.stdout)
 print()
 
-# Illustrating yet another way to achieve bash command execution from python:
-cmd = '''while read -r x;
-   do ping -c 3 "$x" | grep 'round-trip min/avg/max'
-   done <example_hosts.txt'''
-
-# Trivial but horrible
-results = subprocess.run(
-    cmd, shell=True, universal_newlines=True, check=True)
-print(results.stdout)
-print()
+# Illustrating yet another way NOT to achieve bash command execution from python:
+#cmd = '''while read -r x;
+#   do ping -c 3 "$x" | grep 'round-trip min/avg/max'
+#   done <example_hosts.txt'''
+#
+## Trivial but horrible
+#results = subprocess.run(
+#    cmd, shell=True, universal_newlines=True, check=True)
+#print(results.stdout)
+#print()
 
 # Reimplement with shell=False
 with open('example_hosts.txt') as hosts:
