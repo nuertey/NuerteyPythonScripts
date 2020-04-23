@@ -26,103 +26,22 @@ source="john_hopkins"
 cov_19 = Covid(source)
 #data = cov_19.get_data()
 country_list = cov_19.list_countries()
-print(country_list)
-print()
+#print(country_list)
+#print()
 
 data = pd.DataFrame(country_list)
-print(data)
-print()
+#print(data)
+#print()
 
-sorted_data = data.sort_values(by=['id'], ascending=True, ignore_index=True)
-print(sorted_data)
-print()
+# Example output:
+#
+# 149 Sao Tome and Principe
+# {'id': '149', 'country': 'Sao Tome and Principe', 'confirmed': 4, 'active': 4, 'deaths': 0, 'recovered': 0, 'latitude': 0.18636, 'longitude': 6.613081, 'last_update': 1587655832000}
+for row in data.itertuples(index=True, name='Pandas'):
+    country_id = getattr(row, "id")
+    country_name = getattr(row, "name")
+    print(country_id, country_name)
+    data = cov_19.get_status_by_country_name(str(country_name))
+    print(data)
+    print()
 
-#for row in df.itertuples(index=True, name='Pandas'):
-#    print getattr(row, "c1"), getattr(row, "c2")
-#
-#for country in countries['name']:
-#    print(data)
-#    data = cov_19.get_status_by_country_name(str(country))
-#    print(data)
-#    print()
-
-#if source == "worldometers":
-#    data = cov_19.get_status_by_country_name("USA")
-#    print(data)
-#    print()
-#    
-#    data = cov_19.get_status_by_country_name("Ghana")
-#    print(data)
-#    print()
-#    
-#    data = cov_19.get_status_by_country_name("Cameroon")
-#    print(data)
-#    print()
-#    
-#    data = cov_19.get_status_by_country_name("car")
-#    print(data)
-#    print()
-#
-#    data = cov_19.get_status_by_country_name("Ecuador")
-#    print(data)
-#    print()
-#
-#    data = cov_19.get_status_by_country_name("Brazil")
-#    print(data)
-#    print()
-#
-#    data = cov_19.get_status_by_country_name("Cuba")
-#    print(data)
-#    print()
-#
-#    data = cov_19.get_status_by_country_name("Jamaica")
-#    print(data)
-#    print()
-#
-#    data = cov_19.get_status_by_country_name("Greece")
-#    print(data)
-#    print()
-#
-#    data = cov_19.get_status_by_country_name("New Zealand")
-#    print(data)
-#    print()
-#else:
-#    data = cov_19.get_status_by_country_name("US")
-#    print(data)
-#    print()
-#    
-#    data = cov_19.get_status_by_country_name("Ghana")
-#    print(data)
-#    print()
-#    
-#    data = cov_19.get_status_by_country_name("Cameroon")
-#    print(data)
-#    print()
-#    
-#    data = cov_19.get_status_by_country_name("Central African Republic")
-#    print(data)
-#    print()
-#
-#    data = cov_19.get_status_by_country_name("Ecuador")
-#    print(data)
-#    print()
-#
-#    data = cov_19.get_status_by_country_name("Brazil")
-#    print(data)
-#    print()
-#
-#    data = cov_19.get_status_by_country_name("Cuba")
-#    print(data)
-#    print()
-#
-#    data = cov_19.get_status_by_country_name("Jamaica")
-#    print(data)
-#    print()
-#
-#    data = cov_19.get_status_by_country_name("Greece")
-#    print(data)
-#    print()
-#
-#    data = cov_19.get_status_by_country_name("New Zealand")
-#    print(data)
-#    print()
