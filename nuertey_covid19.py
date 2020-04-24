@@ -4,7 +4,23 @@
 # Python script for querying COVID-19 statistics via several publicly
 # available APIs and visualizing them.
 #
-# @note 
+# @note For the future, these visualizations could be enhanced with live
+# news articles on the 'COVID-19' topic via newsapi much like follows:
+#
+#https://newsapi.org/v2/top-headlines?country=us&apiKey=f048819049c24d6d86bd424daa2349f1
+#
+#http://newsapi.org/v2/everything?q=ghana&from=2020-01-01&sortBy=publishedAt&apiKey=f048819049c24d6d86bd424daa2349f1
+#
+# NEWS_API_KEY = config("NEWS_API_KEY")
+# NEWS_API_URL = f"https://newsapi.org/v2/top-headlines?country=us&apiKey={NEWS_API_KEY}"
+#
+# Notice the use of the python 3.6 introduced f-strings in the statement
+# above. F-strings can be further explained by this code snippet:
+#
+# >>> name = "Adjoa"
+# >>> age = 15
+# >>> f"Hello, {name}. You are {age}."
+# 'Hello, Adjoa. You are 15.'
 #
 # @warning  None
 #
@@ -32,28 +48,28 @@ data = pd.DataFrame(country_list)
 
 cols = ['country_id', 'country', 'confirmed', 'active', 'deaths', 'recovered', 
         'latitude', 'longitude', 'last_update', 'scaled']
-combined_output = pd.DataFrame(columns=cols, index=data.itertuples(index=True, name='Pandas'))
+combined_output = pd.DataFrame(columns=cols, index=data.index)
 
 # Example output:
 #
 # 149 Sao Tome and Principe
 # {'id': '149', 'country': 'Sao Tome and Principe', 'confirmed': 4, 'active': 4, 'deaths': 0, 'recovered': 0, 'latitude': 0.18636, 'longitude': 6.613081, 'last_update': 1587655832000}
-for row in data.itertuples(index=True, name='Pandas'):
-    country_id = getattr(row, "id")
-    country_name = getattr(row, "name")
-    #print(country_id, country_name)
-    country_status = cov_19.get_status_by_country_name(str(country_name))
-    print(country_status)
-    print()
-    combined_output.loc[row].country_id = country_status[0]
-    combined_output.loc[row].country = country_status[1]
-    combined_output.loc[row].confirmed = country_status[2]
-    combined_output.loc[row].active = country_status[3]
-    combined_output.loc[row].deaths = country_status[4]
-    combined_output.loc[row].recovered = country_status[5]
-    combined_output.loc[row].latitude = country_status[6]
-    combined_output.loc[row].longitude = country_status[7]
-    combined_output.loc[row].last_update = country_status[8]
+for row in data.index:
+    country_id_input = getattr(row, "id")
+    country_name_input = getattr(row, "name")
+    #print(country_id_input, country_name_input)
+    country_status = cov_19.get_status_by_country_name(str(country_name_input))
+    #print(country_status)
+    #print()
+    combined_output.loc[row].country_id = country_status['id']
+    combined_output.loc[row].country = country_status['country']
+    combined_output.loc[row].confirmed = country_status['confirmed']
+    combined_output.loc[row].active = country_status['active']
+    combined_output.loc[row].deaths = country_status['deaths']
+    combined_output.loc[row].recovered = country_status['recovered']
+    combined_output.loc[row].latitude = country_status['latitude']
+    combined_output.loc[row].longitude = country_status['longitude']
+    combined_output.loc[row].last_update = country_status['last_update']
 
 color_scale = [
     "#fadc8f",
@@ -98,7 +114,9 @@ figure.layout.update(
 )
 
 # https://community.plot.ly/t/plotly-express-scatter-mapbox-hide-legend/36306/2
-# print(fig.data[0].hovertemplate)
+print(fig.data[0].hovertemplate)
 figure.data[0].update(
-    hovertemplate="%{customdata[3]}, %{customdata[2]}<br>Confirmed: %{customdata[0]}<br>Deaths: %{customdata[1]}"
+    hovertemplate="Confirmed: %{customdata[2]} <br>Active:%{customdata[3]} <br>Deaths: %{customdata[4]}<br>%{customdata[1]}"
 )
+
+figure.show()
