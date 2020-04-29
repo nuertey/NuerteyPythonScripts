@@ -24,8 +24,8 @@ pd.set_option('display.max_rows', 100)
 
 # Countries and associated regions
 countries = wb.get_countries()
-#print(countries)
-#print()
+print(countries)
+print()
 
 # Population dataset, by the World Bank (most recent value)
 # The data set is indexed with the country code
@@ -36,8 +36,8 @@ print()
 # Aggregate region, country and population
 df = countries[['region', 'name']].rename(columns={'name': 'country'}).loc[countries.region != 'Aggregates']
 df['population'] = population
-#print(df)
-#print()
+print(df)
+print()
 
 # +
 # The sunburst plot requires weights (values), labels, and parent (region, or World)

@@ -54,22 +54,19 @@ combined_output = pd.DataFrame(columns=cols, index=data.index)
 #
 # 149 Sao Tome and Principe
 # {'id': '149', 'country': 'Sao Tome and Principe', 'confirmed': 4, 'active': 4, 'deaths': 0, 'recovered': 0, 'latitude': 0.18636, 'longitude': 6.613081, 'last_update': 1587655832000}
-for row in data.itertuples(index=True, name='Pandas'):
-    country_id_input = getattr(row, "id")
-    country_name_input = getattr(row, "name")
-    #print(country_id_input, country_name_input)
+for row, country_name_input in zip(data.index, data['name']):
     country_status = cov_19.get_status_by_country_name(str(country_name_input))
     #print(country_status)
     #print()
-    combined_output.loc[row].country_id = country_status['id']
-    combined_output.loc[row].country = country_status['country']
-    combined_output.loc[row].confirmed = country_status['confirmed']
-    combined_output.loc[row].active = country_status['active']
-    combined_output.loc[row].deaths = country_status['deaths']
-    combined_output.loc[row].recovered = country_status['recovered']
-    combined_output.loc[row].latitude = country_status['latitude']
-    combined_output.loc[row].longitude = country_status['longitude']
-    combined_output.loc[row].last_update = country_status['last_update']
+    combined_output.loc[row].country_id  = int(country_status['id'])
+    combined_output.loc[row].country     = country_status['country']
+    combined_output.loc[row].confirmed   = int(country_status['confirmed'])
+    combined_output.loc[row].active      = int(country_status['active'])
+    combined_output.loc[row].deaths      = int(country_status['deaths'])
+    combined_output.loc[row].recovered   = int(country_status['recovered'])
+    combined_output.loc[row].latitude    = country_status['latitude']
+    combined_output.loc[row].longitude   = country_status['longitude']
+    combined_output.loc[row].last_update = int(country_status['last_update'])
 
 color_scale = [
     "#fadc8f",
@@ -91,32 +88,51 @@ combined_output["scaled"] = combined_output["confirmed"] ** 0.77
 print(combined_output)
 print()
 
+# Index of series is column name.
+dataTypeSeries = combined_output.dtypes 
+print('Data type of each column of combined_output Dataframe :')
+print(dataTypeSeries)
+
+new_confirmed = combined_output['confirmed'].astype(str).astype(int)
+new_scaled = combined_output['scaled'].astype(str).astype(float)
+newTypeSeries = new_confirmed.dtypes 
+print('Data type of each column of new_confirmed Dataframe :')
+print(newTypeSeries)
+
 lat, lon, zoom = (combined_output["latitude"], combined_output["longitude"], 5)
 
-figure = px.scatter_mapbox(
-    combined_output,
-    lat="latitude",
-    lon="longitude",
-    color="confirmed",
-    size="scaled",
-    size_max=50,
-    hover_name="country",
-    hover_data=["confirmed", "deaths", "country"],
-    color_continuous_scale=color_scale,
-)
+latTypeSeries = new_scaled.dtypes 
+print('Data type of each column of SCALED Dataframe :')
+print(latTypeSeries)
 
-figure.layout.update(
-    margin={"r": 0, "t": 0, "l": 0, "b": 0},
-    # This takes away the colorbar on the right hand side of the plot
-    coloraxis_showscale=False,
-    mapbox_style=config.MAPBOX_STYLE,
-    mapbox=dict(center=dict(lat=lat, lon=lon), zoom=zoom,),
-)
+#lonTypeSeries = lon.dtypes 
+#print('Data type of each column of LONGITUDE Dataframe :')
+#print(lonTypeSeries)
 
-# https://community.plot.ly/t/plotly-express-scatter-mapbox-hide-legend/36306/2
-print(fig.data[0].hovertemplate)
-figure.data[0].update(
-    hovertemplate="Confirmed: %{customdata[2]} <br>Active:%{customdata[3]} <br>Deaths: %{customdata[4]}<br>%{customdata[1]}"
-)
-
-figure.show()
+#figure = px.scatter_mapbox(
+#    combined_output,
+#    lat="latitude",
+#    lon="longitude",
+#    color="confirmed",
+#    size="scaled",
+#    size_max=50,
+#    hover_name="country",
+#    hover_data=["confirmed", "deaths", "country"],
+#    color_continuous_scale=color_scale,
+#)
+#
+#figure.layout.update(
+#    margin={"r": 0, "t": 0, "l": 0, "b": 0},
+#    # This takes away the colorbar on the right hand side of the plot
+#    coloraxis_showscale=False,
+#    mapbox_style=satellite-streets,
+#    mapbox=dict(center=dict(lat=lat, lon=lon), zoom=zoom,),
+#)
+#
+## https://community.plot.ly/t/plotly-express-scatter-mapbox-hide-legend/36306/2
+#print(fig.data[0].hovertemplate)
+#figure.data[0].update(
+#    hovertemplate="Confirmed: %{customdata[2]} <br>Active:%{customdata[3]} <br>Deaths: %{customdata[4]}<br>%{customdata[1]}"
+#)
+#
+#figure.show()

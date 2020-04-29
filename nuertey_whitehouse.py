@@ -22,7 +22,7 @@ pd.set_option('display.max_colwidth', -1)
 # ---------------------------------
 # https://www.unixtimestamp.com/
 
-URL = "https://api.whitehouse.gov/v1/petitions.json?limit=40&offset=0&createdBefore=1587455758&sortBy=date_reached_public&sortOrder=desc"
+URL = "https://api.whitehouse.gov/v1/petitions.json?limit=100&offset=0&createdBefore=1587455758&sortBy=date_reached_public&sortOrder=desc"
 
 r = requests.get(URL)
 
@@ -33,7 +33,11 @@ if r.ok:
     print()
 
     text_data = r.text
+    #print(text_data)
+    #print()
     json_dict = json.loads(text_data)
+    #print(json_dict)
+    #print()
 
     data = pd.DataFrame.from_dict(json_dict["results"])
     #print(data)
