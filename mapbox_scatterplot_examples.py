@@ -16,6 +16,7 @@ import plotly.graph_objects as go # low-level interface to figures,
 import plotly.express as px # Plotly Express is the easy-to-use, high-level
                             # interface to Plotly, which operates on "tidy"
                             # data and produces easy-to-style figures.
+import pandas as pd
 
 
 # To plot on Mapbox maps with Plotly, a Mapbox account and a public 
@@ -95,3 +96,58 @@ print(dataTypeSeries)
 #    color_continuous_scale=px.colors.cyclical.IceFire, size_max=15, 
 #    zoom=10)
 #figure.show()
+
+# ==========
+# Example 4:
+# ==========
+df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/Nuclear%20Waste%20Sites%20on%20American%20Campuses.csv')
+site_lat = df.lat
+site_lon = df.lon
+locations_name = df.text
+
+fig = go.Figure()
+
+fig.add_trace(go.Scattermapbox(
+        lat=site_lat,
+        lon=site_lon,
+        mode='markers',
+        marker=go.scattermapbox.Marker(
+            size=17,
+            color='rgb(255, 0, 0)',
+            opacity=0.7
+        ),
+        text=locations_name,
+        hoverinfo='text'
+    ))
+
+fig.add_trace(go.Scattermapbox(
+        lat=site_lat,
+        lon=site_lon,
+        mode='markers',
+        marker=go.scattermapbox.Marker(
+            size=8,
+            color='rgb(242, 177, 172)',
+            opacity=0.7
+        ),
+        hoverinfo='none'
+    ))
+
+fig.update_layout(
+    title='Nuclear Waste Sites on Campus',
+    autosize=True,
+    hovermode='closest',
+    showlegend=False,
+    mapbox=dict(
+        accesstoken=token,
+        bearing=0,
+        center=dict(
+            lat=38,
+            lon=-94
+        ),
+        pitch=0,
+        zoom=3,
+        style='satellite-streets'
+    ),
+)
+
+fig.show()

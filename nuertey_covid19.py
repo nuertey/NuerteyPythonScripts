@@ -99,22 +99,28 @@ newTypeSeries = new_confirmed.dtypes
 print('Data type of each column of new_confirmed Dataframe :')
 print(newTypeSeries)
 
-lat, lon, zoom = (combined_output["latitude"], combined_output["longitude"], 5)
+lati, longi, zoom = (combined_output["latitude"].astype(float), combined_output["longitude"].astype(float), 5)
 
-latTypeSeries = new_scaled.dtypes 
+scaledTypeSeries = new_scaled.dtypes 
 print('Data type of each column of SCALED Dataframe :')
+print(scaledTypeSeries)
+
+latTypeSeries = lati.dtypes 
+print('Data type of each column of LATITUDE Dataframe :')
 print(latTypeSeries)
 
-#lonTypeSeries = lon.dtypes 
-#print('Data type of each column of LONGITUDE Dataframe :')
-#print(lonTypeSeries)
+lonTypeSeries = longi.dtypes 
+print('Data type of each column of LONGITUDE Dataframe :')
+print(lonTypeSeries)
+
+combined_output.to_csv("combined_output_dataframe.csv", index = False, header=True)
 
 #figure = px.scatter_mapbox(
 #    combined_output,
-#    lat="latitude",
-#    lon="longitude",
-#    color="confirmed",
-#    size="scaled",
+#    lat=lati,
+#    lon=longi,
+#    color=new_confirmed,
+#    size=new_scaled,
 #    size_max=50,
 #    hover_name="country",
 #    hover_data=["confirmed", "deaths", "country"],
@@ -125,12 +131,12 @@ print(latTypeSeries)
 #    margin={"r": 0, "t": 0, "l": 0, "b": 0},
 #    # This takes away the colorbar on the right hand side of the plot
 #    coloraxis_showscale=False,
-#    mapbox_style=satellite-streets,
-#    mapbox=dict(center=dict(lat=lat, lon=lon), zoom=zoom,),
+#    mapbox_style="satellite-streets",
+#    mapbox=dict(center=dict(lat=float(7.9465), lon=float(1.0232)), zoom=zoom,),
 #)
 #
 ## https://community.plot.ly/t/plotly-express-scatter-mapbox-hide-legend/36306/2
-#print(fig.data[0].hovertemplate)
+##print(figure.data[0].hovertemplate)
 #figure.data[0].update(
 #    hovertemplate="Confirmed: %{customdata[2]} <br>Active:%{customdata[3]} <br>Deaths: %{customdata[4]}<br>%{customdata[1]}"
 #)
