@@ -54,7 +54,7 @@ combined_output = pd.DataFrame(columns=cols, index=data.index)
 #
 # 149 Sao Tome and Principe
 # {'id': '149', 'country': 'Sao Tome and Principe', 'confirmed': 4, 'active': 4, 'deaths': 0, 'recovered': 0, 'latitude': 0.18636, 'longitude': 6.613081, 'last_update': 1587655832000}
-for row in data.index:
+for row in data.itertuples(index=True, name='Pandas'):
     country_id_input = getattr(row, "id")
     country_name_input = getattr(row, "name")
     #print(country_id_input, country_name_input)
