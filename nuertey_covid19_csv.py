@@ -27,77 +27,110 @@
 #  Created: April 29, 2020
 #   Author: Nuertey Odzeyem
 #**********************************************************************/
+import os
 import sys
 import argparse
 import pandas as pd
 import plotly.express as px
 from covid import Covid
 
+pd.set_option('display.max_rows', 100)
+
 def init_argparse() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        usage="%(prog)s [OPTION]...",
+        usage="%(prog)s [-h] | [-v] | [-d] | [-s [john_hopkins | worldometers]]",
         description="Visualize COVID-19 statistics on the World map.",
+        allow_abbrev=False,
+        add_help=True
     )
     parser.add_argument(
         "-v", "--version", action="version",
-        version=f"{parser.prog} version 1.0.0"
+        version=f"{parser.prog} version 0.0.1"
     )
-    parser.add_argument("files", nargs="*")
+    parser.add_argument(
+        "-d", "--download", action='store_true',
+        help="Download realtime data from a specified source or the default. Default data source is John Hopkins. Absence of this argument would imply that \"combined_output_dataframe.csv\" would rather be used as the input data source."
+    )
+    parser.add_argument(
+        "-s", "--source", 
+        action='store', 
+        type=str, 
+        nargs='?', 
+        default='john_hopkins', 
+        choices=['worldometers', 'john_hopkins'],
+        help="Realtime data source. Can be \"worldometers\" or \"john_hopkins\"."
+    )
     return parser
 
-pd.set_option('display.max_rows', 100)
+parser = init_argparse()
+args = parser.parse_args()
+data_source_file_name = "combined_output_dataframe.csv"
 
--h, --help                             Display this program description and help message and then exit.
--d, --download                         Download realtime data from the specified source.
--s, --source <realtime data source>    Realtime data source can be worldometers or john_hopkins.
+if not args.download:
+    if not os.path.isfile(data_source_file_name):
+        print("The data source file specified \"{0}\" does not exist".format(data_source_file_name))
+        sys.exit()
+else:
+    if args.source == 'john_hopkins':
+        source = "john_hopkins"  # Source 1...
+    elif args.source == 'worldometers':
+        source = "worldometers" # Source 2...
 
-The long option --source=worldometers is equivalent to --source worldometers.
-
-args = sys.argv[1:]
-
-#source="worldometers" # Source 1...
-source="john_hopkins"  # Source 2...
-#cov_19 = Covid() # Default is John Hopkins data.
-cov_19 = Covid(source)
-country_list = cov_19.list_countries()
-data = pd.DataFrame(country_list)
-
-cols = ['country_id', 'country', 'confirmed', 'active', 'deaths', 'recovered', 
-        'latitude', 'longitude', 'last_update', 'scaled']
-combined_output = pd.DataFrame(columns=cols, index=data.index)
-
-for row, country_name_input in zip(data.index, data['name']):
-    country_status = cov_19.get_status_by_country_name(str(country_name_input))
-    combined_output.loc[row].country_id  = int(country_status['id'])
-    combined_output.loc[row].country     = country_status['country']
-    combined_output.loc[row].confirmed   = int(country_status['confirmed'])
-    combined_output.loc[row].active      = int(country_status['active'])
-    combined_output.loc[row].deaths      = int(country_status['deaths'])
-    combined_output.loc[row].recovered   = int(country_status['recovered'])
-    combined_output.loc[row].latitude    = country_status['latitude']
-    combined_output.loc[row].longitude   = country_status['longitude']
-    combined_output.loc[row].last_update = int(country_status['last_update'])
-
-# Employing the exponent operation, scale the data in order
-# to render smaller values visible on the scatter mapbox.
-combined_output["scaled"] = combined_output["confirmed"] ** 0.77
-
-# Since the DataFrame is in the default 'object' dtype, and the plotters
-# below rather need the data information in integer and floats, use the
-# technique of writing everything to a CSV file and then reading it again
-# so that it is automagically converted into the numeric types for us.
-# Calm, peaceful sleep, silence and minimized stress leads to good thought.   
-combined_output.to_csv("combined_output_dataframe.csv", index = False, header=True)
+    cov_19 = Covid(source)
+    country_list = cov_19.list_countries()
+    data = pd.DataFrame(country_list)
+    #print(data)
+    #print()
+    
+    if source == "john_hopkins":
+        cols = ['country_id', 'country', 'confirmed', 'active', 'deaths', 'recovered', 
+                'latitude', 'longitude', 'last_update', 'scaled']
+        combined_output = pd.DataFrame(columns=cols, index=data.index)
+        
+        for row, country_name_input in zip(data.index, data['name']):
+            country_status = cov_19.get_status_by_country_name(str(country_name_input))
+            combined_output.loc[row].country_id  = int(country_status['id'])
+            combined_output.loc[row].country     = country_status['country']
+            combined_output.loc[row].confirmed   = int(country_status['confirmed'])
+            combined_output.loc[row].active      = int(country_status['active'])
+            combined_output.loc[row].deaths      = int(country_status['deaths'])
+            combined_output.loc[row].recovered   = int(country_status['recovered'])
+            combined_output.loc[row].latitude    = country_status['latitude']
+            combined_output.loc[row].longitude   = country_status['longitude']
+            combined_output.loc[row].last_update = int(country_status['last_update'])
+    else:
+        cols = ['country', 'confirmed', 'active', 'deaths', 'recovered', 
+                'latitude', 'longitude', 'last_update', 'scaled']
+        combined_output = pd.DataFrame(columns=cols, index=data.index)
+        
+        for row, country_name_input in zip(data.index, data.iloc[:,0]):
+            country_status = cov_19.get_status_by_country_name(str(country_name_input))
+            print(country_status)
+            print()
+            combined_output.loc[row].country     = country_status['country']
+            combined_output.loc[row].confirmed   = int(country_status['confirmed'])
+            combined_output.loc[row].active      = int(country_status['active'])
+            combined_output.loc[row].deaths      = int(country_status['deaths'])
+            combined_output.loc[row].recovered   = int(country_status['recovered'])
+            combined_output.loc[row].latitude    = country_status['latitude']
+            combined_output.loc[row].longitude   = country_status['longitude']
+            combined_output.loc[row].last_update = int(country_status['last_update'])
+    
+    # Employing the exponent operation, scale the data in order
+    # to render smaller values visible on the scatter mapbox.
+    combined_output["scaled"] = combined_output["confirmed"] ** 0.77
+    
+    # Since the DataFrame is in the default 'object' dtype, and the plotters
+    # below rather need the data information in integer and floats, use the
+    # technique of writing everything to a CSV file and then reading it again
+    # so that it is automagically converted into the numeric types for us.
+    # Calm, peaceful sleep, silence and minimized stress leads to good thought.   
+    combined_output.to_csv(data_source_file_name, index = False, header=True)
 
 # Read the data back in the proper numeric formats:
-world_data = pd.read_csv("combined_output_dataframe.csv")
+world_data = pd.read_csv(data_source_file_name)
 #print(world_data)
 #print()
-
-# Index of series is column name.
-#dataTypeSeries = world_data.dtypes 
-#print('Data type of each column of combined_output Dataframe :')
-#print(dataTypeSeries)
 
 color_scale = [
     "#fadc8f",
@@ -177,7 +210,7 @@ figure = px.scatter_mapbox(
     size_max=50,
     hover_name="country", 
     hover_data=["confirmed", "deaths"],
-    color_continuous_scale=hot_gradient,
+    color_continuous_scale=magenta_gradient,
     zoom=3, 
     height=700
 )
@@ -203,7 +236,7 @@ token = open(".mapbox_token").read()
 
 # Realtime data was already retrieved from the relevant sources earlier
 # and saved as the CSV so simply read from that CSV file:
-world_data = pd.read_csv("combined_output_dataframe.csv")
+world_data = pd.read_csv(data_source_file_name)
 
 #    color_continuous_scale=px.colors.cyclical.IceFire,
 figure = px.scatter_mapbox(
