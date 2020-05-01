@@ -60,8 +60,14 @@ for row, country_name_input in zip(data.index, data['name']):
 # to render smaller values visible on the scatter mapbox.
 combined_output["scaled"] = combined_output["confirmed"] ** 0.77
 
+# Since the DataFrame is in the default 'object' dtype, and the plotters
+# below rather need the data information in integer and floats, use the
+# technique of writing everything to a CSV file and then reading it again
+# so that it is automagically converted into the numeric types for us.
+# Calm, peaceful sleep, silence and minimized stress leads to good thought.   
 combined_output.to_csv("combined_output_dataframe.csv", index = False, header=True)
 
+# Read the data back in the proper numeric formats:
 world_data = pd.read_csv("combined_output_dataframe.csv")
 #print(world_data)
 #print()
@@ -112,12 +118,35 @@ color_scale_2 = [
     "#dc9e00"
 ]
 
+# The fuchsia color code is #FF00FF. Here it is graded in order of increasing strength:
+magenta_gradient = [
+    "#ff00ff",
+    "#e800e7",
+    "#cc00cc",
+    "#b000af",
+    "#8b008b",
+]
+
+# The Hot Gradient Color Scheme palette has 6 colors which are Red (#FE0000),
+# Red-Orange (X11) (#FE3F02), University Of Tennessee Orange (#F97C00), 
+# Orange Peel (#FB9E00), Cyber Yellow (#FBD400) and Lemon Glacier (#FDFD04).
+hot_gradient = [
+    "#fdfd04",
+    "#fbd400",
+    "#fb9e00",
+    "#f97c00",
+    "#fe3f02",
+    "#fe0000",
+]
+
 # ==========
 # Example 1:
 #
-# Here is a simple map rendered with OpenStreetMaps tiles, without needing a Mapbox Access Token:
+# Here is a simple map rendered with OpenStreetMaps tiles, without needing
+# a Mapbox Access Token:
 # ==========
-fig = px.scatter_mapbox(
+#     color_discrete_sequence=["fuchsia"], 
+figure = px.scatter_mapbox(
     world_data, 
     lat="latitude", 
     lon="longitude", 
@@ -126,31 +155,36 @@ fig = px.scatter_mapbox(
     size_max=50,
     hover_name="country", 
     hover_data=["confirmed", "deaths"],
-    color_discrete_sequence=["fuchsia"], 
+    color_continuous_scale=hot_gradient,
     zoom=3, 
     height=700
 )
-fig.update_layout(mapbox_style="open-street-map")
-fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+figure.update_layout(mapbox_style="open-street-map")
+figure.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 
-#print(fig.data[0].hovertemplate)
-fig.data[0].update(
+# Replace the displayed latitude and longitude with custom-labelled data:
+#print(figure.data[0].hovertemplate)
+figure.data[0].update(
     hovertemplate="<b>%{hovertext}</b><br><br>Confirmed=%{marker.color}<br>Deaths=%{customdata[1]}"
 )
 
-fig.show()
+figure.show()
 
 # ==========
 # Example 2:
 #
-# Here is a map rendered with the "dark" style from the Mapbox service, which requires an Access Token:
+# Here is a map rendered with the "dark" style from the Mapbox service, 
+# which requires an Access Token. Obtain your free access token from www.mapbox.com
+# and save it in the current directory as the filename below, '.mapbox_token':
 # ==========
 token = open(".mapbox_token").read() 
 
+# Realtime data was already retrieved from the relevant sources earlier
+# and saved as the CSV so simply read from that CSV file:
 world_data = pd.read_csv("combined_output_dataframe.csv")
 
 #    color_continuous_scale=px.colors.cyclical.IceFire,
-fig = px.scatter_mapbox(
+figure = px.scatter_mapbox(
     world_data, 
     lat="latitude", 
     lon="longitude",
@@ -159,28 +193,25 @@ fig = px.scatter_mapbox(
     size_max=50, 
     hover_name="country", 
     hover_data=["confirmed", "active", "deaths"],
-    color_continuous_scale=color_scale_2,
+    color_continuous_scale=hot_gradient,
     zoom=3, 
     height=700
 )
-#fig.update_layout(mapbox_style="dark", mapbox_accesstoken=token)
-#fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
-#fig.show()
 
 #    mapbox_style="satellite-streets",
-fig.layout.update(
+figure.layout.update(
     margin={"r": 0, "t": 0, "l": 0, "b": 0},
     # This takes away the colorbar on the right hand side of the plot
     #coloraxis_showscale=False,
     mapbox_accesstoken=token,
     mapbox_style="dark",
+    # Center the map on Ghana, literally center of the World:
     mapbox=dict(center=dict(lat=float(7.9465), lon=float(1.0232)), zoom=3,),
 )
 
-# https://community.plot.ly/t/plotly-express-scatter-mapbox-hide-legend/36306/2
-#print(fig.data[0].hovertemplate)
-fig.data[0].update(
+#print(figure.data[0].hovertemplate)
+figure.data[0].update(
     hovertemplate="<b>%{hovertext}</b><br><br>Confirmed=%{marker.color}<br>Active=%{customdata[1]}<br>Deaths=%{customdata[2]}"
 )
 
-fig.show()
+figure.show()
