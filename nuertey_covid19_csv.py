@@ -1,8 +1,8 @@
 #***********************************************************************
 # @file
 #
-# Python script for querying COVID-19 statistics via several publicly
-# available APIs and visualizing them.
+# Python script for querying COVID-19 statistics via John Hopkins API
+# and visualizing them.
 #
 # @note For the future, these visualizations could be enhanced with live
 # news articles on the 'COVID-19' topic via newsapi much like follows:
@@ -38,27 +38,18 @@ pd.set_option('display.max_rows', 100)
 
 def init_argparse() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        usage="%(prog)s [-h] | [-v] | [-d] | [-s [john_hopkins | worldometers]]",
-        description="Visualize COVID-19 statistics on the World map.",
+        usage="%(prog)s [-h] | [-v] | [-d]",
+        description="Visualize COVID-19 statistics data on the World map.",
         allow_abbrev=False,
         add_help=True
     )
     parser.add_argument(
         "-v", "--version", action="version",
-        version=f"{parser.prog} version 0.0.1"
+        version=f"{parser.prog} version 0.0.2"
     )
     parser.add_argument(
         "-d", "--download", action='store_true',
-        help="Download realtime data from a specified source or the default. Default data source is John Hopkins. Absence of this argument would imply that \"combined_output_dataframe.csv\" would rather be used as the input data source."
-    )
-    parser.add_argument(
-        "-s", "--source", 
-        action='store', 
-        type=str, 
-        nargs='?', 
-        default='john_hopkins', 
-        choices=['worldometers', 'john_hopkins'],
-        help="Realtime data source. Can be \"worldometers\" or \"john_hopkins\"."
+        help="Download realtime data from John Hopkins data source. Absence of this argument would imply that \"combined_output_dataframe.csv\" would rather be used as the input data source."
     )
     return parser
 
@@ -71,50 +62,28 @@ if not args.download:
         print("The data source file specified \"{0}\" does not exist".format(data_source_file_name))
         sys.exit()
 else:
-    if args.source == 'john_hopkins':
-        source = "john_hopkins"  # Source 1...
-    elif args.source == 'worldometers':
-        source = "worldometers" # Source 2...
-
+    source = "john_hopkins"  # Cuurently, the only source supported by this script.
     cov_19 = Covid(source)
     country_list = cov_19.list_countries()
     data = pd.DataFrame(country_list)
-    #print(data)
-    #print()
+    print(data)
+    print()
     
-    if source == "john_hopkins":
-        cols = ['country_id', 'country', 'confirmed', 'active', 'deaths', 'recovered', 
-                'latitude', 'longitude', 'last_update', 'scaled']
-        combined_output = pd.DataFrame(columns=cols, index=data.index)
-        
-        for row, country_name_input in zip(data.index, data['name']):
-            country_status = cov_19.get_status_by_country_name(str(country_name_input))
-            combined_output.loc[row].country_id  = int(country_status['id'])
-            combined_output.loc[row].country     = country_status['country']
-            combined_output.loc[row].confirmed   = int(country_status['confirmed'])
-            combined_output.loc[row].active      = int(country_status['active'])
-            combined_output.loc[row].deaths      = int(country_status['deaths'])
-            combined_output.loc[row].recovered   = int(country_status['recovered'])
-            combined_output.loc[row].latitude    = country_status['latitude']
-            combined_output.loc[row].longitude   = country_status['longitude']
-            combined_output.loc[row].last_update = int(country_status['last_update'])
-    else:
-        cols = ['country', 'confirmed', 'active', 'deaths', 'recovered', 
-                'latitude', 'longitude', 'last_update', 'scaled']
-        combined_output = pd.DataFrame(columns=cols, index=data.index)
-        
-        for row, country_name_input in zip(data.index, data.iloc[:,0]):
-            country_status = cov_19.get_status_by_country_name(str(country_name_input))
-            print(country_status)
-            print()
-            combined_output.loc[row].country     = country_status['country']
-            combined_output.loc[row].confirmed   = int(country_status['confirmed'])
-            combined_output.loc[row].active      = int(country_status['active'])
-            combined_output.loc[row].deaths      = int(country_status['deaths'])
-            combined_output.loc[row].recovered   = int(country_status['recovered'])
-            combined_output.loc[row].latitude    = country_status['latitude']
-            combined_output.loc[row].longitude   = country_status['longitude']
-            combined_output.loc[row].last_update = int(country_status['last_update'])
+    cols = ['country_id', 'country', 'confirmed', 'active', 'deaths', 'recovered', 
+            'latitude', 'longitude', 'last_update', 'scaled']
+    combined_output = pd.DataFrame(columns=cols, index=data.index)
+    
+    for row, country_name_input in zip(data.index, data['name']):
+        country_status = cov_19.get_status_by_country_name(str(country_name_input))
+        combined_output.loc[row].country_id  = int(country_status['id'])
+        combined_output.loc[row].country     = country_status['country']
+        combined_output.loc[row].confirmed   = int(country_status['confirmed'])
+        combined_output.loc[row].active      = int(country_status['active'])
+        combined_output.loc[row].deaths      = int(country_status['deaths'])
+        combined_output.loc[row].recovered   = int(country_status['recovered'])
+        combined_output.loc[row].latitude    = country_status['latitude']
+        combined_output.loc[row].longitude   = country_status['longitude']
+        combined_output.loc[row].last_update = int(country_status['last_update'])
     
     # Employing the exponent operation, scale the data in order
     # to render smaller values visible on the scatter mapbox.
@@ -232,11 +201,7 @@ figure.show()
 # which requires an Access Token. Obtain your free access token from www.mapbox.com
 # and save it in the current directory as the filename below, '.mapbox_token':
 # ==========
-token = open(".mapbox_token").read() 
-
-# Realtime data was already retrieved from the relevant sources earlier
-# and saved as the CSV so simply read from that CSV file:
-world_data = pd.read_csv(data_source_file_name)
+token = open(".mapbox_token").read()
 
 #    color_continuous_scale=px.colors.cyclical.IceFire,
 figure = px.scatter_mapbox(
