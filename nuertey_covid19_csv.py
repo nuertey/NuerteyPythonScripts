@@ -27,11 +27,33 @@
 #  Created: April 29, 2020
 #   Author: Nuertey Odzeyem
 #**********************************************************************/
+import sys
+import argparse
 import pandas as pd
 import plotly.express as px
 from covid import Covid
 
+def init_argparse() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        usage="%(prog)s [OPTION]...",
+        description="Visualize COVID-19 statistics on the World map.",
+    )
+    parser.add_argument(
+        "-v", "--version", action="version",
+        version=f"{parser.prog} version 1.0.0"
+    )
+    parser.add_argument("files", nargs="*")
+    return parser
+
 pd.set_option('display.max_rows', 100)
+
+-h, --help                             Display this program description and help message and then exit.
+-d, --download                         Download realtime data from the specified source.
+-s, --source <realtime data source>    Realtime data source can be worldometers or john_hopkins.
+
+The long option --source=worldometers is equivalent to --source worldometers.
+
+args = sys.argv[1:]
 
 #source="worldometers" # Source 1...
 source="john_hopkins"  # Source 2...
