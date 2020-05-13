@@ -62,7 +62,7 @@ if not args.download:
         print("The data source file specified \"{0}\" does not exist".format(data_source_file_name))
         sys.exit()
 else:
-    source = "john_hopkins"  # Cuurently, the only source supported by this script.
+    source = "john_hopkins"  # Currently, the only source supported by this script.
     cov_19 = Covid(source)
     country_list = cov_19.list_countries()
     data = pd.DataFrame(country_list)
@@ -75,6 +75,10 @@ else:
     
     for row, country_name_input in zip(data.index, data['name']):
         country_status = cov_19.get_status_by_country_name(str(country_name_input))
+        # These ensuing on-the-fly integer casts do not seem to matter to
+        # the combined_output dataframe as its members still register as 
+        # PyTypeObject, that is, a 'new type'. But keep the code as-is 
+        # for now for instructive purposes.
         combined_output.loc[row].country_id  = int(country_status['id'])
         combined_output.loc[row].country     = country_status['country']
         combined_output.loc[row].confirmed   = int(country_status['confirmed'])

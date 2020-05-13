@@ -38,83 +38,54 @@ pd.set_option('display.max_rows', 100)
 
 def init_argparse() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        usage="%(prog)s [-h] | [-v] | [-d]",
+        usage="%(prog)s [-h] | [-v]",
         description="Visualize COVID-19 statistics data on the World map.",
         allow_abbrev=False,
         add_help=True
     )
     parser.add_argument(
         "-v", "--version", action="version",
-        version=f"{parser.prog} version 0.0.2"
-    )
-    parser.add_argument(
-        "-d", "--download", action='store_true',
-        help="Download realtime data from John Hopkins data source. Absence of this argument would imply that \"combined_output_dataframe.csv\" would rather be used as the input data source."
+        version=f"{parser.prog} version 0.0.3"
     )
     return parser
 
 parser = init_argparse()
 args = parser.parse_args()
-data_source_file_name = "combined_output_dataframe.csv"
 
-if not args.download:
-    if not os.path.isfile(data_source_file_name):
-        print("The data source file specified \"{0}\" does not exist".format(data_source_file_name))
-        sys.exit()
-else:
-    source = "john_hopkins"  # Cuurently, the only source supported by this script.
-    cov_19 = Covid(source)
-    country_list = cov_19.list_countries()
-    data = pd.DataFrame(country_list)
-    print(data)
-    print()
-    
-    cols = ['country_id', 'country', 'confirmed', 'active', 'deaths', 'recovered', 
-            'latitude', 'longitude', 'last_update', 'scaled']
-    combined_output = pd.DataFrame(columns=cols, index=data.index)
-    
-    for row, country_name_input in zip(data.index, data['name']):
-        country_status = cov_19.get_status_by_country_name(str(country_name_input))
-        # These ensuing on-the-fly integer casts do not seem to matter to
-        # the combined_output dataframe as its members still register as 
-        # PyTypeObject, that is, a 'new type'. But keep the code as-is 
-        # for now for instructive purposes.
-        combined_output.loc[row].country_id  = int(country_status['id'])
-        combined_output.loc[row].country     = country_status['country']
-        combined_output.loc[row].confirmed   = int(country_status['confirmed'])
-        combined_output.loc[row].active      = int(country_status['active'])
-        combined_output.loc[row].deaths      = int(country_status['deaths'])
-        combined_output.loc[row].recovered   = int(country_status['recovered'])
-        combined_output.loc[row].latitude    = country_status['latitude']
-        combined_output.loc[row].longitude   = country_status['longitude']
-        combined_output.loc[row].last_update = int(country_status['last_update'])
-    
-    # Employing the exponent operation, scale the data in order
-    # to render smaller values visible on the scatter mapbox.
-    combined_output["scaled"] = combined_output["confirmed"] ** 0.77
-    
-    # Since the DataFrame is in the default 'object' dtype, and the plotters
-    # below rather need the data information in integer and floats, use the
-    # technique of writing everything to a CSV file and then reading it again
-    # so that it is automagically converted into the numeric types for us.
-    # Calm, peaceful sleep, silence and minimized stress leads to good thought.   
-    combined_output.to_csv(data_source_file_name, index = False, header=True)
+source = "john_hopkins"  # Currently, the only source supported by this script.
+cov_19 = Covid(source)
+country_list = cov_19.list_countries()
+data = pd.DataFrame(country_list)
+print(data)
+print()
+
+cols = ['country_id', 'country', 'confirmed', 'active', 'deaths', 'recovered', 
+        'latitude', 'longitude', 'last_update', 'scaled']
+combined_output = pd.DataFrame(columns=cols, index=data.index)
+
+for row, country_name_input in zip(data.index, data['name']):
+    country_status = cov_19.get_status_by_country_name(str(country_name_input))
+    combined_output.loc[row].country_id  = int(country_status['id'])
+    combined_output.loc[row].country     = country_status['country']
+    combined_output.loc[row].confirmed   = int(country_status['confirmed'])
+    combined_output.loc[row].active      = int(country_status['active'])
+    combined_output.loc[row].deaths      = int(country_status['deaths'])
+    combined_output.loc[row].recovered   = int(country_status['recovered'])
+    combined_output.loc[row].latitude    = country_status['latitude']
+    combined_output.loc[row].longitude   = country_status['longitude']
+    combined_output.loc[row].last_update = int(country_status['last_update'])
+
+# Employing the exponent operation, scale the data in order
+# to render smaller values visible on the scatter mapbox.
+combined_output["scaled"] = combined_output["confirmed"] ** 0.77
 
 print('Data type of each column of combined_output Dataframe:')
 print(combined_output.dtypes)
 print()
 
-combined_output = combined_output.infer_objects()
+world_data = combined_output.infer_objects()
 print('Data type of each column of combined_output Dataframe after conversion:')
-print(combined_output.dtypes)
-print()
-
-print(combined_output)
-print()
-
-# Read the data back in the proper numeric formats:
-world_data = pd.read_csv(data_source_file_name)
-print(world_data)
+print(world_data.dtypes)
 print()
 
 color_scale = [
