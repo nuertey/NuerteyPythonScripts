@@ -15,6 +15,7 @@
 import os
 import sys
 import argparse
+import datetime
 import pandas as pd
 
 pd.set_option('display.max_rows', 100)
@@ -41,8 +42,8 @@ def init_argparse() -> argparse.ArgumentParser:
         help="Specify the topic you are interested in."
     )
     parser.add_argument(
-        "-b", "--begin_date", action='store',
-        type=str,
+        "-b", "--begin_date", action='store', 
+        type=lambda s: datetime.datetime.strptime(s, '%Y-%m-%d'),
         help="Specify the beginning date from which to query for all news articles. Format: yyyy-mm-dd"
     )
     return parser
@@ -59,20 +60,23 @@ print()
 print(topic)
 print()
 
-if country == 'None' and topic == 'None':
+print(begin_date)
+print()
+
+if country is None and topic is None:
     print("No primary arguments specified. Exiting...")
     sys.exit()
-elif country != 'None':
+elif country is not None:
     print("Querying for {0} top news headlines...".format(country.capitalize()))
     token = open(".newsapi_token").read().rstrip('\n')
     print(token)
     print()
-elif topic != 'None' and begin_date != 'None':
+elif topic is not None and begin_date is not None:
     print("Querying all world-wide news headlines for topics on \"{0}\" from {1} till now...".format(topic, begin_date))
     token = open(".newsapi_token").read().rstrip('\n')
     print(token)
     print()
-elif topic != 'None':
+elif topic is not None:
     print("Querying all world-wide news headlines for topics on \"{0}\"...".format(topic))
     token = open(".newsapi_token").read().rstrip('\n')
     print(token)
