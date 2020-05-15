@@ -15,11 +15,28 @@
 #**********************************************************************/
 import io
 import quandl
-import base64
 import matplotlib.pyplot as plt
+from pandas.plotting import register_matplotlib_converters
+register_matplotlib_converters()
+import plotly.graph_objects as go
+import plotly.express as px
+
+# Quandl has a vast collection of free and open data collected from a 
+# variety of organizations: central banks, governments, multinational 
+# organizations and more. You can use it without payment and with few 
+# restrictions.
+#
+# Rate limits
+#
+# Authenticated users have a limit of 300 calls per 10 seconds, 
+# 2,000 calls per 10 minutes and a limit of 50,000 calls per day.
+#
+# Authenticated users of free datasets have a concurrency limit of one; 
+# that is, they can make one call at a time and have an additional call
+# in the queue.
 
 # Free quandl API key:
-token = open(".quandl_token").read()
+token = open(".quandl_token").read().rstrip('\n')
 
 # International prices of imported raw materials - Ivory Coast cocoa - 
 # ICE (InterContinental Exchange), Atlanta - Price in US dollars per 
@@ -38,26 +55,39 @@ print()
 
 #retrieve stock data from quandl
 #data = quandl.get('WIKI/AAPL', collapse = 'monthly')
+
+# Notwithstanding the notion being quite quaint and subjective, the 
+# following matplotlib styles seem interesting to me:
+#
+# classic, ggplot, seaborn-bright, seaborn-dark 
 #plt.style.use("ggplot")
 #
-##average of 99 days price
-#data['100mean'] = data['Adj. Close'].rolling(window=100, min_periods=0).mean()
-#
-##I have created two plots in a single graph here
-#axis1 = plt.subplot2grid((6,1), (0,0), rowspan=5, colspan=1)
-#axis2 = plt.subplot2grid((6,1), (5,0), rowspan=1, colspan=1)
-#
-#axis1.plot(data.index, data['Adj. Close'])
-#axis1.plot(data.index, data['100mean'])
-#axis1.plot(data.index, data['High'])
-#
-#axis2.plot(data.index, data['Volume'])
-#
-#plt.title('Forex Daily Prices - US Dollars to Ghanaian Cedis')
-#ax1 = data['3. low'].plot(color='blue', grid=True, label='low')
-#ax2 = data['2. high'].plot(color='red', grid=True, secondary_y=True, label='high')
-#ax3 = data['4. close'].plot(color='green', grid=True, secondary_y=True, label='close')
-#ax1.legend(loc=1)
-#ax2.legend(loc=2)
-#ax3.legend(loc=3)
+#plt.title('International Prices of Imported Ivory Coast Cocoa - InterContinental Exchange')
+#plt.xlabel("Date")
+#plt.ylabel("Price (US dollars per tonne)")
+#plt.plot(data.index, data['Value'], "-r", label="Price in US dollars per tonne (Monthly)")
+#plt.legend(loc="upper left")
+##plt.ylim(-1.5, 2.0)
 #plt.show()
+
+#figure = px.line(data, x=data.index, y='Value', title='International Prices of Imported Ivory Coast Cocoa - InterContinental Exchange')
+#figure.show()
+
+#fig = go.Figure([go.Scatter(x=data.index, y=data['Value'])])
+#fig.show()
+
+figure = go.Figure()
+# Create and style traces:
+figure.add_trace(go.Scatter(x=data.index, 
+                            y=data['Value'],
+                            mode='lines+markers',
+                            name='Price in US dollars per tonne (Monthly)',
+                            line=dict(color='firebrick', width=4,
+                            dash='dash') # dash options include 'dash', 'dot', and 'dashdot'
+))
+
+# Edit the layout
+figure.update_layout(title='International Prices of Imported Ivory Coast Cocoa - InterContinental Exchange',
+                     xaxis_title='Date',
+                     yaxis_title='Price in US dollars per tonne (Monthly)')
+figure.show()
