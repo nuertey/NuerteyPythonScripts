@@ -21,8 +21,8 @@ pd.set_option('display.max_rows', 100)
 
 def init_argparse() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        usage="%(prog)s [-h] | [-v] | [-c country] | [-t topic from_date]",
-        description="Nuertey's News Aggregator. What is a country talking about? Or, what is the world talking about concerning a particular topic?",
+        usage="%(prog)s [-h] | [-v] | [-c country] | [-t topic] [-b begin_date]",
+        description="Nuertey's News Aggregator. What is a country talking about most today? Or, what is the world talking about concerning a particular topic beginning from a particular date till now?",
         allow_abbrev=False,
         add_help=True
     )
@@ -38,7 +38,12 @@ def init_argparse() -> argparse.ArgumentParser:
     parser.add_argument(
         "-t", "--topic", action='store',
         type=str,
-        help="Specify the topic you are interested in and the date from which to query all news articles."
+        help="Specify the topic you are interested in."
+    )
+    parser.add_argument(
+        "-b", "--begin_date", action='store',
+        type=str,
+        help="Specify the beginning date from which to query for all news articles. Format: yyyy-mm-dd"
     )
     return parser
 
@@ -46,6 +51,7 @@ parser = init_argparse()
 args = parser.parse_args()
 country = args.country
 topic = args.topic
+begin_date = args.begin_date
 
 print(country)
 print()
@@ -53,22 +59,29 @@ print()
 print(topic)
 print()
 
-#if not args.download:
-#    if not os.path.isfile(data_source_file_name):
-#        print("The data source file specified \"{0}\" does not exist".format(data_source_file_name))
-#        sys.exit()
-#else:
-#    source = "john_hopkins"  # Currently, the only source supported by this script.
-#    cov_19 = Covid(source)
-#
-#token = open(".newsapi_token").read().rstrip('\n')
+if country == 'None' and topic == 'None':
+    print("No primary arguments specified. Exiting...")
+    sys.exit()
+elif country != 'None':
+    print("Querying for {0} top news headlines...".format(country.capitalize()))
+    token = open(".newsapi_token").read().rstrip('\n')
+    print(token)
+    print()
+elif topic != 'None' and begin_date != 'None':
+    print("Querying all world-wide news headlines for topics on \"{0}\" from {1} till now...".format(topic, begin_date))
+    token = open(".newsapi_token").read().rstrip('\n')
+    print(token)
+    print()
+elif topic != 'None':
+    print("Querying all world-wide news headlines for topics on \"{0}\"...".format(topic))
+    token = open(".newsapi_token").read().rstrip('\n')
+    print(token)
+    print()
 
 # Accept argument input for either a country's top headlines or a topic discussed worldwide.
 
 # Top news by country
 # All world-wide news concerning a topic from a beginning period to present 
-
-
 
 # Live news articles on the 'COVID-19' topic via newsapi much like follows:
 #
