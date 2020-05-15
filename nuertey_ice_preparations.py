@@ -11,7 +11,7 @@
 #
 #  Created: May 14th, 2020
 #   Author: Nuertey Odzeyem, [Yet in the middle of Despair, thou shalt 
-#           strive and grasp for Hope.]
+#           strive and graft onto Hope.]
 #**********************************************************************/
 import io
 import quandl
@@ -38,6 +38,12 @@ import plotly.express as px
 # Free quandl API key:
 token = open(".quandl_token").read().rstrip('\n')
 
+# National Institute of Statistics and Economic Studies (France) data:
+#
+# INSEE is the national statistical agency of France. It collects data
+# on France's economy and society, such as socioeconomic indicators and
+# national accounts.
+
 # International prices of imported raw materials - Ivory Coast cocoa - 
 # ICE (InterContinental Exchange), Atlanta - Price in US dollars per 
 # tonne (Monthly).
@@ -45,16 +51,23 @@ data = quandl.get("INSEE/010002048", authtoken=token)
 print(data)
 print()
 
-print('Data type of each column of data:')
-print(data.dtypes)
+#print('Data type of each column of data:')
+#print(data.dtypes)
+#print()
+
+# International prices of imported raw materials - Arabica coffee 
+# Contract C ICE (InterContinental Exchange), Atlanta - Price in US 
+# cents per pound (Monthly).
+coffee = quandl.get("INSEE/010002042", authtoken=token)
+print(coffee)
 print()
 
 # International prices of imported raw materials - Gold, LME 
 # (London Metal Exchange), London - Price in US dollars per troy ounce 
 # (Monthly)
-
-#retrieve stock data from quandl
-#data = quandl.get('WIKI/AAPL', collapse = 'monthly')
+gold = quandl.get("INSEE/010002061", authtoken=token)
+print(gold)
+print()
 
 # Notwithstanding the notion being quite quaint and subjective, the 
 # following matplotlib styles seem interesting to me:
@@ -77,17 +90,37 @@ print()
 #fig.show()
 
 figure = go.Figure()
-# Create and style traces:
 figure.add_trace(go.Scatter(x=data.index, 
                             y=data['Value'],
                             mode='lines+markers',
                             name='Price in US dollars per tonne (Monthly)',
-                            line=dict(color='firebrick', width=4,
-                            dash='dash') # dash options include 'dash', 'dot', and 'dashdot'
+                            line=dict(color='red', width=1)
 ))
-
-# Edit the layout
 figure.update_layout(title='International Prices of Imported Ivory Coast Cocoa - InterContinental Exchange',
                      xaxis_title='Date',
                      yaxis_title='Price in US dollars per tonne (Monthly)')
+figure.show()
+
+figure = go.Figure()
+figure.add_trace(go.Scatter(x=coffee.index, 
+                            y=coffee['Value'],
+                            mode='lines+markers',
+                            name='Price in US cents per pound (Monthly)',
+                            line=dict(color='red', width=1)
+))
+figure.update_layout(title='International Prices of Imported Arabica Coffee Contract C - InterContinental Exchange',
+                     xaxis_title='Date',
+                     yaxis_title='Price in US cents per pound (Monthly)')
+figure.show()
+
+figure = go.Figure()
+figure.add_trace(go.Scatter(x=gold.index, 
+                            y=gold['Value'],
+                            mode='lines+markers',
+                            name='Price in US dollars per troy ounce (Monthly)',
+                            line=dict(color='red', width=1)
+))
+figure.update_layout(title='International Prices of  Gold - LME (London Metal Exchange) Exchange',
+                     xaxis_title='Date',
+                     yaxis_title='Price in US dollars per troy ounce (Monthly)')
 figure.show()
