@@ -22,6 +22,7 @@ import json
 import pandas as pd
 
 pd.set_option('display.max_rows', 100)
+#pd.set_option('display.max_colwidth', -1)
 
 def init_argparse() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
@@ -84,14 +85,19 @@ elif country is not None:
         #print(json_dict)
         #print()
         data = pd.DataFrame.from_dict(json_dict["articles"])
-        sources = data['source']
-        d = { k: [sources[:1][k]] for k in ['name'] }
-        df = pd.DataFrame(d)
-        print(df)
-        print()
+        sources = data['source'].apply(pd.Series)
+        #print(sources)
+        #print()
         
-        print(data[['source', 'publishedAt', 'content']])
+        # Concat the above to the DataFrame in place of the dict col:
+        dict_col = data.pop('source')
+        #pd.concat([data, sources['name']], axis=1)
+        
+        #print(data[['publishedAt', 'content', 'url']])
+        print(data[['publishedAt', 'title', 'url']])
+        #print(data)
         print()
+        print(data.columns)
     else:
         print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
         sys.exit()
