@@ -20,6 +20,7 @@ import re
 import requests
 import json
 import pandas as pd
+from nuertey_news_config import NEWS_API_COUNTRY_CODES, REVERSE_STATES_MAP
 
 pd.set_option('display.max_rows', 100)
 #pd.set_option('display.max_colwidth', -1)
@@ -68,36 +69,40 @@ if country is None and topic is None:
     print("No primary arguments specified. Exiting...")
     sys.exit()
 elif country is not None:
-    print("Querying for {0} top news headlines...".format(country.capitalize()))
+    print()
+    print("Querying for {0} top news headlines...".format(country.upper()))
+    print()
     token = open(".newsapi_token").read().rstrip('\n')
     news_api_url = f"https://newsapi.org/v2/top-headlines?country={country}&apiKey={token}"
     reply = requests.get(news_api_url)
     if reply.ok:
-        #print("HTTP Response Status Code:-> ", reply.status_code)
-        #print("HTTP Response Content Type:-> ", reply.headers['content-type'])
-        #print("HTTP Response Encoding:-> ", reply.encoding)
-        #print()
-
         text_data = reply.text
-        #print(text_data)
-        #print()
         json_dict = json.loads(text_data)
         #print(json_dict)
         #print()
-        data = pd.DataFrame.from_dict(json_dict["articles"])
-        sources = data['source'].apply(pd.Series)
-        #print(sources)
-        #print()
-        
-        # Concat the above to the DataFrame in place of the dict col:
-        dict_col = data.pop('source')
-        #pd.concat([data, sources['name']], axis=1)
-        
-        #print(data[['publishedAt', 'content', 'url']])
-        print(data[['publishedAt', 'title', 'url']])
-        #print(data)
-        print()
-        print(data.columns)
+        #print(json_dict["totalResults"])
+        if json_dict["totalResults"] > 0:
+            data = pd.DataFrame.from_dict(json_dict["articles"])
+            sources = data['source'].apply(pd.Series)
+            #print(sources)
+            #print()
+            
+            # Concat the above to the DataFrame in place of the dict col:
+            dict_col = data.pop('source')
+            #pd.concat([data, sources['name']], axis=0)
+
+            pd.set_option('display.max_colwidth', -1)        
+            #print(data[['publishedAt', 'content', 'url']])
+            print(data[['publishedAt', 'title']])
+            print()
+            print("And here are the URLS of the above articles for your reference:")
+            print()
+            print(data[['url']])
+            print()
+            print(data.columns)
+        else:
+            print("Sorry. No online news articles were discovered for \"{0}\". Check meatspace.".format(country.upper()))
+            sys.exit()
     else:
         print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
         sys.exit()
