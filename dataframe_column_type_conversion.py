@@ -1,3 +1,6 @@
+print(df.loc[df['A'].str.contains('A4'),'C'].item())
+====================================================
+
 dataTypeSeries = combined_output.dtypes 
 print('Data type of each column of combined_output Dataframe :')
 print(dataTypeSeries)

@@ -41,7 +41,7 @@ def init_argparse() -> argparse.ArgumentParser:
         version=f"{parser.prog} version 0.0.2"
     )
     parser.add_argument(
-        "-c", "--country", action='store', choices=country_codes['code'],
+        "-c", "--country", action='store', choices=str(country_codes['code']),
         type=str,
         help="\nSpecify the country whose top news headlines you want to see. Where country MUST be denoted by one of the country codes from the \npossible News API range of countries below. By design limitations, these are the ONLY possible countries that News API curates \ntop headlines for: \n\n{0}".format(country_codes.to_string(index=False))
     )
@@ -63,18 +63,14 @@ country = args.country
 topic = args.topic
 begin_date = args.begin_date
 
-#print(country)
-#print()
-
-#print(topic)
-#print()
-
 if country is None and topic is None:
     print("No primary arguments specified. Exiting...")
     sys.exit()
 elif country is not None:
+    culprit_country_name = country_codes.loc[country_codes['code'] == country,'country']
+    culprit_country_name = next(iter(culprit_country_name), 'no match')
     print()
-    print("Querying for {0} top news headlines...".format(country.upper()))
+    print("Querying for {0} top news headlines...".format(culprit_country_name))
     print()
     token = open(".newsapi_token").read().rstrip('\n')
     news_api_url = f"https://newsapi.org/v2/top-headlines?country={country}&apiKey={token}"
@@ -105,42 +101,61 @@ elif country is not None:
             print()
             print(data.columns)
         else:
-            print("Sorry. No online news articles were discovered for \"{0}\". Check meatspace.".format(country.upper()))
+            print("Sorry. No online news articles were discovered for \"{0}\". Check meatspace.".format(culprit_country_name))
             sys.exit()
     else:
         print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
         sys.exit()
 elif topic is not None and begin_date is not None:
-    #print(begin_date.strftime('%Y-%m-%d'))
+    the_date_alone = begin_date.strftime('%Y-%m-%d')
+    print(the_date_alone)
     print()
-    print("Querying all world-wide news headlines for topics on \"{0}\" from {1} till now...".format(topic, begin_date.strftime('%Y-%m-%d')))
+    print("Querying all world-wide news headlines for topics on \"{0}\" from {1} till now...".format(topic, the_date_alone))
     token = open(".newsapi_token").read().rstrip('\n')
-    print(token)
-    print()
+    news_api_url = f"https://newsapi.org/v2/everything?q={topic}&from={the_date_alone}&sortBy=publishedAt&apiKey={token}"
+    reply = requests.get(news_api_url)
+    if reply.ok:
+        text_data = reply.text
+        json_dict = json.loads(text_data)
+        #print(json_dict)
+        #print()
+        #print(json_dict["totalResults"])
+        if json_dict["totalResults"] > 0:
+            data = pd.DataFrame.from_dict(json_dict["articles"])
+            sources = data['source'].apply(pd.Series)
+            #print(sources)
+            #print()
+            
+            # Concat the above to the DataFrame in place of the dict col:
+            dict_col = data.pop('source')
+            #pd.concat([data, sources['name']], axis=0)
+
+            pd.set_option('display.max_colwidth', -1)        
+            #print(data[['publishedAt', 'content', 'url']])
+            print(data[['publishedAt', 'title']])
+            print()
+            print("And here are the URLS of the above articles for your reference:")
+            print()
+            print(data[['url']])
+            print()
+            print(data.columns)
+        else:
+            print("Sorry. No online news articles were discovered for \"{0}\". Check meatspace.".format(topic))
+            sys.exit()
+    else:
+        print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
+        sys.exit()
 elif topic is not None:
     print("Querying all world-wide news headlines for topics on \"{0}\"...".format(topic))
     token = open(".newsapi_token").read().rstrip('\n')
     print(token)
     print()
 
-# Accept argument input for either a country's top headlines or a topic discussed worldwide.
-
-# Top news by country
-# All world-wide news concerning a topic from a beginning period to present 
-
-# Live news articles on the 'COVID-19' topic via newsapi much like follows:
-#
-#https://newsapi.org/v2/top-headlines?country=us&apiKey=f048819049c24d6d86bd424daa2349f1
-#
-#http://newsapi.org/v2/everything?q=ghana&from=2020-01-01&sortBy=publishedAt&apiKey=f048819049c24d6d86bd424daa2349f1
-#
-# NEWS_API_KEY = config("NEWS_API_KEY")
-# NEWS_API_URL = f"https://newsapi.org/v2/top-headlines?country=us&apiKey={NEWS_API_KEY}"
-#
-# Notice the use of the python 3.6 introduced f-strings in the statement
-# above. F-strings can be further explained by this code snippet:
-#
-# >>> name = "Adjoa"
-# >>> age = 15
-# >>> f"Hello, {name}. You are {age}."
-# 'Hello, Adjoa. You are 15.'
+#country_business_news = "http://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=" + api_key_newsapi,
+#country_tech_news = "http://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=" + api_key_newsapi,
+#country_health_news = "http://newsapi.org/v2/top-headlines?country=us&category=health&apiKey=" + api_key_newsapi,
+#country_science_news = "http://newsapi.org/v2/top-headlines?country=us&category=science&apiKey=" + api_key_newsapi,
+#country_entertainment_news = "http://newsapi.org/v2/top-headlines?country=us&category=entertainment&apiKey=" + \
+#                            api_key_newsapi,
+#country_sports_news = "http://newsapi.org/v2/top-headlines?country=us&category=sports&apiKey=" + \
+#                            api_key_newsapi,
