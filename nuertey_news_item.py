@@ -26,7 +26,10 @@ from nuertey_news_config import NEWS_API_COUNTRY_CODES
 pd.set_option('display.max_rows', 100)
 
 country_codes = pd.DataFrame(NEWS_API_COUNTRY_CODES)
-codes_dictionary = country_codes.to_dict('list') # choices likes dict objects more than strings.
+
+# parser.choices seems to better prefer dict objects to strings. 
+# Better input matching and option display:
+codes_dictionary = country_codes.to_dict('list') 
 #print(codes_dictionary)
 
 def init_argparse() -> argparse.ArgumentParser:
@@ -40,11 +43,12 @@ def init_argparse() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "-v", "--version", action="version",
-        version=f"{parser.prog} version 0.0.2"
+        version=f"{parser.prog} version 0.0.3"
     )
     parser.add_argument(
         "-c", "--country", action='store', choices=codes_dictionary['code'],
         help="\nSpecify the country whose top news headlines you want to see. Where country MUST be denoted by one of the country codes from the \npossible News API range of countries below. Per News API design, these are the ONLY possible countries that News API curates \ntop headlines for: \n\n{0}\n".format(country_codes.to_string(index=False)),
+        metavar='COUNTRY_CODE_FROM_LIST_BELOW'
     )
     parser.add_argument(
         "-t", "--topic", action='store',
@@ -65,6 +69,7 @@ topic = args.topic
 begin_date = args.begin_date
 
 if country is None and topic is None:
+    print()
     print("No primary arguments specified. Exiting...")
     sys.exit()
 elif country is not None:
@@ -103,6 +108,7 @@ elif country is not None:
         print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
         sys.exit()
 
+    print()
     print("Querying for {0} Business news headlines...".format(culprit_country_name))
     print()
     news_api_url = f"http://newsapi.org/v2/top-headlines?country={country}&category=business&apiKey={token}"
@@ -134,6 +140,7 @@ elif country is not None:
         print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
         sys.exit()
 
+    print()
     print("Querying for {0} Technology news headlines...".format(culprit_country_name))
     print()
     news_api_url = f"http://newsapi.org/v2/top-headlines?country={country}&category=technology&apiKey={token}"
@@ -165,6 +172,7 @@ elif country is not None:
         print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
         sys.exit()
 
+    print()
     print("Querying for {0} Health news headlines...".format(culprit_country_name))
     print()
     news_api_url = f"http://newsapi.org/v2/top-headlines?country={country}&category=health&apiKey={token}"
@@ -196,6 +204,7 @@ elif country is not None:
         print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
         sys.exit()
 
+    print()
     print("Querying for {0} Science news headlines...".format(culprit_country_name))
     print()
     news_api_url = f"http://newsapi.org/v2/top-headlines?country={country}&category=science&apiKey={token}"
@@ -227,6 +236,7 @@ elif country is not None:
         print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
         sys.exit()
 
+    print()
     print("Querying for {0} Entertainment news headlines...".format(culprit_country_name))
     print()
     news_api_url = f"http://newsapi.org/v2/top-headlines?country={country}&category=entertainment&apiKey={token}"
@@ -258,6 +268,7 @@ elif country is not None:
         print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
         sys.exit()
 
+    print()
     print("Querying for {0} Sports news headlines...".format(culprit_country_name))
     print()
     news_api_url = f"http://newsapi.org/v2/top-headlines?country={country}&category=sports&apiKey={token}"
@@ -290,7 +301,6 @@ elif country is not None:
         sys.exit()
 elif topic is not None and begin_date is not None:
     the_date_alone = begin_date.strftime('%Y-%m-%d')
-    #print(the_date_alone)
     print()
     print("Querying all world-wide news headlines for topics on \"{0}\" from {1} till now...".format(topic, the_date_alone))
     token = open(".newsapi_token").read().rstrip('\n')
@@ -330,9 +340,6 @@ elif topic is not None:
     if reply.ok:
         text_data = reply.text
         json_dict = json.loads(text_data)
-        #print(json_dict)
-        #print()
-        #print(json_dict["totalResults"])
         if json_dict["totalResults"] > 0:
             data = pd.DataFrame.from_dict(json_dict["articles"])
             sources = data['source'].apply(pd.Series)
@@ -344,7 +351,6 @@ elif topic is not None:
             #pd.concat([data, sources['name']], axis=0)
 
             pd.set_option('display.max_colwidth', -1)        
-            #print(data[['publishedAt', 'content', 'url']])
             print(data[['publishedAt', 'title']])
             print()
             print("And here are the URLS of the above articles for your reference:")
