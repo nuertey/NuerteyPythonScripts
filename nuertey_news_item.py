@@ -20,10 +20,15 @@ import re
 import requests
 import json
 import pandas as pd
-from nuertey_news_config import NEWS_API_COUNTRY_CODES, REVERSE_STATES_MAP
+from nuertey_news_config import NEWS_API_COUNTRY_CODES
 
 pd.set_option('display.max_rows', 100)
 #pd.set_option('display.max_colwidth', -1)
+
+new_line = '\n'
+country_codes = pd.DataFrame(NEWS_API_COUNTRY_CODES)
+print(country_codes)
+print()
 
 def init_argparse() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
@@ -39,7 +44,7 @@ def init_argparse() -> argparse.ArgumentParser:
     parser.add_argument(
         "-c", "--country", action='store',
         type=str,
-        help="Specify the country whose top news headlines you want to see."
+        help=f"Specify the country whose top news headlines you want to see. Where country MUST be denoted by one of the country codes from the possible News API range of countries below. By design limitations, these are the ONLY possible countries that News API curates top headlines for: {new_line}{new_line.join(country_codes.to_string(index=False))}"
     )
     parser.add_argument(
         "-t", "--topic", action='store',
