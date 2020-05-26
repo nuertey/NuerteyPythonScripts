@@ -20,31 +20,30 @@ import re
 import requests
 import json
 import pandas as pd
+from argparse import RawTextHelpFormatter
 from nuertey_news_config import NEWS_API_COUNTRY_CODES
 
 pd.set_option('display.max_rows', 100)
 #pd.set_option('display.max_colwidth', -1)
 
-new_line = '\n'
 country_codes = pd.DataFrame(NEWS_API_COUNTRY_CODES)
-print(country_codes)
-print()
 
 def init_argparse() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         usage="%(prog)s [-h] | [-v] | [-c country] | [-t topic] [-b begin_date]",
-        description="Welcome, Velkommen, Woé zɔ, Karibu, Mo-heee to Nuertey's News Aggregator. What is a country talking about most today? Or, what is the world talking about concerning a particular topic beginning from a particular date till now? What do you want to know? Ask me in the format below:",
+        description="Welcome, Velkommen, Woé zɔ, Karibu, Mo-heee to Nuertey's News Aggregator. What is a country talking about most today? \nOr, what is the world talking about concerning a particular topic beginning from a particular date till now? \nWhat do you want to know? Ask me in the format below:",
+        formatter_class=RawTextHelpFormatter,
         allow_abbrev=False,
         add_help=True
     )
     parser.add_argument(
         "-v", "--version", action="version",
-        version=f"{parser.prog} version 0.0.1"
+        version=f"{parser.prog} version 0.0.2"
     )
     parser.add_argument(
-        "-c", "--country", action='store',
+        "-c", "--country", action='store', choices=country_codes['code'],
         type=str,
-        help=f"Specify the country whose top news headlines you want to see. Where country MUST be denoted by one of the country codes from the possible News API range of countries below. By design limitations, these are the ONLY possible countries that News API curates top headlines for: {new_line}{new_line.join(country_codes.to_string(index=False))}"
+        help="\nSpecify the country whose top news headlines you want to see. Where country MUST be denoted by one of the country codes from the \npossible News API range of countries below. By design limitations, these are the ONLY possible countries that News API curates \ntop headlines for: \n\n{0}".format(country_codes.to_string(index=False))
     )
     parser.add_argument(
         "-t", "--topic", action='store',
