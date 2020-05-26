@@ -26,7 +26,7 @@ from nuertey_news_config import NEWS_API_COUNTRY_CODES
 pd.set_option('display.max_rows', 100)
 
 country_codes = pd.DataFrame(NEWS_API_COUNTRY_CODES)
-codes_dictionary = country_codes.to_dict('list')
+codes_dictionary = country_codes.to_dict('list') # choices likes dict objects more than strings.
 #print(codes_dictionary)
 
 def init_argparse() -> argparse.ArgumentParser:
@@ -79,14 +79,195 @@ elif country is not None:
     if reply.ok:
         text_data = reply.text
         json_dict = json.loads(text_data)
-        #print(json_dict)
-        #print()
-        #print(json_dict["totalResults"])
         if json_dict["totalResults"] > 0:
             data = pd.DataFrame.from_dict(json_dict["articles"])
             sources = data['source'].apply(pd.Series)
-            #print(sources)
-            #print()
+            
+            # Concat the above to the DataFrame in place of the dict col:
+            dict_col = data.pop('source')
+            #pd.concat([data, sources['name']], axis=0)
+
+            pd.set_option('display.max_colwidth', -1)        
+            #print(data[['publishedAt', 'content', 'url']])
+            print(data[['publishedAt', 'title']])
+            print()
+            print("And here are the URLS of the above articles for your reference:")
+            print()
+            print(data[['url']])
+            print()
+            print(data.columns)
+        else:
+            print("Sorry. No online news articles were discovered for \"{0}\". Check meatspace.".format(culprit_country_name))
+            sys.exit()
+    else:
+        print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
+        sys.exit()
+
+    print("Querying for {0} Business news headlines...".format(culprit_country_name))
+    print()
+    news_api_url = f"http://newsapi.org/v2/top-headlines?country={country}&category=business&apiKey={token}"
+    reply = requests.get(news_api_url)
+    if reply.ok:
+        text_data = reply.text
+        json_dict = json.loads(text_data)
+        if json_dict["totalResults"] > 0:
+            data = pd.DataFrame.from_dict(json_dict["articles"])
+            sources = data['source'].apply(pd.Series)
+            
+            # Concat the above to the DataFrame in place of the dict col:
+            dict_col = data.pop('source')
+            #pd.concat([data, sources['name']], axis=0)
+
+            pd.set_option('display.max_colwidth', -1)        
+            #print(data[['publishedAt', 'content', 'url']])
+            print(data[['publishedAt', 'title']])
+            print()
+            print("And here are the URLS of the above articles for your reference:")
+            print()
+            print(data[['url']])
+            print()
+            print(data.columns)
+        else:
+            print("Sorry. No online news articles were discovered for \"{0}\". Check meatspace.".format(culprit_country_name))
+            sys.exit()
+    else:
+        print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
+        sys.exit()
+
+    print("Querying for {0} Technology news headlines...".format(culprit_country_name))
+    print()
+    news_api_url = f"http://newsapi.org/v2/top-headlines?country={country}&category=technology&apiKey={token}"
+    reply = requests.get(news_api_url)
+    if reply.ok:
+        text_data = reply.text
+        json_dict = json.loads(text_data)
+        if json_dict["totalResults"] > 0:
+            data = pd.DataFrame.from_dict(json_dict["articles"])
+            sources = data['source'].apply(pd.Series)
+            
+            # Concat the above to the DataFrame in place of the dict col:
+            dict_col = data.pop('source')
+            #pd.concat([data, sources['name']], axis=0)
+
+            pd.set_option('display.max_colwidth', -1)        
+            #print(data[['publishedAt', 'content', 'url']])
+            print(data[['publishedAt', 'title']])
+            print()
+            print("And here are the URLS of the above articles for your reference:")
+            print()
+            print(data[['url']])
+            print()
+            print(data.columns)
+        else:
+            print("Sorry. No online news articles were discovered for \"{0}\". Check meatspace.".format(culprit_country_name))
+            sys.exit()
+    else:
+        print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
+        sys.exit()
+
+    print("Querying for {0} Health news headlines...".format(culprit_country_name))
+    print()
+    news_api_url = f"http://newsapi.org/v2/top-headlines?country={country}&category=health&apiKey={token}"
+    reply = requests.get(news_api_url)
+    if reply.ok:
+        text_data = reply.text
+        json_dict = json.loads(text_data)
+        if json_dict["totalResults"] > 0:
+            data = pd.DataFrame.from_dict(json_dict["articles"])
+            sources = data['source'].apply(pd.Series)
+            
+            # Concat the above to the DataFrame in place of the dict col:
+            dict_col = data.pop('source')
+            #pd.concat([data, sources['name']], axis=0)
+
+            pd.set_option('display.max_colwidth', -1)        
+            #print(data[['publishedAt', 'content', 'url']])
+            print(data[['publishedAt', 'title']])
+            print()
+            print("And here are the URLS of the above articles for your reference:")
+            print()
+            print(data[['url']])
+            print()
+            print(data.columns)
+        else:
+            print("Sorry. No online news articles were discovered for \"{0}\". Check meatspace.".format(culprit_country_name))
+            sys.exit()
+    else:
+        print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
+        sys.exit()
+
+    print("Querying for {0} Science news headlines...".format(culprit_country_name))
+    print()
+    news_api_url = f"http://newsapi.org/v2/top-headlines?country={country}&category=science&apiKey={token}"
+    reply = requests.get(news_api_url)
+    if reply.ok:
+        text_data = reply.text
+        json_dict = json.loads(text_data)
+        if json_dict["totalResults"] > 0:
+            data = pd.DataFrame.from_dict(json_dict["articles"])
+            sources = data['source'].apply(pd.Series)
+            
+            # Concat the above to the DataFrame in place of the dict col:
+            dict_col = data.pop('source')
+            #pd.concat([data, sources['name']], axis=0)
+
+            pd.set_option('display.max_colwidth', -1)        
+            #print(data[['publishedAt', 'content', 'url']])
+            print(data[['publishedAt', 'title']])
+            print()
+            print("And here are the URLS of the above articles for your reference:")
+            print()
+            print(data[['url']])
+            print()
+            print(data.columns)
+        else:
+            print("Sorry. No online news articles were discovered for \"{0}\". Check meatspace.".format(culprit_country_name))
+            sys.exit()
+    else:
+        print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
+        sys.exit()
+
+    print("Querying for {0} Entertainment news headlines...".format(culprit_country_name))
+    print()
+    news_api_url = f"http://newsapi.org/v2/top-headlines?country={country}&category=entertainment&apiKey={token}"
+    reply = requests.get(news_api_url)
+    if reply.ok:
+        text_data = reply.text
+        json_dict = json.loads(text_data)
+        if json_dict["totalResults"] > 0:
+            data = pd.DataFrame.from_dict(json_dict["articles"])
+            sources = data['source'].apply(pd.Series)
+            
+            # Concat the above to the DataFrame in place of the dict col:
+            dict_col = data.pop('source')
+            #pd.concat([data, sources['name']], axis=0)
+
+            pd.set_option('display.max_colwidth', -1)        
+            #print(data[['publishedAt', 'content', 'url']])
+            print(data[['publishedAt', 'title']])
+            print()
+            print("And here are the URLS of the above articles for your reference:")
+            print()
+            print(data[['url']])
+            print()
+            print(data.columns)
+        else:
+            print("Sorry. No online news articles were discovered for \"{0}\". Check meatspace.".format(culprit_country_name))
+            sys.exit()
+    else:
+        print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
+        sys.exit()
+
+    print("Querying for {0} Sports news headlines...".format(culprit_country_name))
+    print()
+    news_api_url = f"http://newsapi.org/v2/top-headlines?country={country}&category=sports&apiKey={token}"
+    reply = requests.get(news_api_url)
+    if reply.ok:
+        text_data = reply.text
+        json_dict = json.loads(text_data)
+        if json_dict["totalResults"] > 0:
+            data = pd.DataFrame.from_dict(json_dict["articles"])
+            sources = data['source'].apply(pd.Series)
             
             # Concat the above to the DataFrame in place of the dict col:
             dict_col = data.pop('source')
@@ -109,11 +290,42 @@ elif country is not None:
         sys.exit()
 elif topic is not None and begin_date is not None:
     the_date_alone = begin_date.strftime('%Y-%m-%d')
-    print(the_date_alone)
+    #print(the_date_alone)
     print()
     print("Querying all world-wide news headlines for topics on \"{0}\" from {1} till now...".format(topic, the_date_alone))
     token = open(".newsapi_token").read().rstrip('\n')
     news_api_url = f"https://newsapi.org/v2/everything?q={topic}&from={the_date_alone}&sortBy=publishedAt&apiKey={token}"
+    reply = requests.get(news_api_url)
+    if reply.ok:
+        text_data = reply.text
+        json_dict = json.loads(text_data)
+        if json_dict["totalResults"] > 0:
+            data = pd.DataFrame.from_dict(json_dict["articles"])
+            sources = data['source'].apply(pd.Series)
+            
+            # Concat the above to the DataFrame in place of the dict col:
+            dict_col = data.pop('source')
+            #pd.concat([data, sources['name']], axis=0)
+
+            pd.set_option('display.max_colwidth', -1)        
+            print(data[['publishedAt', 'title']])
+            print()
+            print("And here are the URLS of the above articles for your reference:")
+            print()
+            print(data[['url']])
+            print()
+            print(data.columns)
+        else:
+            print("Sorry. No online news articles were discovered for \"{0}\". Check meatspace.".format(topic))
+            sys.exit()
+    else:
+        print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
+        sys.exit()
+elif topic is not None:
+    print()
+    print("Querying all world-wide news headlines for topics on \"{0}\" ...".format(topic))
+    token = open(".newsapi_token").read().rstrip('\n')
+    news_api_url = f"https://newsapi.org/v2/everything?q={topic}&sortBy=publishedAt&apiKey={token}"
     reply = requests.get(news_api_url)
     if reply.ok:
         text_data = reply.text
@@ -146,17 +358,3 @@ elif topic is not None and begin_date is not None:
     else:
         print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
         sys.exit()
-elif topic is not None:
-    print("Querying all world-wide news headlines for topics on \"{0}\"...".format(topic))
-    token = open(".newsapi_token").read().rstrip('\n')
-    print(token)
-    print()
-
-#country_business_news = "http://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=" + api_key_newsapi,
-#country_tech_news = "http://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=" + api_key_newsapi,
-#country_health_news = "http://newsapi.org/v2/top-headlines?country=us&category=health&apiKey=" + api_key_newsapi,
-#country_science_news = "http://newsapi.org/v2/top-headlines?country=us&category=science&apiKey=" + api_key_newsapi,
-#country_entertainment_news = "http://newsapi.org/v2/top-headlines?country=us&category=entertainment&apiKey=" + \
-#                            api_key_newsapi,
-#country_sports_news = "http://newsapi.org/v2/top-headlines?country=us&category=sports&apiKey=" + \
-#                            api_key_newsapi,
