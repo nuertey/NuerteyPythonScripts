@@ -1,4 +1,4 @@
-NEWS_API_COUNTRY_CODES = [
+NEWS_API_COUNTRY_CODES = (
     {"country": "Argentina", "code": "ar"},
     {"country": "Australia", "code": "au"},
     {"country": "Austria", "code": "at"},
@@ -53,4 +53,4 @@ NEWS_API_COUNTRY_CODES = [
     {"country": "United Kingdom", "code": "gb"},
     {"country": "United States", "code": "us"},
     {"country": "Venezuela", "code": "ve"},
-]
+)
