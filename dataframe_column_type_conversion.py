@@ -1,3 +1,14 @@
+try:
+    r = requests.get('http://www.google.com/nothere')
+    r.raise_for_status()
+except requests.exceptions.HTTPError as err:
+    raise SystemExit(err)
+
+Will print:
+
+404 Client Error: Not Found for url: http://www.google.com/nothere
+
+====================================================
 print(df.loc[df['A'].str.contains('A4'),'C'].item())
 ====================================================
 

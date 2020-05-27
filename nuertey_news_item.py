@@ -20,6 +20,7 @@ import re
 import requests
 import json
 import pandas as pd
+from http import HTTPStatus
 from argparse import RawTextHelpFormatter
 from nuertey_news_config import NEWS_API_COUNTRY_CODES
 
@@ -58,7 +59,7 @@ def init_argparse() -> argparse.ArgumentParser:
     parser.add_argument(
         "-b", "--begin_date", action='store', 
         type=lambda s: datetime.datetime.strptime(s, '%Y-%m-%d'),
-        help="Specify the beginning date from which to query for all news articles. Date format is: yyyy-mm-dd"
+        help="Specify the beginning date from which to query for all news articles. Note that as we are using a \nfree News API subscription, date CANNOT be older than 2020-04-27. Date format is: yyyy-mm-dd"
     )
     return parser
 
@@ -105,7 +106,10 @@ elif country is not None:
             print("Sorry. No online news articles were discovered for \"{0}\". Check meatspace.".format(culprit_country_name))
             sys.exit()
     else:
-        print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
+        print(f'{reply.status_code} :-> {HTTPStatus(reply.status_code).phrase}')
+        print()
+        reply_json = json.loads(reply.text)
+        print(json.dumps(reply_json, indent=2))
         sys.exit()
 
     print()
@@ -137,7 +141,10 @@ elif country is not None:
             print("Sorry. No online news articles were discovered for \"{0}\". Check meatspace.".format(culprit_country_name))
             sys.exit()
     else:
-        print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
+        print(f'{reply.status_code} :-> {HTTPStatus(reply.status_code).phrase}')
+        print()
+        reply_json = json.loads(reply.text)
+        print(json.dumps(reply_json, indent=2))
         sys.exit()
 
     print()
@@ -169,7 +176,10 @@ elif country is not None:
             print("Sorry. No online news articles were discovered for \"{0}\". Check meatspace.".format(culprit_country_name))
             sys.exit()
     else:
-        print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
+        print(f'{reply.status_code} :-> {HTTPStatus(reply.status_code).phrase}')
+        print()
+        reply_json = json.loads(reply.text)
+        print(json.dumps(reply_json, indent=2))
         sys.exit()
 
     print()
@@ -201,7 +211,10 @@ elif country is not None:
             print("Sorry. No online news articles were discovered for \"{0}\". Check meatspace.".format(culprit_country_name))
             sys.exit()
     else:
-        print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
+        print(f'{reply.status_code} :-> {HTTPStatus(reply.status_code).phrase}')
+        print()
+        reply_json = json.loads(reply.text)
+        print(json.dumps(reply_json, indent=2))
         sys.exit()
 
     print()
@@ -233,7 +246,10 @@ elif country is not None:
             print("Sorry. No online news articles were discovered for \"{0}\". Check meatspace.".format(culprit_country_name))
             sys.exit()
     else:
-        print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
+        print(f'{reply.status_code} :-> {HTTPStatus(reply.status_code).phrase}')
+        print()
+        reply_json = json.loads(reply.text)
+        print(json.dumps(reply_json, indent=2))
         sys.exit()
 
     print()
@@ -265,7 +281,10 @@ elif country is not None:
             print("Sorry. No online news articles were discovered for \"{0}\". Check meatspace.".format(culprit_country_name))
             sys.exit()
     else:
-        print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
+        print(f'{reply.status_code} :-> {HTTPStatus(reply.status_code).phrase}')
+        print()
+        reply_json = json.loads(reply.text)
+        print(json.dumps(reply_json, indent=2))
         sys.exit()
 
     print()
@@ -297,7 +316,10 @@ elif country is not None:
             print("Sorry. No online news articles were discovered for \"{0}\". Check meatspace.".format(culprit_country_name))
             sys.exit()
     else:
-        print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
+        print(f'{reply.status_code} :-> {HTTPStatus(reply.status_code).phrase}')
+        print()
+        reply_json = json.loads(reply.text)
+        print(json.dumps(reply_json, indent=2))
         sys.exit()
 elif topic is not None and begin_date is not None:
     the_date_alone = begin_date.strftime('%Y-%m-%d')
@@ -329,7 +351,10 @@ elif topic is not None and begin_date is not None:
             print("Sorry. No online news articles were discovered for \"{0}\". Check meatspace.".format(topic))
             sys.exit()
     else:
-        print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
+        print(f'{reply.status_code} :-> {HTTPStatus(reply.status_code).phrase}')
+        print()
+        reply_json = json.loads(reply.text)
+        print(json.dumps(reply_json, indent=2))
         sys.exit()
 elif topic is not None:
     print()
@@ -362,5 +387,8 @@ elif topic is not None:
             print("Sorry. No online news articles were discovered for \"{0}\". Check meatspace.".format(topic))
             sys.exit()
     else:
-        print('Error! Issue with the URL, HTTP Request, and/or the HTTP Response')
+        print(f'{reply.status_code} :-> {HTTPStatus(reply.status_code).phrase}')
+        print()
+        reply_json = json.loads(reply.text)
+        print(json.dumps(reply_json, indent=2))
         sys.exit()
