@@ -1,3 +1,4 @@
+import pandas as pd
 
 # Pandas concat vs append vs join vs merge
 # 
@@ -22,7 +23,22 @@ dfmi = pd.DataFrame([list('abcd'),
 print(dfmi)
 print()
 
+# But it turns out that assigning to the product of chained indexing has 
+# inherently unpredictable results. To see this, think about how the Python
+# interpreter executes this code:
+
 # Compare these two access methods:
+
+# Preferred (and much faster!):
+# Contrast the previous method to df.loc[:,('one','second')] which passes 
+# a nested tuple of (slice(None),('one','second')) to a single call to
+# __getitem__. This allows pandas to deal with this as a single entity. 
+# Furthermore this order of operations can be significantly faster, and
+# allows one to index both axes if so desired.
+print(dfmi.loc[:, ('one', 'second')])
+# becomes
+# dfmi.loc.__setitem__((slice(None), ('one', 'second')), value)
+print()
 
 # dfmi['one'] selects the first level of the columns and returns a DataFrame 
 # that is singly-indexed. Then another Python operation dfmi_with_one['second'] 
@@ -31,16 +47,16 @@ print()
 # e.g. separate calls to __getitem__, so it has to treat them as linear 
 # operations, they happen one after another.
 print(dfmi['one']['second'])
+# becomes
+# dfmi.__getitem__('one').__setitem__('second', value)
 print()
 
-# Preferred:
-# Contrast the previous method to df.loc[:,('one','second')] which passes 
-# a nested tuple of (slice(None),('one','second')) to a single call to
-# __getitem__. This allows pandas to deal with this as a single entity. 
-# Furthermore this order of operations can be significantly faster, and
-# allows one to index both axes if so desired
-print(dfmi.loc[:, ('one', 'second')])
-print()
+# See that __getitem__ in there? Outside of simple cases, it’s very hard 
+# to predict whether it will return a view or a copy (it depends on the 
+# memory layout of the array, about which pandas makes no guarantees), and
+# therefore whether the __setitem__ will modify dfmi or a temporary object
+# that gets thrown out immediately afterward. That’s what SettingWithCopy 
+# is warning you about!
 
 # ========================================================
 df1 = pd.DataFrame({'A': ['A0', 'A1', 'A2', 'A3'],
