@@ -106,3 +106,13 @@ print()
 
 # More here:
 # https://pandas.pydata.org/pandas-docs/stable/user_guide/merging.html
+
+# ==============================================
+# This is the correct access method:
+
+dfc = pd.DataFrame({'A': ['aaa', 'bbb', 'ccc'], 'B': [1, 2, 3]})
+
+# https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html
+dfc.loc[0, 'A'] = 11 # Do not do "dfc['A'][0] = 111"!!!
+
+print(dfc)
