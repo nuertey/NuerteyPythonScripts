@@ -1,0 +1,281 @@
+====================================
+My Google Drive Music Links For Wayo
+====================================
+
+Revolution OS Documentary Movie About Linux and Open Source Software Movement:
+
+https://drive.google.com/file/d/1f136r79FH4GIj9r0zA5o8eZ0_9AeYhg2/view?usp=sharing
+
+Music Links:
+
+Beethoven- Piano Concerto No. 5 'Emperor'
+https://drive.google.com/file/d/1f136r79FH4GIj9r0zA5o8eZ0_9AeYhg2/view?usp=sharing
+
+Yo-Yo Ma plays Ennio Morricone [Classical, Cello]
+https://drive.google.com/drive/folders/1DmJXsCe7g_OG3kM7LEW2BfKTvvdQDj6H?usp=sharing
+
+Assortment of Excellent Music and Lullabies For Adults, Kids and Babies Alike
+https://drive.google.com/drive/folders/1uPy3y2N76lD0hJokeh5O1JWzEzbvvSUV?usp=sharing
+
+Nature's Symphonies - Bubbling Brook [Classical Piano Backgrounded with Sound of Flowing Stream]
+https://drive.google.com/drive/folders/1M6gJwder1QztyUPkXTAEtdSGi31HWnWM?usp=sharing
+
+Nature's Symphonies - Rhythm of The Rain [Classical Piano with THe Sound of The Rain]
+https://drive.google.com/drive/folders/1TBgilQpdkPWk39QGgkX5p5ztxasLVC9X?usp=sharing
+
+Nature's Symphonies - Sounds Of the Night [Classical Piano Backgrounded with Sounds of The Night]
+https://drive.google.com/drive/folders/1IVfZ3FKK2o6-G7yyQwSQ52j0vWjAYDhF?usp=sharing
+
+More Nuertey Music
+https://drive.google.com/drive/folders/1wAUwt8uB6j-1pdSCvvN6j8_MdF8qTq-f?usp=sharing
+
+The Great Beauty (La Grande Bellezza) Soundtrack CD 1
+https://drive.google.com/drive/folders/1Y_FOZX6cbzgV2wkt1tGLQqkbNqv7kUCp?usp=sharing
+
+The Rough Guide To The Music Of Madagascar - 2005
+https://drive.google.com/drive/folders/1lByYtl1cBimDNgkv9geen0BhoQVO8lOE?usp=sharing
+
+The Rough Guide to the Music of Okinawa
+https://drive.google.com/drive/folders/1-6UPO92t-gHgFhCmGfyHtAe9Y-iQnNRe?usp=sharing
+
+
+=================================
+https://lwn.net/Articles/818525/
+
+Ubuntu 20.04 LTS (Focal Fossa) released
+The 20.04 long-term support (LTS) release of Ubuntu, code named "Focal Fossa", is out. There are desktop and server editions, as well as all of the different Ubuntu flavors: Ubuntu Budgie, Kubuntu, Lubuntu, Ubuntu Kylin, Ubuntu MATE, Ubuntu Studio, and Xubuntu. "The Ubuntu kernel has been updated to the 5.4 based Linux kernel, with additional support for Wireguard VPN, AUFS5, and improved support for IBM, Intel, Raspberry Pi and AMD hardware. [...] 20.04 LTS also brings support for installing an Ubuntu desktop system on top of ZFS. The latest version brings performance enhancements and optional encryption support. Zsys, Ubuntu’s ZFS system tool, provides automated system and user state saving. Tight integration with GRUB allows a user to revert to any system state on boot and go back in time to pave the way to a bulletproof Ubuntu Desktop." More information can be found in the release notes. 
+=================================
+https://www.walmart.com/ip/3-40-HDMI-i5-8250U-RAM-Design-7350-PCIe-FP-Metal-USB-C-DP-WebCam-Full-13-3-8GB-Body-1TB-NVMe-LinuxBook-Quad-Core-SSD-Laptop-GHz-KB-Linux-Backlit-Read/295391384?selected=true
+
+Mytrix LinuxBook 7350, 13.3" Full HD Slim Laptop, i5-8250U Quad-Core up to 3.40 GHz, 8GB RAM, 1TB PCIe NVMe SSD, USB-C/DP, HDMI, Backlit KB, FP Reader, WebCam, Metal Body Design, Linux
+
+Processor Model
+Intel 8th Gen Core i5-8250U
+
+# of Cores
+4
+
+Max Turbo Frequency
+3.40 GHz
+
+Processor Base Frequency
+1.60 GHz
+
+Graphics
+Intel UHD Graphics 620 (built-in)
+
+Graphics RAM
+Shared Memory
+
+Screen Size
+13.3 inches
+
+Screen Resolution
+Full HD (1920 x 1080)
+
+Interface
+1x USB 3.1 Gen 1 Type-C (5 Gb/s signaling rate, Power Delivery, DisplayPort Video Output)
+2x USB 3.0 Gen 1 Type-A (Data Transfer Only)
+1x AC smart pin
+1x HDMI Video Output
+1x headphone/microphone combo
+
+Connectivity
+Realtek Wi-Fi 5 (2x2)
+Bluetooth 5.0
+
+Dimensions
+31.4 x 21.6 x 1.48 cm
+
+Weight
+1.2 kg
+
+Operating system
+Linux Ubuntu 20.04 LTS
+
+    A stylish and slim but powerful Intel Core i5 subnotebook (Linux Ubuntu 20.04 LTS) full aluminum body with plenty of power and battery life in the tank. Pre-Installed Libre Office 2020, fully compatible with all your existing Word, Excel, PowerPoint documents, and even database, picture and PDF editing
+    Intel Core i5-8250U (1.60 GHz base clock, Up to 3.40 GHz max boost clock) Smart Quad-core, eight-way processing performance for FHD-quality computing. Intel UHD Graphics 620 built-in graphic with Windows 10 Home. Built-in Intel UHD Graphics 620 built-in graphic
+    Featuring with 13.3" Narrow Bezel diagonal Full HD (1920 x 1080), 16:9, 220 nit. Backlit keyboard allows you to enjoy comfortable and accurate typing, even in dim lighting with built-in fingerprint sensor and touchpad
+    Comprehensive connections including 1x USB 3.1 Type-C (with DisplayPort video output), 2x USB 3.0 Type-A, 1x HDMI, 1x MicroSD card reader. 31.4 x 21.6 x 1.48 cm, 1.2 kg
+    With Wi-Fi (802.11ac) and Bluetooth combo, you
+
+Specifications
+Processor Type  
+8th Generation Intel
+Processor Speed 
+1.60 GHz
+Wireless Technology 
+Realtek Wi-Fi 5 (2x2) & Bluetooth 5.0
+RAM Memory  
+8.00 GB
+Operating System    
+linux
+Screen Size 
+13.30"
+Brand   
+mytrix
+-----------------------------
+sudo apt update
+sudo apt install geany gedit meld git tree cscope git-extras
+
+# Set infinite history 
+geany ~/.bashrc
+
+Lets query the system first to see its capabilities and whether it fits what you ordered. That is, always know thy system. These commands will be saved in your history so that you can always refer to them and use them if you have to debug some other system:
+
+Use the GNOME Dash to pull up a terminal. We will stick it permanently to the Taskbar/Launcher after this so that next time getting a terminal is just a click. Type Terminal.
+
+Right-click on the Terminal and choose Lock to Launcher. It will now always be there. If there is a terminal open, there will be a dash to the left hand side of it, as many dashes as terminals. Otherwise no dashes.
+
+In the terminal window, type:
+
+whoami
+groups
+
+# In Linux program permissions are allowed or disallowed not just by user for that would mean all potential users that could use the laptop would have to be in the system and this would be an inefficient design, but by the groups that they belong to. Essentially everyone in the family for example can create their own account on the laptop and have their own programs and settings and homepage, passwords etc, and none will see each others work or step over each other. You see the thoughtfulness in the design of Linux?
+ 
+man groups
+
+uname -a
+lsb_release -a
+
+cat /proc/cpuinfo 
+
+cat /proc/devices
+
+lspci -vv
+
+# Disk partitions and find out how much disk space do I have on each:
+sudo lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL
+
+# Current disk partition in use:
+df -P ./ | tail -1 | cut -d' ' -f 1
+
+============================================
+Browser Plugins:
+uBlock Origin
+Adblock Plus
+Fireshot Capture Page
+Link Gopher
+
+FireFox Browser Config -> Open Menu -> Preferences -> 
+ - Restore previous session
+  - Warn you when quitting the browser
+ - Tabs (all 3 checked)
+
+ Home
+  - Homepage & Tabs; change to Blank Page; you dont want these popup info things to disturb your concentration when you are in the zone. That is another bad thing that Windows does. There is always some popup or ding sound to startle your mind and affect how your mind itself absorbs information efficiently. We want to get you in the zone and working perfectly!
+
+ Privacy & Security -> Logins and Passwords
+  - Ask to save logins and passwords for websites
+
+Restart browser now so that all the plugins can better take effect. 
+
+Foxit PDF Reader
+
+https://help.ubuntu.com/stable/ubuntu-help/sharing-desktop.html.en
+
+mkdir Workspace
+cd Workspace
+mkdir JavascriptScripts or _Work
+mkdir PythonScripts
+mkdir BashScripts
+cd BashScripts
+git clone https://jonelo.github.io/bashberries/
+git clone https://github.com/aviaryan/utility-bash-scripts.git 
+git clone https://github.com/ruanyf/simple-bash-scripts.git 
+
+cd ..
+git clone https://github.com/arcayi/myBooks.git Books_Library
+cd BookLibrary
+
+copy over my .gitconfig to him, also isgit bash script and other useful bash scripts: 
+
+CSCOPE setup and usage; add .py .js other languages that he is interested in files 
+
+Setup ThunderBird Email Client
+
+Install and Setup Python3.7 and virtual env
+
+increase bash history to infinite
+
+setup title shortcut for bash shell terminals
+Affix the terminal permanently to the taskbar
+Affix the terminal permanently to the taskbar
+
+git clone https://github.com/plotly/dash-sample-apps
+===========================
+
+ 9572  pip install urllib3
+
+11323  pip install "gcovr>=4.1"
+11324  sudo pip install "gcovr>=4.1"
+11325  pip install --upgrade pip
+11326  sudo pip install --upgrade pip
+17336  pip install psycopg2 
+17699  pip install pymc3
+17700  pip install --upgrade pip
+17724  pip install pymc3
+17725  pip install scikit-learn
+17726  pip install arviz
+17727  pip install pandas
+17728  pip install Psycopg2
+17731  pip install python-dev
+17743  pip install --upgrade pip setuptools
+17771  pip install bottle gunicorn
+17781  pip install psycopg2
+17797  pip install wheel
+17798  pip install pandas
+17804  pip install pandas-datareader
+17806  pip install matplotlib
+
+17813  pip install pandas-gbq
+17819  pip install nose
+17821  pip install requests
+17845  pip install alpha_vantage
+17875  pip install bokeh
+17877  pip install bokeh.charts
+17878  pip install world_bank_data --upgrade
+17879  pip install plotly
+17892  pip install pycountry
+17911  pip install covid
+17912  pip install pydantic
+17913  pip install covid
+
+17941  python3.7 -m pip install --upgrade pip
+17942  pip install --upgrade pip
+17945  python3.7 -m pip install pip
+17947  pip install virtualenv
+17955  pip install covid
+17957  pip install --upgrade pip
+17962  python3.7 -m pip install --upgrade pip
+17970  pip install covid
+17971  pip install --upgrade pip
+17973  pip install pydantic requests
+17978  pip install pandas
+17979  pip install plotly matplotlib
+17981  pip install pycountry pandas_datareader
+17983  pip install COVID19Py
+17985  pip install covid
+17987  pip install pytest
+
+17996  python -m pip install covid
+
+18148  python -m pip install python3-tk
+
+18258  pip install world_bank_data
+18379  pip install alpha_vantage
+
+18416  /home/rena/MyEnv37/bin/python3.7 -m pip install --upgrade pip
+
+18567  pip install nltk
+18568  pip install wheel
+18569  pip install nltk
+18571  pip install networkx
+18619  pip install cmake
+19031  pip install rebound-cli
+19032  pip install beautifulsoup4
+19033  pip install html5lib lxml
+19034  pip install google_images_download
+19126  pip install quandl
+19187  pip install datetime
