@@ -92,6 +92,7 @@ elif country is not None:
             # Concat the above to the DataFrame in place of the dict col:
             dict_col = data.pop('source')
             #pd.concat([data, sources['name']], axis=0)
+            #data.append(sources['name'])
 
             pd.set_option('display.max_colwidth', -1)        
             #print(data[['publishedAt', 'content', 'url']])
