@@ -6,8 +6,9 @@ Revolution OS Documentary Movie About Linux and Open Source Software Movement:
 
 https://drive.google.com/file/d/1f136r79FH4GIj9r0zA5o8eZ0_9AeYhg2/view?usp=sharing
 
+============
 Music Links:
-
+============
 Beethoven- Piano Concerto No. 5 'Emperor'
 https://drive.google.com/file/d/1f136r79FH4GIj9r0zA5o8eZ0_9AeYhg2/view?usp=sharing
 
@@ -39,12 +40,15 @@ The Rough Guide to the Music of Okinawa
 https://drive.google.com/drive/folders/1-6UPO92t-gHgFhCmGfyHtAe9Y-iQnNRe?usp=sharing
 
 
-=================================
-https://lwn.net/Articles/818525/
-
-Ubuntu 20.04 LTS (Focal Fossa) released
+=======================================
+Ubuntu 20.04 LTS (Focal Fossa) released:
+=======================================
 The 20.04 long-term support (LTS) release of Ubuntu, code named "Focal Fossa", is out. There are desktop and server editions, as well as all of the different Ubuntu flavors: Ubuntu Budgie, Kubuntu, Lubuntu, Ubuntu Kylin, Ubuntu MATE, Ubuntu Studio, and Xubuntu. "The Ubuntu kernel has been updated to the 5.4 based Linux kernel, with additional support for Wireguard VPN, AUFS5, and improved support for IBM, Intel, Raspberry Pi and AMD hardware. [...] 20.04 LTS also brings support for installing an Ubuntu desktop system on top of ZFS. The latest version brings performance enhancements and optional encryption support. Zsys, Ubuntu’s ZFS system tool, provides automated system and user state saving. Tight integration with GRUB allows a user to revert to any system state on boot and go back in time to pave the way to a bulletproof Ubuntu Desktop." More information can be found in the release notes. 
-=================================
+
+https://lwn.net/Articles/818525/
+==============================
+Wayo's System Characteristics:
+==============================
 https://www.walmart.com/ip/3-40-HDMI-i5-8250U-RAM-Design-7350-PCIe-FP-Metal-USB-C-DP-WebCam-Full-13-3-8GB-Body-1TB-NVMe-LinuxBook-Quad-Core-SSD-Laptop-GHz-KB-Linux-Backlit-Read/295391384?selected=true
 
 Mytrix LinuxBook 7350, 13.3" Full HD Slim Laptop, i5-8250U Quad-Core up to 3.40 GHz, 8GB RAM, 1TB PCIe NVMe SSD, USB-C/DP, HDMI, Backlit KB, FP Reader, WebCam, Metal Body Design, Linux
@@ -114,9 +118,19 @@ Screen Size
 13.30"
 Brand   
 mytrix
------------------------------
+
+==================================
+Nuertey's Instructions Beginning :
+==================================
+# To see the kernel ring buffer and thus the logs indicating how the system 
+# booted up each single piece of hardware. Dont worry if you dont understand 
+# any of this. You will never go in here. Just showing you that even all the
+# startup logs for all the hardware are available to you if you want to study
+# or peruse them.
+dmesg
+
 sudo apt update
-sudo apt install geany gedit meld git tree cscope git-extras
+sudo apt install geany gedit meld git tree cscope git-extras cscope
 
 # Set infinite history 
 geany ~/.bashrc
