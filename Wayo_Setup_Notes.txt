@@ -122,20 +122,11 @@ mytrix
 ==================================
 Nuertey's Instructions Beginning :
 ==================================
-# To see the kernel ring buffer and thus the logs indicating how the system 
-# booted up each single piece of hardware. Dont worry if you dont understand 
-# any of this. You will never go in here. Just showing you that even all the
-# startup logs for all the hardware are available to you if you want to study
-# or peruse them.
-dmesg
 
-sudo apt update
-sudo apt install geany gedit meld git tree cscope git-extras cscope
-
-# Set infinite history 
-geany ~/.bashrc
-
-Lets query the system first to see its capabilities and whether it fits what you ordered. That is, always know thy system. These commands will be saved in your history so that you can always refer to them and use them if you have to debug some other system:
+# Lets query the system first to see its capabilities and whether it fits
+# what you ordered. That is, always know thy system. These commands will
+# be saved in your history so that you can always refer to them and use
+# them if you have to debug some other system:
 
 Use the GNOME Dash to pull up a terminal. We will stick it permanently to the Taskbar/Launcher after this so that next time getting a terminal is just a click. Type Terminal.
 
@@ -165,6 +156,91 @@ sudo lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL
 # Current disk partition in use:
 df -P ./ | tail -1 | cut -d' ' -f 1
 
+# As we are confident in what our system is now, installations can now begin:
+sudo apt update
+sudo apt install geany gedit meld git tree cscope git-extras cscope python-pygments
+
+touch ~/.lessfilter
+geany ~/.lessfilter
+
+# Add the following contents and save:
+
+#!/bin/sh
+case "$1" in
+    *.awk|*.groff|*.java|*.js|*.m4|*.php|*.pl|*.pm|*.pod|*.sh|\
+    *.ad[asb]|*.asm|*.inc|*.[ch]|*.[ch]pp|*.[ch]xx|*.cc|*.hh|\
+    *.lsp|*.l|*.m|*.pas|*.p|*.xml|*.xps|*.xsl|*.axp|*.ppd|*.pov|\
+    *.diff|*.patch|*.py|*.rb|*.sql|*.ebuild|*.eclass)
+        pygmentize -f 256 "$1";;
+
+    .bashrc|.bash_aliases|.bash_environment)
+        pygmentize -f 256 -l sh "$1";;
+
+    *)
+        if grep -q "#\!/bin/bash" "$1" 2> /dev/null; then
+            pygmentize -f 256 -l sh "$1"
+        else
+            exit 1
+        fi
+esac
+
+exit 0
+
+
+# Make the new bash script executable:
+sudo chmod a+x ~/.lessfilter
+
+# Add the following to the .bashrc file. Whilst there do the other things
+# below too, so can do it all in one step as shown later below:
+export LESS='-R'
+export LESSOPEN='|~/.lessfilter %s'
+
+#increase bash history to infinite
+#setup title shortcut for bash shell terminals. To accomplish,
+# add the following to .bashrc
+geany ~/.bashrc
+
+HISTSIZE=
+HISTFILESIZE=
+
+# ...
+
+title(){
+  ORIG=$PS1
+  TITLE="\e]2;$@\a"
+  PS1=${ORIG}${TITLE}
+}
+
+export CSCOPE_EDITOR=gedit
+export LESS='-R'
+export LESSOPEN='|~/.lessfilter %s'
+
+# After file saved and closed:
+source ~/.bashrc
+
+# Test our changes out:
+title "WAYO's FIRST UBUNTU SHELL"
+
+
+# To see the kernel ring buffer and thus the logs indicating how the system 
+# booted up each single piece of hardware. Dont worry if you dont understand 
+# any of this. You will never go in here. Just showing you that even all the
+# startup logs for all the hardware are available to you if you want to study
+# or peruse them.
+dmesg
+
+# To see it page by page, pipe output to "less" or "more":
+dmesg --human --color=always
+
+# Or use the short version:
+dmesg -H
+
+# Alternatively, there is also this:
+dmesg --color=always | less -R
+
+# Note that many other utilities that produce colored output (ls, grep, etc.) 
+# have a similar --color=always option.
+
 ============================================
 Browser Plugins:
 uBlock Origin
@@ -186,6 +262,7 @@ FireFox Browser Config -> Open Menu -> Preferences ->
 Restart browser now so that all the plugins can better take effect. 
 
 Foxit PDF Reader
+Setup ThunderBird Email Client
 
 https://help.ubuntu.com/stable/ubuntu-help/sharing-desktop.html.en
 
@@ -205,31 +282,86 @@ tree
 tree |more
 
 --------------------------------
-copy over my .gitconfig to him, also isgit bash script and other useful bash scripts: 
+# also isgit bash script and other useful bash scripts: 
+# Save in ~/ and change Permissions to executable:
+cd ~
+ls -l isgit
+sudo chmod a+x isgit
 
-CSCOPE setup and usage; add .py .js other languages that he is interested in files 
-
-Setup ThunderBird Email Client
-
-Install and Setup Python3.7 and virtual env
-
-increase bash history to infinite
-
-setup title shortcut for bash shell terminals
-Affix the terminal permanently to the taskbar
-Affix the terminal permanently to the taskbar
-
-============
-GIT CONFIG :
-============
-rena@PurpleOS:~$ pwd
-/home/rena
+# Try it out:
+isgit <replace with any filename>
+cd Workspace/utility-bash-scripts
+isgit <replace with any filename>
 
 rena@PurpleOS:~$ echo $PATH
 /opt/ros/kinetic/bin:/home/rena:/home/rena/opt:/home/rena/Workspace/Workspace:/home/rena/Workspace/jwt-cpp/include:/home/rena/Workspace/nanopb-0.3.9.1-linux-x86/generator/proto:/home/rena/Qt5.10.1/Tools/QtCreator/bin:/home/rena/Qt5.10.1/5.10.1/gcc_64/bin:/usr/local/include:/usr/include:/usr/include/postgresql:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/jvm/java-11-oracle/bin:/usr/lib/jvm/java-11-oracle/db/bin
 
 rena@PurpleOS:~$ ls -ll ./Workspace/Workspace/isgit
 -rwxrwxr-x 1 rena rena 1061 Mar 26 23:39 ./Workspace/Workspace/isgit
+
+======================================================================
+CSCOPE - Browse all source files on your computer for snippets of code
+
+Another powerful and fast shortcut when coding in any language. I dont
+even  bother with IDEs like Eclipse or VisualStudio or Whatnots. Just
+old-school cscope and geany editor and I am set.
+======================================================================
+# CSCOPE setup and usage; add .py .js other languages that he is interested in files 
+cd ~
+mkdir cscope
+cd cscope
+touch find_files.sh
+
+rena@PurpleOS:~/cscope$ geany find_files.sh 
+#!/bin/bash
+
+find /home/rena/Workspace -follow -name "*.c" > /home/rena/cscope/cscope.files
+find /home/rena/Workspace -follow -name "*.h" >> /home/rena/cscope/cscope.files
+find /home/rena/Workspace -follow -name "*.hpp" >> /home/rena/cscope/cscope.files
+find /home/rena/Workspace -follow -name "*.cpp" >> /home/rena/cscope/cscope.files
+find /home/rena/Workspace -follow -name "*.hh" >> /home/rena/cscope/cscope.files
+find /home/rena/Workspace -follow -name "*.cc" >> /home/rena/cscope/cscope.files
+find /home/rena/Workspace -follow -name "*.c++" >> /home/rena/cscope/cscope.files
+find /home/rena/Workspace -follow -name "*.capnp" >> /home/rena/cscope/cscope.files
+find /home/rena/Workspace -follow -name "*.m" >> /home/rena/cscope/cscope.files
+find /home/rena/Workspace -follow -name "*.pro" >> /home/rena/cscope/cscope.files
+find /home/rena/Workspace -follow -name "Makefile" >> /home/rena/cscope/cscope.files
+find /home/rena/Workspace -follow -name "Makefile*.*" >> /home/rena/cscope/cscope.files
+find /home/rena/Workspace -follow -name "*.json" >> /home/rena/cscope/cscope.files
+find /home/rena/Workspace -follow -name "*.py" >> /home/rena/cscope/cscope.files
+find /home/rena/Workspace -follow -name "*.js" >> /home/rena/cscope/cscope.files
+find /usr/local/boost_1_66_0/libs -follow -name "*.c" >> /home/rena/cscope/cscope.files
+find /usr/local/boost_1_66_0/libs -follow -name "*.h" >> /home/rena/cscope/cscope.files
+find /usr/local/boost_1_66_0/libs -follow -name "*.hpp" >> /home/rena/cscope/cscope.files
+find /usr/local/boost_1_66_0/libs -follow -name "*.cpp" >> /home/rena/cscope/cscope.files
+find /usr/local/boost_1_66_0/libs -follow -name "*.hh" >> /home/rena/cscope/cscope.files
+find /usr/local/boost_1_66_0/libs -follow -name "*.cc" >> /home/rena/cscope/cscope.files
+find /usr/local/boost_1_66_0/libs -follow -name "*.c++" >> /home/rena/cscope/cscope.files
+find /usr/include -follow -name "*.c" >> /home/rena/cscope/cscope.files
+find /usr/include -follow -name "*.h" >> /home/rena/cscope/cscope.files
+find /usr/include -follow -name "*.hpp" >> /home/rena/cscope/cscope.files
+find /usr/include -follow -name "*.cpp" >> /home/rena/cscope/cscope.files
+find /usr/include -follow -name "*.hh" >> /home/rena/cscope/cscope.files
+find /usr/include -follow -name "*.cc" >> /home/rena/cscope/cscope.files
+find /usr/include -follow -name "*.c++" >> /home/rena/cscope/cscope.files
+
+# Save file and close it.
+===============================
+
+*** In the future when Wayo needs/wants/is ready for C++ and C, we will
+*** setup the GCC/G++ compiler then. For now, not to worry as we dont need it yet.
+=============================================
+
+Affix the terminal permanently to the taskbar
+Affix the terminal permanently to the taskbar
+
+============
+GIT CONFIG :
+============
+# copy over my .gitconfig to him, and update to reflect his github information.
+
+rena@PurpleOS:~$ pwd
+/home/rena
 
 rena@PurpleOS:~$ cat .gitconfig
 [merge]
@@ -275,6 +407,8 @@ rena@PurpleOS:~$ cat .gitconfig
 ===============
 PYTHON SETUPS :
 ===============
+#Install and Setup Python3.7 and virtual env
+
 # Even though Wayo's laptop comes with Python 3.8, install Python 3.7 
 # and setup virtual environment for it as my scripts were written for 3.7.
 
