@@ -191,18 +191,20 @@ https://help.ubuntu.com/stable/ubuntu-help/sharing-desktop.html.en
 
 mkdir Workspace
 cd Workspace
-mkdir JavascriptScripts or _Work
-mkdir PythonScripts
-mkdir BashScripts
-cd BashScripts
 git clone https://jonelo.github.io/bashberries/
 git clone https://github.com/aviaryan/utility-bash-scripts.git 
 git clone https://github.com/ruanyf/simple-bash-scripts.git 
 
-cd ..
 git clone https://github.com/arcayi/myBooks.git Books_Library
-cd BookLibrary
+cd Books_Library
 
+# Too see all the books you have just downloaded and can study or reference
+# at your leisure pleasure, issue the first command below, or the second 
+# one to see it page by page:
+tree 
+tree |more
+
+--------------------------------
 copy over my .gitconfig to him, also isgit bash script and other useful bash scripts: 
 
 CSCOPE setup and usage; add .py .js other languages that he is interested in files 
@@ -216,8 +218,6 @@ increase bash history to infinite
 setup title shortcut for bash shell terminals
 Affix the terminal permanently to the taskbar
 Affix the terminal permanently to the taskbar
-
-git clone https://github.com/plotly/dash-sample-apps
 
 ============
 GIT CONFIG :
@@ -293,7 +293,49 @@ python3.7 -m virtualenv MyEnv37
 # with what my scripts are expecting:
 source MyEnv37/bin/activate
 
+# The bash prompt should change like the below to indicate that the virtual
+# environment is indeed successfully activated, and we are within it:
+(MyEnv37) rena@PurpleOS:$ 
+
 ------------------------------------
+# Instead of all the below, perhaps do just these instead:
+
+cd ~/Workspace
+git clone https://github.com/nuertey/NuerteyPythonScripts.git
+cd NuerteyPythonScripts
+
+# This is another shortcut that I should teach you. This shortcut is basically 
+# installing all the packages needed way way below form a list that I had
+# automatically generated using pip to query all my python scripts to see
+# what other packages they need to successfully run. I generated that list,
+# requirements.txt from this other pip command in the directory of my scripts:
+#
+# pip freeze
+pip install -r requirements.txt
+
+# Let's get back to the parent workspace:
+cd ..
+git clone https://github.com/plotly/dash-sample-apps
+cd dash-sample-apps
+geany README.md
+
+# To see one of the dash sample apps listed in the above README in action:
+
+# The app concerns automatically generating webpages and graphs to visualize
+# clinic patient volume by time of the day, waiting time and care score.
+# Yeah, we dont write web pages anymore in the future :). We automatically
+# generate them from python dash.
+cd apps/dash-clinical-analytics
+pip install -r requirements.txt
+python app.py
+
+------------------------------------
+
+# If the above instructions work, then probably do not need the below 
+# installs anymore. You can now run any of my python scripts and view
+# the output, graphs and automatically launched webpages with javascript
+# maps, etc.
+
  9572  pip install urllib3
 
 11323  pip install "gcovr>=4.1"
