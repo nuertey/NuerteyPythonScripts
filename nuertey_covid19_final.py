@@ -65,42 +65,32 @@ def retrieve_covid_statistics(country_name_input):
     # Returning a dictionary is faster:
     return {'country_id': country_status['id'], 'country': country_status['country'], 'confirmed': country_status['confirmed'], 'active': country_status['active'], 'deaths': country_status['deaths'], 'recovered': country_status['recovered'], 'latitude': country_status['latitude'], 'longitude': country_status['longitude'], 'last_update': country_status['last_update']}
 
+# Employ a list for now in the list comprehension for faster processing:
+combined_output = [retrieve_covid_statistics(country) for country in data['name']] 
+#print(combined_output)
+#print()
+
 cols = ['country_id', 'country', 'confirmed', 'active', 'deaths', 'recovered', 
         'latitude', 'longitude', 'last_update']
 
-combined_output = pd.concat([pd.DataFrame(retrieve_covid_statistics(country), columns=['country_id', 'country', 'confirmed', 'active', 'deaths', 'recovered', 'latitude', 'longitude', 'last_update', 'scaled'], index=data.index) for country in data['name']], ignore_index=True)
+# Now create the dataframe from the complete list as this approach is much much faster:
+combined_output = pd.DataFrame(combined_output, columns=cols, index=data.index)
 
-print(combined_output)
-print()
-
-#for row, country_name_input in zip(data.index, data['name']):
-#    country_status = cov_19.get_status_by_country_name(str(country_name_input))
-#    #print(country_status)
-#    combined_output.iloc[row] = {'country_id': country_status['id'], 
-#                                 'country': country_status['country'], 
-#                                 'confirmed': country_status['confirmed'], 
-#                                 'active': country_status['active'],
-#                                 'deaths': country_status['deaths'],
-#                                 'recovered': country_status['recovered'],
-#                                 'latitude': country_status['latitude'],
-#                                 'longitude': country_status['longitude'],
-#                                 'last_update': country_status['last_update']}
-
-# Employing the exponent operation, scale the data in order
-# to render smaller values visible on the scatter mapbox.
+# Create a new column by employing the exponent operation to scale the 
+# data in order to render smaller values visible on the scatter mapbox.
 combined_output['scaled'] = combined_output['confirmed'] ** 0.77
 
 print(combined_output)
 print()
 
-print('Data type of each column of combined_output Dataframe:')
-print(combined_output.dtypes)
-print()
+#print('Data type of each column of combined_output Dataframe:')
+#print(combined_output.dtypes)
+#print()
 
 world_data = combined_output.infer_objects()
-print('Data type of each column of combined_output Dataframe after conversion:')
-print(world_data.dtypes)
-print()
+#print('Data type of each column of combined_output Dataframe after conversion:')
+#print(world_data.dtypes)
+#print()
 
 color_scale = [
     "#fadc8f",
