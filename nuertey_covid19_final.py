@@ -76,7 +76,7 @@ cols = ['country_id', 'country', 'confirmed', 'active', 'deaths', 'recovered',
 # Now create the dataframe from the complete list as this approach is much much faster:
 combined_output = pd.DataFrame(combined_output, columns=cols, index=data.index)
 
-# Create a new column by employing the exponent operation to scale the 
+# Append a new column by employing the exponent operation to scale the 
 # data in order to render smaller values visible on the scatter mapbox.
 combined_output['scaled'] = combined_output['confirmed'] ** 0.77
 
