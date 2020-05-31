@@ -65,19 +65,22 @@ combined_output = pd.DataFrame(columns=cols, index=data.index)
 
 for row, country_name_input in zip(data.index, data['name']):
     country_status = cov_19.get_status_by_country_name(str(country_name_input))
-    combined_output.loc[row].country_id  = int(country_status['id'])
-    combined_output.loc[row].country     = country_status['country']
-    combined_output.loc[row].confirmed   = int(country_status['confirmed'])
-    combined_output.loc[row].active      = int(country_status['active'])
-    combined_output.loc[row].deaths      = int(country_status['deaths'])
-    combined_output.loc[row].recovered   = int(country_status['recovered'])
-    combined_output.loc[row].latitude    = country_status['latitude']
-    combined_output.loc[row].longitude   = country_status['longitude']
-    combined_output.loc[row].last_update = int(country_status['last_update'])
+    combined_output.iloc[row] = {'country_id': country_status['id'], 
+                                 'country': country_status['country'], 
+                                 'confirmed': country_status['confirmed'], 
+                                 'active': country_status['active'],
+                                 'deaths': country_status['deaths'],
+                                 'recovered': country_status['recovered'],
+                                 'latitude': country_status['latitude'],
+                                 'longitude': country_status['longitude'],
+                                 'last_update': country_status['last_update']}
 
 # Employing the exponent operation, scale the data in order
 # to render smaller values visible on the scatter mapbox.
 combined_output["scaled"] = combined_output["confirmed"] ** 0.77
+
+print(combined_output)
+print()
 
 print('Data type of each column of combined_output Dataframe:')
 print(combined_output.dtypes)
