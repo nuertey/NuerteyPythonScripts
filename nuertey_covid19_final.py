@@ -59,18 +59,16 @@ data = pd.DataFrame(country_list)
 print(data)
 print()
 
-cols = ['country_id', 'country', 'confirmed', 'active', 'deaths', 'recovered', 
-        'latitude', 'longitude', 'last_update', 'scaled']
-combined_output = pd.DataFrame(columns=cols, index=data.index)
-
 def retrieve_covid_statistics(country_name_input):
     country_status = cov_19.get_status_by_country_name(str(country_name_input))
 
-    return [country_status['id'], country_status['country'], country_status['confirmed'], country_status['active'], country_status['deaths'], country_status['recovered'], country_status['latitude'], country_status['longitude'], country_status['last_update']]
+    # Returning a dictionary is faster:
+    return {'country_id': country_status['id'], 'country': country_status['country'], 'confirmed': country_status['confirmed'], 'active': country_status['active'], 'deaths': country_status['deaths'], 'recovered': country_status['recovered'], 'latitude': country_status['latitude'], 'longitude': country_status['longitude'], 'last_update': country_status['last_update']}
 
-combined_output = [retrieve_covid_statistics(country) for country in data['name']]
+cols = ['country_id', 'country', 'confirmed', 'active', 'deaths', 'recovered', 
+        'latitude', 'longitude', 'last_update']
 
-pd.concat([pd.DataFrame(retrieve_covid_statistics(country), columns=cols, index=data.index) for country in data['name']], ignore_index=True)
+combined_output = pd.concat([pd.DataFrame(retrieve_covid_statistics(country), columns=['country_id', 'country', 'confirmed', 'active', 'deaths', 'recovered', 'latitude', 'longitude', 'last_update', 'scaled'], index=data.index) for country in data['name']], ignore_index=True)
 
 print(combined_output)
 print()
