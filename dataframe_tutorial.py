@@ -2,13 +2,21 @@ import random
 import numpy as np
 import pandas as pd
 
+# ============================================================
+# List Comprehensions
+#
 # Examples of python list comprehensions follow. Check the python user
 # guide for more information and background on it next:
 #
-# https://pandas.pydata.org/pandas-docs/stable/user_guide/
+# https://python-3-patterns-idioms-test.readthedocs.io/en/latest/Comprehensions.html
+# https://docs.python.org/3/tutorial/datastructures.html#nested-list-comprehensions
 #
 # self.biases = [np.random.randn(y, 1) for y in sizes[1:]]
 # self.weights = [np.random.randn(y, x) for x, y in zip(sizes[:-1], sizes[1:])]
+
+# Refer to nuertey_covid19_final.py for an excellent example.
+
+# [f(v) for (n, f), v in zip(cls.all_slots, values)]
 
 # ============================================================
 # Different choices for indexing
@@ -134,8 +142,138 @@ x.iloc[1] = {'x': 9, 'y': 99} # I guess curly braces denotes a dict, like json.
 print(x)
 print()
 
+# ============================================================
+# Slicing ranges
+# 
+# The most robust and consistent way of slicing ranges along arbitrary axes is described in the Selection by Position section detailing the .iloc method. For now, we explain the semantics of slicing using the [] operator.
+# 
+# With Series, the syntax works exactly as with an ndarray, returning a slice of the values and the corresponding labels:
+print(s[:5])   # First 5 elements and their labels (indices)
+print()
+
+print(s[::2])  # Every other element(2) and their labels (indices)
+print()
+
+print(s[::-1]) # Reverse the series and its labels (indices)
+print()
+
+# Note that setting works as well:
+s2 = s.copy()
+
+s2[:5] = 0
+
+print(s2)
+print()
+
+# With DataFrame, slicing inside of [] slices the rows. This is provided largely as a convenience since it is such a common operation.
+print(df[:3])
+print()
+
+print(df[::-1])
+print()
+
+# Selection by label
+# 
+# Warning
+# 
+# Whether a copy or a reference is returned for a setting operation, may depend on the context. This is sometimes called chained assignment and should be avoided. See Returning a View versus Copy.
+#
+# Warning
+# 
+#     .loc is strict when you present slicers that are not compatible (or convertible) with the index type. For example using integers in a DatetimeIndex. These will raise a TypeError.
+#
+# Nuertey Odzeyem Addendum: Very good behavior indeed above! Take advantage of .loc in your slicing operations for added type checking.
+dfl = pd.DataFrame(np.random.randn(5, 4),
+                columns=list('ABCD'),
+                index=pd.date_range('20130101', periods=5))
+
+
+print(dfl)
+print()
+
+# TypeError: cannot do slice indexing on <class 'pandas.tseries.index.DatetimeIndex'> with these indexers [2] of <type 'int'>
+print(dfl.loc[2:3])
+print()
+
+# String likes in slicing can be convertible to the type of the index and lead to natural slicing.
+#
+# Nuertey Odzeyem Addendum: Very good behavior indeed above! Take advantage of it in your slicing.
+dfl.loc['20130102':'20130104']
+
+# Warning
+# 
+# Starting in 0.21.0, pandas will show a FutureWarning if indexing with a list with missing labels. In the future this will raise a KeyError. See list-like Using loc with missing keys in a list is Deprecated.
+
+# pandas provides a suite of methods in order to have purely label based indexing. This is a strict inclusion based protocol. Every label asked for must be in the index, or a KeyError will be raised. When slicing, both the start bound AND the stop bound are included, if present in the index. Integers are valid labels, but they refer to the label and not the position.
+# 
+# The .loc attribute is the primary access method. The following are valid inputs:
+# 
+#     A single label, e.g. 5 or 'a' (Note that 5 is interpreted as a label of the index. This use is not an integer position along the index.).
+# 
+#     A list or array of labels ['a', 'b', 'c'].
+# 
+#     A slice object with labels 'a':'f' (Note that contrary to usual python slices, both the start and the stop are included, when present in the index! See Slicing with labels.
+# 
+#     A boolean array.
+# 
+#     A callable, see Selection By Callable.
+s1 = pd.Series(np.random.randn(6), index=list('abcdef'))
+
+# Nuertey Odzeyem Addendum: note that series are presented vertically
+# instead of the more logical horizontally.
+print(s1)
+print()
+
+print(s1.loc['c':])
+print()
+
+print(s1.loc['b'])
+print()
+
+# Note that setting works as well:
+s1.loc['c':] = 0
+
+print(s1)
+print()
+
+# With a DataFrame:
+df1 = pd.DataFrame(np.random.randn(6, 4),
+                   index=list('abcdef'),
+                   columns=list('ABCD'))
+
+print(df1)
+print()
+
+print(df1.loc[['a', 'b', 'd'], :])
+print()
+
+# Accessing via label slices:
+print(df1.loc['d':, 'A':'C'])
+print()
+
+# For getting a cross section using a label (equivalent to df.xs('a')):
+print(df1.loc['a'])
+print()
+
+# For getting values with a boolean array:
+print(df1.loc['a'] > 0)
+print()
+
+print(df1.loc[:, df1.loc['a'] > 0])
+print()
+
+# NA values in a boolean array propagate as False:
+# 
+# Changed in version 1.0.2: mask = pd.array([True, False, True, False, pd.NA, False], dtype=”boolean”) mask df1[mask]
+
+# For getting a value explicitly:
+# this is also equivalent to ``df1.at['a','A']``
+print(df1.loc['a', 'A'])
+print()
+
+
 # ======================================================
-# Pandas concat vs append vs join vs merge
+# Pandas concat vs append vs join vs merge (**** 'Tis more performant still to append on the lists and then create the Pandas dataframe with the complete list. See nuertey_covid19_final.py)
 # 
 #     Concat gives the flexibility to join based on the axis( all rows or all columns)
 # 
