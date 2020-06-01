@@ -136,8 +136,6 @@ def bill_for(month, active_subscription, users):
       print()
       for user in users:
         if user['deactivated_on'] is None:
-          # Still have to convert actual 'activated_on': datetime.date(2018, 11, 4)
-          # to actual datetime.date but running out of time:
           print(user['activated_on'])
           print(user['deactivated_on'])
           user_days = (last_day_of_month(month.date()) - user['activated_on']).days + 1
@@ -147,8 +145,6 @@ def bill_for(month, active_subscription, users):
           print()
           total_monthly_bill = total_monthly_bill + user_monthly_bill
         else:
-          # Still have to convert actual 'activated_on': datetime.date(2018, 11, 4)
-          # to actual datetime.date but running out of time:
           print(user['activated_on'])
           print(user['deactivated_on'])
           user_days = (user['deactivated_on'] - user['activated_on']).days + 1
