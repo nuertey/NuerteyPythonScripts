@@ -418,7 +418,8 @@ sudo apt-get update
 sudo apt-get install build-essential libpq-dev libssl-dev openssl libffi-dev zlib1g-dev
 sudo apt-get install python3-pip python3-dev python3.7
 
-pip3.7 install virtualenv
+# system-wide install and upgrade all packages
+sudo pip3.7 install -U virtualenv 
 python3.7 -m virtualenv MyEnv37
 
 # Always source this on first rebooting the computer before running any
@@ -430,6 +431,16 @@ source MyEnv37/bin/activate
 # The bash prompt should change like the below to indicate that the virtual
 # environment is indeed successfully activated, and we are within it:
 (MyEnv37) rena@PurpleOS:$ 
+
+pip install --upgrade pip
+
+# Verification step:
+python --version
+pip --version
+virtualenv --version
+
+# show packages installed within the virtual environment
+pip list
 
 ------------------------------------
 # Instead of all the below, perhaps do just these instead:
@@ -462,6 +473,50 @@ geany README.md
 cd apps/dash-clinical-analytics
 pip install -r requirements.txt
 python app.py
+
+# For hardcore higher level python learning, let's do Neural Networks and
+# Deep Machine Learning:
+# Install the TensorFlow pip package and others:
+
+pip install anaconda libpython theano amadeus
+pip install --upgrade tensorflow
+
+# Try it out to verify if install ws successful:
+python -c "import tensorflow as tf;print(tf.reduce_sum(tf.random.normal([1000, 1000])))"
+
+# There are two tensor flow python scripts in NuerteyPythonScripts folder.
+# When and if ready for machine learning, run them as follows and peruse what they do.
+python tensorflow_beginners_example.py 
+python tensorflow_experts_example.py
+
+https://static.latexstudio.net/article/2018/0912/neuralnetworksanddeeplearning.pdf
+Neural Networks and Deep Learning
+by Michael Nielsen
+
+# This step is important so we do not clone a repo into another repo. Hence why it was important that we create a top-level Workspace directory to house your work in the beginning:
+cd ~/Workspace
+git clone https://github.com/mnielsen/neural-networks-and-deep-learning
+git clone https://github.com/MichalDanielDobrzanski/DeepLearningPython35
+
+Download the free Neural Networks PDF above and github python source code (git clone it) above. Read the PDF leisurely as you have time (thisis way high level so take your time with the basic stuff first) and try the code samples. It will take your python skills to a higher level. The python scripts concern trying to use Neural Networks and Deep Machine Learning to train a model to automatically recognize and classify peoples' handwritings no matter how squiggly.
+
+And in those code samples on github, we simply train the algorithm and model with handwriting samples taken from thousands and thousands of American high school students and stored in a national database, MNIST. The model then "learns" to begin recognizing handwritings, including squiggly ones...
+
+Here is an excerpt from the beginning of the free PDF:
+
+"Neural networks are one of the most beautiful programming paradigms ever invented. In
+the conventional approach to programming, we tell the computer what to do, breaking big
+problems up into many small, precisely defined tasks that the computer can easily perform.
+By contrast, in a neural network we don’t tell the computer how to solve our problem. Instead,
+it learns from observational data, figuring out its own solution to the problem at hand.
+Automatically learning from data sounds promising. However, until 2006 we didn’t
+know how to train neural networks to surpass more traditional approaches, except for
+a few specialized problems. What changed in 2006 was the discovery of techniques for
+learning in so-called deep neural networks. These techniques are now known as deep
+learning. They’ve been developed further, and today deep neural networks and deep learning
+achieve outstanding performance on many important problems in computer vision, speech
+recognition, and natural language processing. They’re being deployed on a large scale by
+companies such as Google, Microsoft, and Facebook." 
 
 ------------------------------------
 
