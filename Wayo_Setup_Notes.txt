@@ -498,7 +498,7 @@ cd ~/Workspace
 git clone https://github.com/mnielsen/neural-networks-and-deep-learning
 git clone https://github.com/MichalDanielDobrzanski/DeepLearningPython35
 
-Download the free Neural Networks PDF above and github python source code (git clone it) above. Read the PDF leisurely as you have time (thisis way high level so take your time with the basic stuff first) and try the code samples. It will take your python skills to a higher level. The python scripts concern trying to use Neural Networks and Deep Machine Learning to train a model to automatically recognize and classify peoples' handwritings no matter how squiggly.
+Download the free Neural Networks PDF above and github python source code (git clone it) above. Read the PDF leisurely as you have time (this is way high level so take your time with the basic stuff first) and try the code samples. It will take your python skills to a higher level. The python scripts concern trying to use Neural Networks and Deep Machine Learning to train a model to automatically recognize and classify peoples' handwritings no matter how squiggly.
 
 And in those code samples on github, we simply train the algorithm and model with handwriting samples taken from thousands and thousands of American high school students and stored in a national database, MNIST. The model then "learns" to begin recognizing handwritings, including squiggly ones...
 
