@@ -2,6 +2,8 @@ import random
 import numpy as np
 import pandas as pd
 
+pd.set_option('display.max_rows', 100)
+
 # ============================================================
 # List Comprehensions
 #
@@ -192,8 +194,13 @@ print(dfl)
 print()
 
 # TypeError: cannot do slice indexing on <class 'pandas.tseries.index.DatetimeIndex'> with these indexers [2] of <type 'int'>
-print(dfl.loc[2:3])
-print()
+try:
+    print(dfl.loc[2:3])
+    print()
+except Exception as e:
+    print("Caught TypeError exception as expected...")
+    print(e)
+    print()
 
 # String likes in slicing can be convertible to the type of the index and lead to natural slicing.
 #
@@ -271,6 +278,405 @@ print()
 print(df1.loc['a', 'A'])
 print()
 
+# Slicing with labels
+# 
+# When using .loc with slices, if both the start and the stop labels are present in the index, then elements located between the two (including them) are returned:
+s = pd.Series(list('abcde'), index=[0, 3, 2, 5, 4])
+
+print(s)
+print()
+
+# The '3' and '5' here are labels, not numerical indices.
+print(s.loc[3:5])
+print()
+
+# If at least one of the two is absent, but the index is sorted, and can be compared against start and stop labels, then slicing will still work as expected, by selecting labels which rank between the two:
+print(s.sort_index())
+print()
+
+print(s.sort_index().loc[1:6])
+print()
+
+# However, if at least one of the two is absent and the index is not sorted, an error will be raised (since doing otherwise would be computationally expensive, as well as potentially ambiguous for mixed type indexes). For instance, in the above example, s.loc[1:6] would raise KeyError.
+try:
+    print(s.loc[1:6])
+    print()
+except Exception as e:
+    print("Caught KeyError exception as expected...")
+    print(e)
+    print()
+
+# Nuertey Odzeyem Addendum: I dont understand the below so well as my intuition does not coincide with the results of the test case scenarios. Therefore prefer selection by labels instead.
+# 
+# Selection by position
+#
+# Warning
+# 
+# Whether a copy or a reference is returned for a setting operation, may depend on the context. This is sometimes called chained assignment and should be avoided. See Returning a View versus Copy below.
+# 
+# Pandas provides a suite of methods in order to get purely integer based indexing. The semantics follow closely Python and NumPy slicing. These are 0-based indexing. When slicing, the start bound is included, while the upper bound is excluded. Trying to use a non-integer, even a valid label will raise an IndexError.
+# 
+# The .iloc attribute is the primary access method. The following are valid inputs:
+# 
+#     An integer e.g. 5.
+# 
+#     A list or array of integers [4, 3, 0].
+# 
+#     A slice object with ints 1:7.
+# 
+#     A boolean array.
+# 
+#     A callable, see Selection By Callable.
+s1 = pd.Series(np.random.randn(5), index=list(range(0, 10, 2)))
+
+print(s1)
+print()
+
+print(s1.iloc[:3])
+print()
+
+print(s1.iloc[3])
+print()
+
+# Note that setting works as well:
+s1.iloc[:3] = 0
+
+print(s1)
+print()
+
+# With a DataFrame:
+df1 = pd.DataFrame(np.random.randn(6, 4), index=list(range(0, 12, 2)), columns=list(range(0, 8, 2)))
+
+print(df1)
+print()
+
+print(df1.iloc[:3])
+print()
+
+print(df1.iloc[1:5, 2:4])
+print()
+
+# Select via integer list:
+print(df1.iloc[[1, 3, 5], [1, 3]])
+print()
+
+print(df1.iloc[1:3, :])
+print()
+
+print(df1.iloc[:, 1:3])
+print()
+
+# this is also equivalent to ``df1.iat[1,1]``
+print(df1.iloc[1, 1])
+print()
+
+# For getting a cross section using an integer position (equiv to df.xs(1)):
+print(df1.iloc[1])
+print()
+
+# Out of range slice indexes are handled gracefully just as in Python/Numpy.
+
+# these are allowed in python/numpy.
+x = list('abcdef')
+
+print(x)
+print()
+
+print(x[4:10])
+print()
+
+print(x[8:10])
+print()
+
+s = pd.Series(x)
+
+print(s)
+print()
+
+print(s.iloc[4:10])
+print()
+
+print(s.iloc[8:10])
+print()
+
+# Note that using slices that go out of bounds can result in an empty axis (e.g. an empty DataFrame being returned).
+dfl = pd.DataFrame(np.random.randn(5, 2), columns=list('AB'))
+
+print(dfl)
+print()
+
+print(dfl.iloc[:, 2:3])
+print()
+
+print(dfl.iloc[:, 1:3])
+print()
+
+print(dfl.iloc[4:6])
+print()
+
+# A single indexer that is out of bounds will raise an IndexError. A list of indexers where any element is out of bounds will raise an IndexError:
+try:
+    print(dfl.iloc[[4, 5, 6]])
+    print()
+except Exception as e:
+    print("Caught IndexError exception as expected...")
+    print(e)
+    print()
+
+try:
+    print(dfl.iloc[:, 4])
+    print()
+except Exception as e:
+    print("Caught IndexError exception as expected...")
+    print(e)
+    print()
+
+# Selection by callable
+# 
+# .loc, .iloc, and also [] indexing can accept a callable as indexer. The callable must be a function with one argument (the calling Series or DataFrame) that returns valid output for indexing.
+df1 = pd.DataFrame(np.random.randn(6, 4), index=list('abcdef'), columns=list('ABCD'))
+
+print(df1)
+print()
+
+print(df1.loc[lambda df: df['A'] > 0, :])
+print()
+
+print(df1.loc[:, lambda df: ['A', 'B']])
+print()
+
+print(df1.iloc[:, lambda df: [0, 1]])
+print()
+
+print(df1[lambda df: df.columns[0]])
+print()
+
+# You can use callable indexing in Series.
+print(df1['A'].loc[lambda s: s > 0])
+print()
+
+# Using these methods / indexers, you can chain data selection operations without using a temporary variable.
+bb = pd.read_csv('data/baseball.csv', index_col='id')
+
+print(bb)
+print()
+
+cincinnati = bb.loc[bb['team'] == 'CIN', ['team', 'r']]
+print(cincinnati)
+print()
+
+print(cincinnati['r'].sum())
+print()
+
+# Create a new index by amalgamating two columns, sum the values over each unique year 
+# and each unique team and then locate which of the sum of r's exceeds 100:
+print(bb.groupby(['year', 'team']).sum())
+print()
+
+print(bb.groupby(['year', 'team']).sum().loc[lambda df: df['r'] > 100])
+print()
+
+# IX indexer is deprecated
+# 
+# Warning
+# 
+# Starting in 0.20.0, the .ix indexer is deprecated, in favor of the more strict .iloc and .loc indexers.
+# 
+# .ix offers a lot of magic on the inference of what the user wants to do. To wit, .ix can decide to index positionally OR via labels depending on the data type of the index. This has caused quite a bit of user confusion over the years.
+# 
+# The recommended methods of indexing are:
+# 
+#     .loc if you want to label index.
+# 
+#     .iloc if you want to positionally index.
+dfd = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]}, index=list('abc'))
+
+print(dfd)
+print()
+
+# Previous behavior, where you wish to get the 0th and the 2nd elements from the index in the ‘A’ column.
+print(dfd.ix[[0, 2], 'A'])
+print()
+
+# Using .loc. Here we will select the appropriate indexes from the index, then use label indexing.
+print(dfd.loc[dfd.index[[0, 2]], 'A'])
+print()
+
+# This can also be expressed using .iloc, by explicitly getting locations on the indexers, and using positional indexing to select things.
+print(dfd.iloc[[0, 2], dfd.columns.get_loc('A')])
+print()
+
+# For getting multiple indexers, using .get_indexer:
+print(dfd.iloc[[0, 2], dfd.columns.get_indexer(['A', 'B'])])
+print()
+
+# Indexing with list with missing labels is deprecated
+# 
+# Warning
+# 
+# Starting in 0.21.0, using .loc or [] with a list with one or more missing labels, is deprecated, in favor of .reindex.
+# 
+# In prior versions, using .loc[list-of-labels] would work as long as at least 1 of the keys was found (otherwise it would raise a KeyError). This behavior is deprecated and will show a warning message pointing to this section. The recommended alternative is to use .reindex().
+# 
+# For example.
+s = pd.Series([1, 2, 3])
+
+print(s)
+print()
+
+# Selection with all keys found is unchanged.
+print(s.loc[[1, 2]])
+print()
+
+print(s.loc[[1, 2, 3]])
+print()
+
+# Unlike the current behavior, passing list-likes to .loc with any non-matching elements will raise
+# KeyError in the future, you can use .reindex() as an alternative.
+# 
+# See the documentation here:
+# https://pandas.pydata.org/pandas-docs/stable/indexing.html#deprecate-loc-reindex-listlike
+
+# Reindexing
+# 
+# The idiomatic way to achieve selecting potentially not-found elements is via .reindex(). See also the section on reindexing.
+
+print(s.reindex([1, 2, 3]))
+print()
+
+# Alternatively, if you want to select only valid keys, the following is idiomatic and efficient; it is guaranteed to preserve the dtype of the selection.
+labels = [1, 2, 3]
+
+print(s.loc[s.index.intersection(labels)])
+print()
+
+# Having a duplicated index will raise for a .reindex():
+s = pd.Series(np.arange(4), index=['a', 'a', 'b', 'c'])
+
+labels = ['c', 'd']
+
+try:
+    print(s.reindex(labels))
+    print()
+except Exception as e:
+    print("Caught ValueError exception as expected...")
+    print(e)
+    print()
+
+# Generally, you can intersect the desired labels with the current axis, and then reindex.
+print(s.loc[s.index.intersection(labels)].reindex(labels))
+print()
+
+# However, this would still raise if your resulting index is duplicated.
+labels = ['a', 'd']
+
+try:
+    print(s.loc[s.index.intersection(labels)].reindex(labels))
+    print()
+except Exception as e:
+    print("Caught ValueError exception as expected...")
+    print(e)
+    print()
+
+# Selecting random samples
+# 
+# A random selection of rows or columns from a Series or DataFrame with the sample() method. The method will sample rows by default, and accepts a specific number of rows/columns to return, or a fraction of rows.
+s = pd.Series([0, 1, 2, 3, 4, 5])
+print(s)
+print()
+
+# When no arguments are passed, returns 1 row.
+print(s.sample())
+print()
+
+# One may specify either a number of rows:
+print(s.sample(n=3))
+print()
+
+# Or a fraction of the rows:
+print(s.sample(frac=0.5)) # s.size()*0.5 = 3
+print()
+
+# By default, sample will return each row at most once, but one can also sample with replacement using the replace option:
+s = pd.Series([0, 1, 2, 3, 4, 5])
+
+# Without replacement (default):
+print(s.sample(n=6, replace=False))
+print()
+
+# With replacement:
+print(s.sample(n=6, replace=True))
+print()
+
+# By default, each row has an equal probability of being selected, but if you want rows to have different probabilities, you can pass the sample function sampling weights as weights. These weights can be a list, a NumPy array, or a Series, but they must be of the same length as the object you are sampling. Missing values will be treated as a weight of zero, and inf values are not allowed. If weights do not sum to 1, they will be re-normalized by dividing all weights by the sum of the weights. For example:
+s = pd.Series([0, 1, 2, 3, 4, 5])
+
+example_weights = [0, 0, 0.2, 0.2, 0.2, 0.4]
+
+print(s.sample(n=3, weights=example_weights))
+print()
+
+# Weights will be re-normalized automatically
+example_weights2 = [0.5, 0, 0, 0, 0, 0]
+
+print(s.sample(n=1, weights=example_weights2))
+print()
+
+# When applied to a DataFrame, you can use a column of the DataFrame as sampling weights (provided you are sampling rows and not columns) by simply passing the name of the column as a string.
+df2 = pd.DataFrame({'col1': [9, 8, 7, 6], 'weight_column': [0.5, 0.4, 0.1, 0]})
+print(df2)
+print()
+
+print(df2.sample(n=3, weights='weight_column'))
+print()
+
+# sample also allows users to sample columns instead of rows using the axis argument.
+df3 = pd.DataFrame({'col1': [1, 2, 3], 'col2': [2, 3, 4]})
+print(df3)
+print()
+
+print(df3.sample(n=1, axis=1)) # axis = 0 is the index.
+print()
+
+# Finally, one can also set a seed for sample’s random number generator using the random_state argument, which will accept either an integer (as a seed) or a NumPy RandomState object.
+df4 = pd.DataFrame({'col1': [1, 2, 3], 'col2': [2, 3, 4]})
+
+# With a given seed, the sample will always draw the same rows.
+print(df4.sample(n=2, random_state=2))
+print()
+
+print(df4.sample(n=2, random_state=2))
+print()
+
+# Setting with enlargement
+# 
+# The .loc/[] operations can perform enlargement when setting a non-existent key for that axis.
+# 
+# In the Series case this is effectively an appending operation.
+se = pd.Series([1, 2, 3])
+print(se)
+print()
+
+se[5] = 5.
+
+print(se)
+print()
+
+# A DataFrame can be enlarged on either axis via .loc.
+dfi = pd.DataFrame(np.arange(6).reshape(3, 2), columns=['A', 'B'])
+print(dfi)
+print()
+
+dfi.loc[:, 'C'] = dfi.loc[:, 'A']
+
+print(dfi)
+print()
+
+# This is like an append operation on the DataFrame.
+dfi.loc[3] = 5
+
+print(dfi)
+print()
 
 # ======================================================
 # Pandas concat vs append vs join vs merge (**** 'Tis more performant still to append on the lists and then create the Pandas dataframe with the complete list. See nuertey_covid19_final.py)
@@ -287,7 +693,7 @@ print()
 # ========================================================
 # Returning a view versus a copy
 
-# When setting values in a pandas object, care must be taken to avoid what is called chained indexing. # Here is an example.
+# When setting values in a pandas object, care must be taken to avoid what is called chained indexing. Here is an example.
 dfmi = pd.DataFrame([list('abcd'),
                      list('efgh'),
                      list('ijkl'),
