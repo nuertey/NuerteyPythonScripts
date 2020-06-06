@@ -4,6 +4,18 @@ import pandas as pd
 
 pd.set_option('display.max_rows', 100)
 
+# To index a particular cell and change its value, use df.loc:
+# 
+# df.loc[df.Name == 'Snowball', 'yellow'] = 2
+
+# To efficiently iterate through all the rows of the data frame, use df.iterrows:
+# 
+# values_to_insert_into_yellow_by_name = {'Puppy': 1, 'London': 2, 'Snowball': 2, 'Malibu': 3}
+# for idx, row in df.iterrows():
+#     name = df.loc[idx, 'Name']
+#     insert = values_to_insert_into_yellow_by_name[name]
+#     df.loc[idx, 'yellow'] = insert
+
 # ============================================================
 # List Comprehensions
 #
@@ -677,6 +689,147 @@ dfi.loc[3] = 5
 
 print(dfi)
 print()
+
+# Fast scalar value getting and setting
+# 
+# Since indexing with [] must handle a lot of cases (single-label access, slicing, boolean indexing, etc.), it has a bit of overhead in order to figure out what you’re asking for. If you only want to access a scalar value, the fastest way is to use the at and iat methods, which are implemented on all of the data structures.
+# 
+# Similarly to loc, at provides label based scalar lookups, while, iat provides integer based lookups analogously to iloc:
+print(s)
+print(s.iat[5])
+print()
+
+print(df)
+print(df.at[dates[5], 'A'])
+print()
+
+print(df.iat[3, 0])
+print()
+
+# You can also set using these same indexers.
+df.at[dates[5], 'E'] = 7
+print(df)
+print()
+
+df.iat[3, 0] = 7
+print()
+
+# at may enlarge the object in-place as above if the indexer is missing.
+df.at[dates[-1] + pd.Timedelta('1 day'), 0] = 7
+
+print(df)
+print()
+
+# Boolean indexing
+# 
+# Another common operation is the use of boolean vectors to filter the data. The operators are: | for or, & for and, and ~ for not. These must be grouped by using parentheses, since by default Python will evaluate an expression such as df['A'] > 2 & df['B'] < 3 as df['A'] > (2 & df['B']) < 3, while the desired evaluation order is (df['A > 2) & (df['B'] < 3).
+# 
+# Using a boolean vector to index a Series works exactly as in a NumPy ndarray:
+s = pd.Series(range(-3, 4))
+
+print(s)
+print()
+
+print(s[s > 0])
+print()
+
+print(s[(s < -1) | (s > 0.5)])
+print()
+
+print(s[~(s < 0)])
+print()
+
+# You may select rows from a DataFrame using a boolean vector the same length as the DataFrame’s index (for example, something derived from one of the columns of the DataFrame):
+print(df[df['A'] > 0])
+print()
+
+# List comprehensions and the map method of Series can also be used to produce more complex criteria:
+df2 = pd.DataFrame({'a': ['one', 'one', 'two', 'three', 'two', 'one', 'six'],
+                    'b': ['x', 'y', 'y', 'x', 'y', 'x', 'x'],
+                    'c': np.random.randn(7)})
+print(df2)
+print()
+
+# only want 'two' or 'three'
+criterion = df2['a'].map(lambda x: x.startswith('t'))
+print(criterion) # Yields an indexed bool type.
+print()
+
+print(df2[criterion])
+print()
+
+# equivalent but slower
+print(df2[[x.startswith('t') for x in df2['a']]])
+print()
+
+# Multiple criteria
+print(df2[criterion & (df2['b'] == 'x')])
+print()
+
+# With the choice methods Selection by Label, Selection by Position, and Advanced Indexing you may select along more than one axis using boolean vectors combined with other indexing expressions:
+print(df2.loc[criterion & (df2['b'] == 'x'), 'b':'c'])
+print()
+
+# Indexing with isin
+# 
+# Consider the isin() method of Series, which returns a boolean vector that is true wherever the Series elements exist in the passed list. This allows you to select rows where one or more columns have values you want:
+s = pd.Series(np.arange(5), index=np.arange(5)[::-1], dtype='int64')
+print(s)
+print()
+
+print(s.isin([2, 4, 6]))
+print()
+
+print(s[s.isin([2, 4, 6])])
+print()
+
+# The same method is available for Index objects and is useful for the cases when you don’t know which of the sought labels are in fact present:
+print(s[s.index.isin([2, 4, 6])])
+print()
+
+# compare it to the following
+print(s.reindex([2, 4, 6]))
+print()
+
+# In addition to that, MultiIndex allows selecting a separate level to use in the membership check:
+s_mi = pd.Series(np.arange(6),
+                 index=pd.MultiIndex.from_product([[0, 1], ['a', 'b', 'c']]))
+print(s_mi)
+print()
+
+print(s_mi.iloc[s_mi.index.isin([(1, 'a'), (2, 'b'), (0, 'c')])])
+print()
+
+print(s_mi.iloc[s_mi.index.isin(['a', 'c', 'e'], level=1)])
+print()
+
+# DataFrame also has an isin() method. When calling isin, pass a set of values as either an array or dict. If values is an array, isin returns a DataFrame of booleans that is the same shape as the original DataFrame, with True wherever the element is in the sequence of values.
+df = pd.DataFrame({'vals': [1, 2, 3, 4], 'ids': ['a', 'b', 'f', 'n'],
+                   'ids2': ['a', 'n', 'c', 'n']})
+print(df)
+print()
+
+values = ['a', 'b', 1, 3]
+
+print(df.isin(values))
+print()
+
+# Oftentimes you’ll want to match certain values with certain columns. Just make values a dict where the key is the column, and the value is a list of items you want to check for.
+values = {'ids': ['a', 'b'], 'vals': [1, 3]}
+
+print(df.isin(values))
+print()
+
+# Combine DataFrame’s isin with the any() and all() methods to quickly select subsets of your data that meet a given criteria. To select a row where each column meets its own criterion:
+values = {'ids': ['a', 'b'], 'ids2': ['a', 'c'], 'vals': [1, 3]}
+
+row_mask = df.isin(values).all(1)
+print(row_mask)
+print()
+
+print(df[row_mask])
+print()
+
 
 # ======================================================
 # Pandas concat vs append vs join vs merge (**** 'Tis more performant still to append on the lists and then create the Pandas dataframe with the complete list. See nuertey_covid19_final.py)
