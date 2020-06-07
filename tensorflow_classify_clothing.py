@@ -33,28 +33,45 @@ fashion_mnist = keras.datasets.fashion_mnist
 class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
                'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
+# NumPy arrays have an attribute called shape that returns a tuple with each index having the number of corresponding elements. That is, what are the dimensions of the array, and for each dimension, how many elements does it contain?
+
 # Let's explore the format of the dataset before training the model. The following shows there are 60,000 images in the training set, with each image represented as 28 x 28 pixels:
-train_images.shape
+print(train_images.shape)
+print()
 
 # Likewise, there are 60,000 labels in the training set:
-len(train_labels)
+print(len(train_labels))
+print()
 
-train_labels
+# Each label is an integer between 0 and 9:
+print(train_labels)
+print()
 
-test_image.shape
+# There are 10,000 images in the test set. Again, each image is represented as 28 x 28 pixels:
+print(test_image.shape)
+print()
 
-test_images.shapes
+# And the test set contains 10,000 images labels:
+print(len(test_labels))
+print()
 
+# Preprocess the data
+#
+# The data must be preprocessed before training the network. If you inspect the first image in the training set, you will see that the pixel values fall in the range of 0 to 255:
 plt.figure()
 plt.imshow(train_images[0])
 plt.colorbar()
 plt.grid(False)
 plt.show()
 
+# Normalization
+#
+# Scale these values to a range of 0 to 1 before feeding them to the neural network model. To do so, divide the values by 255. It's important that the *training set* and the *testing set* be preprocessed in the same way:
 train_images = train_images / 255.0
 
 test_images = test_images / 255.0
 
+# To verify that the data is in the correct format and that you're ready to build and train the network, let's display the first 25 images from the *training set* and display the class name below each image.
 plt.figure(figsize=(10,10))
 for i in range(25):
     plt.subplot(5,5,i+1)
@@ -65,25 +82,89 @@ for i in range(25):
     plt.xlabel(class_names[train_labels[i]])
 plt.show()
 
+# Build the model
+# 
+# Building the neural network requires configuring the layers of the model, then compiling the model.
+
+# Set up the layers
+# 
+# The basic building block of a neural network is the layer. Layers extract representations from the data fed into them. Hopefully, these representations are meaningful for the problem at hand.
+# 
+# Most of deep learning consists of chaining together simple layers. Most layers, such as tf.keras.layers.Dense, have parameters that are learned during training.
+"""**Sequential**: That defines a SEQUENCE of layers in the neural network
+
+**Flatten**: Remember earlier where our images were a square, when you printed them out? Flatten just takes that square and turns it into a 1 dimensional set.
+
+**Dense**: Adds a layer of neurons
+
+Each layer of neurons need an **activation function** to tell them what to do. There's lots of options, but just use these for now. 
+
+**Relu** effectively means "If X>0 return X, else return 0" -- so what it does it it only passes values 0 or greater to the next layer in the network.
+
+**Softmax** takes a set of values, and effectively picks the biggest one, so, for example, if the output of the last layer looks like [0.1, 0.1, 0.05, 0.1, 9.5, 0.1, 0.05, 0.05, 0.05], it saves you from fishing through it looking for the biggest value, and turns it into [0,0,0,0,1,0,0,0,0] -- The goal is to save a lot of coding!
+"""
 model = keras.Sequential([
-       keras.layers.Flatten(input_shape=(28,28)),
+       keras.layers.Flatten(input_shape=(28, 28)),
        keras.layers.Dense(128, activation= 'relu'),
-       keras.layers.Dense(10,activation='softmax')                   
+       keras.layers.Dense(10, activation='softmax')                   
 ])
 
+# The first layer in this network, tf.keras.layers.Flatten, transforms the format of the images from a two-dimensional array (of 28 by 28 pixels) to a one-dimensional array (of 28 * 28 = 784 pixels). Think of this layer as unstacking rows of pixels in the image and lining them up. This layer has no parameters to learn; it only reformats the data.
+# 
+# After the pixels are flattened, the network consists of a sequence of two tf.keras.layers.Dense layers. These are densely connected, or fully connected, neural layers. The first Dense layer has 128 nodes (or neurons). The second (and last) layer returns a logits array with length of 10. Each node contains a score that indicates the current image belongs to one of the 10 classes.
+
+# Compile the model
+# 
+# Before the model is ready for training, it needs a few more settings. These are added during the model's compile step:
+# 
+#     Loss function —This measures how accurate the model is during training. You want to minimize this function to "steer" the model in the right direction.
+#     Optimizer —This is how the model is updated based on the data it sees and its loss function.
+#     Metrics —Used to monitor the training and testing steps. The following example uses accuracy, the fraction of the images that are correctly classified.
+# 
 model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 
+# Train the model
+# 
+# Training the neural network model requires the following steps:
+# 
+#     Feed the training data to the model. In this example, the training data is in the train_images and train_labels arrays.
+#     The model learns to associate images and labels.
+#     You ask the model to make predictions about a test set—in this example, the test_images array.
+#     Verify that the predictions match the labels from the test_labels array.
+# 
+
+# Feed the model
+#
+# To start training, call the model.fit method—so called because it "fits" the model to the training data:
 model.fit(train_images, train_labels, epochs=10)
 
+# As the model trains, the loss and accuracy metrics are displayed. This model reaches an accuracy of about 0.91 (or 91%) on the training data.
+
+# Evaluate accuracy
+# 
+# Next, compare how the model performs on the test dataset:
 test_loss, test_acc = model.evaluate(test_images,  test_labels, verbose=2)
+print("\nTest accuracy: {0} \nError: {1}".format(test_acc, (1 - test_acc)))
 
-print('\nTest accuracy:', test_acc, '\nError:', 1 - test_acc)
+# It turns out that the accuracy on the test dataset is a little less than the accuracy on the training dataset. This gap between training accuracy and test accuracy represents overfitting. Overfitting happens when a machine learning model performs worse on new, previously unseen inputs than it does on the training data. An overfitted model "memorizes" the noise and details in the training dataset to a point where it negatively impacts the performance of the model on the new data. For more information, see the following:
+# 
+#     Demonstrate overfitting: https://www.tensorflow.org/tutorials/keras/overfit_and_underfit#demonstrate_overfitting
+#     Strategies to prevent overfitting: https://www.tensorflow.org/tutorials/keras/overfit_and_underfit#strategies_to_prevent_overfitting
+# 
 
-test_loss, test_acc = model.evaluate(test_images,  test_labels, verbose=2)
+# Make predictions
+# 
+# With the model thus trained, you can use it to make predictions about some images.
+# The model's linear outputs, [logits](https://developers.google.com/machine-learning/glossary#logits). Attach a softmax layer to convert the logits to probabilities, which are easier to interpret. 
 
-print('\nTest accuracy:', test_acc)
+# logits
+# 
+# The vector of raw (non-normalized) predictions that a classification model generates, which is ordinarily then passed to a normalization function. If the model is solving a multi-class classification problem, logits typically become an input to the softmax function. The softmax function then generates a vector of (normalized) probabilities with one value for each possible class.
+# 
+# In addition, logits sometimes refer to the element-wise inverse of the sigmoid function. For more information, see tf.nn.sigmoid_cross_entropy_with_logits.
+probability_model = tf.keras.Sequential([model, tf.keras.layers.Softmax()])
 
 predictions = model.predict(test_images)
 

@@ -4,6 +4,19 @@ import pandas as pd
 
 pd.set_option('display.max_rows', 100)
 
+# Print the shape of a 2-D array:
+arr = np.array([[1, 2, 3, 4], [5, 6, 7, 8]])
+
+print(arr)
+print(arr.shape)
+print()
+
+arr = np.array([1, 2, 3, 4], ndmin=5)
+
+print(arr)
+print('shape of array :', arr.shape)
+print()
+
 # Reading multiple files to create a single DataFrame
 # 
 # The best way to combine multiple files into a single DataFrame is to read the individual frames one by one, put all of the individual frames into a list, and then combine the frames in the list using pd.concat():
