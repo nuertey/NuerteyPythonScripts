@@ -1,0 +1,24 @@
+(MyEnv37) rena@PurpleOS:~/postgrestest$ python tensorflow_experts_example.py 
+2020-06-07 10:13:30.164927: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcuda.so.1'; dlerror: libnvidia-fatbinaryloader.so.430.64: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/kinetic/lib:/opt/ros/kinetic/lib/x86_64-linux-gnu
+2020-06-07 10:13:30.164969: E tensorflow/stream_executor/cuda/cuda_driver.cc:313] failed call to cuInit: UNKNOWN ERROR (303)
+2020-06-07 10:13:30.165005: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (PurpleOS): /proc/driver/nvidia/version does not exist
+2020-06-07 10:13:30.165282: I tensorflow/core/platform/cpu_feature_guard.cc:143] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2020-06-07 10:13:30.171549: I tensorflow/core/platform/profile_utils/cpu_utils.cc:102] CPU Frequency: 2394715000 Hz
+2020-06-07 10:13:30.172743: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x5a93da0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2020-06-07 10:13:30.172768: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+2020-06-07 10:13:30.175352: W tensorflow/core/framework/cpu_allocator_impl.cc:81] Allocation of 376320000 exceeds 10% of free system memory.
+2020-06-07 10:13:30.564360: W tensorflow/core/framework/cpu_allocator_impl.cc:81] Allocation of 62720000 exceeds 10% of free system memory.
+2020-06-07 10:13:30.694863: W tensorflow/core/framework/cpu_allocator_impl.cc:81] Allocation of 376320000 exceeds 10% of free system memory.
+WARNING:tensorflow:Layer my_model is casting an input tensor from dtype float64 to the layer's dtype of float32, which is new behavior in TensorFlow 2.  The layer has dtype float32 because it's dtype defaults to floatx.
+
+If you intended to run this layer in float32, you can safely ignore this warning. If in doubt, this warning is likely only an issue if you are porting a TensorFlow 1.X model to TensorFlow 2.
+
+To change all layers to have dtype float64 by default, call `tf.keras.backend.set_floatx('float64')`. To change just this layer, pass dtype='float64' to the layer constructor. If you are the author of this layer, you can disable autocasting by passing autocast=False to the base Layer constructor.
+
+2020-06-07 10:14:16.876758: W tensorflow/core/framework/cpu_allocator_impl.cc:81] Allocation of 62720000 exceeds 10% of free system memory.
+Epoch 1, Loss: 0.12956827878952026, Accuracy: 96.16000366210938, Test Loss: 0.05874055624008179, Test Accuracy: 97.95999908447266
+2020-06-07 10:14:18.875037: W tensorflow/core/framework/cpu_allocator_impl.cc:81] Allocation of 376320000 exceeds 10% of free system memory.
+Epoch 2, Loss: 0.04048694297671318, Accuracy: 98.73333740234375, Test Loss: 0.057891108095645905, Test Accuracy: 98.1199951171875
+Epoch 3, Loss: 0.021009646356105804, Accuracy: 99.35333251953125, Test Loss: 0.05695076286792755, Test Accuracy: 98.12999725341797
+Epoch 4, Loss: 0.014050841331481934, Accuracy: 99.52832794189453, Test Loss: 0.05735127255320549, Test Accuracy: 98.29999542236328
+Epoch 5, Loss: 0.009421412833034992, Accuracy: 99.68499755859375, Test Loss: 0.061263393610715866, Test Accuracy: 98.47999572753906

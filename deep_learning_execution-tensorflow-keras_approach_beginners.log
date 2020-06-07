@@ -1,0 +1,21 @@
+(MyEnv37) rena@PurpleOS:~/postgrestest$ python tensorflow_beginners_example.py
+2020-06-07 10:10:57.209398: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcuda.so.1'; dlerror: libnvidia-fatbinaryloader.so.430.64: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/kinetic/lib:/opt/ros/kinetic/lib/x86_64-linux-gnu
+2020-06-07 10:10:57.209438: E tensorflow/stream_executor/cuda/cuda_driver.cc:313] failed call to cuInit: UNKNOWN ERROR (303)
+2020-06-07 10:10:57.209466: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (PurpleOS): /proc/driver/nvidia/version does not exist
+2020-06-07 10:10:57.209772: I tensorflow/core/platform/cpu_feature_guard.cc:143] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2020-06-07 10:10:57.328898: I tensorflow/core/platform/profile_utils/cpu_utils.cc:102] CPU Frequency: 2394715000 Hz
+2020-06-07 10:10:57.329650: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x54d7810 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2020-06-07 10:10:57.329678: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+2020-06-07 10:10:57.988932: W tensorflow/core/framework/cpu_allocator_impl.cc:81] Allocation of 188160000 exceeds 10% of free system memory.
+Epoch 1/5
+1875/1875 [==============================] - 2s 1ms/step - loss: 0.2928 - accuracy: 0.9155
+Epoch 2/5
+1875/1875 [==============================] - 2s 1ms/step - loss: 0.1428 - accuracy: 0.9579
+Epoch 3/5
+1875/1875 [==============================] - 2s 1ms/step - loss: 0.1067 - accuracy: 0.9673
+Epoch 4/5
+1875/1875 [==============================] - 2s 1ms/step - loss: 0.0897 - accuracy: 0.9718
+Epoch 5/5
+1875/1875 [==============================] - 2s 1ms/step - loss: 0.0763 - accuracy: 0.9755
+2020-06-07 10:11:10.939660: W tensorflow/core/framework/cpu_allocator_impl.cc:81] Allocation of 31360000 exceeds 10% of free system memory.
+313/313 [==============================] - 0s 853us/step - loss: 0.0760 - accuracy: 0.9775
