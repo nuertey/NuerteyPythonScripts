@@ -4,6 +4,31 @@ import pandas as pd
 
 pd.set_option('display.max_rows', 100)
 
+# Reading multiple files to create a single DataFrame
+# 
+# The best way to combine multiple files into a single DataFrame is to read the individual frames one by one, put all of the individual frames into a list, and then combine the frames in the list using pd.concat():
+# 
+# In [189]: for i in range(3):
+#    .....:     data = pd.DataFrame(np.random.randn(10, 4))
+#    .....:     data.to_csv('file_{}.csv'.format(i))
+#    .....: 
+# 
+# In [190]: files = ['file_0.csv', 'file_1.csv', 'file_2.csv']
+# 
+# In [191]: result = pd.concat([pd.read_csv(f) for f in files], ignore_index=True)
+# 
+# You can use the same approach to read all files matching a pattern. Here is an example using glob:
+# 
+# In [192]: import glob
+# 
+# In [193]: import os
+# 
+# In [194]: files = glob.glob('file_*.csv')
+# 
+# In [195]: result = pd.concat([pd.read_csv(f) for f in files], ignore_index=True)
+# 
+# Finally, this strategy will work with the other pd.read_*(...) functions described in the io docs.
+
 # To index a particular cell and change its value, use df.loc:
 # 
 # df.loc[df.Name == 'Snowball', 'yellow'] = 2
@@ -830,6 +855,164 @@ print()
 print(df[row_mask])
 print()
 
+# The where() Method and Masking
+# 
+# Selecting values from a Series with a boolean vector generally returns a subset of the data. To guarantee that selection output has the same shape as the original data, you can use the where method in Series and DataFrame.
+# 
+# To return only the selected rows:
+print(s[s > 0])
+print()
+
+# To return a Series of the same shape as the original:
+print(s.where(s > 0))
+print()
+
+# Selecting values from a DataFrame with a boolean criterion now also preserves input data shape. where is used under the hood as the implementation. The code below is equivalent to df.where(df < 0).
+df = pd.DataFrame(np.random.randn(8, 4),
+                  index=dates, columns=['A', 'B', 'C', 'D'])
+
+print(df)
+print()
+
+print(df[df < 0])
+print()
+
+# In addition, where takes an optional other argument for replacement of values where the condition is False, in the returned copy.
+print(df.where(df < 0, -df))
+print()
+
+# You may wish to set values based on some boolean criteria. This can be done intuitively like so:
+s2 = s.copy()
+
+s2[s2 < 0] = 0
+
+print(s2)
+print()
+
+df2 = df.copy()
+
+df2[df2 < 0] = 0
+
+print(df2)
+print()
+
+# By default, where returns a modified copy of the data. There is an optional parameter inplace so that the original data can be modified without creating a copy:
+df_orig = df.copy()
+
+df_orig.where(df > 0, -df, inplace=True)
+
+print(df_orig)
+print()
+print(df)
+print()
+
+# Note
+# 
+# The signature for DataFrame.where() differs from numpy.where(). Roughly df1.where(m, df2) is equivalent to np.where(m, df1, df2).
+
+print(df.where(df < 0, -df) == np.where(df < 0, df, -df)) # Will evaluate to all trues.
+print()
+
+# Alignment
+# 
+# Furthermore, where aligns the input boolean condition (ndarray or DataFrame), such that partial selection with setting is possible. This is analogous to partial setting via .loc (but on the contents rather than the axis labels).
+df2 = df.copy()
+
+df2[df2[1:4] > 0] = 3
+
+print(df2)
+print()
+
+# Where can also accept axis and level parameters to align the input when performing the where.
+df2 = df.copy()
+
+print(df2.where(df2 > 0, df2['A'], axis='index'))
+print()
+
+# This is equivalent to (but faster than) the following.
+df2 = df.copy()
+
+print(df.apply(lambda x, y: x.where(x > 0, y), y=df['A']))
+print()
+
+# where can accept a callable as condition and other arguments. The function must be with one argument (the calling Series or DataFrame) and that returns valid output as condition and other argument.
+df3 = pd.DataFrame({'A': [1, 2, 3],
+                    'B': [4, 5, 6],
+                    'C': [7, 8, 9]})
+print(df3)
+print()
+
+print(df3.where(lambda x: x > 4, lambda x: x + 10))
+print()
+
+# Mask
+# 
+# mask() is the inverse boolean operation of where.
+print(s)
+print()
+
+print(s.mask(s >= 0))
+print()
+
+print(df.mask(df >= 0))
+print()
+
+# The query() Method
+# 
+# DataFrame objects have a query() method that allows selection using an expression.
+# 
+# You can get the value of the frame where column b has values between the values of columns a and c. For example:
+n = 10
+
+df = pd.DataFrame(np.random.rand(n, 3), columns=list('abc'))
+
+print(df)
+print()
+
+# pure python
+print(df[(df['a'] < df['b']) & (df['b'] < df['c'])])
+print()
+
+# query
+print(df.query('(a < b) & (b < c)'))
+print()
+
+# Do the same thing but fall back on a named index if there is no column with the name a.
+df = pd.DataFrame(np.random.randint(n / 2, size=(n, 2)), columns=list('bc'))
+
+df.index.name = 'a' # This is how you name the index.
+
+print(df)
+print()
+
+print(df.query('a < b and b < c'))
+print()
+
+# If instead you don’t want to or cannot name your index, you can use the name index in your query expression:
+df = pd.DataFrame(np.random.randint(n, size=(n, 2)), columns=list('bc'))
+
+print(df)
+print()
+
+print(df.query('index < b < c'))
+print()
+
+# Note
+# 
+# If the name of your index overlaps with a column name, the column name is given precedence. For example,
+df = pd.DataFrame({'a': np.random.randint(5, size=5)})
+
+df.index.name = 'a'
+
+print(df.query('a > 2'))  # uses the column 'a', not the index
+print()
+
+# You can still use the index in a query expression by using the special identifier ‘index’:
+print(df.query('index > 2'))
+print()
+
+# If for some reason you have a column named index, then you can refer to the index as ilevel_0 as well, but at this point you should consider renaming your columns to something less ambiguous.
+
 
 # ======================================================
 # Pandas concat vs append vs join vs merge (**** 'Tis more performant still to append on the lists and then create the Pandas dataframe with the complete list. See nuertey_covid19_final.py)
@@ -949,3 +1132,4 @@ dfc = pd.DataFrame({'A': ['aaa', 'bbb', 'ccc'], 'B': [1, 2, 3]})
 dfc.loc[0, 'A'] = 11 # Do not do "dfc['A'][0] = 111"!!!
 
 print(dfc)
+
