@@ -166,11 +166,19 @@ print("\nTest accuracy: {0} \nError: {1}".format(test_acc, (1 - test_acc)))
 # In addition, logits sometimes refer to the element-wise inverse of the sigmoid function. For more information, see tf.nn.sigmoid_cross_entropy_with_logits.
 probability_model = tf.keras.Sequential([model, tf.keras.layers.Softmax()])
 
-predictions = model.predict(test_images)
+predictions = probability_model.predict(test_images)
 
-np.argmax(predictions[0])te
+# Here, the model has predicted the label for each image in the testing set. Let's take a look at the first prediction:
+print(predictions[0])
+print()
 
-test_labels[0]
+# A prediction is an array of 10 numbers. They represent the model's "confidence" that the image corresponds to each of the 10 different articles of clothing. You can see which label has the highest confidence value:
+print(np.argmax(predictions[0]))
+print()
+
+# So, the model is most confident that this image is an ankle boot, or `class_names[9]`. Examining the test label shows that this classification is correct:
+print(test_labels[0])
+print()
 
 def plot_image(i, predictions_array, true_label, img):
   predictions_array, true_label, img = predictions_array, true_label[i], img[i]
