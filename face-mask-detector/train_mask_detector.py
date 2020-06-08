@@ -1,3 +1,5 @@
+# https://medium.com/@falahgs07/face-mask-detection-using-mobilenetv2-transfer-learning-957462e4abd0
+
 # USAGE
 # python train_mask_detector.py --dataset dataset
 
