@@ -1,0 +1,70 @@
+(MyEnv37) rena@PurpleOS:~/postgrestest/face-mask-detector$ python train_mask_detector.py -d ./dataset
+[INFO] loading images...
+WARNING:tensorflow:`input_shape` is undefined or non-square, or `rows` is not in [96, 128, 160, 192, 224]. Weights for input shape (224, 224) will be loaded as the default.
+2020-06-08 06:41:42.171143: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcuda.so.1'; dlerror: libnvidia-fatbinaryloader.so.430.64: cannot open shared object file: No such file or directory
+2020-06-08 06:41:42.183441: E tensorflow/stream_executor/cuda/cuda_driver.cc:313] failed call to cuInit: UNKNOWN ERROR (303)
+2020-06-08 06:41:42.183498: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (PurpleOS): /proc/driver/nvidia/version does not exist
+2020-06-08 06:41:42.183794: I tensorflow/core/platform/cpu_feature_guard.cc:143] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2020-06-08 06:41:42.363514: I tensorflow/core/platform/profile_utils/cpu_utils.cc:102] CPU Frequency: 2394300000 Hz
+2020-06-08 06:41:42.367418: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x37653b80 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2020-06-08 06:41:42.367438: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+Downloading data from https://storage.googleapis.com/tensorflow/keras-applications/mobilenet_v2/mobilenet_v2_weights_tf_dim_ordering_tf_kernels_1.0_224_no_top.h5
+9412608/9406464 [==============================] - 10s 1us/step
+[INFO] compiling model...
+[INFO] training head...
+Epoch 1/20
+2020-06-08 06:41:59.514329: W tensorflow/core/framework/cpu_allocator_impl.cc:81] Allocation of 19440000 exceeds 10% of free system memory.
+2020-06-08 06:41:59.620313: W tensorflow/core/framework/cpu_allocator_impl.cc:81] Allocation of 51380224 exceeds 10% of free system memory.
+2020-06-08 06:41:59.837125: W tensorflow/core/framework/cpu_allocator_impl.cc:81] Allocation of 51380224 exceeds 10% of free system memory.
+2020-06-08 06:41:59.932161: W tensorflow/core/framework/cpu_allocator_impl.cc:81] Allocation of 25690112 exceeds 10% of free system memory.
+2020-06-08 06:41:59.984621: W tensorflow/core/framework/cpu_allocator_impl.cc:81] Allocation of 154140672 exceeds 10% of free system memory.
+34/34 [==============================] - 34s 995ms/step - loss: 0.5383 - accuracy: 0.7341 - val_loss: 0.1298 - val_accuracy: 0.9819
+Epoch 2/20
+34/34 [==============================] - 31s 918ms/step - loss: 0.1477 - accuracy: 0.9522 - val_loss: 0.0560 - val_accuracy: 0.9964
+Epoch 3/20
+34/34 [==============================] - 32s 930ms/step - loss: 0.0811 - accuracy: 0.9785 - val_loss: 0.0370 - val_accuracy: 0.9964
+Epoch 4/20
+34/34 [==============================] - 32s 939ms/step - loss: 0.0525 - accuracy: 0.9869 - val_loss: 0.0295 - val_accuracy: 0.9964
+Epoch 5/20
+34/34 [==============================] - 33s 960ms/step - loss: 0.0473 - accuracy: 0.9860 - val_loss: 0.0254 - val_accuracy: 0.9964
+Epoch 6/20
+34/34 [==============================] - 31s 919ms/step - loss: 0.0297 - accuracy: 0.9944 - val_loss: 0.0227 - val_accuracy: 0.9964
+Epoch 7/20
+34/34 [==============================] - 32s 940ms/step - loss: 0.0301 - accuracy: 0.9888 - val_loss: 0.0217 - val_accuracy: 0.9964
+Epoch 8/20
+34/34 [==============================] - 32s 945ms/step - loss: 0.0341 - accuracy: 0.9897 - val_loss: 0.0202 - val_accuracy: 0.9964
+Epoch 9/20
+34/34 [==============================] - 31s 916ms/step - loss: 0.0324 - accuracy: 0.9906 - val_loss: 0.0217 - val_accuracy: 0.9964
+Epoch 10/20
+34/34 [==============================] - 32s 945ms/step - loss: 0.0351 - accuracy: 0.9888 - val_loss: 0.0187 - val_accuracy: 0.9964
+Epoch 11/20
+34/34 [==============================] - 32s 938ms/step - loss: 0.0269 - accuracy: 0.9934 - val_loss: 0.0190 - val_accuracy: 0.9964
+Epoch 12/20
+34/34 [==============================] - 32s 935ms/step - loss: 0.0240 - accuracy: 0.9897 - val_loss: 0.0158 - val_accuracy: 0.9964
+Epoch 13/20
+34/34 [==============================] - 34s 998ms/step - loss: 0.0194 - accuracy: 0.9934 - val_loss: 0.0150 - val_accuracy: 0.9964
+Epoch 14/20
+34/34 [==============================] - 31s 920ms/step - loss: 0.0207 - accuracy: 0.9925 - val_loss: 0.0150 - val_accuracy: 0.9964
+Epoch 15/20
+34/34 [==============================] - 33s 982ms/step - loss: 0.0202 - accuracy: 0.9916 - val_loss: 0.0188 - val_accuracy: 0.9964
+Epoch 16/20
+34/34 [==============================] - 31s 926ms/step - loss: 0.0137 - accuracy: 0.9963 - val_loss: 0.0173 - val_accuracy: 0.9964
+Epoch 17/20
+34/34 [==============================] - 32s 940ms/step - loss: 0.0118 - accuracy: 0.9972 - val_loss: 0.0190 - val_accuracy: 0.9964
+Epoch 18/20
+34/34 [==============================] - 33s 956ms/step - loss: 0.0227 - accuracy: 0.9916 - val_loss: 0.0154 - val_accuracy: 0.9964
+Epoch 19/20
+34/34 [==============================] - 33s 959ms/step - loss: 0.0158 - accuracy: 0.9972 - val_loss: 0.0176 - val_accuracy: 0.9964
+Epoch 20/20
+34/34 [==============================] - 32s 948ms/step - loss: 0.0113 - accuracy: 0.9972 - val_loss: 0.0179 - val_accuracy: 0.9964
+[INFO] evaluating network...
+              precision    recall  f1-score   support
+
+   with_mask       1.00      0.99      1.00       138
+without_mask       0.99      1.00      1.00       138
+
+    accuracy                           1.00       276
+   macro avg       1.00      1.00      1.00       276
+weighted avg       1.00      1.00      1.00       276
+
+[INFO] saving mask detector model...
