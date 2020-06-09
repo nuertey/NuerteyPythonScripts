@@ -59,14 +59,29 @@ data = pd.DataFrame(country_list)
 print(data)
 print()
 
-def retrieve_covid_statistics(country_name_input):
-    country_status = cov_19.get_status_by_country_name(str(country_name_input))
+#print(cov_19.get_status_by_country_name('sweden'))
+#print()
+
+def retrieve_covid_statistics(country_id_input, country_name_input):
+    print(country_id_input)
+    print(country_name_input)
+    print()
+    try:
+        country_status = cov_19.get_status_by_country_name(country_name_input)
+    except Exception as e:
+        print("Caught an unexpected exception:")
+        print(e)
+        print()
+        country_status = {'id': country_id_input, 'country': country_name_input, 'confirmed': 0, 'active': 0, 'deaths': 0, 'recovered': 0, 'latitude': 0, 'longitude': 0, 'last_update': 1591652013000}
+
+    print(country_status)
+    print()
 
     # Returning a dictionary is faster:
     return {'country_id': country_status['id'], 'country': country_status['country'], 'confirmed': country_status['confirmed'], 'active': country_status['active'], 'deaths': country_status['deaths'], 'recovered': country_status['recovered'], 'latitude': country_status['latitude'], 'longitude': country_status['longitude'], 'last_update': country_status['last_update']}
 
 # Employ a list for now in the list comprehension for faster processing:
-combined_output = [retrieve_covid_statistics(country) for country in data['name']] 
+combined_output = [retrieve_covid_statistics(identifier, country) for identifier, country in zip(data['id'], data['name'])] 
 #print(combined_output)
 #print()
 
