@@ -1,4 +1,4 @@
-from __future__ import absolute_import, division, print_function, unicode_literals
+# from __future__ import absolute_import, division, print_function, unicode_literals
 
 # TensorFlow and tf.keras
 import tensorflow as tf
@@ -48,7 +48,7 @@ print(train_labels)
 print()
 
 # There are 10,000 images in the test set. Again, each image is represented as 28 x 28 pixels:
-print(test_image.shape)
+print(test_images.shape)
 print()
 
 # And the test set contains 10,000 images labels:
@@ -109,6 +109,12 @@ model = keras.Sequential([
        keras.layers.Dense(10, activation='softmax')                   
 ])
 
+# model = keras.Sequential([
+#     keras.layers.Flatten(input_shape=(28, 28)),
+#     keras.layers.Dense(128, activation='relu'),
+#     keras.layers.Dense(10)
+# ])
+
 # The first layer in this network, tf.keras.layers.Flatten, transforms the format of the images from a two-dimensional array (of 28 by 28 pixels) to a one-dimensional array (of 28 * 28 = 784 pixels). Think of this layer as unstacking rows of pixels in the image and lining them up. This layer has no parameters to learn; it only reformats the data.
 # 
 # After the pixels are flattened, the network consists of a sequence of two tf.keras.layers.Dense layers. These are densely connected, or fully connected, neural layers. The first Dense layer has 128 nodes (or neurons). The second (and last) layer returns a logits array with length of 10. Each node contains a score that indicates the current image belongs to one of the 10 classes.
@@ -122,7 +128,7 @@ model = keras.Sequential([
 #     Metrics —Used to monitor the training and testing steps. The following example uses accuracy, the fraction of the images that are correctly classified.
 # 
 model.compile(optimizer='adam',
-              loss='sparse_categorical_crossentropy',
+              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
 
 # Train the model
@@ -180,6 +186,7 @@ print()
 print(test_labels[0])
 print()
 
+# Graph this to look at the full set of 10 class predictions:
 def plot_image(i, predictions_array, true_label, img):
   predictions_array, true_label, img = predictions_array, true_label[i], img[i]
   plt.grid(False)
@@ -190,7 +197,7 @@ def plot_image(i, predictions_array, true_label, img):
 
   predicted_label = np.argmax(predictions_array)
   if predicted_label == true_label:
-    color = 'pink'
+    color = 'blue'
   else:
     color = 'red'
 
@@ -209,12 +216,69 @@ def plot_value_array(i, predictions_array, true_label):
   predicted_label = np.argmax(predictions_array)
 
   thisplot[predicted_label].set_color('red')
-  thisplot[true_label].set_color('pink')
+  thisplot[true_label].set_color('blue')
 
-i = 9
+# Verify predictions
+# 
+# With the model trained, you can use it to make predictions about some images.
+# 
+# Let's look at the 0th image, predictions, and prediction array. Correct prediction labels are blue and incorrect prediction labels are red. The number gives the percentage (out of 100) for the predicted label.
+i = 0
 plt.figure(figsize=(6,3))
 plt.subplot(1,2,1)
 plot_image(i, predictions[i], test_labels, test_images)
 plt.subplot(1,2,2)
 plot_value_array(i, predictions[i],  test_labels)
 plt.show()
+
+i = 12
+plt.figure(figsize=(6,3))
+plt.subplot(1,2,1)
+plot_image(i, predictions[i], test_labels, test_images)
+plt.subplot(1,2,2)
+plot_value_array(i, predictions[i],  test_labels)
+plt.show()
+
+# Let's plot several images with their predictions. Note that the model can be wrong even when very confident.
+
+# Plot the first X test images, their predicted labels, and the true labels.
+# Color correct predictions in blue and incorrect predictions in red.
+num_rows = 5
+num_cols = 3
+num_images = num_rows*num_cols
+plt.figure(figsize=(2*2*num_cols, 2*num_rows))
+for i in range(num_images):
+  plt.subplot(num_rows, 2*num_cols, 2*i+1)
+  plot_image(i, predictions[i], test_labels, test_images)
+  plt.subplot(num_rows, 2*num_cols, 2*i+2)
+  plot_value_array(i, predictions[i], test_labels)
+plt.tight_layout()
+plt.show()
+
+# Use the trained model
+#
+# Finally, use the trained model to make a prediction about a single image.
+
+# Grab an image from the test dataset.
+img = test_images[1]
+print(img.shape)
+
+# `tf.keras` models are optimized to make predictions on a *batch*, or collection, of examples at once. Accordingly, even though you're using a single image, you need to add it to a list:
+
+# Add the image to a batch where it's the only member.
+img = (np.expand_dims(img,0))
+
+print(img.shape)
+
+# Now predict the correct label for this image:
+predictions_single = probability_model.predict(img)
+print(predictions_single)
+
+plot_value_array(1, predictions_single[0], test_labels)
+_ = plt.xticks(range(10), class_names, rotation=45)
+
+# `keras.Model.predict` returns a list of lists—one list for each image in the batch of data. Grab the predictions for our (only) image in the batch:
+print(np.argmax(predictions_single[0]))
+print()
+
+# And the model predicts a label as expected.
