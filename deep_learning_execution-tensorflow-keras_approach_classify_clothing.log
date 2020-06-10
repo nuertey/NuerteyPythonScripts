@@ -1,0 +1,67 @@
+(MyEnv37) rena@PurpleOS:~/postgrestest$ python tensorflow_classify_clothing.py
+2.2.0
+Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/train-labels-idx1-ubyte.gz
+32768/29515 [=================================] - 0s 7us/step
+Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/train-images-idx3-ubyte.gz
+26427392/26421880 [==============================] - 130s 5us/step
+Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/t10k-labels-idx1-ubyte.gz
+8192/5148 [===============================================] - 0s 1us/step
+Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/t10k-images-idx3-ubyte.gz
+4423680/4422102 [==============================] - 15s 3us/step
+(60000, 28, 28)
+
+60000
+
+[9 0 0 ... 3 0 5]
+
+(10000, 28, 28)
+
+10000
+
+2020-06-10 15:29:50.852265: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcuda.so.1'; dlerror: libnvidia-fatbinaryloader.so.430.64: cannot open shared object file: No such file or directory
+2020-06-10 15:29:50.852308: E tensorflow/stream_executor/cuda/cuda_driver.cc:313] failed call to cuInit: UNKNOWN ERROR (303)
+2020-06-10 15:29:50.852337: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (PurpleOS): /proc/driver/nvidia/version does not exist
+2020-06-10 15:29:50.852636: I tensorflow/core/platform/cpu_feature_guard.cc:143] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2020-06-10 15:29:51.049621: I tensorflow/core/platform/profile_utils/cpu_utils.cc:102] CPU Frequency: 2394655000 Hz
+2020-06-10 15:29:51.050397: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x63c3970 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2020-06-10 15:29:51.050424: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+2020-06-10 15:29:52.159487: W tensorflow/core/framework/cpu_allocator_impl.cc:81] Allocation of 188160000 exceeds 10% of free system memory.
+Epoch 1/10
+1875/1875 [==============================] - 2s 1ms/step - loss: 1.7137 - accuracy: 0.7564
+Epoch 2/10
+1875/1875 [==============================] - 2s 1ms/step - loss: 1.6741 - accuracy: 0.7890
+Epoch 3/10
+1875/1875 [==============================] - 2s 1ms/step - loss: 1.6142 - accuracy: 0.8484
+Epoch 4/10
+1875/1875 [==============================] - 2s 1ms/step - loss: 1.6024 - accuracy: 0.8599
+Epoch 5/10
+1875/1875 [==============================] - 2s 1ms/step - loss: 1.5949 - accuracy: 0.8676
+Epoch 6/10
+1875/1875 [==============================] - 2s 1ms/step - loss: 1.5915 - accuracy: 0.8702
+Epoch 7/10
+1875/1875 [==============================] - 2s 1ms/step - loss: 1.5867 - accuracy: 0.8751
+Epoch 8/10
+1875/1875 [==============================] - 2s 1ms/step - loss: 1.5836 - accuracy: 0.8784
+Epoch 9/10
+1875/1875 [==============================] - 2s 1ms/step - loss: 1.5804 - accuracy: 0.8815
+Epoch 10/10
+1875/1875 [==============================] - 2s 1ms/step - loss: 1.5787 - accuracy: 0.8826
+2020-06-10 15:30:19.923209: W tensorflow/core/framework/cpu_allocator_impl.cc:81] Allocation of 31360000 exceeds 10% of free system memory.
+313/313 - 0s - loss: 1.6028 - accuracy: 0.8580
+
+Test accuracy: 0.8579999804496765 
+Error: 0.1420000195503235
+2020-06-10 15:30:20.415304: W tensorflow/core/framework/cpu_allocator_impl.cc:81] Allocation of 31360000 exceeds 10% of free system memory.
+[0.0853381  0.0853381  0.0853381  0.0853381  0.0853381  0.08534723
+ 0.0853381  0.08533817 0.0853381  0.23194797]
+
+9
+
+9
+
+(28, 28)
+(1, 28, 28)
+[[0.08533674 0.08533674 0.23196931 0.08533674 0.08533674 0.08533674
+  0.08533674 0.08533674 0.08533674 0.08533674]]
+2
+
