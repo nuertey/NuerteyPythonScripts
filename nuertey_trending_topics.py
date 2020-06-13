@@ -13,8 +13,9 @@
 #**********************************************************************/
 import time
 import datetime
-import pycountry
 import pytrends
+import pycountry
+import numpy as np
 import pandas as pd
 from datetime import datetime, date, time
 from pytrends.request import TrendReq
@@ -29,11 +30,19 @@ from pytrends.request import TrendReq
 
 pd.set_option('display.max_rows', 100)
 
+list_alpha_2 = [i.alpha_2 for i in list(pycountry.countries)] 
+countries_data = pd.DataFrame(np.column_stack([list_alpha_2]), columns=['country_code_2'])
+countries_data['country_name'] = [ pycountry.countries.get(alpha_2=code).name for code in countries_data['country_code_2'] ] 
+print(countries_data)
+print()
+
 # Login to Google. Only need to run this once, the rest of requests will use the same session.
 pytrend = TrendReq()
 
 # Returns Categories dictionary for potential usage in help text.
 all_categories = pytrends.categories()
+print(all_categories)
+print()
 
 # TBD Nuertey Odzeyem, ask Wayo when he wakes, "Would 'topic keyword', 'country' 
 # and 'category' inputs to this new python script satisfy his requirement 
