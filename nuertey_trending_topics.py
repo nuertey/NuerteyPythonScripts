@@ -11,12 +11,15 @@
 #  Created: June 13, 2020
 #   Author: Nuertey Odzeyem
 #**********************************************************************/
+import json
 import time
 import datetime
 import pytrends
 import pycountry
 import numpy as np
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
 from datetime import datetime, date, time
 from pytrends.request import TrendReq
 
@@ -39,9 +42,16 @@ print()
 # Login to Google. Only need to run this once, the rest of requests will use the same session.
 pytrend = TrendReq()
 
+# category Category to search within (number defaults to all categories)
+
 # Returns Categories dictionary for potential usage in help text.
-all_categories = pytrends.categories()
-print(all_categories)
+all_categories = pytrend.categories()
+#all_categories = pd.DataFrame(all_categories)
+#all_categories = pd.concat({k: pd.DataFrame(v).T for k, v in all_categories.items()}, axis=0)
+#all_categories = pd.DataFrame.from_dict(all_categories)
+#all_categories = all_categories['children'].apply(pd.Series)
+print(json.dumps(all_categories, sort_keys=False, indent=4))
+#print(all_categories)
 print()
 
 # TBD Nuertey Odzeyem, ask Wayo when he wakes, "Would 'topic keyword', 'country' 
@@ -59,8 +69,11 @@ print()
 #       -g denotes Google Trends Categories listing (list of 1427 category entries will be displayed in help text)
 #       -t denotes a trending topic keyword of interest
 
-# Create payload and capture API tokens. Only needed for interest_over_time(), interest_by_region() & related_queries()
-pytrend.build_payload(kw_list=['bofrot', 'palm oil', 'fried rice', 'somanya', 'pojoss'], timeframe='today 10-y', geo = 'GH')
+# Create payload and capture API tokens. Only needed for interest_over_time(),
+# interest_by_region() & related_queries():
+#
+# Google returns a response with code 400 when a key word is > 100 characters.
+pytrend.build_payload(kw_list=['bofrot', 'somanya', 'pojoss'], timeframe='today 10-y', geo = 'GH', cat = 71)
 
 # Interest Over Time
 interest_over_time_data = pytrend.interest_over_time()
@@ -68,13 +81,19 @@ interest_over_time_data = pytrend.interest_over_time()
 print(interest_over_time_data)
 print()
 
+sns.set(color_codes=True)
+dx = interest_over_time_data.plot.line(figsize = (9,6), title = "Interest Over Time")
+dx.set_xlabel('Date')
+dx.set_ylabel('Trends Index')
+dx.tick_params(axis='both', which='major', labelsize=13)
+
 # Interest by Region
 interest_by_region_data = pytrend.interest_by_region(resolution='COUNTRY', inc_low_vol=True, inc_geo_code=True)
 #print(interest_by_region_data.head())
 print(interest_by_region_data)
 print()
 
-#interest_by_region_data.reset_index().plot(x=’geoName’, y=’Taylor Swift’, figsize=(120, 10), kind =’bar’)
+interest_by_region_data.reset_index().plot(x='geoName', y=['bofrot', 'palm oil', 'fried rice', 'somanya', 'pojoss'], figsize=(120, 10), kind='bar')
 
 # Related Topics, returns a dictionary of dataframes
 related_topics_dict = pytrend.related_topics()
