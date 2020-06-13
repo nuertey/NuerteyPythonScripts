@@ -11,7 +11,7 @@
 #  Created: June 13, 2020
 #   Author: Nuertey Odzeyem
 #**********************************************************************/
-import json
+#import pprint
 import time
 import datetime
 import pytrends
@@ -48,11 +48,14 @@ pytrend = TrendReq()
 all_categories = pytrend.categories()
 #all_categories = pd.DataFrame(all_categories)
 #all_categories = pd.concat({k: pd.DataFrame(v).T for k, v in all_categories.items()}, axis=0)
-#all_categories = pd.DataFrame.from_dict(all_categories)
-#all_categories = all_categories['children'].apply(pd.Series)
-print(json.dumps(all_categories, sort_keys=False, indent=4))
-#print(all_categories)
+all_categories_data = pd.DataFrame.from_dict(all_categories)
+#all_categories_data = all_categories_data['children'].apply(pd.Series)
+print(all_categories_data)
 print()
+
+#pp = pprint.PrettyPrinter(width=160)
+#pp.pprint(dict(all_categories))
+#print()
 
 # TBD Nuertey Odzeyem, ask Wayo when he wakes, "Would 'topic keyword', 'country' 
 # and 'category' inputs to this new python script satisfy his requirement 
