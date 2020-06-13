@@ -1,5 +1,6 @@
 import pycountry
-import pycountry
+import numpy as np
+import pandas as pd
 
 pd.set_option('display.max_rows', 100)
 
@@ -38,3 +39,10 @@ print()
 # 5     125           US   United States
 # 6     600          GBR  United Kingdom
 # 7       0          XYZ    Invalid Code
+
+countries_data = pd.DataFrame(np.column_stack([list_alpha_2, list_alpha_3]), 
+                               columns=['country_code_2', 'country_code_3'])
+
+countries_data['country_name'] = [ pycountry.countries.get(alpha_3=code).name for code in countries_data['country_code_3'] ] 
+print(countries_data)
+print()
