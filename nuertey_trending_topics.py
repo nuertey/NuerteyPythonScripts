@@ -23,6 +23,26 @@ import matplotlib.pyplot as plt
 from datetime import datetime, date, time
 from pytrends.request import TrendReq
 
+#def myprint(d, ident=0):
+#    for k, v in d.items():
+#        if isinstance(v, dict):
+#            myprint(v, ident+1)
+#        else:
+#            print('\t' * (ident+1) + "{0} : {1}".format(k, v))
+#
+#def pretty(d, indent=0):
+#    for key, value in d.items():
+#        print('\t' * indent + str(key))
+#        if isinstance(value, dict):
+#            pretty(value, indent+1)
+#        else:
+#            #print('\t' * (indent+1) + str(value))
+#            print()
+#            category_data = pd.DataFrame.from_dict(category_data)
+#            category_data = category_data['children'].apply(pd.Series)
+#            print(category_data)
+#            print()
+
 # Run output of script for Emile on topics trending in Cameroon by region
 # ISO-3166-2 and on the category, "politics". Plot it.
 
@@ -49,8 +69,10 @@ all_categories = pytrend.categories()
 #all_categories = pd.DataFrame(all_categories)
 #all_categories = pd.concat({k: pd.DataFrame(v).T for k, v in all_categories.items()}, axis=0)
 all_categories_data = pd.DataFrame.from_dict(all_categories)
-#all_categories_data = all_categories_data['children'].apply(pd.Series)
-print(all_categories_data)
+all_categories_data = all_categories_data['children'].apply(pd.Series)
+main_categories_data = all_categories_data[['name', 'id']]
+#main_categories_data.set_index('name', inplace=True)
+print(main_categories_data)
 print()
 
 #pp = pprint.PrettyPrinter(width=160)
