@@ -22,6 +22,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from datetime import datetime, date, time
 from pytrends.request import TrendReq
+from itertools import chain
 
 def myprint(d, ident=0):
     for k, v in d.items():
@@ -68,7 +69,10 @@ pytrend = TrendReq()
 
 # Returns Categories dictionary for potential usage in help text.
 all_categories = pytrend.categories()
-#print(all_categories.items())
+#print(all_categories['children'][:1])
+#print()
+
+#print(list(chain.from_iterable(all_categories['children'].items())))
 #print()
 #print(all_categories.keys())
 #print()
@@ -81,6 +85,9 @@ all_categories = pytrend.categories()
 #all_categories = pd.concat({k: pd.DataFrame(v).T for k, v in all_categories.items()}, axis=0)
 all_categories_data = pd.DataFrame.from_dict(all_categories)
 all_categories_data = all_categories_data['children'].apply(pd.Series)
+all_categories_data = all_categories_data['children'].apply(pd.Series)
+print(all_categories_data)
+print()
 main_categories_data = all_categories_data[['name', 'id']]
 #main_categories_data.set_index('name', inplace=True)
 print(main_categories_data)
@@ -94,7 +101,7 @@ print()
 #pp = pprint.PrettyPrinter(width=160)
 #pp.pprint(dict(all_categories))
 #print()
-myprint(all_categories)
+#myprint(all_categories)
 
 # TBD Nuertey Odzeyem, ask Wayo when he wakes, "Would 'topic keyword', 'country' 
 # and 'category' inputs to this new python script satisfy his requirement 
@@ -116,7 +123,7 @@ myprint(all_categories)
 # interest_by_region() & related_queries():
 #
 # Google returns a response with code 400 when a key word is > 100 characters.
-pytrend.build_payload(kw_list=['bofrot', 'somanya', 'pojoss'], timeframe='today 10-y', geo = 'GH', cat = 71)
+pytrend.build_payload(kw_list=['covid', 'somanya', 'ewe'], timeframe='today 12-m', geo = 'GH', cat = 71)
 
 # Interest Over Time
 interest_over_time_data = pytrend.interest_over_time()
@@ -136,7 +143,7 @@ interest_by_region_data = pytrend.interest_by_region(resolution='COUNTRY', inc_l
 print(interest_by_region_data)
 print()
 
-interest_by_region_data.reset_index().plot(x='geoName', y=['bofrot', 'palm oil', 'fried rice', 'somanya', 'pojoss'], figsize=(120, 10), kind='bar')
+interest_by_region_data.reset_index().plot(x='geoName', y=['covid', 'somanya', 'ewe'], figsize=(120, 10), kind='bar')
 
 # Related Topics, returns a dictionary of dataframes
 related_topics_dict = pytrend.related_topics()
