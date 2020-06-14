@@ -1,0 +1,52 @@
+# When we resume, first install boost libraries. Navigate to boost.org in Firefox:
+https://www.boost.org/users/download/
+https://www.boost.org/doc/libs/1_73_0/more/getting_started/unix-variants.html
+
+# Determine of the boost automatic apt package install version is new enough (1.73), if not then install manually:
+apt-cache policy libboost-all-dev
+
+# --------------------------
+# Manual Boost Installation:
+# --------------------------
+
+# Use automatic package management to download boost dependencies:
+sudo apt-get update
+sudo apt-get install build-essential g++ python-dev autotools-dev libicu-dev  libbz2-dev 
+
+# In Documents folder:
+cd ~/Documents
+wget https://dl.bintray.com/boostorg/release/1.73.0/source/boost_1_73_0.tar.bz2
+
+cd /usr/local/
+sudo tar --bzip2 -xf ~/Downloads/boost_1_73_0.tar.bz2
+ls
+cd boost_1_73_0/
+
+./bootstrap.sh --help
+./bootstrap.sh
+sudo ./b2 install
+
+# Edit ~/.profile to locate the PATH variable:
+sudo geany ~/.profile
+add isgit to $PATH : "/home/wayo/Workspace/NuerteyUbuntuReference"
+add boost to $PATH : "/usr/local/boost_1_73_0"
+
+sudo apt-get install git-extras
+
+cd ~/Workspace/NuerteyUbuntuReference
+
+git contrib nuertey
+git summary
+git effort |more
+git info
+
+# From previous email
+git clones ...
+
+# Save PDFs in ~/Documents
+
+# Then cscope database work. Ensure to update boost paths to 1.73 ...
+
+
+*** show Wayo how to use git difftool after the gitconfig changes and in relation
+to the changes he has made to the Wayo_Setup_Notes.txt file
