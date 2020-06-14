@@ -1,0 +1,1428 @@
+All categories: 0
+
+    Arts & Entertainment: 3
+        Celebrities & Entertainment News: 184
+        Comics & Animation: 316
+            Animated Films: 1104
+            Anime & Manga: 317
+            Cartoons: 319
+            Comics: 318
+        Entertainment Industry: 612
+            Film & TV Industry: 1116
+                Film & TV Awards: 1108
+                Film & TV Production: 1117
+            Recording Industry: 1115
+                Music Awards: 1113
+                Record Labels: 1114
+        Events & Listings: 569
+            Clubs & Nightlife: 188
+            Concerts & Music Festivals: 891
+            Film Festivals: 1086
+            Live Sporting Events: 1273
+            Movie Listings & Theater Showtimes: 1085
+            Ticket Sales: 614
+        Fun & Trivia: 539
+            Dress-Up & Fashion Games: 1173
+            Flash-Based Entertainment: 447
+            Fun Tests & Silly Surveys: 1174
+        Humor: 182
+            Comedy Films: 1095
+            Live Comedy: 895
+            Political Humor: 1180
+            Spoofs & Satire: 1244
+            TV Comedies: 1047
+        Movies: 34
+            Action & Adventure Films: 1097
+                Martial Arts Films: 1101
+                Superhero Films: 1100
+                Western Films: 1099
+            Animated Films: 1104
+            Bollywood & South Asian Film: 360
+            Classic Films: 1102
+                Silent Films: 1098
+            Comedy Films: 1095
+            Cult & Indie Films: 1103
+            Documentary Films: 1072
+            Drama Films: 1094
+            DVD & Video Shopping: 210
+                DVD & Video Rentals: 1145
+            Family Films: 1291
+            Film & TV Awards: 1108
+            Film Festivals: 1086
+            Horror Films: 615
+            Movie Memorabilia: 213
+            Movie Reference: 1106
+                Movie Reviews & Previews: 1107
+            Musical Films: 1105
+            Romance Films: 1310
+            Science Fiction & Fantasy Films: 616
+            Thriller, Crime & Mystery Films: 1096
+        Music & Audio: 35
+            CD & Audio Shopping: 217
+            Classical Music: 586
+                Opera: 1185
+            Country Music: 587
+            Dance & Electronic Music: 588
+            Experimental & Industrial Music: 1022
+            Folk & Traditional Music: 1023
+            Jazz & Blues: 589
+                Blues: 1040
+                Jazz: 42
+            Latin Pop: 1285
+            Music Art & Memorabilia: 218
+            Music Education & Instruction: 1087
+            Music Equipment & Technology: 1024
+                DJ Resources & Equipment: 1025
+                Music Recording Technology: 1026
+                Musical Instruments: 216
+                    Drums & Percussion: 1327
+                    Guitars: 1325
+                    Pianos & Keyboards: 1326
+                Samples & Sound Libraries: 1091
+            Music Reference: 1027
+                Music Composition & Theory: 1028
+                Sheet Music: 892
+                Song Lyrics & Tabs: 617
+            Music Streams & Downloads: 220
+            Pop Music: 1021
+            Radio: 215
+                Podcasting: 809
+                Talk Radio: 1186
+            Religious Music: 1020
+                Christian & Gospel Music: 585
+            Rock Music: 590
+                Classic Rock & Oldies: 1037
+                Hard Rock & Progressive: 1035
+                Indie & Alternative Music: 1038
+                Metal (Music): 1036
+                Punk (Music): 1041
+            Soundtracks: 893
+            Urban & Hip-Hop: 592
+                Rap & Hip-Hop: 1030
+                Reggaeton: 1242
+                Soul & R&B: 1039
+            Vocals & Show Tunes: 618
+            World Music: 593
+                African Music: 1208
+                Arab & Middle Eastern Music: 1034
+                East Asian Music: 1033
+                Latin American Music: 591
+                    Brazilian Music: 1287
+                    Latin Pop: 1285
+                    Reggaeton: 1242
+                    Salsa & Tropical Music: 1286
+                Reggae & Caribbean Music: 1031
+                    Reggaeton: 1242
+                South Asian Music: 1032
+        Offbeat: 33
+            Edgy & Bizarre: 538
+            Occult & Paranormal: 449
+        Online Media: 613
+            Flash-Based Entertainment: 447
+            Music Streams & Downloads: 220
+            Online Games: 105
+                Massive Multiplayer: 935
+            Online Image Galleries: 1222
+                Photo & Image Sharing: 978
+                Photo Rating Sites: 320
+                Stock Photography: 574
+            Online Video: 211
+                Video Sharing: 979
+            Web Portals: 301
+            Webcams & Virtual Tours: 575
+        Performing Arts: 23
+            Acting & Theater: 894
+            Broadway & Musical Theater: 1243
+            Dance: 581
+            Opera: 1185
+        TV & Video: 36
+            Online Video: 211
+                Video Sharing: 979
+            TV Commercials: 1055
+            TV Guides & Reference: 1187
+            TV Networks & Stations: 359
+            TV Shows & Programs: 358
+                TV Comedies: 1047
+                TV Dramas: 1193
+                    TV Crime & Legal Shows: 1111
+                    TV Medical Shows: 1194
+                    TV Soap Operas: 357
+                TV Family-Oriented Shows: 1110
+                TV Game Shows: 1050
+                TV Reality Shows: 1049
+                TV Sci-Fi & Fantasy Shows: 1112
+                TV Talk Shows: 1048
+        Visual Art & Design: 24
+            Architecture: 477
+            Art & Craft Supplies: 1361
+            Arts Education: 1195
+            Design: 653
+                CAD & CAM: 1300
+                Graphic Design: 654
+                Industrial & Product Design: 655
+                Interior Design: 656
+            Painting: 1167
+            Photographic & Digital Arts: 439
+                Camera & Photo Equipment: 573
+                    Binoculars, Telescopes & Optical Devices: 1384
+                    Cameras & Camcorders: 306
+                        Camcorders: 308
+                        Camera Lenses: 1383
+                        Cameras: 307
+                Photo & Video Software: 577
+                    Video File Formats & Codecs: 1315
+    Autos & Vehicles: 47
+        Automotive Industry: 1190
+        Bicycles & Accessories: 1191
+        Boats & Watercraft: 1140
+        Campers & RVs: 1213
+        Classic Vehicles: 1013
+        Commercial Vehicles: 1214
+            Cargo Trucks & Trailers: 1215
+        Custom & Performance Vehicles: 806
+        Hybrid & Alternative Vehicles: 810
+            Electric & Plug-In Vehicles: 1380
+        Microcars & City Cars: 1317
+        Motorcycles: 273
+        Off-Road Vehicles: 148
+        Personal Aircraft: 1147
+        Scooters & Mopeds: 1212
+        Trucks & SUVs: 610
+            SUVs: 1057
+            Trucks: 1056
+            Vans & Minivans: 1058
+        Vehicle Brands: 815
+            Acura: 820
+            Audi: 821
+            Bentley: 1059
+            BMW: 822
+            Buick: 1060
+            Cadillac: 823
+            Chevrolet: 826
+            Chrysler: 833
+            Citroën: 834
+            Dodge: 836
+            Ferrari: 1061
+            Fiat: 838
+            Ford: 840
+            GM-Daewoo: 896
+            GMC: 842
+            Honda: 843
+            Hummer: 1062
+            Hyundai: 845
+            Isuzu: 1378
+            Jaguar: 1063
+            Jeep: 846
+            Kia: 848
+            Lamborghini: 1064
+            Land Rover: 1065
+            Lexus: 849
+            Lincoln: 850
+            Maserati: 1066
+            Mazda: 851
+            Mercedes-Benz: 852
+            Mercury: 853
+            Mini: 1067
+            Mitsubishi: 854
+            Nissan: 855
+                Infiniti: 1377
+            Peugeot: 856
+            Pontiac: 857
+            Porsche: 858
+            Renault-Samsung: 859
+            Rolls-Royce: 1068
+            Saab: 897
+            Saturn: 860
+            Subaru: 861
+            Suzuki: 1070
+            Toyota: 863
+                Scion: 1069
+            Vauxhall-Opel: 898
+            Volkswagen: 865
+            Volvo: 867
+        Vehicle Codes & Driving Laws: 1294
+            Drunk Driving Law: 968
+        Vehicle Licensing & Registration: 170
+        Vehicle Maintenance: 138
+        Vehicle Parts & Accessories: 89
+            Auto Exterior: 1217
+            Auto Interior: 1218
+            Car Electronics: 1188
+                Car Audio: 230
+                Car Video: 1189
+                GPS & Navigation: 794
+            Engine & Transmission: 1216
+            Vehicle Fuels & Lubricants: 1269
+            Vehicle Wheels & Tires: 438
+        Vehicle Shopping: 473
+            Fuel Economy & Gas Prices: 1268
+            Vehicle Specs, Reviews & Comparisons: 1267
+        Vehicle Shows: 803
+    Beauty & Fitness: 44
+        Beauty Pageants: 1219
+        Body Art: 239
+        Cosmetic Procedures: 1220
+            Cosmetic Surgery: 238
+        Cosmetology & Beauty Professionals: 147
+        Face & Body Care: 143
+            Hygiene & Toiletries: 244
+            Make-Up & Cosmetics: 234
+            Perfumes & Fragrances: 242
+            Skin & Nail Care: 93
+            Unwanted Body & Facial Hair Removal: 144
+        Fashion & Style: 185
+            Fashion Designers & Collections: 98
+            Fashion Modeling: 1155
+        Fitness: 94
+            Bodybuilding: 241
+            Yoga & Pilates: 611
+        Hair Care: 146
+            Hair Loss: 235
+        Spas & Beauty Services: 145
+            Massage Therapy: 557
+        Weight Loss: 236
+    Books & Literature: 22
+        Biographies & Quotations: 690
+        Book Retailers: 355
+        Children's Literature: 1183
+        E-Books: 608
+        Fan Fiction: 540
+        Literary Classics: 1184
+        Magazines: 412
+        Poetry: 565
+        Writers Resources: 1177
+    Business & Industrial: 12
+        Advertising & Marketing: 25
+            Marketing Services: 83
+                Loyalty Cards & Programs: 1309
+            Public Relations: 327
+            Search Engine Optimization & Marketing: 84
+            Telemarketing: 328
+        Aerospace & Defense: 356
+            Defense Industry: 669
+            Space Technology: 668
+        Agriculture & Forestry: 46
+            Agricultural Equipment: 748
+            Aquaculture: 747
+            Crops & Seed: 749
+            Food Production: 621
+            Forestry: 750
+            Horticulture: 751
+            Livestock: 752
+        Automotive Industry: 1190
+        Business Education: 799
+        Business Finance: 1138
+            Commercial Lending: 1160
+            Investment Banking: 1139
+            Risk Management: 620
+            Venture Capital: 905
+        Business News: 784
+            Company News: 1179
+                Company Earnings: 1240
+                Mergers & Acquisitions: 1241
+            Economy News: 1164
+            Financial Markets: 1163
+            Fiscal Policy News: 1165
+        Business Operations: 1159
+            Business Plans & Presentations: 336
+            Human Resources: 157
+                Compensation & Benefits: 723
+                Corporate Training: 331
+                Payroll Services: 724
+                Recruitment & Staffing: 330
+            Management: 338
+                Business Process: 721
+                Project Management: 1360
+                    Project Management Software: 1359
+                Strategic Planning: 722
+                Supply Chain Management: 801
+        Business Services: 329
+            Advertising & Marketing: 25
+                Marketing Services: 83
+                    Loyalty Cards & Programs: 1309
+                Public Relations: 327
+                Search Engine Optimization & Marketing: 84
+                Telemarketing: 328
+            Consulting: 1162
+            Corporate Events: 334
+                Trade Shows & Conventions: 335
+            E-Commerce Services: 340
+                Merchant Services & Payment Systems: 280
+            Fire & Security Services: 726
+            Knowledge Management: 800
+            Office Services: 28
+                Office & Facilities Management: 337
+            Office Supplies: 95
+                Business Cards & Stationary: 1375
+                Office Furniture: 333
+                Printers, Copiers & Fax: 1330
+                    Copiers: 1331
+                    Fax Machines: 1332
+                    Ink & Toner: 1333
+                    Printers: 494
+                    Scanners: 495
+            Outsourcing: 718
+            Photo & Video Services: 576
+                Stock Photography: 574
+            Physical Asset Management: 719
+            Quality Control & Tracking: 720
+            Signage: 1076
+            Writing & Editing Services: 725
+        Chemicals Industry: 288
+            Agrochemicals: 670
+            Cleaning Agents: 671
+            Coatings & Adhesives: 672
+            Dyes & Pigments: 673
+            Plastics & Polymers: 674
+        Construction & Maintenance: 48
+            Building Materials & Supplies: 650
+                Doors & Windows: 827
+                HVAC & Climate Control: 828
+                Nails Screws & Fasteners: 829
+                Plumbing Fixtures & Equipment: 830
+                Wood & Plastics: 831
+            Civil Engineering: 651
+            Construction Consulting & Contracting: 652
+            Urban & Regional Planning: 686
+        Energy & Utilities: 233
+            Electricity: 658
+            Nuclear Energy: 954
+            Oil & Gas: 659
+                Vehicle Fuels & Lubricants: 1269
+            Renewable & Alternative Energy: 657
+            Waste Management: 660
+                Recycling: 1307
+            Water Supply & Treatment: 1349
+        Enterprise Technology: 77
+            Customer Relationship Management (CRM): 341
+            Data Management: 343
+            E-Commerce Services: 340
+                Merchant Services & Payment Systems: 280
+            Enterprise Resource Planning (ERP): 342
+        Entertainment Industry: 612
+            Film & TV Industry: 1116
+                Film & TV Awards: 1108
+                Film & TV Production: 1117
+            Recording Industry: 1115
+                Music Awards: 1113
+                Record Labels: 1114
+        Hospitality Industry: 955
+            Event Planning: 956
+            Food Service: 957
+                Grocery & Food Retailers: 121
+                Restaurant Supply: 816
+        Industrial Materials & Equipment: 287
+            Fluid Handling: 1152
+                Valves Hoses & Fittings: 839
+            Generators: 835
+            Heavy Machinery: 837
+        Manufacturing: 49
+            Factory Automation: 661
+        Metals & Mining: 606
+        Pharmaceuticals & Biotech: 255
+        Printing & Publishing: 1176
+            Document & Printing Services: 332
+                Business Cards & Stationary: 1375
+            Journalism & News Industry: 1204
+        Professional & Trade Associations: 1199
+        Retail Trade: 841
+            Retail Equipment & Technology: 844
+        Small Business: 551
+            Business Formation: 1200
+            Home Office: 727
+            MLM & Business Opportunities: 552
+        Textiles & Nonwovens: 566
+        Transportation & Logistics: 50
+            Aviation: 662
+            Distribution & Logistics: 664
+            Freight & Trucking: 289
+                Cargo Trucks & Trailers: 1215
+            Import & Export: 354
+            Mail & Package Delivery: 1150
+                Couriers & Messengers: 663
+            Maritime Transport: 665
+            Moving & Relocation: 291
+            Packaging: 290
+            Parking: 1306
+                Airport Parking & Transportation: 1245
+            Public Storage: 1347
+            Rail Transport: 666
+            Urban Transport: 667
+    Computers & Electronics: 5
+        CAD & CAM: 1300
+        Computer Hardware: 30
+            Computer Components: 717
+                Chips & Processors: 741
+                Computer Memory: 226
+                Sound & Video Cards: 740
+            Computer Drives & Storage: 496
+                CD & DVD Drives & Burners: 1321
+                CD & DVD Storage Media: 1322
+                Computer Memory: 226
+                Data Backup & Recovery: 1323
+                Flash Drives & Memory Cards: 1318
+                Hard Drives: 1320
+                Memory Card Readers: 1319
+                Network Storage: 729
+            Computer Peripherals: 312
+                Computer Monitors & Displays: 487
+                Input Devices: 493
+                Printers, Copiers & Fax: 1330
+                    Copiers: 1331
+                    Fax Machines: 1332
+                    Ink & Toner: 1333
+                    Printers: 494
+                    Scanners: 495
+            Computer Servers: 728
+            Desktop Computers: 309
+            Hardware Modding & Tuning: 739
+            Laptops & Notebooks: 310
+                Tablet PCs: 1277
+        Computer Security: 314
+            Antivirus & Malware: 315
+            Network Security: 344
+        Consumer Electronics: 78
+            Audio Equipment: 361
+                Headphones: 1396
+                MP3 & Portable Media Players: 227
+                Speakers: 1158
+                Stereo Systems & Components: 91
+            Camera & Photo Equipment: 573
+                Binoculars, Telescopes & Optical Devices: 1384
+                Cameras & Camcorders: 306
+                    Camcorders: 308
+                    Camera Lenses: 1383
+                    Cameras: 307
+            Car Electronics: 1188
+                Car Audio: 230
+                Car Video: 1189
+                GPS & Navigation: 794
+            Electronic Accessories: 1192
+            Gadgets & Portable Electronics: 362
+                E-Book Readers: 1324
+                Handheld Game Consoles: 1046
+                MP3 & Portable Media Players: 227
+                PDAs & Handhelds: 228
+            Game Systems & Consoles: 899
+                Handheld Game Consoles: 1046
+                Nintendo: 1043
+                Sony PlayStation: 1044
+                Xbox: 1045
+            GPS & Navigation: 794
+            TV & Video Equipment: 229
+                DVRs & Set-Top Boxes: 1393
+                Home Theater Systems: 1157
+                Projectors & Screens: 1334
+                Televisions: 305
+                    HDTVs: 1354
+                    LCD TVs: 1356
+                    Plasma TVs: 1355
+                    Projection TVs: 1357
+                Video Players & Recorders: 492
+                    Blu-Ray Players & Recorders: 1394
+                    DVD Players & Recorders: 1395
+        Electronics & Electrical: 434
+            Data Sheets & Electronics Reference: 900
+            Electromechanical Devices: 743
+            Electronic Components: 742
+            Optoelectronics & Fiber: 744
+            Power Supplies: 745
+            Test & Measurement: 746
+        Enterprise Technology: 77
+            Customer Relationship Management (CRM): 341
+            Data Management: 343
+            E-Commerce Services: 340
+                Merchant Services & Payment Systems: 280
+            Enterprise Resource Planning (ERP): 342
+        Networking: 311
+            Data Formats & Protocols: 488
+            Distributed & Parallel Computing: 1298
+            Network Monitoring & Management: 347
+            Networking Equipment: 346
+            VPN & Remote Access: 1279
+        Programming: 31
+            C & C++: 731
+            Developer Jobs: 802
+            Development Tools: 730
+            Java: 732
+            Scripting Languages: 733
+            Windows & .NET: 734
+        Software: 32
+            Business & Productivity Software: 498
+                Accounting & Financial Software: 1341
+                Calendar & Scheduling Software: 1358
+                Presentation Software: 1346
+                Project Management Software: 1359
+                Spreadsheet Software: 1344
+                Word Processing Software: 1345
+            Device Drivers: 225
+            Educational Software: 804
+            Freeware & Shareware: 901
+            Internet Software: 807
+                Content Management: 808
+                Internet Clients & Browsers: 304
+                Proxying & Filtering: 902
+            Mobile Apps & Add-Ons: 1109
+                Ringtones & Mobile Goodies: 532
+            Multimedia Software: 497
+                Audio & Music Software: 1089
+                    Audio Files Formats & Codecs: 1092
+                Desktop Publishing: 1088
+                    Fonts: 805
+                Graphics & Animation Software: 486
+                Media Players: 1090
+                Photo & Video Software: 577
+                    Video File Formats & Codecs: 1315
+            Open Source: 313
+            Operating Systems: 303
+                Linux & Unix: 736
+                Mac OS: 735
+                Mobile OS: 1382
+                Windows OS: 737
+            Software Utilities: 224
+            Web Apps & Online Tools: 1142
+        Technical Support: 567
+        Technology News: 785
+    Finance: 7
+        Accounting & Auditing: 278
+            Accounting & Financial Software: 1341
+            Tax Preparation & Planning: 1283
+        Banking: 37
+        Credit & Lending: 279
+            Auto Financing: 468
+            College Financing: 813
+            Credit Cards: 811
+            Debt Management: 812
+            Home Financing: 466
+        Currencies & Foreign Exchange: 814
+        Financial Planning: 903
+        Grants & Financial Assistance: 1282
+            College Financing: 813
+        Insurance: 38
+            Auto Insurance: 467
+            Health Insurance: 249
+            Home Insurance: 465
+        Investing: 107
+            Commodities & Futures Trading: 904
+        Retirement & Pension: 619
+    Food & Drink: 71
+        Alcoholic Beverages: 277
+            Beer: 404
+            Liquor: 406
+            Wine: 405
+        Candy & Sweets: 906
+        Cooking & Recipes: 122
+            Baked Goods: 907
+            Fruits & Vegetables: 908
+            Meat & Seafood: 909
+            Soups & Stews: 910
+            Vegetarian Cuisine: 825
+            World Cuisines: 911
+                Asian Cuisine: 912
+                Latin American Cuisine: 913
+                Mediterranean Cuisine: 914
+                North American Cuisine: 915
+        Culinary Training: 297
+        Grocery & Food Retailers: 121
+        Non-Alcoholic Beverages: 560
+            Coffee & Tea: 916
+        Restaurants: 276
+            Dining Guides: 917
+            Fast Food: 918
+            Restaurant Supply: 816
+    Games: 8
+        Arcade & Coin-Op Games: 919
+        Board Games: 920
+            Chess & Abstract Strategy Games: 921
+            Miniatures & Wargaming: 922
+        Card Games: 39
+            Collectible Card Games: 923
+            Poker & Casino Games: 924
+        Computer & Video Games: 41
+            Action & Platform Games: 1311
+            Adventure Games: 925
+            Casual Games: 926
+            Driving & Racing Games: 927
+            Fighting Games: 928
+            Game Systems & Consoles: 899
+                Handheld Game Consoles: 1046
+                Nintendo: 1043
+                Sony PlayStation: 1044
+                Xbox: 1045
+            Gaming Media & Reference: 1343
+                Game Cheats & Hints: 381
+            Music & Dance Games: 929
+            Shooter Games: 930
+            Simulation Games: 931
+            Sports Games: 932
+            Strategy Games: 933
+            Video Game Emulation: 1342
+            Video Game Retailers: 1146
+        Family-Oriented Games & Activities: 1290
+            Drawing & Coloring: 1397
+            Dress-Up & Fashion Games: 1173
+        Online Games: 105
+            Massive Multiplayer: 935
+        Party Games: 936
+        Puzzles & Brainteasers: 937
+        Roleplaying Games: 622
+        Table Games: 938
+            Billiards: 939
+            Table Tennis: 940
+    Health: 45
+        Aging & Geriatrics: 623
+            Alzheimer's Disease: 624
+        Alternative & Natural Medicine: 499
+            Acupuncture & Chinese Medicine: 1239
+            Cleansing & Detoxification: 1238
+        Health Conditions: 419
+            AIDS & HIV: 625
+            Allergies: 626
+            Arthritis: 628
+            Cancer: 429
+            Cold & Flu: 629
+            Diabetes: 630
+            Ear Nose & Throat: 1211
+            Eating Disorders: 571
+            Endocrine Conditions: 1328
+                Diabetes: 630
+                Thyroid Conditions: 1329
+            Genetic Disorders: 941
+            GERD & Digestive Disorders: 638
+            Heart & Hypertension: 559
+            Infectious Diseases: 632
+                Cold & Flu: 629
+                Parasites & Parasitic Diseases: 1262
+                Sexually Transmitted Diseases: 421
+                    AIDS & HIV: 625
+                Vaccines & Immunizations: 1263
+            Injury: 817
+            Neurological Disorders: 942
+                Alzheimer's Disease: 624
+            Obesity: 818
+            Pain Management: 819
+                Headaches & Migraines: 631
+            Respiratory Conditions: 824
+                Asthma: 627
+            Skin Conditions: 420
+            Sleep Disorders: 633
+        Health Education & Medical Training: 254
+        Health Foundations & Medical Research: 252
+        Health News: 1253
+            Health Policy: 1256
+        Medical Devices & Equipment: 251
+            Assistive Technology: 1352
+                Mobility Equipment & Accessories: 1353
+        Medical Facilities & Services: 256
+            Doctors' Offices: 634
+            Hospitals & Treatment Centers: 250
+            Medical Procedures: 635
+                Medical Tests & Exams: 943
+                Surgery: 944
+                    Cosmetic Surgery: 238
+                Vaccines & Immunizations: 1263
+            Physical Therapy: 500
+        Medical Literature & Resources: 253
+            Medical Photos & Illustration: 945
+        Men's Health: 636
+            Erectile Dysfunction: 202
+        Mental Health: 437
+            Anxiety & Stress: 639
+            Depression: 640
+            Learning & Developmental Disabilities: 641
+                ADD & ADHD: 642
+        Nursing: 418
+            Assisted Living & Long Term Care: 649
+        Nutrition: 456
+            Special & Restricted Diets: 457
+                Cholesterol Issues: 643
+            Vitamins & Supplements: 237
+        Oral & Dental Care: 245
+        Pediatrics: 645
+        Pharmacy: 248
+            Drugs & Medications: 646
+        Public Health: 947
+            Health Policy: 1256
+            Occupational Health & Safety: 644
+            Poisons & Overdoses: 946
+            Vaccines & Immunizations: 1263
+        Reproductive Health: 195
+            Birth Control: 198
+            Erectile Dysfunction: 202
+            Infertility: 647
+            OBGYN: 558
+                Pregnancy & Maternity: 401
+            Sex Education & Counseling: 536
+            Sexual Enhancement: 1236
+            Sexually Transmitted Diseases: 421
+                AIDS & HIV: 625
+        Substance Abuse: 257
+            Drug & Alcohol Testing: 1351
+            Drug & Alcohol Treatment: 1350
+            Smoking & Smoking Cessation: 1237
+            Steroids & Performance-Enhancing Drugs: 1235
+        Vision Care: 246
+            Eyeglasses & Contacts: 1224
+        Women's Health: 648
+            OBGYN: 558
+                Pregnancy & Maternity: 401
+    Hobbies & Leisure: 65
+        Antiques & Collectibles: 64
+        Bowling: 1016
+        Clubs & Nightlife: 188
+        Clubs & Organizations: 189
+        Contests, Awards & Prizes: 1276
+            Film & TV Awards: 1108
+            Lottery & Sweepstakes: 364
+        Crafts: 284
+            Fiber & Textile Arts: 1230
+        Cycling: 458
+            Bicycles & Accessories: 1191
+        Outdoors: 688
+            Equestrian: 568
+            Fishing: 462
+            Hiking & Camping: 542
+            Hunting & Shooting: 461
+        Paintball: 786
+        Pets & Animals: 66
+            Animal Products & Services: 882
+                Animal Welfare: 883
+                Pet Food & Supplies: 379
+                Veterinarians: 380
+            Pets: 563
+                Birds: 884
+                Cats: 885
+                Dogs: 886
+                Exotic Pets: 607
+                Fish & Aquaria: 887
+                Horses: 888
+                Rabbits & Rodents: 889
+                Reptiles & Amphibians: 890
+            Wildlife: 119
+                Insects & Entomology: 1278
+                Zoos-Aquariums-Preserves: 1009
+        Photographic & Digital Arts: 439
+            Camera & Photo Equipment: 573
+                Binoculars, Telescopes & Optical Devices: 1384
+                Cameras & Camcorders: 306
+                    Camcorders: 308
+                    Camera Lenses: 1383
+                    Cameras: 307
+            Photo & Video Software: 577
+                Video File Formats & Codecs: 1315
+        Radio Control & Modeling: 787
+        Recreational Aviation: 999
+            Personal Aircraft: 1147
+        Running & Walking: 541
+        Special Occasions: 977
+            Gifts & Special Event Items: 70
+                Cards & Greetings: 100
+                Flowers: 323
+                Gifts: 99
+                Party & Holiday Supplies: 324
+            Holidays & Seasonal Events: 678
+                Birthdays & Name Days: 1270
+                Carnival & Mardi Gras: 1246
+                Christian Holidays: 1274
+                    Christmas: 1078
+                    Easter: 1123
+                Halloween & October 31st: 1079
+                Islamic Holidays: 1275
+                Jewish Holidays: 1124
+                New Year: 1271
+                Thanksgiving: 1125
+                Valentine's Day: 1122
+            Weddings: 293
+        Subcultures & Niche Interests: 502
+            Goth Subculture: 503
+            Science Fiction & Fantasy: 676
+        Water Activities: 1002
+            Boating: 459
+                Boats & Watercraft: 1140
+            Diving & Underwater Activities: 1305
+            Surf & Swim: 689
+            Water Sports: 118
+    Home & Garden: 11
+        Bed & Bath: 948
+            Bathroom: 1365
+            Bedroom: 1366
+                Bedding & Bed Linens: 1369
+                Beds & Headboards: 1367
+                Mattresses: 1368
+        Domestic Services: 472
+            Cleaning Supplies & Services: 949
+        Gardening & Landscaping: 269
+        Home Appliances: 271
+            Major Kitchen Appliances: 1293
+            Small Kitchen Appliances: 1292
+            Water Filters & Purifiers: 1371
+        Home Furnishings: 270
+            Clocks: 1363
+            Lamps & Lighting: 272
+            Rugs & Carpets: 1362
+            Sofas & Chairs: 1370
+        Home Improvement: 158
+            Construction & Power Tools: 950
+            Doors & Windows: 827
+            Flooring: 832
+                Rugs & Carpets: 1362
+            House Painting & Finishing: 1232
+            HVAC & Climate Control: 828
+            Plumbing: 1153
+            Roofing: 1175
+        Home Storage & Shelving: 1348
+        Homemaking & Interior Decor: 137
+        HVAC & Climate Control: 828
+        Kitchen & Dining: 951
+            Cookware & Diningware: 120
+                Cutlery & Cutting Accessories: 1373
+            Major Kitchen Appliances: 1293
+            Small Kitchen Appliances: 1292
+        Laundry: 1364
+        Nursery & Playroom: 1372
+        Pest Control: 471
+        Swimming Pools & Spas: 952
+        Yard & Patio: 953
+    Internet & Telecom: 13
+        Communications Equipment: 385
+            Radio Equipment: 1182
+        Email & Messaging: 394
+            Microblogging: 1381
+            Text & Instant Messaging: 1379
+            Voice & Video Chat: 386
+        Mobile & Wireless: 382
+            Mobile & Wireless Accessories: 1171
+                Bluetooth Accessories: 1170
+            Mobile Apps & Add-Ons: 1109
+                Ringtones & Mobile Goodies: 532
+            Mobile OS: 1382
+            Mobile Phones: 390
+                Smart Phones: 1071
+        Search Engines: 485
+            People Search: 1234
+        Service Providers: 383
+            Cable & Satellite Providers: 501
+            ISPs: 104
+            Phone Service Providers: 384
+                Calling Cards: 389
+        Teleconferencing: 392
+        Web Apps & Online Tools: 1142
+        Web Portals: 301
+        Web Services: 302
+            Affiliate Programs: 326
+            Search Engine Optimization & Marketing: 84
+            Web Design & Development: 422
+            Web Hosting & Domain Registration: 53
+            Web Stats & Analytics: 675
+    Jobs & Education: 958
+        Education: 74
+            Academic Conferences & Publications: 1289
+            Alumni & Reunions: 1015
+            Arts Education: 1195
+            Business Education: 799
+            Colleges & Universities: 372
+            Distance Learning: 367
+            Early Childhood Education: 1012
+            Foreign Language Study: 1266
+            Health Education & Medical Training: 254
+            Homeschooling: 791
+            Legal Education: 792
+            Music Education & Instruction: 1087
+            Primary & Secondary Schooling (K-12): 371
+            Special Education: 1118
+            Standardized & Admissions Tests: 373
+            Study Abroad: 1308
+            Teaching & Classroom Resources: 700
+            Training & Certification: 1388
+            Vocational & Continuing Education: 369
+                Computer Education: 1229
+        Jobs: 60
+            Career Resources & Planning: 959
+            Developer Jobs: 802
+            Job Listings: 960
+            Resumes & Portfolios: 961
+    Law & Government: 19
+        Government: 76
+            Courts & Judiciary: 1075
+            Embassies & Consulates: 962
+            Executive Branch: 963
+            Government Agencies: 1387
+            Government Contracting & Procurement: 1385
+            Intelligence & Counterterrorism: 1221
+            Legislative Branch: 964
+            Lobbying: 1386
+            Multilateral Organizations: 965
+            Public Finance: 1161
+            Public Policy: 1316
+                Drug Laws & Policy: 1314
+                Fiscal Policy News: 1165
+                Health Policy: 1256
+                Immigration Policy & Border Issues: 1313
+                International Relations: 521
+            Royalty: 702
+            State & Local Government: 966
+            Visa & Immigration: 555
+        Legal: 75
+            Accident & Personal Injury Law: 427
+            Bankruptcy: 423
+            Business & Corporate Law: 1272
+            Constitutional Law & Civil Rights: 967
+            Criminal Law: 424
+            Family Law: 522
+            Intellectual Property: 426
+            Labor & Employment Law: 701
+            Legal Education: 792
+            Legal Services: 969
+            Product Liability: 970
+            Vehicle Codes & Driving Laws: 1294
+                Drunk Driving Law: 968
+        Military: 366
+            Air Force: 1247
+            Army: 1248
+            Marines: 1250
+            Military History: 1288
+            Navy: 1249
+            Veterans: 793
+        Public Safety: 166
+            Crime & Justice: 704
+                Corporate & Financial Crime: 1181
+                Gangs & Organized Crime: 1312
+                Prisons & Corrections: 1284
+            Emergency Services: 168
+            Law Enforcement: 535
+                Intelligence & Counterterrorism: 1221
+            Public Health: 947
+                Health Policy: 1256
+                Occupational Health & Safety: 644
+                Poisons & Overdoses: 946
+                Vaccines & Immunizations: 1263
+            Security Products & Services: 705
+        Social Services: 508
+            Counseling Services: 511
+            Welfare & Unemployment: 706
+    News: 16
+        Broadcast & Network News: 112
+        Business News: 784
+            Company News: 1179
+                Company Earnings: 1240
+                Mergers & Acquisitions: 1241
+            Economy News: 1164
+            Financial Markets: 1163
+            Fiscal Policy News: 1165
+        Celebrities & Entertainment News: 184
+        Gossip & Tabloid News: 507
+            Scandals & Investigations: 1259
+        Health News: 1253
+            Health Policy: 1256
+        Journalism & News Industry: 1204
+        Local News: 572
+        Newspapers: 408
+        Politics: 396
+            Campaigns & Elections: 398
+            Left-Wing Politics: 410
+            Media Critics & Watchdogs: 1203
+            Opinion & Commentary: 1201
+            Political Polls & Surveys: 1202
+            Right-Wing Politics: 409
+        Sports News: 1077
+        Technology News: 785
+        Weather: 63
+        World News: 1209
+    Online Communities: 299
+        Blogging Resources & Services: 504
+            Microblogging: 1381
+        Dating & Personals: 55
+            Matrimonial Services: 546
+            Personals: 102
+            Photo Rating Sites: 320
+        File Sharing & Hosting: 321
+        Forum & Chat Providers: 191
+        Online Goodies: 43
+            Clip Art & Animated GIFs: 1223
+            Skins Themes & Wallpapers: 578
+            Social Network Apps & Add-Ons: 847
+        Online Journals & Personal Sites: 582
+        Photo & Video Sharing: 275
+            Photo & Image Sharing: 978
+            Video Sharing: 979
+        Social Networks: 529
+            Social Network Apps & Add-Ons: 847
+        Virtual Worlds: 972
+    People & Society: 14
+        Disabled & Special Needs: 677
+            Assistive Technology: 1352
+                Mobility Equipment & Accessories: 1353
+        Ethnic & Identity Groups: 56
+            Africans & Diaspora: 579
+                African-Americans: 547
+            Arabs & Middle Easterners: 556
+            Asians & Diaspora: 1257
+                East Asians & Diaspora: 549
+                South Asians & Diaspora: 528
+                Southeast Asians & Pacific Islanders: 580
+            Discrimination & Identity Relations: 1205
+            Eastern Europeans: 682
+            Expatriate Communities: 973
+            Gay-Lesbian-Bisexual-Transgender: 113
+            Indigenous Peoples: 681
+                Native Americans: 171
+            Jewish Culture: 550
+                Jewish Holidays: 1124
+            Latinos & Latin-Americans: 548
+            Western Europeans: 683
+        Family & Relationships: 1131
+            Etiquette: 1304
+            Family: 1132
+                Ancestry & Genealogy: 400
+                Baby & Pet Names: 1231
+                Parenting: 58
+                    Adoption: 974
+                    Babies & Toddlers: 1374
+                        Baby Care & Hygiene: 115
+                    Child Care: 403
+                    Pregnancy & Maternity: 401
+                    Youth Camps: 402
+            Friendship: 1134
+            Marriage: 1133
+                Divorce & Separation: 1261
+                Weddings: 293
+            Romance: 1135
+            Troubled Relationships: 1260
+                Divorce & Separation: 1261
+        Kids & Teens: 154
+            Children's Interests: 679
+                Children's Literature: 1183
+                Family Films: 1291
+                Family-Oriented Games & Activities: 1290
+                    Drawing & Coloring: 1397
+                    Dress-Up & Fashion Games: 1173
+                TV Family-Oriented Shows: 1110
+            Teen Interests: 680
+        Religion & Belief: 59
+            Astrology & Divination: 448
+            Buddhism: 862
+            Christianity: 864
+                Christian Holidays: 1274
+                    Christmas: 1078
+                    Easter: 1123
+            Hinduism: 866
+            Islam: 868
+                Islamic Holidays: 1275
+            Judaism: 869
+            Occult & Paranormal: 449
+            Pagan & Esoteric Traditions: 1258
+            Places of Worship: 1296
+            Scientology: 1251
+            Self-Help & Motivational: 870
+            Skeptics & Non-Believers: 975
+            Spirituality: 101
+            Theology & Religious Study: 1340
+        Seniors & Retirement: 298
+        Social Issues & Advocacy: 54
+            Animal Welfare: 883
+            Charity & Philanthropy: 57
+            Discrimination & Identity Relations: 1205
+            Drug Laws & Policy: 1314
+            Environmental Issues: 82
+                Climate Change & Global Warming: 1255
+            Health Policy: 1256
+            Housing & Development: 1166
+            Human Rights & Liberties: 1280
+            Immigration Policy & Border Issues: 1313
+            Media Critics & Watchdogs: 1203
+            Poverty & Hunger: 1127
+            Privacy Issues: 1281
+            Reproductive Rights: 976
+            Same-Sex Marriage: 1301
+            Work & Labor Issues: 703
+                Labor & Employment Law: 701
+                Unions & Labor Movement: 1121
+        Social Sciences: 509
+            Communications & Media Studies: 1302
+                Public Speaking: 1303
+            Demographics: 510
+            Economics: 520
+            International Relations: 521
+            Psychology: 543
+        Subcultures & Niche Interests: 502
+            Goth Subculture: 503
+            Science Fiction & Fantasy: 676
+    Pets & Animals: 66
+        Animal Products & Services: 882
+            Animal Welfare: 883
+            Pet Food & Supplies: 379
+            Veterinarians: 380
+        Pets: 563
+            Birds: 884
+            Cats: 885
+            Dogs: 886
+            Exotic Pets: 607
+            Fish & Aquaria: 887
+            Horses: 888
+            Rabbits & Rodents: 889
+            Reptiles & Amphibians: 890
+        Wildlife: 119
+            Insects & Entomology: 1278
+            Zoos-Aquariums-Preserves: 1009
+    Real Estate: 29
+        Apartments & Residential Rentals: 378
+        Commercial & Investment Real Estate: 1178
+        Property Development: 687
+        Property Inspections & Appraisals: 463
+        Property Management: 425
+        Real Estate Agencies: 96
+        Real Estate Listings: 1080
+        Timeshares & Vacation Properties: 1081
+    Reference: 533
+        Directories & Listings: 527
+            Business & Personal Listings: 377
+        General Reference: 980
+            Biographies & Quotations: 690
+            Calculators & Reference Tools: 691
+            Dictionaries & Encyclopedias: 692
+            Educational Resources: 374
+            Forms Guides & Templates: 693
+                Legal Forms: 1137
+            How-To, DIY & Expert Content: 694
+            Public Records: 1136
+            Time & Calendars: 695
+        Geographic Reference: 1084
+            City & Local Guides: 1014
+            Maps: 268
+                Traffic & Public Transit: 685
+        Humanities: 474
+            History: 433
+                Military History: 1288
+            Myth & Folklore: 609
+            Philosophy: 1093
+        Language Resources: 108
+            Dictionaries & Encyclopedias: 692
+            Foreign Language Resources: 1264
+                Foreign Language Study: 1266
+                Translation Tools & Resources: 1265
+        Libraries & Museums: 375
+        Social Sciences: 509
+            Communications & Media Studies: 1302
+                Public Speaking: 1303
+            Demographics: 510
+            Economics: 520
+            International Relations: 521
+            Psychology: 543
+        Technical Reference: 1233
+            Data Sheets & Electronics Reference: 900
+            Technical Support: 567
+    Science: 174
+        Astronomy: 435
+        Biological Sciences: 440
+            Anatomy: 788
+            Flora & Fauna: 981
+                Insects & Entomology: 1278
+            Genetics: 982
+            Neuroscience: 1226
+        Chemistry: 505
+        Computer Science: 1227
+            Computer Education: 1229
+            Distributed & Parallel Computing: 1298
+            Machine Learning & Artificial Intelligence: 1299
+            Programming: 31
+                C & C++: 731
+                Developer Jobs: 802
+                Development Tools: 730
+                Java: 732
+                Scripting Languages: 733
+                Windows & .NET: 734
+        Earth Sciences: 1168
+            Atmospheric Science: 1254
+                Climate Change & Global Warming: 1255
+            Geology: 443
+            Paleontology: 1169
+            Water & Marine Sciences: 441
+        Ecology & Environment: 442
+            Climate Change & Global Warming: 1255
+        Engineering & Technology: 231
+            CAD & CAM: 1300
+            Robotics: 1141
+            Technology News: 785
+        Mathematics: 436
+            Statistics: 1252
+        Physics: 444
+        Scientific Equipment: 445
+        Scientific Institutions: 446
+    Shopping: 18
+        Antiques & Collectibles: 64
+        Apparel: 68
+            Apparel Services: 1228
+            Athletic Apparel: 983
+            Casual Apparel: 984
+                T-Shirts: 428
+            Children's Clothing: 985
+            Clothing Accessories: 124
+                Gems & Jewelry: 350
+                Handbags & Purses: 986
+                Watches: 987
+            Costumes: 988
+            Eyewear: 989
+                Eyeglasses & Contacts: 1224
+            Footwear: 697
+            Formal Wear: 990
+            Headwear: 991
+            Men's Clothing: 992
+            Outerwear: 993
+            Sleepwear: 994
+            Swimwear: 995
+            Undergarments: 530
+            Uniforms & Workwear: 996
+            Women's Clothing: 997
+        Auctions: 292
+        Classifieds: 61
+        Consumer Electronics: 78
+            Audio Equipment: 361
+                Headphones: 1396
+                MP3 & Portable Media Players: 227
+                Speakers: 1158
+                Stereo Systems & Components: 91
+            Camera & Photo Equipment: 573
+                Binoculars, Telescopes & Optical Devices: 1384
+                Cameras & Camcorders: 306
+                    Camcorders: 308
+                    Camera Lenses: 1383
+                    Cameras: 307
+            Car Electronics: 1188
+                Car Audio: 230
+                Car Video: 1189
+                GPS & Navigation: 794
+            Electronic Accessories: 1192
+            Gadgets & Portable Electronics: 362
+                E-Book Readers: 1324
+                Handheld Game Consoles: 1046
+                MP3 & Portable Media Players: 227
+                PDAs & Handhelds: 228
+            Game Systems & Consoles: 899
+                Handheld Game Consoles: 1046
+                Nintendo: 1043
+                Sony PlayStation: 1044
+                Xbox: 1045
+            GPS & Navigation: 794
+            TV & Video Equipment: 229
+                DVRs & Set-Top Boxes: 1393
+                Home Theater Systems: 1157
+                Projectors & Screens: 1334
+                Televisions: 305
+                    HDTVs: 1354
+                    LCD TVs: 1356
+                    Plasma TVs: 1355
+                    Projection TVs: 1357
+                Video Players & Recorders: 492
+                    Blu-Ray Players & Recorders: 1394
+                    DVD Players & Recorders: 1395
+        Consumer Resources: 69
+            Consumer Advocacy & Protection: 97
+            Coupons & Discount Offers: 365
+            Customer Services: 450
+                Loyalty Cards & Programs: 1309
+                Technical Support: 567
+                Warranties & Service Contracts: 451
+            Product Reviews & Price Comparisons: 353
+                Price Comparisons: 352
+                Vehicle Specs, Reviews & Comparisons: 1267
+        Entertainment Media: 1143
+            Book Retailers: 355
+            CD & Audio Shopping: 217
+            DVD & Video Shopping: 210
+                DVD & Video Rentals: 1145
+            Entertainment Media Rentals: 1144
+                DVD & Video Rentals: 1145
+            Video Game Retailers: 1146
+        Gifts & Special Event Items: 70
+            Cards & Greetings: 100
+            Flowers: 323
+            Gifts: 99
+            Party & Holiday Supplies: 324
+        Luxury Goods: 696
+        Mass Merchants & Department Stores: 73
+        Photo & Video Services: 576
+            Stock Photography: 574
+        Shopping Portals & Search Engines: 531
+        Sporting Goods: 263
+            Bicycles & Accessories: 1191
+            Sports Memorabilia: 1083
+        Swap Meets & Outdoor Markets: 1210
+        Ticket Sales: 614
+        Tobacco Products: 123
+        Toys: 432
+        Wholesalers & Liquidators: 1225
+    Sports: 20
+        College Sports: 1073
+        Combat Sports: 514
+            Boxing: 515
+            Martial Arts: 516
+            Wrestling: 512
+        Extreme Sports: 554
+            Drag & Street Racing: 1206
+            Stunts & Dangerous Feats: 1207
+        Fantasy Sports: 998
+        Individual Sports: 1000
+            Bowling: 1016
+            Cycling: 458
+                Bicycles & Accessories: 1191
+            Golf: 261
+            Gymnastics: 519
+            Racquet Sports: 262
+                Tennis: 1376
+            Running & Walking: 541
+            Skate Sports: 1126
+            Track & Field: 518
+        Live Sporting Events: 1273
+        Motor Sports: 180
+            Drag & Street Racing: 1206
+        Sporting Goods: 263
+            Bicycles & Accessories: 1191
+            Sports Memorabilia: 1083
+        Sports Coaching & Training: 1082
+        Sports News: 1077
+        Team Sports: 1001
+            American Football: 258
+            Baseball: 259
+            Basketball: 264
+            Cheerleading: 534
+            Cricket: 296
+            Handball: 1017
+            Hockey: 260
+            Rugby: 517
+            Soccer: 294
+            Volleyball: 699
+        Water Sports: 118
+        Winter Sports: 265
+            Ice Skating: 1149
+            Skiing & Snowboarding: 1148
+        World Sports Competitions: 1198
+            Olympics: 513
+    Travel: 67
+        Air Travel: 203
+            Airport Parking & Transportation: 1245
+            Recreational Aviation: 999
+                Personal Aircraft: 1147
+        Bus & Rail: 708
+        Car Rental & Taxi Services: 205
+        Carpooling & Ridesharing: 1339
+        Cruises & Charters: 206
+        Hotels & Accommodations: 179
+        Luggage & Travel Accessories: 1003
+        Specialty Travel: 1004
+            Adventure Travel: 707
+            Agritourism: 1389
+            Ecotourism: 1005
+            Sightseeing Tours: 1390
+            Vineyards & Wine Tourism: 1391
+        Tourist Destinations: 208
+            Beaches & Islands: 1074
+            Historical Sites & Buildings: 1006
+            Lakes & Rivers: 1120
+            Mountain & Ski Resorts: 1119
+            Regional Parks & Gardens: 1007
+            Theme Parks: 1008
+            Zoos-Aquariums-Preserves: 1009
+        Travel Agencies & Services: 1010
+            Tourist Boards & Visitor Centers: 1392
+            Vacation Offers: 1019
+        Travel Guides & Travelogues: 1011
