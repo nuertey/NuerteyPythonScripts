@@ -78,9 +78,9 @@ interest_over_time_data = pytrend.interest_over_time()
 print(interest_over_time_data)
 print()
 
-print("First plotting... ")
+#print("First plotting... ")
 sns.set(color_codes=True)
-dx = interest_over_time_data.plot.line(figsize = (9,6), title = "Interest Over Time")
+dx = interest_over_time_data.plot.line(figsize = (9,6), title = "Trending Topics In Ghana - Interest Over Time")
 dx.set_xlabel('Date')
 dx.set_ylabel('Trends Index')
 dx.tick_params(axis='both', which='major', labelsize=13)
@@ -90,9 +90,7 @@ interest_by_region_data = pytrend.interest_by_region(resolution='COUNTRY', inc_l
 print(interest_by_region_data)
 print()
 
-print("Second plotting... ")
 interest_by_region_data.reset_index().plot(x='geoName', y=['covid', 'somanya', 'ewe', 'cocoa', 'gold'], figsize=(120, 10), kind='bar')
-plt.show()
 
 # Related Topics, returns a dictionary of dataframes
 related_topics_dict = pytrend.related_topics()
@@ -119,22 +117,4 @@ suggestions_dict = pytrend.suggestions(keyword='Ghana')
 print(suggestions_dict)
 print()
 
-# ======================================================================
-# for example, lets enter some keywords here, select a time range and country
-pytrend.build_payload(kw_list=['tea', 'coffee', 'coke', 'milk', 'water'], timeframe='today 12-m', geo = 'US', cat =67)
-
-#to get interest over time score, you'll need pytrend.interest_over_time() function. 
-#For more functions, check this: https://github.com/GeneralMills/pytrends
-interest_over_time_df = pytrend.interest_over_time()
-print(interest_over_time_df.head())
-
-# Let's draw
-import matplotlib.pyplot as plt
-import seaborn as sns
-sns.set(color_codes=True)
-ax = interest_over_time_df.plot.line(figsize = (9,6), title = "Interest Over Time")
-ax.set_xlabel('Date')
-ax.set_ylabel('Trends Index')
-ax.tick_params(axis='both', which='major', labelsize=13)
 plt.show()
-
