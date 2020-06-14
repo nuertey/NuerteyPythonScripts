@@ -5,6 +5,7 @@ import time
 import datetime
 import pytrends
 import pycountry
+import collections
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -23,6 +24,15 @@ def myprint(d, ident=0):
         elif k != 'children':
             print('\t' * (ident+1) + "{0} : {1}\n".format(k, v))
 
+# The yield from operator returns an item from a generator one at a time.
+# This syntax for delegating to a subgenerator was added in 3.3
+def flatten(l):
+    for el in l:
+        if isinstance(el, collections.Iterable) and not isinstance(el, (str, bytes)):
+            yield from flatten(el)
+        else:
+            yield el
+
 for ele in d.values():
     if isinstance(ele,dict):
        for k, v in ele.items():
@@ -30,21 +40,23 @@ for ele in d.values():
 
 def RecursiveTraverse(nested_categories, indent=0):
     for element in nested_categories.values():
+        element = str(element).strip('[').strip(']')
         if isinstance(element, dict):
-            next_key = None
-            temp = iter(element) 
-            for iter_key, (key, value) in zip(temp, element.items()):
+            for key, value in element.items():
                 # print('\t' * indent + str(key))
-                next_key = next(temp, None)
-                if iter_key == 'children' and next_key != 'children' and next_key != None:
+                if key == 'children':
+                    RecursiveTraverse(value, indent+1)
+                elif key == 'name':
                     #print('\t' * (indent+1) + str(value))
                     category_data = pd.DataFrame.from_dict(value)
                     #category_data = category_data['children'].apply(pd.Series)
                     print(category_data)
                     print()
-                elif iter_key == 'children':
-                    RecursiveTraverse(value, indent+1)
+
         else:
+            print('\t' * (indent+1) + "Warning! Not a dictionary:")
+            print('\t' * (indent+1) + str(element))
+            print()
 
 pytrend = TrendReq()
 all_categories = pytrend.categories()
