@@ -11,6 +11,9 @@
 #  Created: June 13, 2020
 #   Author: Nuertey Odzeyem
 #**********************************************************************/
+import os
+import sys
+import argparse
 import time
 import datetime
 import pytrends
@@ -21,14 +24,13 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from datetime import datetime, date, time
 from pytrends.request import TrendReq
+from argparse import RawTextHelpFormatter
 
 # Run output of script for Emile on topics trending in Cameroon by region
 # ISO-3166-2 and on the category, "politics". Plot it.
 
 # Also run output of script for Emile on Cameroon as a topic trending 
 # by Country (ISO-3166-1) world-wide for 20 years. Plot it. 
-#
-# country_name = pycountry.countries.get({country_code}).name
 
 pd.set_option('display.max_rows', 100)
 
@@ -38,7 +40,8 @@ countries_data['country_name'] = [ pycountry.countries.get(alpha_2=code).name fo
 print(countries_data)
 print()
 
-# Login to Google. Only need to run this once, the rest of requests will use the same session.
+# Login to Google. Only need to run this once, the rest of requests will
+# use the same session.
 pytrend = TrendReq()
 
 # category Category to search within (number defaults to all categories)
@@ -63,9 +66,51 @@ print()
 # python nuertey_trending_topics.py -c ghana -g fashion -t kente "
 #
 # where -c denotes country for which to monitor for realtime trending topics (list of ISO_3166-2 country codes will be displayed in help text)
-#       -g denotes Google Trends Categories listing (list of 25 major category entries will be displayed in help text)
-#       -v denotes Google Trends Categories listing (verbosely list all 1427 categories and sub-categories recursively in help text)
+#       -g denotes optional Google Trends Categories listing (list of 25 major category entries will be displayed in help text). Default is all categories.
 #       -t denotes a trending topic keyword of interest
+
+# parser.choices seems to better prefer dict objects to strings. 
+# Better input matching and option display:
+def init_argparse() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        usage="%(prog)s [-h] | [-v] | [-c country_code] | [-g category] [-t topic]",
+        description="Welcome, Velkommen, Woé zɔ, Karibu, Mo-heee to Nuertey's Trending Topics Displayer. How has this topic been trending in the various regions of this country? Program options described below:",
+        epilog="Enjoy using Nuertey's Trending Topics Displayer to latch upon the World's pulse!",
+        formatter_class=RawTextHelpFormatter,
+        allow_abbrev=False,
+        add_help=True
+    )
+    parser.add_argument(
+        "-v", "--version", action="version",
+        version=f"{parser.prog} version 0.0.1"
+    )
+    parser.add_argument(
+        "-c", "--country", action='store', choices=countries_data['country_code_2'],
+        help="\nSpecify the country whose trending topics you want to see. Where country MUST be denoted by one of the country codes from the \npossible Google Trends API range of countries below: \n\n{0}\n".format(countries_data.to_string(index=False)),
+        metavar='COUNTRY_CODE_FROM_LIST_BELOW'
+    )
+    parser.add_argument(
+        "-g", "--category", action='store', choices=main_categories_data['id'],
+        help="\nOptionally specify the category from which to query the trending topics. Default is all categories. Where category MUST be denoted by one of the category ids from the \npossible Google Trends API range of main categories below: \n\n{0}\n".format(main_categories_data.to_string(index=False)),
+        nargs='?', default=0
+        metavar='CATEGORY_ID_FROM_LIST_BELOW'
+    )
+    parser.add_argument(
+        "-t", "--topic", action='store',
+        type=str,
+        help="Specify the topic you are interested in."
+    )
+    return parser
+
+parser = init_argparse()
+args = parser.parse_args()
+country = args.country
+category = args.category
+topic = args.topic
+
+print(country)
+print(category)
+print(topic)
 
 # Create payload and capture API tokens. Only needed for interest_over_time(),
 # interest_by_region() & related_queries():
