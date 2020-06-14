@@ -37,8 +37,8 @@ pd.set_option('display.max_rows', 100)
 list_alpha_2 = [i.alpha_2 for i in list(pycountry.countries)] 
 countries_data = pd.DataFrame(np.column_stack([list_alpha_2]), columns=['country_code_2'])
 countries_data['country_name'] = [ pycountry.countries.get(alpha_2=code).name for code in countries_data['country_code_2'] ] 
-print(countries_data)
-print()
+#print(countries_data)
+#print()
 
 # Login to Google. Only need to run this once, the rest of requests will
 # use the same session.
@@ -51,8 +51,8 @@ all_categories = pytrend.categories()
 all_categories_data = pd.DataFrame.from_dict(all_categories)
 all_categories_data = all_categories_data['children'].apply(pd.Series)
 main_categories_data = all_categories_data[['name', 'id']]
-print(main_categories_data)
-print()
+#print(main_categories_data)
+#print()
 
 # TBD Nuertey Odzeyem, ask Wayo when he wakes, "Would 'topic keyword', 'country' 
 # and 'category' inputs to this new python script satisfy his requirement 
@@ -71,10 +71,13 @@ print()
 
 # parser.choices seems to better prefer dict objects to strings. 
 # Better input matching and option display:
+country_codes_dictionary = countries_data.to_dict('list') 
+category_codes_dictionary = main_categories_data.to_dict('list') 
+
 def init_argparse() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         usage="%(prog)s [-h] | [-v] | [-c country_code] | [-g category] [-t topic]",
-        description="Welcome, Velkommen, Woé zɔ, Karibu, Mo-heee to Nuertey's Trending Topics Displayer. How has this topic been trending in the various regions of this country? Program options described below:",
+        description="Welcome, Velkommen, Woé zɔ, Karibu, Mo-heee to Nuertey's Trending Topics Displayer. How has this topic been trending in the various regions of this country for the past year? Program options described below:",
         epilog="Enjoy using Nuertey's Trending Topics Displayer to latch upon the World's pulse!",
         formatter_class=RawTextHelpFormatter,
         allow_abbrev=False,
@@ -85,14 +88,14 @@ def init_argparse() -> argparse.ArgumentParser:
         version=f"{parser.prog} version 0.0.1"
     )
     parser.add_argument(
-        "-c", "--country", action='store', choices=countries_data['country_code_2'],
+        "-c", "--country", action='store', choices=country_codes_dictionary['country_code_2'],
         help="\nSpecify the country whose trending topics you want to see. Where country MUST be denoted by one of the country codes from the \npossible Google Trends API range of countries below: \n\n{0}\n".format(countries_data.to_string(index=False)),
         metavar='COUNTRY_CODE_FROM_LIST_BELOW'
     )
     parser.add_argument(
-        "-g", "--category", action='store', choices=main_categories_data['id'],
+        "-g", "--category", action='store', choices=category_codes_dictionary['id'],
         help="\nOptionally specify the category from which to query the trending topics. Default is all categories. Where category MUST be denoted by one of the category ids from the \npossible Google Trends API range of main categories below: \n\n{0}\n".format(main_categories_data.to_string(index=False)),
-        nargs='?', default=0
+        nargs='?', default=0,
         metavar='CATEGORY_ID_FROM_LIST_BELOW'
     )
     parser.add_argument(
