@@ -28,6 +28,11 @@ from argparse import RawTextHelpFormatter
 
 pd.set_option('display.max_rows', 100)
 
+# Note that during testing, it was discovered that Kenya as country input
+# is failing. See the following pytrends github issue that is tracking it:
+#
+# https://github.com/GeneralMills/pytrends/issues/316
+
 # Login to Google. Only need to run this once, the rest of requests will
 # use the same session.
 pytrend = TrendReq()
@@ -64,6 +69,7 @@ def init_argparse() -> argparse.ArgumentParser:
     parser.add_argument(
         "-c", "--country", action='store', choices=country_codes_dictionary['country_code_2'],
         help="\nSpecify the country whose trending topics you want to see. Where country MUST be denoted by one of the country codes from the \npossible Google Trends API range of countries below: \n\n{0}\n".format(countries_data.to_string(index=False)),
+        nargs='?', default='GH',
         metavar='COUNTRY_CODE_FROM_LIST_BELOW'
     )
     parser.add_argument(
@@ -84,37 +90,18 @@ parser = init_argparse()
 args = parser.parse_args()
 country = args.country
 category = args.category
-topic = args.topic
+topics = args.topics
 
-#print(country)
-#print(category)
-#print(topic)
-
-if country is None:
-    country = 'GH'
-    culprit_country_name = 'Ghana'
-    print(culprit_country_name)
-    print()
-elif country is not None:
-    culprit_country_name = countries_data.loc[countries_data['country_code_2'] == country,'country_name']
-    culprit_country_name = next(iter(culprit_country_name), 'no match')
-    print(culprit_country_name)
-    print()
-
-if topic is None:
-    topic = ['covid', 'somanya', 'ewe', 'cocoa', 'gold']
-    print(topic)
-    print()
-elif topic is not None:
-    topic = [topic]
-    print(topic)
-    print()
+culprit_country_name = countries_data.loc[countries_data['country_code_2'] == country,'country_name']
+culprit_country_name = next(iter(culprit_country_name), 'no match')
+print(culprit_country_name)
+print()
 
 # Create payload and capture API tokens. Only needed for interest_over_time(),
 # interest_by_region() & related_queries():
 #
 # Google returns a response with code 400 when a key word is > 100 characters.
-pytrend.build_payload(kw_list=topic, timeframe='today 12-m', geo=country, cat=category)
+pytrend.build_payload(kw_list=topics, timeframe='today 12-m', geo=country, cat=category)
 
 # Interest Over Time
 interest_over_time_data = pytrend.interest_over_time()
@@ -132,7 +119,7 @@ interest_by_region_data = pytrend.interest_by_region(resolution='COUNTRY', inc_l
 print(interest_by_region_data)
 print()
 
-interest_by_region_data.reset_index().plot(x='geoName', y=topic, figsize=(120, 10), kind='bar')
+interest_by_region_data.reset_index().plot(x='geoName', y=topics, figsize=(120, 10), kind='bar')
 
 # Related Topics, returns a dictionary of dataframes
 related_topics_dict = pytrend.related_topics()
@@ -145,12 +132,25 @@ print(related_queries_dict)
 print()
 
 # Get Google Hot Trends data. Trending searches in real time:
+# For now there is a bug with this API in pytrends that is being 
+# investigated at:
+#
+# https://github.com/GeneralMills/pytrends/issues/403
+# https://github.com/GeneralMills/pytrends/pull/406/commits/e8efdabbe3158d7382130ca4f00aa2e14af965d1
 trending_searches_data = pytrend.trending_searches(pn='kenya') 
+#trending_searches_data = pytrend.trending_searches()
 print(trending_searches_data)
 print()
 
 # Get Google Top Charts. Can also specify date as so: "date=201912"
-top_charts_data = pytrend.top_charts(date=2017, hl='en-US', geo=country)
+# For now there is a bug with this API in pytrends that is being 
+# investigated at:
+#
+# https://github.com/GeneralMills/pytrends/issues/355
+
+#top_charts_data = pytrend.top_charts(date=2019, geo=country)
+#top_charts_data = pytrend.top_charts(date=2019, geo='NG')
+top_charts_data = pytrend.top_charts(date=2019, geo='KE')
 print(top_charts_data)
 print()
 
