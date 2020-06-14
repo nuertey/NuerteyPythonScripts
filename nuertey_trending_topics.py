@@ -82,7 +82,7 @@ def init_argparse() -> argparse.ArgumentParser:
         "-t", "--topics", action='store',
         nargs='*', default=['covid', 'somanya', 'ewe', 'cocoa', 'gold'],
         type=str,
-        help="Specify the topic you are interested in."
+        help="Specify the topics that you are interested in monitoring. A maximum of 5 topics are supported in this format:\n-t 'jumia cameroon' 'covid 19 cameroon' 'cameroon online' 'cameroon news' 'cameroon music'"
     )
     return parser
 
