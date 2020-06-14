@@ -44,8 +44,12 @@ countries_data['country_name'] = [ pycountry.countries.get(alpha_2=code).name fo
 
 # Returns all main Google Trends categories and their ids for usage in help text.
 all_categories = pytrend.categories()
+#print(all_categories)
+#print()
 all_categories_data = pd.DataFrame.from_dict(all_categories)
 all_categories_data = all_categories_data['children'].apply(pd.Series)
+#print(all_categories_data)
+#print()
 main_categories_data = all_categories_data[['name', 'id']]
 
 # parser.choices seems to better prefer dict objects to strings. 

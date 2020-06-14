@@ -55,6 +55,9 @@ print()
 #print(data.dtypes)
 #print()
 
+data_source_file_name = "ivory_coast_cocoa-intercontinental_exchange.csv"
+data.to_csv(data_source_file_name, index = True, header=True)
+
 # International prices of imported raw materials - Arabica coffee 
 # Contract C ICE (InterContinental Exchange), Atlanta - Price in US 
 # cents per pound (Monthly).
