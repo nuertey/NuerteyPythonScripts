@@ -1,5 +1,4 @@
 import ast
-import urllib
 import pytrends
 import collections
 import numpy as np
@@ -31,13 +30,9 @@ def RecursiveTraverse(nested_categories, indent=0):
             #print(value)
             #print()
             if key == 'children':
-                #nested_categories[key] = str(value).strip('[').strip(']')
-                #value = str(value).strip('[').strip(']')
-                value = str(value)[1:-1]
-                value = urllib.quote("'{}'".format(value))
+                #value = str(value)[1:-1] # Strip off the square brackets.
                 print(value)
                 print()
-                value = ast.literal_eval(value) 
                 RecursiveTraverse(value, indent+1)
             elif key == 'name':
                 culprit_line = '\t' * (indent+1) + str(value)
@@ -66,6 +61,10 @@ main_categories_data = all_categories_data[['name', 'id']]
 #print(main_categories_data)
 #print()
 
+all_categories = str(all_categories).replace('[', '')
+all_categories = all_categories.replace(']', '')
+#all_categories = "'{}'".format(all_categories) # Set thing up so we can convert back to dict.
+all_categories = ast.literal_eval(all_categories) # Convert back to dictionary.
 RecursiveTraverse(all_categories)
 all_categories_data = pd.DataFrame({'name': category_names_list, 'id': category_ids_list})
 print(all_categories_data)
