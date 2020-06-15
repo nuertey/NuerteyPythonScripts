@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 from pytrends.request import TrendReq
 
-pd.set_option('display.max_rows', 100)
+pd.set_option('display.max_rows', 200)
 
 category_names_list = []
 category_ids_list   = []
@@ -20,6 +20,8 @@ def flatten(l):
             yield el
 
 def RecursiveTraverse(nested_categories, indent=0):
+    print('\t' * (indent) + "Within RecursiveTraverse() ... ")
+    print()
     if isinstance(nested_categories, collections.abc.Mapping):
         print('\t' * (indent+1) + "Success! Expected! A dictionary.")
         print()
@@ -46,6 +48,11 @@ def RecursiveTraverse(nested_categories, indent=0):
         print('\t' * (indent+1) + "Warning! Unexpected! Not a dictionary:")
         print('\t' * (indent+1) + str(nested_categories))
         print()
+        # enumerate() effectively 'removes' the square brackets as the
+        # square brackets were simply denoting a list.
+        for i, element in enumerate(nested_categories):
+            #print(i, ": ", element)
+            RecursiveTraverse(element, indent+1)
 
 pytrend = TrendReq()
 all_categories = pytrend.categories()
@@ -61,11 +68,12 @@ main_categories_data = all_categories_data[['name', 'id']]
 #print(main_categories_data)
 #print()
 
-all_categories = str(all_categories).replace('[', '')
-all_categories = all_categories.replace(']', '')
+#all_categories = str(all_categories).replace('[', '')
+#all_categories = all_categories.replace(']', '')
 #all_categories = "'{}'".format(all_categories) # Set thing up so we can convert back to dict.
-all_categories = ast.literal_eval(all_categories) # Convert back to dictionary.
+#all_categories = ast.literal_eval(all_categories) # Convert back to dictionary.
 RecursiveTraverse(all_categories)
 all_categories_data = pd.DataFrame({'name': category_names_list, 'id': category_ids_list})
+pd.set_option('display.max_rows', 200)
 print(all_categories_data)
 print()
