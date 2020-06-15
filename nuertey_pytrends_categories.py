@@ -40,7 +40,7 @@ def displayDataFrame(dataframe, displayNumRows=True, displayIndex=False, leftJus
         for columnName in list(dataframe.columns):
             columnType = type(columnName)  # The magic!!
             #print("{} =>  {}".format(columnName, columnType))
-            form = ""
+            form = "{{}}".format()
             if columnType == type(bool):
                 form = "{{!s:<8}}".format()
             elif columnType == type(float):
@@ -81,13 +81,13 @@ def RecursiveTraverse(nested_categories, indent=0):
             if key == 'children':
                 RecursiveTraverse(value, indent+1)
             elif key == 'name':
-                culprit_line = '\t' * (indent+1) + str(value)
+                culprit_line = '\t' * (indent+1) + str(value) + " : "
                 #culprit_string = "{0}{1}".format(('\t' * (indent+1)), value)
                 #category_names_list.append(value)
                 category_names_list.append(culprit_line)
                 #category_names_list.append(culprit_string)
             elif key == 'id':
-                culprit_line = culprit_line + " : " + str(value)
+                culprit_line = culprit_line + str(value)
                 category_ids_list.append(value)
                 print(culprit_line)
     else:
