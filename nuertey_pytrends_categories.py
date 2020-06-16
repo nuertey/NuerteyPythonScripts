@@ -107,7 +107,7 @@ def RecursiveTraverse(nested_categories, indent=0):
             elif key == 'id':
                 culprit_line = culprit_line + str(value)
                 category_ids_list.append(value)
-                print(culprit_line)
+                #print(culprit_line)
     else:
         # enumerate() effectively 'removes' the square brackets as the
         # square brackets are simply denoting lists embedded in the dictionary.
@@ -121,6 +121,8 @@ all_categories = pytrend.categories()
 
 RecursiveTraverse(all_categories)
 parsed_categories_data = pd.DataFrame({'name': category_names_list, 'id': category_ids_list})
+# To reverse dataframe use the following, though testing proves that it
+# does not work in the present case:
 #parsed_categories_data.reindex(index=parsed_categories_data.index[::-1])
 #or simply:
 #parsed_categories_data.iloc[::-1]
@@ -129,21 +131,43 @@ parsed_categories_data = pd.DataFrame({'name': category_names_list, 'id': catego
 # To left-justify only one particular dataframe column, use the following:
 #print(parsed_categories_data.to_string(formatters={'name':'{{:<{}s}}'.format(parsed_categories_data['name'].str.len().max()).format}, index=False))
 
-displayDataFrame(parsed_categories_data)
+#displayDataFrame(parsed_categories_data)
 print()
 
 all_categories_data = pd.DataFrame.from_dict(all_categories)
 all_categories_data = all_categories_data['children'].apply(pd.Series)
+print(all_categories_data)
+print()
+
+#all_categories_data = all_categories_data['children'].apply(pd.Series)
 #print(all_categories_data)
 #print()
+
+#exploded_categories_data = all_categories_data.unstack(level=0)
+#print(exploded_categories_data)
+#print()
+
+exploded_categories_data = all_categories_data.explode('children')
+print(exploded_categories_data)
+print()
 
 main_categories_data = all_categories_data[['name', 'id']]
 #print(main_categories_data)
 #print()
 
+print("Attempting to flatten... Output is as follows:")
+print()
+print(flatten(all_categories))
+print()
+
 # =====================================================================
 # JUST A FURTHER PRACTICE SESSION TO TEST OUT SOME IDEAS
 # =====================================================================
+#
+# .apply(pd.Series) seems intended to create a row-wise or column-wise
+# dataframe from the source column. If the result is column-wise and you
+# needed row-wise (or vice-versa), use .transpose() on result.
+
 the_dictionary = {'2017-9-11': {'Type1': [15, 115452.0, 3], 'Type2': [47, 176153.0, 4], 'Type3': [0, 0, 0]}, '2017-9-12': {'Type1': [26, 198223.0, 5], 'Type2': [39, 178610.0, 6], 'Type3': [0, 0, 0]}}
 
 print(the_dictionary)
@@ -155,5 +179,114 @@ print()
 
 # I need to split values in the lists into different columns and group them by Types. 
 # This is what I do:
-df_new = df[list(df)].unstack().apply(pd.Series)
-print(df_new)
+#df_new = df[list(df)].unstack().apply(pd.Series)
+#print(df_new)
+
+# I think faster solution is DataFrame constructor, see timings:
+s = df.unstack()
+print(s)
+print()
+
+newest_df = pd.DataFrame(s.values.tolist(), index=s.index)
+print(newest_df)
+print()
+
+# =====================================================================
+df = pd.DataFrame({
+    'name': ['john', 'smith'],
+    'id': [1, 2],
+    'apps': [[['app1', 'v1'], ['app2', 'v2'], ['app3','v3']], 
+             [['app1', 'v1'], ['app4', 'v4']]]
+})
+print(df)
+print()
+
+# Instead of .apply(pd.Series) (which is awfully slow), use pd.DataFrame(df.apps.tolist()): 
+dftmp = df.apps.apply(pd.Series).T.melt().dropna()
+print("dftmp:\n", dftmp)
+print()
+
+df_faster = pd.DataFrame(df.apps.tolist())
+print("df_faster:\n", df_faster)
+print()
+
+dfapp = (dftmp.value
+              .apply(pd.Series)
+              .set_index(dftmp.variable)
+              .rename(columns={0:'app_name', 1:'app_version'})
+        )
+print(dfapp)
+print()
+
+print("Merging...")
+print()
+
+df_final = df[['name', 'id']].merge(dfapp, left_index=True, right_index=True)
+
+print(df_final)
+print()
+
+# ---------------------------------------------------------------------
+# Alternate approaches of above documented below:
+
+# Chain of pd.Series easy to understand, also if you would like know more
+# methods, check unnesting:
+print(df)
+print()
+
+df_output = df.set_index(['name','id']).apps.apply(pd.Series).\
+         stack().apply(pd.Series).\
+            reset_index(level=[0,1]).\
+                rename(columns={0:'app_name',1:'app_version'})
+print(df_output)
+print()
+
+# Out[541]: 
+#     name  id app_name app_version
+# 0   john   1     app1          v1
+# 1   john   1     app2          v2
+# 2   john   1     app3          v3
+# 0  smith   2     app1          v1
+# 1  smith   2     app4          v4
+
+# Method two slightly modify the function I write:
+def unnesting(df, explode):
+    idx = df.index.repeat(df[explode[0]].str.len())
+    df1 = pd.concat([
+        pd.DataFrame({x: sum(df[x].tolist(),[])}) for x in explode], axis=1)
+    df1.index = idx
+    return df1.join(df.drop(explode, 1), how='left')
+
+# And then:
+yourdf = unnesting(df, ['apps'])
+print(yourdf)
+print()
+
+yourdf['app_name'], yourdf['app_version'] = yourdf.apps.str[0], yourdf.apps.str[1]
+print(yourdf)
+print()
+
+# Out[548]: 
+#          apps  id   name app_name app_version
+# 0  [app1, v1]   1   john     app1          v1
+# 0  [app2, v2]   1   john     app2          v2
+# 0  [app3, v3]   1   john     app3          v3
+# 1  [app1, v1]   2  smith     app1          v1
+# 1  [app4, v4]   2  smith     app4          v4
+
+# Or, alternatively to all the above:
+yourdf = unnesting(df, ['apps']).reindex(columns=df.columns.tolist()+['app_name','app_version'])
+print(yourdf)
+print()
+
+yourdf[['app_name','app_version']] = yourdf.apps.tolist()
+print(yourdf)
+print()
+
+# Out[567]: 
+#          apps  id   name app_name app_version
+# 0  [app1, v1]   1   john     app1          v1
+# 0  [app2, v2]   1   john     app2          v2
+# 0  [app3, v3]   1   john     app3          v3
+# 1  [app1, v1]   2  smith     app1          v1
+# 1  [app4, v4]   2  smith     app4          v4
