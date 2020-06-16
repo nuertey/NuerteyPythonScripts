@@ -65,6 +65,12 @@ def displayDataFrame(dataframe, displayNumRows=True, displayIndex=False, leftJus
         for key, value in format_mappings.items():
             dataframe[key] = dataframe[key].apply(format_mappings[key])
 
+        # Google Trends Categories seem to be returned in the reverse 
+        # logical order. Fix it in a way that makes sense so that top-level
+        # categories are displayed first and then their sub-categories 
+        # are displayed after. That this will result in a reverse 
+        # alphabetical ordering of the category listings is of comparatively
+        # minor importance.  
         for idx in reversed(dataframe.index):
             print(dataframe.name[idx], dataframe.id[idx])
         print()
@@ -135,6 +141,9 @@ main_categories_data = all_categories_data[['name', 'id']]
 #print(main_categories_data)
 #print()
 
+# =====================================================================
+# JUST A FURTHER PRACTICE SESSION TO TEST OUT SOME IDEAS
+# =====================================================================
 the_dictionary = {'2017-9-11': {'Type1': [15, 115452.0, 3], 'Type2': [47, 176153.0, 4], 'Type3': [0, 0, 0]}, '2017-9-12': {'Type1': [26, 198223.0, 5], 'Type2': [39, 178610.0, 6], 'Type3': [0, 0, 0]}}
 
 print(the_dictionary)
