@@ -22,7 +22,10 @@ import numpy as np
 import pandas as pd
 from pytrends.request import TrendReq
 
+#pd.set_option('display.max_columns', 200)
 pd.set_option('display.max_rows', 200)
+pd.set_option('display.min_rows', 200)
+pd.set_option('display.expand_frame_repr', True)
 
 def displayDataFrame(dataframe, displayNumRows=True, displayIndex=False, leftJustify=True):
     # type: (pd.DataFrame, bool, bool, bool) -> None
@@ -35,11 +38,12 @@ def displayDataFrame(dataframe, displayNumRows=True, displayIndex=False, leftJus
     """
 
     if leftJustify:
-        formatters = {}
+        format_mappings = {}
 
         for columnName in list(dataframe.columns):
             columnType = type(columnName)  # The magic!!
             #print("{} =>  {}".format(columnName, columnType))
+            #print()
             form = "{{}}".format()
             if columnType == type(bool):
                 form = "{{!s:<8}}".format()
@@ -51,10 +55,18 @@ def displayDataFrame(dataframe, displayNumRows=True, displayIndex=False, leftJus
                 max = dataframe[columnName].str.len().max()
                 form = "{{:<{}s}}".format(max)
 
-            formatters[columnName] = functools.partial(str.format, form)
+            format_mappings[columnName] = functools.partial(str.format, form)
+        
+        # TBD Nuertey Odzeyem; can also apply the format_mappings to the
+        # whole dataframe at once like the following, and then print the
+        # whole dataframe with one call instead of looping:
+        #dataframe = dataframe.to_string(index=displayIndex, formatters=format_mappings)
+        #print(dataframe, end="\n\n")
+        for key, value in format_mappings.items():
+            dataframe[key] = dataframe[key].apply(format_mappings[key])
 
-        print()
-        print(dataframe.to_string(index=displayIndex, formatters=formatters), end="\n\n")
+        for idx in reversed(dataframe.index):
+            print(dataframe.name[idx], dataframe.id[idx])
         print()
     else:
         print(dataframe.to_string(index=displayIndex), end="\n\n")
@@ -103,6 +115,9 @@ all_categories = pytrend.categories()
 
 RecursiveTraverse(all_categories)
 parsed_categories_data = pd.DataFrame({'name': category_names_list, 'id': category_ids_list})
+#parsed_categories_data.reindex(index=parsed_categories_data.index[::-1])
+#or simply:
+#parsed_categories_data.iloc[::-1]
 #print(parsed_categories_data)
 
 # To left-justify only one particular dataframe column, use the following:
@@ -119,3 +134,17 @@ all_categories_data = all_categories_data['children'].apply(pd.Series)
 main_categories_data = all_categories_data[['name', 'id']]
 #print(main_categories_data)
 #print()
+
+the_dictionary = {'2017-9-11': {'Type1': [15, 115452.0, 3], 'Type2': [47, 176153.0, 4], 'Type3': [0, 0, 0]}, '2017-9-12': {'Type1': [26, 198223.0, 5], 'Type2': [39, 178610.0, 6], 'Type3': [0, 0, 0]}}
+
+print(the_dictionary)
+print()
+
+df = pd.DataFrame.from_dict(the_dictionary, orient='index')
+print(df)
+print()
+
+# I need to split values in the lists into different columns and group them by Types. 
+# This is what I do:
+df_new = df[list(df)].unstack().apply(pd.Series)
+print(df_new)
