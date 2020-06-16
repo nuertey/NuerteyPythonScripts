@@ -167,6 +167,8 @@ print()
 # .apply(pd.Series) seems intended to create a row-wise or column-wise
 # dataframe from the source column. If the result is column-wise and you
 # needed row-wise (or vice-versa), use .transpose() on result.
+print("Tutorial 1...")
+print()
 
 the_dictionary = {'2017-9-11': {'Type1': [15, 115452.0, 3], 'Type2': [47, 176153.0, 4], 'Type3': [0, 0, 0]}, '2017-9-12': {'Type1': [26, 198223.0, 5], 'Type2': [39, 178610.0, 6], 'Type3': [0, 0, 0]}}
 
@@ -192,6 +194,9 @@ print(newest_df)
 print()
 
 # =====================================================================
+print("Tutorial 2...")
+print()
+
 df = pd.DataFrame({
     'name': ['john', 'smith'],
     'id': [1, 2],
@@ -231,7 +236,13 @@ print()
 
 # Chain of pd.Series easy to understand, also if you would like know more
 # methods, check unnesting:
+print("Tutorial 3...")
+print()
+
 print(df)
+print()
+
+print("Method 1 (apply(pd.Series) twice):")
 print()
 
 df_output = df.set_index(['name','id']).apps.apply(pd.Series).\
@@ -248,6 +259,9 @@ print()
 # 2   john   1     app3          v3
 # 0  smith   2     app1          v1
 # 1  smith   2     app4          v4
+
+print("Method 2 (call unnesting()) python method on column you intend to explode):")
+print()
 
 # Method two slightly modify the function I write:
 def unnesting(df, explode):
@@ -273,6 +287,9 @@ print()
 # 0  [app3, v3]   1   john     app3          v3
 # 1  [app1, v1]   2  smith     app1          v1
 # 1  [app4, v4]   2  smith     app4          v4
+
+print("Method 3 (compact way to call unnesting() and reindex at the same time):")
+print()
 
 # Or, alternatively to all the above:
 yourdf = unnesting(df, ['apps']).reindex(columns=df.columns.tolist()+['app_name','app_version'])
