@@ -97,6 +97,7 @@ def RecursiveTraverse(nested_categories, indent=0):
         culprit_line = ""
         for key, value in nested_categories.items():
             if key == 'children':
+                # Sub-lists are sub-categories (or children) of the parent list:
                 RecursiveTraverse(value, indent+1)
             elif key == 'name':
                 culprit_line = '\t' * (indent+1) + str(value) + " : "
@@ -131,7 +132,7 @@ parsed_categories_data = pd.DataFrame({'name': category_names_list, 'id': catego
 # To left-justify only one particular dataframe column, use the following:
 #print(parsed_categories_data.to_string(formatters={'name':'{{:<{}s}}'.format(parsed_categories_data['name'].str.len().max()).format}, index=False))
 
-#displayDataFrame(parsed_categories_data)
+displayDataFrame(parsed_categories_data)
 print()
 
 all_categories_data = pd.DataFrame.from_dict(all_categories)
@@ -147,9 +148,9 @@ print()
 #print(exploded_categories_data)
 #print()
 
-exploded_categories_data = all_categories_data.explode('children')
-print(exploded_categories_data)
-print()
+#exploded_categories_data = all_categories_data.explode('children')
+#print(exploded_categories_data)
+#print()
 
 main_categories_data = all_categories_data[['name', 'id']]
 #print(main_categories_data)
@@ -192,6 +193,35 @@ print()
 newest_df = pd.DataFrame(s.values.tolist(), index=s.index)
 print(newest_df)
 print()
+
+# Or If values are strings:
+#df = df.unstack().str.strip('[]').str.split(', ', expand=True).astype(float)
+#print(df)
+#print()
+
+#                     0         1    2
+# Type1 2017-9-11  15.0  115452.0  3.0
+#       2017-9-12  26.0  198223.0  5.0
+# Type2 2017-9-11  47.0  176153.0  4.0
+#       2017-9-12  39.0  178610.0  6.0
+# Type3 2017-9-11   0.0       0.0  0.0
+#       2017-9-12   0.0       0.0  0.0
+
+# Or is possible convert values to lists:
+# import ast
+# 
+# s = df.unstack().apply(ast.literal_eval)
+# df = pd.DataFrame(s.values.tolist(), index=s.index).astype(float)
+# print(df)
+# print()
+
+#                     0         1    2
+# Type1 2017-9-11  15.0  115452.0  3.0
+#       2017-9-12  26.0  198223.0  5.0
+# Type2 2017-9-11  47.0  176153.0  4.0
+#       2017-9-12  39.0  178610.0  6.0
+# Type3 2017-9-11   0.0       0.0  0.0
+#       2017-9-12   0.0       0.0  0.0
 
 # =====================================================================
 print("Tutorial 2...")
