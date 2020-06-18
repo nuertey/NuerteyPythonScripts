@@ -166,8 +166,8 @@ parsed_categories_data = pd.DataFrame({'name': category_names_list, 'id': catego
 # To left-justify only one particular dataframe column, use the following:
 #print(parsed_categories_data.to_string(formatters={'name':'{{:<{}s}}'.format(parsed_categories_data['name'].str.len().max()).format}, index=False))
 
-#displayDataFrame(parsed_categories_data)
-#print()
+displayDataFrame(parsed_categories_data)
+print()
 
 all_categories_data = pd.DataFrame.from_dict(all_categories)
 all_categories_data = all_categories_data['children'].apply(pd.Series)
@@ -187,12 +187,12 @@ all_categories_data = all_categories_data['children'].apply(pd.Series)
 #print()
 
 main_categories_data = all_categories_data[['name', 'id']]
-#print(main_categories_data)
-#print()
-
-print("Attempting to flatten... Output is as follows:")
+print(main_categories_data)
 print()
-platypus = flatten(all_categories)
+
+#print("Attempting to flatten... Output is as follows:")
+#print()
+#platypus = flatten(all_categories)
 
 # platypus.next() has been renamed to platypus.__next__(). The reason for this is consistency: special methods like __init__() and __del__() all have double underscores (or "dunder" in the current vernacular), and .next() was one of the few exceptions to that rule. This was fixed in Python 3.0. [*]
 # 
@@ -202,13 +202,13 @@ platypus = flatten(all_categories)
 
 #how_many = len(all_categories)
 #print(how_many)
-print(next(platypus))
+#print(next(platypus))
 #for i in platypus:
 #    print()
 #    print(i, next(platypus))
 #    print()
 #    print("Calling next(platypus)..." )
-print()
+#print()
 
 # =====================================================================
 # JUST A FURTHER PRACTICE SESSION TO TEST OUT SOME IDEAS
