@@ -21,6 +21,12 @@ import collections
 import numpy as np
 import pandas as pd
 from pytrends.request import TrendReq
+try:
+    from collections.abc import Mapping
+    from collections.abc import Sequence
+except ImportError:
+    from collections import Mapping
+    from collections import Sequence
 
 #pd.set_option('display.max_columns', 200)
 pd.set_option('display.max_rows', 200)
@@ -85,15 +91,41 @@ category_ids_list   = []
 
 # The yield from operator returns an item from a generator one at a time.
 # This syntax for delegating to a subgenerator was added in 3.3
-def flatten(l):
-    for el in l:
-        if isinstance(el, collections.Iterable) and not isinstance(el, (str, bytes)):
-            yield from flatten(el)
-        else:
-            yield el
+def flatten(nested_categories, indent=0):
+    if isinstance(nested_categories, Mapping) and not isinstance(nested_categories, (str, bytes)):
+        print("Found a dictionary:")
+        #print(nested_categories)
+        #print()
+        culprit_line = ""
+        for key, value in nested_categories.items():
+            print(key, value)
+            print()
+            if key == 'children':
+                # Sub-lists are sub-categories (or children) of the parent list:
+                yield from flatten(value, indent+1)
+            elif key == 'name':
+                culprit_line = "{0}{1} : ".format(('\t' * (indent+1)), value)
+            elif key == 'id':
+                culprit_line = culprit_line + str(value)
+                print(culprit_line)
+                yield culprit_line
+    else:
+        #elif isinstance(nested_categories, Sequence) and not isinstance(nested_categories, (str, bytes)):
+        print("Found a list:")
+        #print(nested_categories)
+        #print()
+        for entity in enumerate(nested_categories):
+            print(entity)
+            print()
+            yield from flatten(entity, indent+1)
+    #else:
+    #    print("Found an unexpected string or integer entity (i.e. a single category name or id):")
+    #    print(nested_categories)
+    #    print()
+    #    yield nested_categories
 
 def RecursiveTraverse(nested_categories, indent=0):
-    if isinstance(nested_categories, collections.abc.Mapping):
+    if isinstance(nested_categories, Mapping):
         culprit_line = ""
         for key, value in nested_categories.items():
             if key == 'children':
@@ -122,6 +154,9 @@ all_categories = pytrend.categories()
 
 RecursiveTraverse(all_categories)
 parsed_categories_data = pd.DataFrame({'name': category_names_list, 'id': category_ids_list})
+#print(parsed_categories_data.dtypes)
+#print()
+
 # To reverse dataframe use the following, though testing proves that it
 # does not work in the present case:
 #parsed_categories_data.reindex(index=parsed_categories_data.index[::-1])
@@ -132,13 +167,13 @@ parsed_categories_data = pd.DataFrame({'name': category_names_list, 'id': catego
 # To left-justify only one particular dataframe column, use the following:
 #print(parsed_categories_data.to_string(formatters={'name':'{{:<{}s}}'.format(parsed_categories_data['name'].str.len().max()).format}, index=False))
 
-displayDataFrame(parsed_categories_data)
-print()
+#displayDataFrame(parsed_categories_data)
+#print()
 
 all_categories_data = pd.DataFrame.from_dict(all_categories)
 all_categories_data = all_categories_data['children'].apply(pd.Series)
-print(all_categories_data)
-print()
+#print(all_categories_data)
+#print()
 
 #all_categories_data = all_categories_data['children'].apply(pd.Series)
 #print(all_categories_data)
@@ -158,7 +193,22 @@ main_categories_data = all_categories_data[['name', 'id']]
 
 print("Attempting to flatten... Output is as follows:")
 print()
-print(flatten(all_categories))
+platypus = flatten(all_categories)
+
+# platypus.next() has been renamed to platypus.__next__(). The reason for this is consistency: special methods like __init__() and __del__() all have double underscores (or "dunder" in the current vernacular), and .next() was one of the few exceptions to that rule. This was fixed in Python 3.0. [*]
+# 
+# But instead of calling platypus.__next__(), use next(platypus).
+# 
+# [*] There are other special attributes that have gotten this fix; func_name, is now __name__, etc.
+
+#how_many = len(all_categories)
+#print(how_many)
+print(next(platypus))
+#for i in platypus:
+#    print()
+#    print(i, next(platypus))
+#    print()
+#    print("Calling next(platypus)..." )
 print()
 
 # =====================================================================
