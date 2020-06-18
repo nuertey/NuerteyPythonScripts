@@ -98,8 +98,8 @@ def flatten(nested_categories, indent=0):
         #print()
         culprit_line = ""
         for key, value in nested_categories.items():
-            print(key, value)
-            print()
+            #print(nested_categories)
+            #print()
             if key == 'children':
                 # Sub-lists are sub-categories (or children) of the parent list:
                 yield from flatten(value, indent+1)
@@ -109,8 +109,7 @@ def flatten(nested_categories, indent=0):
                 culprit_line = culprit_line + str(value)
                 print(culprit_line)
                 yield culprit_line
-    else:
-        #elif isinstance(nested_categories, Sequence) and not isinstance(nested_categories, (str, bytes)):
+    elif isinstance(nested_categories, Sequence) and not isinstance(nested_categories, (str, bytes)):
         print("Found a list:")
         #print(nested_categories)
         #print()
@@ -118,11 +117,11 @@ def flatten(nested_categories, indent=0):
             print(entity)
             print()
             yield from flatten(entity, indent+1)
-    #else:
-    #    print("Found an unexpected string or integer entity (i.e. a single category name or id):")
-    #    print(nested_categories)
-    #    print()
-    #    yield nested_categories
+    else:
+        print("Found an unexpected string or integer entity (i.e. a single category name or id):")
+        print(nested_categories)
+        print()
+        yield nested_categories
 
 def RecursiveTraverse(nested_categories, indent=0):
     if isinstance(nested_categories, Mapping):
