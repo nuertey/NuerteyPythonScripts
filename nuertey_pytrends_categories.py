@@ -386,3 +386,45 @@ print()
 # 0  [app3, v3]   1   john     app3          v3
 # 1  [app1, v1]   2  smith     app1          v1
 # 1  [app4, v4]   2  smith     app4          v4
+
+# =====================================================================
+print("Tutorial 3...")
+print()
+
+# 2.7.1. find¶
+# 
+# A python equivalent of the unix find function (find . -name “*.py”)
+import os
+import fnmatch
+
+def gen_find(filepat, top):
+    for path, dirlist, filelist in os.walk(top):
+        for name in fnmatch.filter(filelist, filepat):
+            yield os.path.join(path, name)
+
+for name in gen_find("*.py", "."):
+    print(name)
+
+# The unix version is faster but difference is only about 15% and you 
+# now have a find function on every platform!
+
+# =====================================================================
+print("Tutorial 4...")
+print()
+
+# 2.7.2. flatten¶
+# 
+# Let us take an example. We want to flatten the following nested list:
+nested = [[1, 2], [3, 4], [5]]
+
+# Such a generator would do the job:
+def flatten(nested):
+    for sublist in nested:
+        for element in sublist:
+            yield element
+
+print(list(flatten(nested)))
+#[1, 2, 3, 4, 5]
+
+print(list(flatten(all_categories)))
+
