@@ -165,9 +165,6 @@ parsed_categories_data = pd.DataFrame({'name': category_names_list, 'id': catego
 #parsed_categories_data.iloc[::-1]
 #print(parsed_categories_data)
 
-# To left-justify only one particular dataframe column, use the following:
-#print(parsed_categories_data.to_string(formatters={'name':'{{:<{}s}}'.format(parsed_categories_data['name'].str.len().max()).format}, index=False))
-
 displayDataFrame(parsed_categories_data)
 print()
 
@@ -278,10 +275,16 @@ for i in range(len(cats)):
 print(text)
 print()
 
+# Alternative way of composing the dataframe:
+#categories_dataframe = pd.DataFrame(
+#    {'name': hierarchical_categories_text,
+#     'id': flattened_category_ids
+#    })
 categories_dataframe = pd.DataFrame(np.column_stack([hierarchical_categories_text]), columns=['name'])
 categories_dataframe['id'] = flattened_category_ids
-print(categories_dataframe)
-print() 
+# To left-justify only one particular dataframe column, use the following:
+print(categories_dataframe.to_string(formatters={'name':'{{:<{}s}}'.format(categories_dataframe['name'].str.len().max()).format}, index=False))
+print()
 
 print(categories_dataframe.dtypes)
 print()
