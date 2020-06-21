@@ -15,6 +15,8 @@
 #**********************************************************************/
 # pylint: disable=C0103,C0200,R0205
 from __future__ import print_function
+import json
+from json2html import *
 import pytrends
 import functools
 import collections
@@ -209,6 +211,49 @@ print()
 #    print()
 #    print("Calling next(platypus)..." )
 #print()
+
+print("Using recommended new approach from... https://github.com/GeneralMills/pytrends/issues/412")
+
+#If you want a file json from the categories:
+json_categories = json.dumps(all_categories) 
+
+#if you want an html file from the categories (you need to specify classes):
+html_categories = json2html.convert(json_categories)
+
+#the text string generated from the categories:
+text = '\u2022  ' + categories['name'] + ': ' + str(categories['id'])
+print(text)
+print()
+cats = categories['children']
+print(cats)
+print()
+for i in range(len(cats)):
+    cat = cats[i]
+    text = text + '\n    \u25CB  ' + cat['name'] + ': ' + str(cat['id'])
+    scats = cat['children']
+    for i in range(len(scats)):
+        scat = scats[i]
+        text = text + '\n        \u25AA  ' + scat['name'] + ': ' + str(scat['id'])
+        if len(scat) > 2:
+            sscats = scat['children']
+            for i in range(len(sscats)):
+                sscat = sscats[i]
+                text = text + '\n            \u25AA  ' + sscat['name'] + ': ' + str(sscat['id'])
+                if len(sscat) > 2:
+                    ssscats = sscat['children']
+                    for i in range(len(ssscats)):
+                        ssscat = ssscats[i]
+                        text = text + '\n                \u25AA  ' + ssscat['name'] + ': ' + str(ssscat['id'])
+                        if len(ssscat) > 2:
+                            sssscats = ssscat['children']
+                            for i in range(len(sssscats)):
+                                sssscat = sssscats[i]
+                                text = text + '\n                    \u25AA  ' + sssscat['name'] + ': ' + str(sssscat['id'])
+                                if len(sssscat) > 2:
+                                    ssssscats = sssscat['children']
+                                    for i in range(len(ssssscats)):
+                                         ssssscat = ssssscats[i]
+                                         text = text + '\n                        \u25AA  ' + ssssscat['name'] + ': ' + str(ssssscat['id'])  
 
 # =====================================================================
 # JUST A FURTHER PRACTICE SESSION TO TEST OUT SOME IDEAS
