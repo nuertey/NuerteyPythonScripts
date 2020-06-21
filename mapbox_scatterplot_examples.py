@@ -35,49 +35,49 @@ token = open(".mapbox_token").read()
 # to (by plane)
 # 
 # Douala International Airport, Cameroon
-#figure = go.Figure(go.Scattermapbox(
-#    mode = "markers+text+lines",
-#    lon = [-87.904724, -73.87396590000003, 9.7183], lat = [41.978611, 40.7769271, 4.0035],
-#    marker = {'size': 20, 'symbol': ["bus", "airport", "airport"]},
-#    text = ["Bus", "Airport", "Airport"],textposition = "bottom right"))
-#
-#figure.update_layout(
-#    mapbox = {
-#        'accesstoken': token,
-#        'style': "satellite-streets", 'zoom': 0.7},
-#    showlegend = False)
-#
-#figure.show()
-#figure = go.Figure(go.Scattermapbox(
-#    mode = "markers+text+lines",
-#    lon = [-87.963135, -0.171879, -0.013991], lat = [42.166283, 5.607005, 6.104996],
-#    marker = {'size': 20, 'symbol': ["walk", "airport", "home"]},
-#    text = ["Apartment", "Airport", "Home Is Home"],textposition = "bottom right"))
-#
-#figure.update_layout(
-#    mapbox = {
-#        'accesstoken': token,
-#        'style': "satellite-streets", 'zoom': 0.7},
-#    showlegend = False)
-#
-#figure.show()
+figure = go.Figure(go.Scattermapbox(
+    mode = "markers+text+lines",
+    lon = [-87.904724, -73.87396590000003, 9.7183], lat = [41.978611, 40.7769271, 4.0035],
+    marker = {'size': 20, 'symbol': ["bus", "airport", "airport"]},
+    text = ["Bus", "Airport", "Airport"],textposition = "bottom right"))
+
+figure.update_layout(
+    mapbox = {
+        'accesstoken': token,
+        'style': "satellite-streets", 'zoom': 0.7},
+    showlegend = False)
+
+figure.show()
+figure = go.Figure(go.Scattermapbox(
+    mode = "markers+text+lines",
+    lon = [-87.963135, -0.171879, -0.013991], lat = [42.166283, 5.607005, 6.104996],
+    marker = {'size': 20, 'symbol': ["walk", "airport", "home"]},
+    text = ["Apartment", "Airport", "Home Is Home"],textposition = "bottom right"))
+
+figure.update_layout(
+    mapbox = {
+        'accesstoken': token,
+        'style': "satellite-streets", 'zoom': 0.7},
+    showlegend = False)
+
+figure.show()
 
 # ==========
 # Example 2:
 # ==========
-#figure = go.Figure(go.Scattermapbox(
-#    mode = "markers+text+lines",
-#    lon = [-75, -80, -50], lat = [45, 20, -20],
-#    marker = {'size': 20, 'symbol': ["bus", "harbor", "airport"]},
-#    text = ["Bus", "Harbor", "airport"],textposition = "bottom right"))
-#
-#figure.update_layout(
-#    mapbox = {
-#        'accesstoken': token,
-#        'style': "outdoors", 'zoom': 0.7},
-#    showlegend = False)
-#
-#figure.show()
+figure = go.Figure(go.Scattermapbox(
+    mode = "markers+text+lines",
+    lon = [-75, -80, -50], lat = [45, 20, -20],
+    marker = {'size': 20, 'symbol': ["bus", "harbor", "airport"]},
+    text = ["Bus", "Harbor", "airport"],textposition = "bottom right"))
+
+figure.update_layout(
+    mapbox = {
+        'accesstoken': token,
+        'style': "outdoors", 'zoom': 0.7},
+    showlegend = False)
+
+figure.show()
 
 # ==========
 # Example 3:
@@ -91,11 +91,11 @@ print()
 dataTypeSeries = data.dtypes 
 print('Data type of each column of Dataframe :')
 print(dataTypeSeries)
-#figure = px.scatter_mapbox(data, lat="centroid_lat", lon="centroid_lon",
-#    color="peak_hour", size="car_hours",
-#    color_continuous_scale=px.colors.cyclical.IceFire, size_max=15, 
-#    zoom=10)
-#figure.show()
+figure = px.scatter_mapbox(data, lat="centroid_lat", lon="centroid_lon",
+    color="peak_hour", size="car_hours",
+    color_continuous_scale=px.colors.cyclical.IceFire, size_max=15, 
+    zoom=10)
+figure.show()
 
 # ==========
 # Example 4:
