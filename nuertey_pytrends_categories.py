@@ -221,7 +221,7 @@ json_categories = json.dumps(all_categories)
 html_categories = json2html.convert(json_categories)
 
 #the text string generated from the categories:
-text = '\u2022  ' + categories['name'] + ': ' + str(categories['id'])
+text = '\u2022  ' + all_categories['name'] + ': ' + str(all_categories['id'])
 print(text)
 print()
 cats = categories['children']
