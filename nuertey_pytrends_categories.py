@@ -214,6 +214,9 @@ print()
 
 print("Using recommended new approach from... https://github.com/GeneralMills/pytrends/issues/412")
 
+flattened_category_ids = []
+hierarchical_categories_text = []
+
 #If you want a file json from the categories:
 json_categories = json.dumps(all_categories) 
 
@@ -222,39 +225,66 @@ html_categories = json2html.convert(json_categories)
 
 #the text string generated from the categories:
 text = '\u2022  ' + all_categories['name'] + ': ' + str(all_categories['id'])
-print(text)
-print()
-cats = categories['children']
-print(cats)
-print()
+row_text = '' + all_categories['name'] + ': '
+hierarchical_categories_text.append(row_text)
+flattened_category_ids.append(all_categories['id'])
+cats = all_categories['children']
 for i in range(len(cats)):
     cat = cats[i]
     text = text + '\n    \u25CB  ' + cat['name'] + ': ' + str(cat['id'])
+    row_text = '    ' + cat['name'] + ': '
+    hierarchical_categories_text.append(row_text)
+    flattened_category_ids.append(cat['id'])
     scats = cat['children']
     for i in range(len(scats)):
         scat = scats[i]
         text = text + '\n        \u25AA  ' + scat['name'] + ': ' + str(scat['id'])
-        if len(scat) > 2:
+        row_text = '        ' + scat['name'] + ': '
+        hierarchical_categories_text.append(row_text)
+        flattened_category_ids.append(scat['id'])
+        if len(scat) > 2: # Ensure that we do contain child sub-categories.
             sscats = scat['children']
             for i in range(len(sscats)):
                 sscat = sscats[i]
                 text = text + '\n            \u25AA  ' + sscat['name'] + ': ' + str(sscat['id'])
-                if len(sscat) > 2:
+                row_text = '            ' + sscat['name'] + ': '
+                hierarchical_categories_text.append(row_text)
+                flattened_category_ids.append(sscat['id'])
+                if len(sscat) > 2: # Ensure that we do contain child sub-categories.
                     ssscats = sscat['children']
                     for i in range(len(ssscats)):
                         ssscat = ssscats[i]
                         text = text + '\n                \u25AA  ' + ssscat['name'] + ': ' + str(ssscat['id'])
+                        row_text = '                ' + ssscat['name'] + ': '
+                        hierarchical_categories_text.append(row_text)
+                        flattened_category_ids.append(ssscat['id'])
                         if len(ssscat) > 2:
                             sssscats = ssscat['children']
                             for i in range(len(sssscats)):
                                 sssscat = sssscats[i]
                                 text = text + '\n                    \u25AA  ' + sssscat['name'] + ': ' + str(sssscat['id'])
+                                row_text = '                    ' + sssscat['name'] + ': '
+                                hierarchical_categories_text.append(row_text)
+                                flattened_category_ids.append(sssscat['id'])
                                 if len(sssscat) > 2:
                                     ssssscats = sssscat['children']
                                     for i in range(len(ssssscats)):
-                                         ssssscat = ssssscats[i]
-                                         text = text + '\n                        \u25AA  ' + ssssscat['name'] + ': ' + str(ssssscat['id'])  
+                                        ssssscat = ssssscats[i]
+                                        text = text + '\n                        \u25AA  ' + ssssscat['name'] + ': ' + str(ssssscat['id'])
+                                        row_text = '                        ' + ssssscat['name'] + ': '
+                                        hierarchical_categories_text.append(row_text)
+                                        flattened_category_ids.append(ssssscat['id'])  
 
+print(text)
+print()
+
+categories_dataframe = pd.DataFrame(np.column_stack([hierarchical_categories_text]), columns=['name'])
+categories_dataframe['id'] = flattened_category_ids
+print(categories_dataframe)
+print() 
+
+print(categories_dataframe.dtypes)
+print()
 # =====================================================================
 # JUST A FURTHER PRACTICE SESSION TO TEST OUT SOME IDEAS
 # =====================================================================
