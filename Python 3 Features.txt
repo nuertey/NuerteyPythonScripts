@@ -1,0 +1,1140 @@
+level 1
+TomSwirly
+M-x praise-python570 points ·
+2 days ago
+
+How is this "Python 3 in One Pic"?
+
+Let's forget about all the built-in modules.
+
+Here are a bunch of features missing (not duplicating the other such complaint here on this page):
+
+    generators
+
+    list/dict/set comprehensions
+
+    f-strings
+
+    with statements
+
+    Function definitions
+
+    parameter passing (args, kwargs, etc)
+
+    Whatever it's called when you pull lists apart: first, *rest = some_list
+
+    list slicing
+
+I believe I could double the length of that list without much trouble.
+level 2
+hughperman
+175 points ·
+2 days ago
+
+"continue"
+
+"pass"
+
+"try/except/finally"
+
+"assert"
+
+Decorators
+
+A whole load of string functionality
+
+The entire async set of functionality
+
+
+And tons more: https://docs.python.org/3/reference/index.html
+level 3
+jagakoenig
+42 points ·
+1 day ago
+
+    "pass"
+
+The real mvp making annoying IDEs shut up
+level 4
+Jonno_FTW
+hisss10 points ·
+1 day ago
+
+There's also ...
+level 4
+iamtheauthor
+5 points ·
+1 day ago
+
+Is it for IDE's? I thought it was syntactically required for the indentation rules, just there's something to consume at that indent level.
+level 5
+jagakoenig
+0 points ·
+1 day ago
+
+Yes, it's more or less the same thing. The IDE will warn you that there's nothing to consume without the pass
+level 6
+benargee
+11 points ·
+1 day ago
+
+Python literally crashes without code in an indentation block. The IDE only warns of the inevitable, not just that it's bad form.
+
+IndentationError: expected an indented block
+
+level 7
+jagakoenig
+1 point ·
+1 day ago
+
+But Python only crashes if that piece of code is reachable, right?
+level 8
+benargee
+2 points ·
+1 day ago
+· edited 1 day ago
+
+No, it always crashes. Regardless of IDE. You're free to test this yourself on the command line using python path/to/file.pyor python3 path/to/file.py in linux or windows.
+
+print("start")
+if (False):
+    if (False):
+        #crash with nothing here.
+print("finish")
+
+level 9
+jagakoenig
+1 point ·
+1 day ago
+
+Huh, weird. I could have sworn that wasn't the case, but you're right. Do you know if that changed anytime?
+level 10
+benargee
+1 point ·
+13 hours ago
+
+No Idea. It's possible since you always listened to the IDE, you assumed that was the only roadblock.
+level 4
+lostnfoundaround
+1 point ·
+1 day ago
+
+pass is what I use when I’m too lazy to comment it out.
+level 2
+hoppla1232
+27 points ·
+2 days ago
+
+Holy shit, I never knew about first, *rest = some_list
+level 3
+Ph0X
+15 points ·
+1 day ago
+
+Wasn't in py2 but it's useful, can be more complex too like:
+
+a, b, *others, c = [1, 2, 3, 4, 5, 6]
+
+With others getting [3, 4, 5]
+level 4
+OPtoss
+1 point ·
+1 day ago
+
+Can you do
+
+*others, last = [1,2,3] ?
+
+Or
+
+first, *others, last = [1,2,3,4] ?
+level 5
+Ph0X
+9 points ·
+1 day ago
+
+Yep! You can have one catch-all and as many individual unpacking on either side. That being said if the size of the iterable is smaller than the number of targets, it'll fail. But the catch-all can be empty so this works
+
+a, *rest = [1]
+level 3
+Aedan91
+1 point ·
+1 day ago
+
+It's like Elixir's pattern matching.
+level 2
+fluzz142857
+50 points ·
+2 days ago
+
+It's called "unpacking"
+level 3
+tartare4562
+1 point ·
+1 day ago
+
+Wasn't "expansion"?
+level 3
+ec429_
+-5 points ·
+1 day ago
+4 children
+level 2
+Novask2077
+62 points ·
+1 day ago
+
+Python 3 in one post
+
+python3
+|
+|
+code
+
+level 2
+themanthewoman
+42 points ·
+1 day ago
+
+    I believe I could double the length of that list without much trouble.
+
+I am not being a smartass, but do it. Seriously.
+
+Speaking as a beginner to Python, I think the most apprehensive and overwhelming issue in the language (and anything, really) isn't what I know, it is what I don't know.
+
+I realize it is impractical to make a short listing EVERYTHING with Python, but, frankly, I love the way OP has his or her guide set up as I can follow it so easily and understand it. I now recognize things further down the pipe that I will get to learn.
+level 3
+TravisJungroth
+5 points ·
+1 day ago
+
+Check out Learn Python in Y Minutes. It’s the same idea as this picture but a hundred times better.
+level 2
+redderper
+8 points ·
+1 day ago
+
+After the control flow statements they just said "fuck it, too much work"
+level 2
+theneonkoala
+9 points ·
+2 days ago
+
+Looks like its work in progress
+level 2
+kirtap7
+3 points ·
+1 day ago
+
+Totally agree! This similar post does a better job https://www.reddit.com/r/Python/comments/f9azmd/learn_python_3_from_a_single_picture
+level 2
+billsil
+2 points ·
+1 day ago
+
+I actually think it’s compatible as far back to python 2.4.
+level 2
+azdood85
+2 points ·
+1 day ago
+
+This is apparently the "Early Access" or "Alpha Release". Maybe they are going with the "DLC Available For Purchase" model.
+level 2
+anyramdomnamewilldo
+2 points ·
+1 day ago
+
+there is better version https://raw.githubusercontent.com/coodict/python3-in-one-pic/master/py3%20in%20one%20pic.png
+level 2
+slayer_of_idiots
+pythonista1 point ·
+1 day ago
+
+Also exceptions and exception handling
+level 2
+super-porp-cola
+1 point ·
+1 day ago
+
+Mostly good points but it does have list slicing, it is missing string slicing however.
+level 2
+SweetOnionTea
+1 point ·
+1 day ago
+
+Not to mention a the set functions that make them more useful than treating it like a list or dict. Union, difference, intersection..
+level 2
+DeepMachineMaster
+1 point ·
+1 day ago
+
+That actually would be pretty helpful if you could spare the time to do it.
+level 2
+shiv26196
+1 point ·
+1 day ago
+
+So is there a "Python 3 in One Pic" for real? I mean a legit one with all the libraries.
+level 2
+benargee
+1 point ·
+1 day ago
+
+More like "Python 3 101 in One Pic"
+level 2
+anitapu
+0 points ·
+1 day ago
+
+Can someone help me with Python? If I'm trying to print out something like the word oxygen 1,000 times what's the code to do that?
+level 3
+TheCatcherOfThePie
+3 points ·
+1 day ago
+
+print('oxygen\n'*1000)
+
+Is a more succinct way of doing it. This creates a string which is 'oxygen\n' (oxygen followed by a newline character), repeats it 1000 times, then prints the result.
+
+The other person's method also works, with some slight modification:
+
+for i in range(1000):
+    print('oxygen')
+
+level 3
+powerstroked89
+0 points ·
+1 day ago
+· edited 1 day ago
+
+I am a beginner myself but you could do this.
+
+for i in range(1, 1001):
+    print('oxygen')
+
+you use 1001 because if you use 1000, it will stop at 999. 1001 will stop you at 1000.
+level 4
+Chunderscore
+4 points ·
+1 day ago
+
+But it starts at 0.
+
+for I in range(3): print(I)
+
+Should give:
+
+0 1 2
+
+Stops after 2, runs three times.
+level 5
+powerstroked89
+3 points ·
+1 day ago
+
+it was a typo on my part: for i in range(1, 1001): print('oxygen') would give him oxygen 1000 times. Again still a noob, sorry about that.
+level 6
+wp381640
+3 points ·
+1 day ago
+
+Use zero because python indexes at 0 (most languages do) and it’s better to learn to think that way
+level 7
+powerstroked89
+1 point ·
+1 day ago
+
+ok cool, that makes sense and I kind of thought that but when I received the first response I was like oh crap, I forgot about the starting position when I posted the code.
+level 8
+anitapu
+2 points ·
+20 hours ago
+
+I found that you can do
+
+
+something = 'oxygen'
+
+print (something * 1000)
+
+
+Thanks for the help, though
+level 1
+iBlag
+105 points ·
+2 days ago
+
+No for/else loop? No try/except/else/finally blocks?
+level 2
+jeetelongname
+25 points ·
+2 days ago
+
+For else I could live without but try except is super useful. It should be in here
+level 2
+druman22
+1 point ·
+1 day ago
+
+Didn't even know for else was a thing. Also it apparently acts like a then statement? so else doesn't really make sense
+level 3
+Pythagorean_1
+3 points ·
+1 day ago
+
+It does make sense if you view it as for...break...else
+level 4
+druman22
+1 point ·
+1 day ago
+
+Does it still run if it never breaks?
+level 5
+iBlag
+2 points ·
+1 day ago
+
+The else block only runs if the for loop never breaks. :)
+level 6
+druman22
+2 points ·
+1 day ago
+
+Ohh gotcha. That's kinda neat, don't think I'll make much use of it. Thanks though
+level 7
+Pythagorean_1
+2 points ·
+1 day ago
+
+Actually, when I first learnt about this feature, I thought I might never use it, but the day after I stumbled upon a problem where it was absolutely the shortest and most elegant solution possible.
+level 1
+cant_go_tits_up
+33 points ·
+1 day ago
+
+Does anyone else think it's fucking ludicrous we're still making, in general, the distinction between 2 and 3? Python 2 is dead, was originally supposed to have died 5 years ago already, and Python 3 is 12 years old!
+
+Other languages have gone through similarly drastic changes in much less time, but Python 2 is just refusing to die.
+level 2
+stOneskull
+6 points ·
+1 day ago
+
+maybe it'll be the same time we're all on python4 that we start just calling it python
+level 2
+ApoorvWatsky
+4 points ·
+1 day ago
+
+I hate that some online judges still have python2/pypy2 but not pypy3 implementation. Pisses me off. Just get rid of it jesus, python2 is officially dead.
+level 1
+git_riposte
+51 points ·
+2 days ago
+
+I think this is pretty sweet, despite any incompleteness.
+
+Also bears a strange resemblance to a subway map.
+level 1
+bconduit
+26 points ·
+2 days ago
+· edited 2 days ago
+
+I notice it has st = {}, creating a dict, rather than a set.
+
+What’s it trying to depict with that? I’m only a few months in, so I might be overlooking something?
+level 2
+calcopiritus
+23 points ·
+2 days ago
+
+If you look above it you see that he declares an empty set with set(). This is the correct way. He puts set = {} to teach people that don't know that that will make a dict. So if you want an empty set you write set(), if you want an empty dict you write {} or dict().
+level 2
+Yazeed666
+5 points ·
+2 days ago
+
+To create an empty set you use the set() function where st = set()
+level 3
+bconduit
+1 point ·
+2 days ago
+
+Yeah, I was just curious why it showed st = {} under the set info.
+level 4
+dstlny_97
+13 points ·
+2 days ago
+
+Because you can create a set like that too.
+
+Something like:
+
+st = { 2, 4, 6, 8, 12 }
+level 5
+bconduit
+3 points ·
+2 days ago
+
+Oh. Duh. It’s like three lines above it in the image, even. Thanks for clarifying!
+level 5
+jmmcd
+Evolutionary algorithms, music and graphics2 points ·
+1 day ago
+
+But not that specific example as {} created an empty dict.
+level 4
+TomSwirly
+M-x praise-python3 points ·
+2 days ago
+
+Look at the next line - it then goes on to show that type(st) is dict. I have complaints about this whole thing, but that part seems pretty reasonable.
+level 1
+groome8579
+24 points ·
+2 days ago
+
+As someone relatively new to python I think this is actually quite helpful. Thanks OP
+level 2
+RheingoldRiver
+12 points ·
+1 day ago
+
+how is this helpful? I'm not judging/criticizing, I'm just incredibly confused how this could be useful - like maybe as a cheat sheet but surely there's better cheat sheets around? Is Python your first language & it's conceptually helpful, or is it just nice for remembering syntax?
+level 3
+groome8579
+9 points ·
+1 day ago
+
+I found it useful to see syntax and examples in one place. That’s all. Python is my first language though. 😄
+level 4
+RheingoldRiver
+5 points ·
+1 day ago
+
+Try checking this out - they're pdfs which might be kinda annoying but I think it's likely to be a lot more helpful - if you search for images there's also tons of options, and you can even choose something that's roughly desktop-sized and set it as your wallpaper! I think you should pretty easily be able to find stuff a lot better than the OP, hopefully this is helpful!
+level 4
+Blazerboy65
+2 points ·
+1 day ago
+
+My favorite resource for exactly this purpose.
+
+https://learnxinyminutes.com/docs/python/
+level 3
+RastaPasta12
+2 points ·
+1 day ago
+
+For me it just means I dont have to dive deep into wikis or documentation that boggles my mind for basic stuff
+level 3
+stOneskull
+1 point ·
+1 day ago
+
+it shows all the basics, you can see an overview, so it makes it all less overwhelming if it's new to you. good as a foundation, something to build on. it fits well on the screen in full-size too. it's good.
+level 1
+AvailableProfile
+6 points ·
+1 day ago
+
+Tagging this doodle as "Resource" is insulting to tags, resources and the individual letters of the alphabet.
+level 1
+reborn_20
+14 points ·
+2 days ago
+
+I count myself as an intermediate Python programmer. And still even ignoring important packages this is missing very much. Reminds me of these, become a data scientist in three months advertisements.
+
+Better call it Python 3 for Beginners in one pic.
+level 1
+thelaxiankey
+5 points ·
+1 day ago
+
+I don't really get the point of this. It's incomplete, difficult to use, and doesn't really reveal anything about the language. Really it's just a list of datatypes and control flow... which seems pretty limited.
+level 1
+godgivesashit
+3 points ·
+2 days ago
+
+Is it possible to download this mindmap? Thx in advance!
+level 2
+Decency
+3 points ·
+1 day ago
+
+Right click on it and "save image as" or whatever the equivalent is in your browser.
+level 3
+godgivesashit
+3 points ·
+1 day ago
+
+Thx for info, but I don't need the image. I need the .mm file to work with it in freemind.
+level 4
+Decency
+2 points ·
+1 day ago
+
+Ah sorry about that, I wasn't familiar with this format. A quick google with python3 filetype:mm found an updated version in a repo here!
+level 5
+godgivesashit
+1 point ·
+1 day ago
+
+Thx a lot!!!
+level 1
+jiaoziren
+3 points ·
+1 day ago
+
+Is there a tool to make this kind of pictures?
+level 2
+avocadoenigma
+1 point ·
+1 day ago
+
+Google mind map software. There are several good open source software available.
+level 1
+Mr_Again
+6 points ·
+1 day ago
+
+If you're going to redo this to add all the suggestions /missing bits, then consider getting rid of all the calls to print which add nothing but noise
+level 1
+SirKainey
+3 points ·
+2 days ago
+
+Am I missing something with that 6 in the tuple bit? Shouldn't it be 5?
+level 2
+laaazlo
+2 points ·
+1 day ago
+
+I think it's showing that tuples are immutable but their elements may not be.
+level 2
+NinjaXI
+2 points ·
+2 days ago
+
+I'm not sure I can explain this 100% correctly, but the trick there is the element at index 3 is a list. Any changes to the list values is possible because the value of the tuple is a reference to the list, not the list itself.
+
+What you can't do is assign a new list to that index as that would be changing the value(ie changing the reference to another one).
+
+I primarily work in Java so some of this terminology might be wrong in Python.
+level 3
+SirKainey
+3 points ·
+1 day ago
+
+The list is mutable but the tuple isn't.
+level 2
+djangozenno
+1 point ·
+2 days ago
+
+it's replaced
+level 3
+SirKainey
+1 point ·
+2 days ago
+
+That'll teach me for skimming over it. You're right.
+level 3
+fighterace00
+1 point ·
+1 day ago
+
+Oh I finally see it, that was an expression not the output
+level 1
+iamnotlookingforporn
+3 points ·
+2 days ago
+
+Maybe could add some common modules like numpy
+level 2
+TheCatcherOfThePie
+3 points ·
+1 day ago
+· edited 1 day ago
+
+I'd say they should start with some standard library stuff before covering third-party modules (even popular ones like numpy).
+level 1
+Demonic_Dante
+3 points ·
+1 day ago
+
+It's just a list that have basic python terminologies
+level 1
+cr4d
+3 points ·
+1 day ago
+
+I'm confused by the intent of this.
+level 1
+hudnix
+3 points ·
+1 day ago
+
+This entire thread is a giant validation of Cunningham's Law
+level 1
+cell_cycle
+3 points ·
+1 day ago
+· edited 1 day ago
+
+Is this a joke, this got so many upvotes? Please tell me that it is just this sub that has gone to shit. Otherwise, if this is the current state of the actual Python community, then we are screwed. I mean there are signs with so much bullshit being added in recent Python versions like walrus' testicles, subbollockspreters, type shits and what not, but I still believed that Python will continue to stay strong.
+level 1
+Fruitymcdoo
+3 points ·
+1 day ago
+
+Learning Python from scratch is easier than trying to understand this image.
+level 2
+ashhy-ashhy
+1 point ·
+1 day ago
+
+yes
+level 1
+peter_struwell
+2 points ·
+1 day ago
+
+python 3 in multiple pictures https://twitter.com/kippynyc/status/1265057357240963073?s=21
+level 1
+mrslayer7
+4 points ·
+2 days ago
+
+You used python 3 to write python 3
+level 1
+pool_t
+4 points ·
+2 days ago
+· edited 2 days ago
+
+Everyone commenting "How is this Python 3?" "No this? No that?":How about you make something informative instead of bashing?
+
+Edit: I think this is really cool for someone who is just getting into Python btw
+level 2
+AlphaGamer753
+3.728 points ·
+2 days ago
+
+Not having created something informative like this doesn't mean you forfeit your right to criticise. There are far better resources than this for someone who is just getting into Python, most of which are available on this subreddit.
+level 3
+Hybr1dth
+0 points ·
+2 days ago
+
+There's criticism, and there's constructive criticism. There is some of both present, but it paints an ugly stereotype.
+level 3
+risajajr
+-1 points ·
+1 day ago
+
+And he didn't say your right to criticize is forfeit. He basically called out that it is easier to criticize than to create. I think if there are far better resources than this on this subreddit, it would be very helpful to someone just getting into Python if those were posted (I, myself, don't know where those are).
+level 4
+AlphaGamer753
+3.71 point ·
+1 day ago
+
+    How about you make something informative instead of bashing?
+
+Notice the word "instead" - i.e. until you make something informative, you forfeit your right to criticise.
+
+    it would be very helpful to someone just getting into Python if those were posted (I, myself, don't know where those are)
+
+Sidebar. r/learnpython. Google. This subreddit is not for teaching you how to code, it's for discussing the language, sharing projects, news, etc. There's a reason that there's an entire subreddit dedicated to helping you.
+level 2
+nemom
+5 points ·
+1 day ago
+
+If somebody posts an image titled "The Alphabet in One Pic" and they miss four letters, people are allowed to point them out.
+level 1
+gigakos
+1 point ·
+2 days ago
+
+At st.discard('t'), why is the '!' removed as well?
+level 2
+otterom
+1 point ·
+1 day ago
+
+It shouldn't be. Yet another error in the diagram.
+level 1
+wildpantz
+1 point ·
+2 days ago
+
+I watched a Python development related video once and it looked a lot like some neural structure expanding. One branch kind of seemed bigger than all of this
+level 1
+DeserterOfDecadence
+1 point ·
+2 days ago
+
+My new desktop wallpaper.
+
+Thank you kind creator
+level 2
+otterom
+1 point ·
+1 day ago
+
+Don't, lol.
+
+There's too many errors.
+level 1
+ExpatiateDy
+1 point ·
+2 days ago
+
+This is one hell of a pic
+level 1
+uanw
+1 point ·
+2 days ago
+
+Everyone forgets about the ellipsis type :(
+level 1
+chaturri
+1 point ·
+1 day ago
+
+Damn this is fantastic. Thanks!
+level 1
+jamesonwhiskers
+1 point ·
+1 day ago
+
+Clearly lots of good work went into this! Thanks OP! I would love to see the completed version in some sort of interactive format where you can explore each branch. I wonder if it could be automatically generated from the existing documentation and some scraping
+level 1
+TENX--S
+1 point ·
+1 day ago
+
+tuples are more than "immutable list"; "Interior Mutability" is a big topic.
+level 1
+RosyGraph
+1 point ·
+1 day ago
+
+Wow! This would make a good desk mat.
+level 1
+alexscheppert
+1 point ·
+1 day ago
+
+No fstrings?
+level 1
+Tobis76
+1 point ·
+1 day ago
+
+Mindmap programming! Good for structuring.
+level 1
+rulesilol
+1 point ·
+1 day ago
+
+I'm still surprised python had complex numbers built in but doesn't have exponentials
+level 1
+broadsheetvstabloid
+1 point ·
+1 day ago
+
+The %s should be replaced with {} and .format.
+
+“Hello, {}”.format(name)
+
+The % method is considered “old” and will likely be deprecated in the future.
+level 1
+Duel-shock514
+1 point ·
+1 day ago
+
+this is a very good pic ive been coding in python every now and again and this is SOOO helpful cause sometimes i forget stuff
+level 1
+Nekkramancer
+1 point ·
+1 day ago
+
+This is officially my little cheat sheet
+level 1
+JakubBlaha
+1 point ·
+1 day ago
+
+What is 1 + 2j? I guess I am missing on some maths here...
+level 2
+arunboss
+2 points ·
+1 day ago
+
+It's how you represent a complex number in math. j = sqrt(-1)
+level 3
+JakubBlaha
+1 point ·
+1 day ago
+
+Okay. I see. Thanks for the explanation!
+level 4
+arunboss
+2 points ·
+1 day ago
+
+So a complex number has an imaginary component (the 2j part in OP's example) and a real component. They are super useful in signal processing (Fourier analysis).
+level 1
+defiantstyles
+1 point ·
+1 day ago
+
+Saving this to my Google Drive! I had no idea that Python supported complex numbers!
+level 1
+Adam-Fenjiro
+1 point ·
+1 day ago
+
+Thanks dude !
+level 1
+Jaypalm
+1 point ·
+1 day ago
+
+Should be reformatted for desktop
+level 1
+arunboss
+1 point ·
+1 day ago
+
+I didn't realize python has native support for complex numbers. It's interesting they went with j instead of i like mathematicians. Also I don't understand the people complaining about this not being comprehensive. How can you expect the whole of python 3 to be fit into one picture? Despite being "incomplete" this is a quick start for programmers to get going with python.
+level 1
+kirtap7
+1 point ·
+1 day ago
+
+This is a way better post https://www.reddit.com/r/Python/comments/f9azmd/learn_python_3_from_a_single_picture/
+level 1
+RaspberryInk
+1 point ·
+1 day ago
+
+Is this MindNode? I know there are lots of ways of doing this, but this looks a lot like their layout algorithm.
+level 1
+Dacoolster
+1 point ·
+1 day ago
+
+Simple 😅
+level 1
+welshfargo
+1 point ·
+1 day ago
+
+I find this more useful: https://learnxinyminutes.com/docs/python/
+level 1
+Xanzent
+1 point ·
+1 day ago
+
+You've completed step 1, now draw the rest of the fucking owl
+level 1
+Tracksuit_Trey
+1 point ·
+1 day ago
+
+I think some stuff is missing.
+level 1
+Kassme
+1 point ·
+1 day ago
+
+This is so awesome, going to put this up on my wall! Has all the basics that I struggle to remember as I'm learning this language. Thanks.
+level 1
+Harry-Tran9512
+1 point ·
+1 day ago
+
+Amazing. Thank you 😁
+level 1
+otterom
+1 point ·
+1 day ago
+
+"Am I a joke to you?"
+
+- PEP 572
+level 1
+bauripalash
+1 point ·
+1 day ago
+
+This is not the complete picture. 🤷‍♂️
+level 1
+ryulei80
+1 point ·
+1 day ago
+
+N I C E , Can someone turn this to a interactive web page?
+level 1
+sohang_lal
+1 point ·
+1 day ago
+
+How was this created? As in what software was used to create this? This looks sick
+level 1
+Strangeduh
+1 point ·
+1 day ago
+
+This is so great! As an absolute beginner, this is worth so much. Thanks!
+level 1
+__THE_RED_BULL__
+1 point ·
+11 hours ago
+
+Finally! A clear version! Thanks!
+
+This was on my Twitter feed yesterday but the picture looked like it had DTs while being compressed.
+level 1
+crab-rabbit
+1 point ·
+1 day ago
+
+if you retitled this as "python3 basic syntax" and converted it to text, you'd have a much better response
+level 2
+TravisJungroth
+1 point ·
+1 day ago
+
+When I’m writing this, they have 3,000 upvotes. I doubt text with as many mistakes and missing info would get as much attention. People just upvote pictures.
+level 3
+crab-rabbit
+1 point ·
+1 day ago
+
+fair enough. 9 hours ago it wasn't as popular. there were also 80 fewer comments. either way, i was wrong
+level 1
+Triumph_Of_The_Ill
+1 point ·
+1 day ago
+
+The set .pop result isn't quite right in that the result is not deterministic - it will randomly give you an element from the set.
+level 2
+mxzf
+2 points ·
+1 day ago
+
+It's worth noting that set.pop() is deterministic and not random. It returns an arbitrary element, not a random one.
+
+It has no correlation to the order that elements are declared in the set, but it is deterministic (since it just grabs the first element it finds) rather than random (since it doesn't actually randomize the choice at all).
+
+People actually looking for a random element from a set should use random.choice(list(set_variable))instead.
+level 3
+TravisJungroth
+2 points ·
+1 day ago
+
+It’s neither deterministic nor random. The code won’t always have the same output given the same input, so it’s not deterministic.
+level 4
+mxzf
+1 point ·
+1 day ago
+
+I'll have to run some tests in a bit, but I believe it is determanistic. Hashes are deterministic by nature, that's the whole point of them. And the source I looked at for set.pop() just looks like it walks through the memory block and grabs the first element it finds.
+
+It's not transparently determanistic at the level users interact with, but that doesn't make it non-determanistic either. It'll still have the same output given the same input, but "the same input" is broader than just the contents of the set (insertion/removal order and so on matter too).
+level 5
+TravisJungroth
+1 point ·
+1 day ago
+
+You're using the word "deterministic" wrong in the context of code, or at least different than most other people.
+
+    but "the same input" is broader than just the contents of the set (insertion/removal order and so on matter too).
+
+By that logic random.choice() is deterministic because it always has the same output as long as you happen to run it in a way so that it gets the same seed.
+
+If you allow endless scope, then the question becomes whether or not we're in a deterministic universe, and the word loses some value to us in this context. Determinism in programming is a simpler question. If I run the same code multiple times, will it always return the same result? The answer for set.pop() is no.
+level 1
+trial-by-ordeal
+-1 points ·
+2 days ago
+
+This is brilliant
+level 1
+unsurestill
+-1 points ·
+2 days ago
+
+Can someone make one like this but in c++?
+level 2
+MirrorLake
+1 point ·
+1 day ago
+
+https://learnxinyminutes.com/docs/c++/
+
+And for good measure, the keyword reference.
+
+https://en.cppreference.com/w/cpp/keyword
+level 1
+BAG0N
+-1 points ·
+2 days ago
+
+That's pretty damn cool, tho the operators is lacking the integer division (//)
+level 1
+jeel2331
+0 points ·
+2 days ago
+
+One word :Useful
+level 1
+Knight_Fisher61
+-7 points ·
+2 days ago
+0 children
+level 1
+smrtboi84
+0 points ·
+1 day ago
+
+Super cool new background
+level 1
+jabbalaci
+0 points ·
+1 day ago
+
+What's this?
+
+for i in "Hello":
+    print(i)
+
+Use ifor indices only. Even the following would be bad IMO:
+
+for i in [4, 6, 1, 9]:
+    print(i)
+
+iwould be OK here:
+
+for i in range(10):
+    print(i)
+
+level 2
+Pythagorean_1
+0 points ·
+1 day ago
+
+All three lines are perfectly fine.
+level 3
+jabbalaci
+1 point ·
+1 day ago
+
+Why? "i" stands for "int" or "index". How on Earth could the first one be acceptable?
