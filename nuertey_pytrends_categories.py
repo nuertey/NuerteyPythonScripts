@@ -222,21 +222,21 @@ html_categories = json2html.convert(json_categories)
 
 #the text string generated from the categories:
 text = '\u2022  ' + all_categories['name'] + ': ' + str(all_categories['id'])
-row_text = '' + all_categories['name'] + ': '
+row_text = '\u2022  ' + all_categories['name'] + ': '
 hierarchical_categories_text.append(row_text)
 flattened_category_ids.append(all_categories['id'])
 cats = all_categories['children']
 for i in range(len(cats)):
     cat = cats[i]
     text = text + '\n    \u25CB  ' + cat['name'] + ': ' + str(cat['id'])
-    row_text = '    ' + cat['name'] + ': '
+    row_text = '    \u25CB  ' + cat['name'] + ': '
     hierarchical_categories_text.append(row_text)
     flattened_category_ids.append(cat['id'])
     scats = cat['children']
     for i in range(len(scats)):
         scat = scats[i]
         text = text + '\n        \u25AA  ' + scat['name'] + ': ' + str(scat['id'])
-        row_text = '        ' + scat['name'] + ': '
+        row_text = '        \u25AA  ' + scat['name'] + ': '
         hierarchical_categories_text.append(row_text)
         flattened_category_ids.append(scat['id'])
         if len(scat) > 2: # Ensure that we do contain child sub-categories.
@@ -244,7 +244,7 @@ for i in range(len(cats)):
             for i in range(len(sscats)):
                 sscat = sscats[i]
                 text = text + '\n            \u25AA  ' + sscat['name'] + ': ' + str(sscat['id'])
-                row_text = '            ' + sscat['name'] + ': '
+                row_text = '            \u25AA  ' + sscat['name'] + ': '
                 hierarchical_categories_text.append(row_text)
                 flattened_category_ids.append(sscat['id'])
                 if len(sscat) > 2: # Ensure that we do contain child sub-categories.
@@ -252,7 +252,7 @@ for i in range(len(cats)):
                     for i in range(len(ssscats)):
                         ssscat = ssscats[i]
                         text = text + '\n                \u25AA  ' + ssscat['name'] + ': ' + str(ssscat['id'])
-                        row_text = '                ' + ssscat['name'] + ': '
+                        row_text = '                \u25AA  ' + ssscat['name'] + ': '
                         hierarchical_categories_text.append(row_text)
                         flattened_category_ids.append(ssscat['id'])
                         if len(ssscat) > 2:
@@ -260,7 +260,7 @@ for i in range(len(cats)):
                             for i in range(len(sssscats)):
                                 sssscat = sssscats[i]
                                 text = text + '\n                    \u25AA  ' + sssscat['name'] + ': ' + str(sssscat['id'])
-                                row_text = '                    ' + sssscat['name'] + ': '
+                                row_text = '                    \u25AA  ' + sssscat['name'] + ': '
                                 hierarchical_categories_text.append(row_text)
                                 flattened_category_ids.append(sssscat['id'])
                                 if len(sssscat) > 2:
@@ -268,12 +268,12 @@ for i in range(len(cats)):
                                     for i in range(len(ssssscats)):
                                         ssssscat = ssssscats[i]
                                         text = text + '\n                        \u25AA  ' + ssssscat['name'] + ': ' + str(ssssscat['id'])
-                                        row_text = '                        ' + ssssscat['name'] + ': '
+                                        row_text = '                        \u25AA  ' + ssssscat['name'] + ': '
                                         hierarchical_categories_text.append(row_text)
                                         flattened_category_ids.append(ssssscat['id'])  
 
-print(text)
-print()
+#print(text)
+#print()
 
 # Alternative way of composing the dataframe:
 #categories_dataframe = pd.DataFrame(
@@ -282,6 +282,7 @@ print()
 #    })
 categories_dataframe = pd.DataFrame(np.column_stack([hierarchical_categories_text]), columns=['name'])
 categories_dataframe['id'] = flattened_category_ids
+
 # To left-justify only one particular dataframe column, use the following:
 print(categories_dataframe.to_string(formatters={'name':'{{:<{}s}}'.format(categories_dataframe['name'].str.len().max()).format}, index=False))
 print()
