@@ -4,6 +4,40 @@ import pandas as pd
 
 pd.set_option('display.max_rows', 100)
 
+# ===================================================================
+# General Comment:
+
+# Apparently it is more Pythonic to adopt a strategy of "easier to 
+# ask for forgiveness than permission" (EAFP) rather than "look before
+# you leap" (LBYL). See these references:
+#
+# http://web.archive.org/web/20070929122422/http://mail.python.org/pipermail/python-list/2003-May/205182.html
+#
+# https://web.archive.org/web/20180411011411/http://python.net/~goodger/projects/pycon/2007/idiomatic/handout.html#eafp-vs-lbyl
+
+# To resolve:
+# Traceback (most recent call last):
+#   File "nuertey_trending_topics.py", line 117, in <module>
+#     recursive_flatten(all_categories)
+#   File "nuertey_trending_topics.py", line 64, in recursive_flatten
+#     recursive_flatten(cat, (indent+1))
+#   File "nuertey_trending_topics.py", line 64, in recursive_flatten
+#     recursive_flatten(cat, (indent+1))
+#   File "nuertey_trending_topics.py", line 60, in recursive_flatten
+#     cats = nested_categories['children']
+# KeyError: 'children'
+
+#    try:
+#        cats = nested_categories['children']
+#        if len(cats) >= 1: # Ensure that we do contain child sub-categories.
+#            for i in range(len(cats)):
+#                cat = cats[i]
+#                recursive_flatten(cat, (indent+1))
+#    except Exception as e:
+#        pass
+
+
+# ===================================================================
 # Print the shape of a 2-D array:
 arr = np.array([[1, 2, 3, 4], [5, 6, 7, 8]])
 
