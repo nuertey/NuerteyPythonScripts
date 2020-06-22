@@ -26,7 +26,9 @@ from datetime import datetime, date, time
 from pytrends.request import TrendReq
 from argparse import RawTextHelpFormatter
 
-pd.set_option('display.max_rows', 100)
+pd.set_option('display.max_rows', 200)
+pd.set_option('display.min_rows', 200)
+pd.set_option('display.expand_frame_repr', True)
 
 # Note that during testing, it was discovered that Kenya as country input
 # is failing. See the following pytrends github issue that is tracking it:
@@ -44,23 +46,77 @@ countries_data['country_name'] = [ pycountry.countries.get(alpha_2=code).name fo
 
 # Returns all main Google Trends categories and their ids for usage in help text.
 all_categories = pytrend.categories()
-#print(all_categories)
+
+flattened_category_ids = []
+hierarchical_categories_text = []
+
+#the text string generated from the categories:
+text = '\u2022  ' + all_categories['name'] + ': ' + str(all_categories['id'])
+row_text = '\u2022  ' + all_categories['name'] + ': '
+hierarchical_categories_text.append(row_text)
+flattened_category_ids.append(all_categories['id'])
+cats = all_categories['children']
+for i in range(len(cats)):
+    cat = cats[i]
+    text = text + '\n    \u25CB  ' + cat['name'] + ': ' + str(cat['id'])
+    row_text = '    \u25CB  ' + cat['name'] + ': '
+    hierarchical_categories_text.append(row_text)
+    flattened_category_ids.append(cat['id'])
+    scats = cat['children']
+    for i in range(len(scats)):
+        scat = scats[i]
+        text = text + '\n        \u25AA  ' + scat['name'] + ': ' + str(scat['id'])
+        row_text = '        \u25AA  ' + scat['name'] + ': '
+        hierarchical_categories_text.append(row_text)
+        flattened_category_ids.append(scat['id'])
+        if len(scat) > 2: # Ensure that we do contain child sub-categories.
+            sscats = scat['children']
+            for i in range(len(sscats)):
+                sscat = sscats[i]
+                text = text + '\n            \u25AA  ' + sscat['name'] + ': ' + str(sscat['id'])
+                row_text = '            \u25AA  ' + sscat['name'] + ': '
+                hierarchical_categories_text.append(row_text)
+                flattened_category_ids.append(sscat['id'])
+                if len(sscat) > 2: # Ensure that we do contain child sub-categories.
+                    ssscats = sscat['children']
+                    for i in range(len(ssscats)):
+                        ssscat = ssscats[i]
+                        text = text + '\n                \u25AA  ' + ssscat['name'] + ': ' + str(ssscat['id'])
+                        row_text = '                \u25AA  ' + ssscat['name'] + ': '
+                        hierarchical_categories_text.append(row_text)
+                        flattened_category_ids.append(ssscat['id'])
+                        if len(ssscat) > 2:
+                            sssscats = ssscat['children']
+                            for i in range(len(sssscats)):
+                                sssscat = sssscats[i]
+                                text = text + '\n                    \u25AA  ' + sssscat['name'] + ': ' + str(sssscat['id'])
+                                row_text = '                    \u25AA  ' + sssscat['name'] + ': '
+                                hierarchical_categories_text.append(row_text)
+                                flattened_category_ids.append(sssscat['id'])
+                                if len(sssscat) > 2:
+                                    ssssscats = sssscat['children']
+                                    for i in range(len(ssssscats)):
+                                        ssssscat = ssssscats[i]
+                                        text = text + '\n                        \u25AA  ' + ssssscat['name'] + ': ' + str(ssssscat['id'])
+                                        row_text = '                        \u25AA  ' + ssssscat['name'] + ': '
+                                        hierarchical_categories_text.append(row_text)
+                                        flattened_category_ids.append(ssssscat['id'])  
+
+#print(text)
 #print()
-all_categories_data = pd.DataFrame.from_dict(all_categories)
-all_categories_data = all_categories_data['children'].apply(pd.Series)
-#print(all_categories_data)
-#print()
-main_categories_data = all_categories_data[['name', 'id']]
+
+categories_dataframe = pd.DataFrame(np.column_stack([hierarchical_categories_text]), columns=['name'])
+categories_dataframe['id'] = flattened_category_ids
 
 # parser.choices seems to better prefer dict objects to strings. 
 # Better input matching and option display:
 country_codes_dictionary = countries_data.to_dict('list') 
-category_ids_dictionary = main_categories_data.to_dict('list') 
+category_ids_dictionary = categories_dataframe.to_dict('list') 
 
 def init_argparse() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         usage="%(prog)s [-h] | [-v] | [-c country_code] | [-g category] [-t topic]",
-        description="Welcome, Velkommen, Woé zɔ, Karibu, Mo-heee to Nuertey's Trending Topics Displayer. How has this topic been trending in the various regions of this country for the past year? Program options described below:",
+        description="Welcome, Velkommen, Woé zɔ, Karibu, Mo-heee to Nuertey's Trending Topics Displayer. How has this topic been trending in the various regions of this country for the past years? Program options described below:",
         epilog="Enjoy using Nuertey's Trending Topics Displayer to latch upon the World's pulse!",
         formatter_class=RawTextHelpFormatter,
         allow_abbrev=False,
@@ -68,17 +124,17 @@ def init_argparse() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "-v", "--version", action="version",
-        version=f"{parser.prog} version 0.0.1"
+        version=f"{parser.prog} version 0.0.2"
     )
     parser.add_argument(
         "-c", "--country", action='store', choices=country_codes_dictionary['country_code_2'],
-        help="\nSpecify the country whose trending topics you want to see. Where country MUST be denoted by one of the country codes from the \npossible Google Trends API range of countries below: \n\n{0}\n".format(countries_data.to_string(index=False)),
+        help="\nSpecify the country whose trending topics you want to see. Where country MUST be denoted by one of the country codes from the \npossible Google Trends API range of countries below: \n\n{0}\n\n".format(countries_data.to_string(index=False)),
         nargs='?', default='GH',
         metavar='COUNTRY_CODE_FROM_LIST_BELOW'
     )
     parser.add_argument(
-        "-g", "--category", action='store', choices=category_ids_dictionary['id'],
-        help="\nOptionally specify the category from which to query the trending topics. Default is all categories. Where category MUST be denoted by one of the category ids from the \npossible Google Trends API range of main categories below: \n\n{0}\n".format(main_categories_data.to_string(index=False)),
+        "-g", "--category", action='store', type=int, choices=category_ids_dictionary['id'],
+        help="\nOptionally specify the category from which to query the trending topics. Default is all categories. Where category MUST be denoted by one of the category ids from the \npossible Google Trends API range of categories below: \n\n{0}\n\n".format(categories_dataframe.to_string(formatters={'name':'{{:<{}s}}'.format(categories_dataframe['name'].str.len().max()).format}, index=False)),
         nargs='?', default=0,
         metavar='CATEGORY_ID_FROM_LIST_BELOW'
     )
@@ -86,7 +142,7 @@ def init_argparse() -> argparse.ArgumentParser:
         "-t", "--topics", action='store',
         nargs='*', default=['covid', 'somanya', 'ewe', 'cocoa', 'gold'],
         type=str,
-        help="Specify the topics that you are interested in monitoring. A maximum of 5 topics are supported in this format:\n-t 'jumia cameroon' 'covid 19 cameroon' 'cameroon online' 'cameroon news' 'cameroon music'"
+        help="Specify the topics that you are interested in monitoring. A maximum of 5 topics are supported like for example:\n-t 'jumia cameroon' 'covid 19 cameroon' 'cameroon online' 'cameroon news' 'cameroon music'"
     )
     return parser
 
