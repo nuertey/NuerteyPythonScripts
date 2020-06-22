@@ -51,92 +51,75 @@ flattened_category_ids = []
 hierarchical_categories_text = []
 hierarchical_bullet_points = ['\u2022', '\u25CB', '\u25AA', '\u25AA',
                               '\u25AA', '\u25AA', '\u25AA']
-hierarchical_level = 0
 
 # Generalize the following into a recursive method:
 def recursive_flatten(nested_categories, indent=0):
-    row_text = ('    ' * indent) + '{hierarchical_bullet_points[hierarchical_level]}  ' + nested_categories['name'] + ': '
+    row_text = ('    ' * indent) + str(hierarchical_bullet_points[indent]) + '  ' + nested_categories['name'] + ': '
     hierarchical_categories_text.append(row_text)
     flattened_category_ids.append(nested_categories['id'])
-    cats = nested_categories['children']
-    if len(cats) > 1: # Ensure that we do contain child sub-categories.
-        for i in range(len(cats)):
-            cat = cats[i]
-            row_text = ('    ' * (indent+1)) + '{hierarchical_bullet_points[hierarchical_level]}  ' + cat['name'] + ': '
-            hierarchical_categories_text.append(row_text)
-            flattened_category_ids.append(cat['id'])
-            scats = cat['children']
-            hierarchical_level += 1
-
-    if isinstance(nested_categories, Mapping):
-        culprit_line = ""
-        for key, value in nested_categories.items():
-            if key == 'children':
-                # Sub-lists are sub-categories (or children) of the parent list:
-                RecursiveTraverse(value, indent+1)
-            elif key == 'name':
-                culprit_line = '\t' * (indent+1) + str(value) + " : "
-                #culprit_string = "{0}{1}".format(('\t' * (indent+1)), value)
-                #category_names_list.append(value)
-                category_names_list.append(culprit_line)
-                #category_names_list.append(culprit_string)
-            elif key == 'id':
-                culprit_line = culprit_line + str(value)
-                category_ids_list.append(value)
-                #print(culprit_line)
+    try:
+        cats = nested_categories['children']
+        if len(cats) >= 1: # Ensure that we do contain child sub-categories.
+            for i in range(len(cats)):
+                cat = cats[i]
+                recursive_flatten(cat, (indent+1))
+    except Exception as e:
+        #print("Caught exception whilst recursing. Likely exhausted recursion depth:")
+        #print(e)
+        print()
 
 #the text string generated from the categories:
-text = '\u2022  ' + all_categories['name'] + ': ' + str(all_categories['id'])
-row_text = '\u2022  ' + all_categories['name'] + ': '
-hierarchical_categories_text.append(row_text)
-flattened_category_ids.append(all_categories['id'])
-cats = all_categories['children']
-for i in range(len(cats)):
-    cat = cats[i]
-    text = text + '\n    \u25CB  ' + cat['name'] + ': ' + str(cat['id'])
-    row_text = '    \u25CB  ' + cat['name'] + ': '
-    hierarchical_categories_text.append(row_text)
-    flattened_category_ids.append(cat['id'])
-    scats = cat['children']
-    for i in range(len(scats)):
-        scat = scats[i]
-        text = text + '\n        \u25AA  ' + scat['name'] + ': ' + str(scat['id'])
-        row_text = '        \u25AA  ' + scat['name'] + ': '
-        hierarchical_categories_text.append(row_text)
-        flattened_category_ids.append(scat['id'])
-        if len(scat) > 2: # Ensure that we do contain child sub-categories.
-            sscats = scat['children']
-            for i in range(len(sscats)):
-                sscat = sscats[i]
-                text = text + '\n            \u25AA  ' + sscat['name'] + ': ' + str(sscat['id'])
-                row_text = '            \u25AA  ' + sscat['name'] + ': '
-                hierarchical_categories_text.append(row_text)
-                flattened_category_ids.append(sscat['id'])
-                if len(sscat) > 2: # Ensure that we do contain child sub-categories.
-                    ssscats = sscat['children']
-                    for i in range(len(ssscats)):
-                        ssscat = ssscats[i]
-                        text = text + '\n                \u25AA  ' + ssscat['name'] + ': ' + str(ssscat['id'])
-                        row_text = '                \u25AA  ' + ssscat['name'] + ': '
-                        hierarchical_categories_text.append(row_text)
-                        flattened_category_ids.append(ssscat['id'])
-                        if len(ssscat) > 2:
-                            sssscats = ssscat['children']
-                            for i in range(len(sssscats)):
-                                sssscat = sssscats[i]
-                                text = text + '\n                    \u25AA  ' + sssscat['name'] + ': ' + str(sssscat['id'])
-                                row_text = '                    \u25AA  ' + sssscat['name'] + ': '
-                                hierarchical_categories_text.append(row_text)
-                                flattened_category_ids.append(sssscat['id'])
-                                if len(sssscat) > 2:
-                                    ssssscats = sssscat['children']
-                                    for i in range(len(ssssscats)):
-                                        ssssscat = ssssscats[i]
-                                        text = text + '\n                        \u25AA  ' + ssssscat['name'] + ': ' + str(ssssscat['id'])
-                                        row_text = '                        \u25AA  ' + ssssscat['name'] + ': '
-                                        hierarchical_categories_text.append(row_text)
-                                        flattened_category_ids.append(ssssscat['id'])  
-
+#text = '\u2022  ' + all_categories['name'] + ': ' + str(all_categories['id'])
+#row_text = '\u2022  ' + all_categories['name'] + ': '
+#hierarchical_categories_text.append(row_text)
+#flattened_category_ids.append(all_categories['id'])
+#cats = all_categories['children']
+#for i in range(len(cats)):
+#    cat = cats[i]
+#    text = text + '\n    \u25CB  ' + cat['name'] + ': ' + str(cat['id'])
+#    row_text = '    \u25CB  ' + cat['name'] + ': '
+#    hierarchical_categories_text.append(row_text)
+#    flattened_category_ids.append(cat['id'])
+#    scats = cat['children']
+#    for i in range(len(scats)):
+#        scat = scats[i]
+#        text = text + '\n        \u25AA  ' + scat['name'] + ': ' + str(scat['id'])
+#        row_text = '        \u25AA  ' + scat['name'] + ': '
+#        hierarchical_categories_text.append(row_text)
+#        flattened_category_ids.append(scat['id'])
+#        if len(scat) > 2: # Ensure that we do contain child sub-categories.
+#            sscats = scat['children']
+#            for i in range(len(sscats)):
+#                sscat = sscats[i]
+#                text = text + '\n            \u25AA  ' + sscat['name'] + ': ' + str(sscat['id'])
+#                row_text = '            \u25AA  ' + sscat['name'] + ': '
+#                hierarchical_categories_text.append(row_text)
+#                flattened_category_ids.append(sscat['id'])
+#                if len(sscat) > 2: # Ensure that we do contain child sub-categories.
+#                    ssscats = sscat['children']
+#                    for i in range(len(ssscats)):
+#                        ssscat = ssscats[i]
+#                        text = text + '\n                \u25AA  ' + ssscat['name'] + ': ' + str(ssscat['id'])
+#                        row_text = '                \u25AA  ' + ssscat['name'] + ': '
+#                        hierarchical_categories_text.append(row_text)
+#                        flattened_category_ids.append(ssscat['id'])
+#                        if len(ssscat) > 2:
+#                            sssscats = ssscat['children']
+#                            for i in range(len(sssscats)):
+#                                sssscat = sssscats[i]
+#                                text = text + '\n                    \u25AA  ' + sssscat['name'] + ': ' + str(sssscat['id'])
+#                                row_text = '                    \u25AA  ' + sssscat['name'] + ': '
+#                                hierarchical_categories_text.append(row_text)
+#                                flattened_category_ids.append(sssscat['id'])
+#                                if len(sssscat) > 2:
+#                                    ssssscats = sssscat['children']
+#                                    for i in range(len(ssssscats)):
+#                                        ssssscat = ssssscats[i]
+#                                        text = text + '\n                        \u25AA  ' + ssssscat['name'] + ': ' + str(ssssscat['id'])
+#                                        row_text = '                        \u25AA  ' + ssssscat['name'] + ': '
+#                                        hierarchical_categories_text.append(row_text)
+#                                        flattened_category_ids.append(ssssscat['id'])  
+recursive_flatten(all_categories)
 #print(text)
 #print()
 
@@ -171,7 +154,7 @@ def init_argparse() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "-g", "--category", action='store', type=int, choices=category_ids_dictionary['id'],
-        help="\nOptionally specify the category from which to query the trending topics. Default is all categories. Where category MUST be denoted by one of the category ids from the \npossible Google Trends API range of categories below: \n\n{0}\n\n".format(categories_dataframe.to_string(formatters={'name':'{{:<{}s}}'.format(categories_dataframe['name'].str.len().max()).format}, index=False)),
+        help="\nOptionally specify the category from which to query the trending topics. Default is all categories. Where category MUST be denoted by one of the category ids from the \npossible Google Trends API range of categories below: \n\n{0}\n\n".format(categories_dataframe.to_string(formatters={'name':'{{:<{}s}}'.format(categories_dataframe['name'].str.len().max()).format}, index=True)),
         nargs='?', default=0,
         metavar='CATEGORY_ID_FROM_LIST_BELOW'
     )
