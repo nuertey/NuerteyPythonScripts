@@ -49,6 +49,41 @@ all_categories = pytrend.categories()
 
 flattened_category_ids = []
 hierarchical_categories_text = []
+hierarchical_bullet_points = ['\u2022', '\u25CB', '\u25AA', '\u25AA',
+                              '\u25AA', '\u25AA', '\u25AA']
+hierarchical_level = 0
+
+# Generalize the following into a recursive method:
+def recursive_flatten(nested_categories, indent=0):
+    row_text = ('    ' * indent) + '{hierarchical_bullet_points[hierarchical_level]}  ' + nested_categories['name'] + ': '
+    hierarchical_categories_text.append(row_text)
+    flattened_category_ids.append(nested_categories['id'])
+    cats = nested_categories['children']
+    if len(cats) > 1: # Ensure that we do contain child sub-categories.
+        for i in range(len(cats)):
+            cat = cats[i]
+            row_text = ('    ' * (indent+1)) + '{hierarchical_bullet_points[hierarchical_level]}  ' + cat['name'] + ': '
+            hierarchical_categories_text.append(row_text)
+            flattened_category_ids.append(cat['id'])
+            scats = cat['children']
+            hierarchical_level += 1
+
+    if isinstance(nested_categories, Mapping):
+        culprit_line = ""
+        for key, value in nested_categories.items():
+            if key == 'children':
+                # Sub-lists are sub-categories (or children) of the parent list:
+                RecursiveTraverse(value, indent+1)
+            elif key == 'name':
+                culprit_line = '\t' * (indent+1) + str(value) + " : "
+                #culprit_string = "{0}{1}".format(('\t' * (indent+1)), value)
+                #category_names_list.append(value)
+                category_names_list.append(culprit_line)
+                #category_names_list.append(culprit_string)
+            elif key == 'id':
+                culprit_line = culprit_line + str(value)
+                category_ids_list.append(value)
+                #print(culprit_line)
 
 #the text string generated from the categories:
 text = '\u2022  ' + all_categories['name'] + ': ' + str(all_categories['id'])
