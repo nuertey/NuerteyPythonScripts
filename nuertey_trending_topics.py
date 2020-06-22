@@ -113,6 +113,8 @@ categories_dataframe['id'] = flattened_category_ids
 country_codes_dictionary = countries_data.to_dict('list') 
 category_ids_dictionary = categories_dataframe.to_dict('list') 
 
+# In the future, explicitly set the argument types (type=<type>) to 
+# ensure that argument parsing does not fail.
 def init_argparse() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         usage="%(prog)s [-h] | [-v] | [-c country_code] | [-g category] [-t topic]",
