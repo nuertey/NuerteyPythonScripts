@@ -22,4 +22,6 @@ if bool(os.environ.get('DEBUG', '')):
     db.drop_all()
 db.create_all()
 
-If a DEBUG environment variable is set, drop tables and rebuild. Otherwise, just create the tables once and you're good to go.
+# If a DEBUG environment variable is set (via activate bash script or 
+# otherwise), drop tables and rebuild. Otherwise, just create the tables
+# once and you're good to go.
