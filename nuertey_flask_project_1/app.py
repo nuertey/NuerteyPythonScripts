@@ -38,10 +38,10 @@ app = Flask(__name__)
 # configuration a map from the specified route to the function that runs 
 # when that route is accessed. You can use this to start building out the 
 # rest of the API.
-#@app.route('/')
-#def hello_world():
-#    """Print 'Hello, world!' as the response body."""
-#    return 'Hello, world!'
+@app.route('/')
+def hello_world():
+    """Print 'Hello, world!' as the response body."""
+    return 'Hello, world!'
 
 # This is the most basic complete Flask application. app is an instance of 
 # Flask, taking in the __name__ of the script file. This lets Python know 
@@ -70,7 +70,7 @@ db = SQLAlchemy(app)
 
 # Beware of circular dependency by ensuring that the db is created first
 # before importing the models.
-from .models import Task, User
+from .models import Task, Profile
 
 INCOMING_DATE_FMT = '%d/%m/%Y %H:%M:%S'
 
