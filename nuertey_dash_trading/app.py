@@ -119,7 +119,10 @@ try:
             ]
         )
 
-    app = dash.Dash()
+    app = dash.Dash(
+        __name__, meta_tags=[{"name": "viewport", "content": "width=device-width"}]
+    )
+
     colors = {
         'background': '#111111',
         'text': '#7FDBFF'
@@ -163,12 +166,61 @@ try:
     )
 
     app.layout = html.Div(style={'backgroundColor': colors['background']}, children=[
+        # dcc.Interval is a component that will fire a callback periodically. 
+        # Use dcc.Interval to update your app in realtime without needing 
+        # to refresh the page or click on any buttons.
+
+        # Interval component for live clock:
+        dcc.Interval(id="interval", interval=1 * 1000, n_intervals=0),
+
+        # Interval component for news updates:
+        dcc.Interval(id="i_news", interval=1 * 60000, n_intervals=0),
+
         html.H1(
             children='Nuertey Odzeyem\'s Automatic Stock Trading Dash Web Application',
             style={
                 'textAlign': 'center',
                 'color': colors['text']
             }
+        ),
+        # Left Panel Div
+        html.Div(
+            className="three columns div-left-panel",
+            children=[
+                # Div for Left Panel App Info
+                html.Div(
+                    className="div-info",
+                    children=[
+                        html.Img(
+                            className="logo", src=app.get_asset_url("dash-logo-new.png")
+                        ),
+                        html.H6(className="title-header", children="FOREX TRADER"),
+                        html.P(
+                            """
+                            This app continually queries csv files and updates Ask and Bid prices
+                            for major currency pairs as well as Stock Charts. You can also virtually
+                            buy and sell stocks and see the profit updates.
+                            """
+                        ),
+                    ],
+                ),
+                # Div for realtime clock:
+                html.Div(
+                    className="div-currency-toggles",
+                    children=[
+                        html.P(
+                            id="live_clock",
+                            className="three-col",
+                            children=datetime.datetime.now().strftime("%H:%M:%S"),
+                        ),
+                    ],
+                ),
+                # Div for News Headlines:
+                html.Div(
+                    className="div-news",
+                    children=[html.Div(id="news", children=update_news())],
+                ),
+            ],
         ),
         html.Div(children='Extended application description from header here...', style={
             'textAlign': 'center',
