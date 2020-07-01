@@ -39,13 +39,24 @@
 #           2020
 #   Author: Nuertey Odzeyem
 #**********************************************************************/
-import dash
+import os
+import sys
+import json
+import base64
+import datetime
+import requests
 import psycopg2
 import pandas as pd
+
+import dash
 import dash_core_components as dcc
 import dash_html_components as html
+
 import plotly.graph_objects as go
 import plotly.express as px
+
+from dash.dependencies import Input, Output, State
+from nuertey_news_config import NEWS_API_COUNTRY_CODES
 
 pd.set_option('display.max_rows', 200)
 pd.set_option('display.min_rows', 200)
@@ -64,6 +75,49 @@ try:
     trades = pd.read_sql('select * from trades', connection)
     quotes = pd.read_sql('select * from quotes', connection)
     orders = pd.read_sql('select * from orders', connection)
+
+    country_codes = pd.DataFrame(NEWS_API_COUNTRY_CODES)
+    # API Requests for news div
+    news_requests = requests.get(
+        "https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=da8e2e705b914f9f86ed2e9692e66012"
+    )
+
+    # API Call to update news
+    def update_news():
+        json_data = news_requests.json()["articles"]
+        df = pd.DataFrame(json_data)
+        df = pd.DataFrame(df[["title", "url"]])
+        max_rows = 10
+        return html.Div(
+            children=[
+                html.P(className="p-news", children="Headlines"),
+                html.P(
+                    className="p-news float-right",
+                    children="Last update : "
+                    + datetime.datetime.now().strftime("%H:%M:%S"),
+                ),
+                html.Table(
+                    className="table-news",
+                    children=[
+                        html.Tr(
+                            children=[
+                                html.Td(
+                                    children=[
+                                        html.A(
+                                            className="td-link",
+                                            children=df.iloc[i]["title"],
+                                            href=df.iloc[i]["url"],
+                                            target="_blank",
+                                        )
+                                    ]
+                                )
+                            ]
+                        )
+                        for i in range(min(len(df), max_rows))
+                    ],
+                ),
+            ]
+        )
 
     app = dash.Dash()
     colors = {
@@ -110,13 +164,13 @@ try:
 
     app.layout = html.Div(style={'backgroundColor': colors['background']}, children=[
         html.H1(
-            children='Hello Dash. Nuertey Odzeyem Arriveth!',
+            children='Nuertey Odzeyem\'s Automatic Stock Trading Dash Web Application',
             style={
                 'textAlign': 'center',
                 'color': colors['text']
             }
         ),
-        html.Div(children='Dash: A web application framework for Python. Nuertey\'s Very First Example...', style={
+        html.Div(children='Extended application description from header here...', style={
             'textAlign': 'center',
             'color': colors['text']
         }),
@@ -167,5 +221,22 @@ finally:
 
     print("Ending Mr. Nuertey Odzeyem's stock_trading Dash/PostgreSQL database test...")
 
-if __name__ == '__main__':
+# Callback to update country of choice for news headlines:
+@app.callback(
+    dash.dependencies.Output('dd-output-container', 'children'),
+    [dash.dependencies.Input('demo-dropdown', 'value')])
+def update_output(value):
+    return 'You have selected "{}" for top news headlines.'.format(value)
+
+# Callback to update live clock:
+@app.callback(Output("live_clock", "children"), [Input("interval", "n_intervals")])
+def update_time(n):
+    return datetime.datetime.now().strftime("%H:%M:%S")
+
+# Callback to update news:
+@app.callback(Output("news", "children"), [Input("i_news", "n_intervals")])
+def update_news_div(n):
+    return update_news()
+
+if __name__ == "__main__":
     app.run_server(debug=True)
