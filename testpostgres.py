@@ -2,6 +2,14 @@ import psycopg2
 import pandas
 import pandas.io.sql
 
+# Here's the shortest code that will do the job:
+# 
+# from pandas import DataFrame
+# df = DataFrame(resoverall.fetchall())
+# df.columns = resoverall.keys()
+# 
+# You can go fancier and parse the types as in Paul's answer.
+
 try:
     print()
     print("Beginning Mr. Nuertey Odzeyem's stock_trading PostgreSQL database test...")
