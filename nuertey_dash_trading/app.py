@@ -150,8 +150,11 @@ try:
         # Use dcc.Interval to update your app in realtime without needing 
         # to refresh the page or click on any buttons.
 
-        # Interval component for live clock:
+        # Interval component for live clock updates:
         dcc.Interval(id="interval", interval=1 * 1000, n_intervals=0),
+
+        # Interval component for graph, database tables and price comparison updates:
+        dcc.Interval(id="i_tris", interval=1 * 5000, n_intervals=0),
 
         # Interval component for news updates:
         dcc.Interval(id="i_news", interval=1 * 60000, n_intervals=0),
@@ -214,10 +217,50 @@ try:
             'textAlign': 'center',
             'color': colors['text']
         }),
+        # Div for VWAP trace and trades price graphs:
         dcc.Graph(id='graph-1', 
             figure=figure1
         )
     ])
+
+    # Callback to update country of choice for news headlines:
+    @app.callback([Output('dd-output-container', 'children'), Output("news", "children")], [Input('demo-dropdown', 'value')])
+    def update_output(value):
+        country_code = value
+        return 'You have selected "{}" for top news headlines.'.format(value), update_news()
+
+    # Callback to update live clock:
+    @app.callback(Output("live_clock", "children"), [Input("interval", "n_intervals")])
+    def update_time(n):
+        return datetime.datetime.now().strftime("%H:%M:%S")
+
+    # Callback to update news:
+    @app.callback(Output("news", "children"), [Input("i_news", "n_intervals")])
+    def update_news_div(n):
+        return update_news()
+
+    # Callback to update graph:
+    @app.callback(Output('graph-1', 'figure'), [Input("i_tris", "n_intervals")])
+    def update_graph(n):
+        trades = pd.read_sql('select * from trades', connection)
+        quotes = pd.read_sql('select * from quotes', connection)
+        orders = pd.read_sql('select * from orders', connection)
+
+        # Create the VWAP trace contrasted with the stock trades price:
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=trades['timestamped'], y=trades['price'],
+                            mode='lines+markers',
+                            name='Stock Exchange Trades Price'))
+        fig.add_trace(go.Scatter(x=trades['timestamped'], y=trades['volume_weighted_average_price'],
+                            mode='lines+markers',
+                            name='Volume-Weighted Average Price (VWAP)'))
+        fig.update_layout(
+            title="Stock Exchange Trades Price Versus Volume-Weighted Average Price (VWAP)",
+            xaxis_title="Timestamp",
+            yaxis_title="Price"
+        )
+
+        return fig
 
 except Exception as e:
     print("Error! Can't connect to database or HTTP Request failed. Invalid dbname, user or password, etc. ...")
@@ -230,22 +273,6 @@ finally:
         print()
 
     print("Ending Mr. Nuertey Odzeyem's stock_trading Dash/PostgreSQL database test...")
-
-# Callback to update country of choice for news headlines:
-@app.callback([Output('dd-output-container', 'children'), Output("news", "children")], [Input('demo-dropdown', 'value')])
-def update_output(value):
-    country_code = value
-    return 'You have selected "{}" for top news headlines.'.format(value), update_news()
-
-# Callback to update live clock:
-@app.callback(Output("live_clock", "children"), [Input("interval", "n_intervals")])
-def update_time(n):
-    return datetime.datetime.now().strftime("%H:%M:%S")
-
-# Callback to update news:
-@app.callback(Output("news", "children"), [Input("i_news", "n_intervals")])
-def update_news_div(n):
-    return update_news()
 
 if __name__ == "__main__":
     app.run_server(debug=True)
