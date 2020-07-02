@@ -133,7 +133,7 @@ try:
         else:
             composed_news = f'{reply.status_code} :-> {HTTPStatus(reply.status_code).phrase}'
             reply_json = json.loads(reply.text)
-            composed_news = composed_news + "<br>" + json.dumps(reply_json, indent=2))
+            composed_news = composed_news + "<br>" + json.dumps(reply_json, indent=2)
             the_composed_news = html.Div(children=composed_news, style={
                 'textAlign': 'center',
                 'color': colors['text']
@@ -175,9 +175,6 @@ try:
 
         # Interval component for graph, database tables and price comparison updates:
         dcc.Interval(id="i_tris", interval=1 * 5000, n_intervals=0),
-
-        # Interval component for news updates:
-        dcc.Interval(id="i_news", interval=1 * 60000, n_intervals=0),
 
         html.H1(
             children='Nuertey Odzeyem\'s VWAP Stock Trading Dash Web Application',
@@ -281,11 +278,6 @@ try:
     def update_time(n):
         return datetime.datetime.now().strftime("%H:%M:%S")
 
-    # Callback to update news:
-    @app.callback(Output("news", "children"), [Input("i_news", "n_intervals")])
-    def update_news_div(n):
-        return update_news()
-
     # Callback to update trades table and generated graph:
     @app.callback([Output('stock-trades', 'data'), Output('graph-1', 'figure')], [Input("i_tris", "n_intervals")])
     def update_trades_and_graph(n):
@@ -322,7 +314,7 @@ try:
         return orders.to_dict('records')
 
 except Exception as e:
-    print("Error! Can't connect to database or General Exception. Invalid dbname, user or password, etc. ...")
+    print("Error! General Exception caught:")
     print(e)
 
 finally:
