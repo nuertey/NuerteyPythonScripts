@@ -78,11 +78,11 @@ try:
 
     country_codes = pd.DataFrame(COUNTRY_CODES)
     codes_dictionary = country_codes.to_dict('list')
-    country_code_current_choice = 'ng'
+    country_code = 'ng' # Default country code = Nigeria for testing and to prick Wayo and Emile's interest.
 
     # API Requests for news div
     news_requests = requests.get(
-        "https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=da8e2e705b914f9f86ed2e9692e66012"
+        "https://newsapi.org/v2/top-headlines?country={country_code}&apiKey=da8e2e705b914f9f86ed2e9692e66012"
     )
 
     # API Call to update news
@@ -131,41 +131,18 @@ try:
         'text': '#7FDBFF'
     }
 
-    figure2 = go.Figure(data=[go.Scatter(x=[1, 2, 3], y=[4, 1, 2])])
-
-    figure2.update_layout(
-        title="Sample Plot Title",
-        xaxis_title="testing x",
-        yaxis_title="testing y"
-    )
-
-    df = px.data.iris() # iris is a pandas DataFrame
-    figure3 = px.scatter(df, x="sepal_width", y="sepal_length")
-
-    figure4 = go.Figure()
-
-    figure4.add_trace(go.Scatter(
-        x=[0, 1, 2, 3, 4, 5, 6, 7, 8],
-        y=[0, 1, 2, 3, 4, 5, 6, 7, 8],
-        name="Name of Trace 1"       # this sets its legend entry
-    ))
-
-
-    figure4.add_trace(go.Scatter(
-        x=[0, 1, 2, 3, 4, 5, 6, 7, 8],
-        y=[1, 0, 3, 2, 5, 4, 7, 6, 8],
-        name="Name of Trace 2"
-    ))
-
-    figure4.update_layout(
-        title="Plot Title",
-        xaxis_title="X-Axis Title (Nuertey)",
-        yaxis_title="Y-Axis Title (Odzeyem)",
-        font=dict(
-            family="Courier New, monospace",
-            size=18,
-            color="#7f7f7f"
-        )
+    # Create the VWAP trace contrasted with the stock trades price:
+    figure1 = go.Figure()
+    figure1.add_trace(go.Scatter(x=trades['timestamped'], y=trades['price'],
+                        mode='lines+markers',
+                        name='Stock Exchange Trades Price'))
+    figure1.add_trace(go.Scatter(x=trades['timestamped'], y=trades['volume_weighted_average_price'],
+                        mode='lines+markers',
+                        name='Volume-Weighted Average Price (VWAP)'))
+    figure1.update_layout(
+        title="Stock Exchange Trades Price Versus Volume-Weighted Average Price (VWAP)",
+        xaxis_title="Timestamp",
+        yaxis_title="Price"
     )
 
     app.layout = html.Div(style={'backgroundColor': colors['background']}, children=[
@@ -222,7 +199,7 @@ try:
                 dcc.Dropdown(
                     id='demo-dropdown',
                     options=COUNTRY_CODES,
-                    value=country_code_current_choice
+                    value=country_code
                 ),
                 # Div for dropdown list output container:
                 html.Div(id='dd-output-container'),
@@ -237,43 +214,13 @@ try:
             'textAlign': 'center',
             'color': colors['text']
         }),
-        dcc.Graph(
-            id='Graph1',
-            figure={
-                'data': [
-                    {'x': [1, 2, 3], 'y': [4, 1, 2], 'type': 'bar', 'name': 'SF'},
-                    {'x': [1, 2, 3], 'y': [2, 4, 5], 'type': 'bar', 'name': u'Montréal'},
-                ],
-                'layout': {
-                    'plot_bgcolor': colors['background'],
-                    'paper_bgcolor': colors['background'],
-                    'font': {
-                        'color': colors['text']
-                    },
-                    'title':'Bar Graph of San Francisco Versus Montreal',
-                    'xaxis':{
-                        'title':'X-Axis Title'
-                    },
-                    'yaxis':{
-                        'title':'Y-Axis Title'
-                    }
-                }
-            }
-        ),
-        dcc.Graph(
-            id='example-graph-2',
-            figure=figure2
-        ),
-        dcc.Graph(id='example-graph-3', 
-            figure=figure3
-        ),
-        dcc.Graph(id='example-graph-4', 
-            figure=figure4
+        dcc.Graph(id='graph-1', 
+            figure=figure1
         )
     ])
 
 except Exception as e:
-    print("Error! Can't connect to database. Invalid dbname, user or password...")
+    print("Error! Can't connect to database or HTTP Request failed. Invalid dbname, user or password, etc. ...")
     print(e)
 
 finally:
@@ -287,7 +234,7 @@ finally:
 # Callback to update country of choice for news headlines:
 @app.callback([Output('dd-output-container', 'children'), Output("news", "children")], [Input('demo-dropdown', 'value')])
 def update_output(value):
-    country_code_current_choice = value
+    country_code = value
     return 'You have selected "{}" for top news headlines.'.format(value), update_news()
 
 # Callback to update live clock:
