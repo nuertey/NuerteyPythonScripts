@@ -47,6 +47,7 @@ import datetime
 import requests
 import psycopg2
 import pandas as pd
+from http import HTTPStatus
 import dash
 import dash_table
 import dash_core_components as dcc
@@ -64,6 +65,15 @@ try:
     print("Beginning Mr. Nuertey Odzeyem's stock_trading Dash/PostgreSQL database test...")
     print()
 
+    app = dash.Dash(
+        __name__, meta_tags=[{"name": "viewport", "content": "width=device-width"}]
+    )
+
+    colors = {
+        'background': '#111111',
+        'text': '#7FDBFF'
+    }
+
     connect_str = "dbname='stock_trading' user='nuertey' host='localhost' " + \
                   "password='krobo2003'"
 
@@ -76,27 +86,25 @@ try:
     country_codes = pd.DataFrame(COUNTRY_CODES)
     codes_dictionary = country_codes.to_dict('list')
     country_code = 'ng' # Default country code = Nigeria for testing and to prick Wayo and Emile's interest.
+    culprit_country_name = country_codes.loc[country_codes['value'] == country_code,'label']
+    culprit_country_name = next(iter(culprit_country_name), 'no match')
 
-    # API Requests for news div
-    news_requests = requests.get(
-        "https://newsapi.org/v2/top-headlines?country={country_code}&apiKey=da8e2e705b914f9f86ed2e9692e66012"
-    )
+    token = open("../.newsapi_token").read().rstrip('\n')
+    news_api_url = f"https://newsapi.org/v2/top-headlines?country={country_code}&apiKey={token}"
+    reply = requests.get(news_api_url)
 
     # API Call to update news
     def update_news():
-        json_data = news_requests.json()["articles"]
-        df = pd.DataFrame(json_data)
-        df = pd.DataFrame(df[["title", "url"]])
-        max_rows = 10
-        return html.Div(
-            children=[
-                html.P(className="p-news", children="Headlines"),
-                html.P(
-                    className="p-news float-right",
-                    children="Last update : "
-                    + datetime.datetime.now().strftime("%H:%M:%S"),
-                ),
-                html.Table(
+        the_composed_news = html.Div([html.P('Placeholder Text'),])
+        if reply.ok:
+            text_data = reply.text
+            json_dict = json.loads(text_data)
+            if json_dict["totalResults"] > 0:
+                df = pd.DataFrame.from_dict(json_dict["articles"])
+                df = pd.DataFrame(df[["title", "url"]])
+                max_rows = 10
+                #pd.set_option('display.max_colwidth', -1)
+                the_composed_news = html.Table(
                     className="table-news",
                     children=[
                         html.Tr(
@@ -115,18 +123,33 @@ try:
                         )
                         for i in range(min(len(df), max_rows))
                     ],
+                )
+            else:
+                composed_news = "Sorry. No online news articles were discovered for \"{0}\". Check meatspace.".format(culprit_country_name)
+                the_composed_news = html.Div(children=composed_news, style={
+                    'textAlign': 'center',
+                    'color': colors['text']
+                })
+        else:
+            composed_news = f'{reply.status_code} :-> {HTTPStatus(reply.status_code).phrase}'
+            reply_json = json.loads(reply.text)
+            composed_news = composed_news + "<br>" + json.dumps(reply_json, indent=2))
+            the_composed_news = html.Div(children=composed_news, style={
+                'textAlign': 'center',
+                'color': colors['text']
+            })
+
+        return html.Div(
+            children=[
+                html.P(className="p-news", children="Headlines"),
+                html.P(
+                    className="p-news float-right",
+                    children="Last update : "
+                    + datetime.datetime.now().strftime("%H:%M:%S"),
                 ),
+                the_composed_news,
             ]
         )
-
-    app = dash.Dash(
-        __name__, meta_tags=[{"name": "viewport", "content": "width=device-width"}]
-    )
-
-    colors = {
-        'background': '#111111',
-        'text': '#7FDBFF'
-    }
 
     # Create the VWAP trace contrasted with the stock trades price:
     figure1 = go.Figure()
@@ -157,7 +180,7 @@ try:
         dcc.Interval(id="i_news", interval=1 * 60000, n_intervals=0),
 
         html.H1(
-            children='Nuertey Odzeyem\'s Automatic Stock Trading Dash Web Application',
+            children='Nuertey Odzeyem\'s VWAP Stock Trading Dash Web Application',
             style={
                 'textAlign': 'center',
                 'color': colors['text']
@@ -299,7 +322,7 @@ try:
         return orders.to_dict('records')
 
 except Exception as e:
-    print("Error! Can't connect to database or HTTP Request failed. Invalid dbname, user or password, etc. ...")
+    print("Error! Can't connect to database or General Exception. Invalid dbname, user or password, etc. ...")
     print(e)
 
 finally:
