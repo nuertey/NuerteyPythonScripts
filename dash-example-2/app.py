@@ -37,6 +37,7 @@ app.layout = html.Div([
                 ) for i in df.continent.unique()
             ],
             'layout': go.Layout(
+                title=go.layout.Title(text="<br>Nuertey Odzeyem Test Dash Web App<br>Life Expectancy Versus GDP Per Capita Of All Countries In The World"),
                 xaxis={'type': 'log', 'title': 'GDP Per Capita'},
                 yaxis={'title': 'Life Expectancy'},
                 margin={'l': 40, 'b': 40, 't': 10, 'r': 10},
