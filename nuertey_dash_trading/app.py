@@ -47,15 +47,12 @@ import datetime
 import requests
 import psycopg2
 import pandas as pd
-
 import dash
+import dash_table
 import dash_core_components as dcc
 import dash_html_components as html
-
-import plotly.graph_objects as go
-import plotly.express as px
-
 from dash.dependencies import Input, Output, State
+import plotly.graph_objects as go
 from news_config import COUNTRY_CODES
 
 pd.set_option('display.max_rows', 200)
@@ -217,6 +214,33 @@ try:
             'textAlign': 'center',
             'color': colors['text']
         }),
+        # Dash DataTable is an interactive table component designed for 
+        # viewing, editing, and exploring large datasets. DataTable is 
+        # rendered with standard, semantic HTML <table/> markup, which 
+        # makes it accessible, responsive, and easy to style. This component 
+        # was written from scratch in React.js specifically for the Dash
+        # community. Its API was designed to be ergonomic and its behavior
+        # is completely customizable through its properties. 7 months in 
+        # the making, this is the most complex Dash component that Plotly
+        # has written, all from the ground-up using React and TypeScript. 
+        # DataTable was designed with a featureset that allows for Dash
+        # users to create complex, spreadsheet driven applications with 
+        # no compromises:
+        dash_table.DataTable(
+            id='stock-trades',
+            columns=[{"name": i, "id": i} for i in trades.columns],
+            data=trades.to_dict('records'),
+        ),
+        dash_table.DataTable(
+            id='stock-quotes',
+            columns=[{"name": i, "id": i} for i in quotes.columns],
+            data=quotes.to_dict('records'),
+        ),
+        dash_table.DataTable(
+            id='stock-orders',
+            columns=[{"name": i, "id": i} for i in orders.columns],
+            data=orders.to_dict('records'),
+        ),
         # Div for VWAP trace and trades price graphs:
         dcc.Graph(id='graph-1', 
             figure=figure1
@@ -239,12 +263,10 @@ try:
     def update_news_div(n):
         return update_news()
 
-    # Callback to update graph:
-    @app.callback(Output('graph-1', 'figure'), [Input("i_tris", "n_intervals")])
-    def update_graph(n):
+    # Callback to update trades table and generated graph:
+    @app.callback([Output('stock-trades', 'data'), Output('graph-1', 'figure')], [Input("i_tris", "n_intervals")])
+    def update_trades_and_graph(n):
         trades = pd.read_sql('select * from trades', connection)
-        quotes = pd.read_sql('select * from quotes', connection)
-        orders = pd.read_sql('select * from orders', connection)
 
         # Create the VWAP trace contrasted with the stock trades price:
         fig = go.Figure()
@@ -260,7 +282,21 @@ try:
             yaxis_title="Price"
         )
 
-        return fig
+        return trades.to_dict('records'), fig
+
+    # Callback to update quotes table:
+    @app.callback(Output('stock-quotes', 'data'), [Input("i_tris", "n_intervals")])
+    def update_quotes(n):
+        quotes = pd.read_sql('select * from quotes', connection)
+
+        return quotes.to_dict('records')
+
+    # Callback to update orders table:
+    @app.callback(Output('stock-orders', 'data'), [Input("i_tris", "n_intervals")])
+    def update_orders(n):
+        orders = pd.read_sql('select * from orders', connection)
+
+        return orders.to_dict('records')
 
 except Exception as e:
     print("Error! Can't connect to database or HTTP Request failed. Invalid dbname, user or password, etc. ...")
