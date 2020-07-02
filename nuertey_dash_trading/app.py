@@ -61,17 +61,18 @@ pd.set_option('display.min_rows', 200)
 #pd.set_option('display.expand_frame_repr', True)
 
 try:
-    print()
-    print("Beginning Mr. Nuertey Odzeyem's stock_trading Dash/PostgreSQL database test...")
-    print()
-
     app = dash.Dash(
         __name__, meta_tags=[{"name": "viewport", "content": "width=device-width"}]
     )
 
     colors = {
         'background': '#111111',
-        'text': '#7FDBFF'
+        'text': '#7FDBFF',
+        'red_text': '#F8051B',
+        'green_yellow_text': '#B1FA08',
+        'green_text': '#0CFA08',
+        'blue_text': '#041EFC',
+        'red_yellow_text': '#FC5E04'
     }
 
     connect_str = "dbname='stock_trading' user='nuertey' host='localhost' " + \
@@ -90,11 +91,14 @@ try:
     culprit_country_name = next(iter(culprit_country_name), 'no match')
 
     token = open("../.newsapi_token").read().rstrip('\n')
-    news_api_url = f"https://newsapi.org/v2/top-headlines?country={country_code}&apiKey={token}"
-    reply = requests.get(news_api_url)
 
     # API Call to update news
-    def update_news():
+    def update_news(the_code=country_code, the_name=culprit_country_name):
+        culprit_country_name = the_name
+        print(culprit_country_name)
+        print(the_code)
+        news_api_url = f"https://newsapi.org/v2/top-headlines?country={the_code}&apiKey={token}"
+        reply = requests.get(news_api_url)
         the_composed_news = html.Div([html.P('Placeholder Text'),])
         if reply.ok:
             text_data = reply.text
@@ -114,6 +118,8 @@ try:
                                         html.A(
                                             className="td-link",
                                             children=df.iloc[i]["title"],
+                                            style={'textAlign': 'left', 
+                                                   'color': colors['red_text']},
                                             href=df.iloc[i]["url"],
                                             target="_blank",
                                         )
@@ -128,7 +134,7 @@ try:
                 composed_news = "Sorry. No online news articles were discovered for \"{0}\". Check meatspace.".format(culprit_country_name)
                 the_composed_news = html.Div(children=composed_news, style={
                     'textAlign': 'center',
-                    'color': colors['text']
+                    'color': colors['red_text']
                 })
         else:
             composed_news = f'{reply.status_code} :-> {HTTPStatus(reply.status_code).phrase}'
@@ -136,16 +142,19 @@ try:
             composed_news = composed_news + "<br>" + json.dumps(reply_json, indent=2)
             the_composed_news = html.Div(children=composed_news, style={
                 'textAlign': 'center',
-                'color': colors['text']
+                'color': colors['red_text']
             })
 
         return html.Div(
             children=[
-                html.P(className="p-news", children="Headlines"),
+                html.P(className="p-news", children="News Headlines",
+                    style={'textAlign': 'left', 'color': colors['green_text']}
+                ),
                 html.P(
                     className="p-news float-right",
                     children="Last update : "
                     + datetime.datetime.now().strftime("%H:%M:%S"),
+                    style={'textAlign': 'left', 'color': colors['green_text']}
                 ),
                 the_composed_news,
             ]
@@ -183,6 +192,14 @@ try:
                 'color': colors['text']
             }
         ),
+        # Div for dropdown list:
+        dcc.Dropdown(
+            id='demo-dropdown',
+            options=[{'label': i, 'value': i} for i in country_codes['label']],
+            value=culprit_country_name
+        ),
+        # Div for dropdown list output container:
+        html.Div(id='dd-output-container'),
         # Left Panel Div
         html.Div(
             className="three columns div-left-panel",
@@ -192,17 +209,17 @@ try:
                     className="div-info",
                     children=[
                         html.Img(
-                            className="logo", src=app.get_asset_url("dash-logo-new.png")
+                            className="author-image", src=app.get_asset_url("nuertey_image_dressy2.png")
                         ),
-                        html.H6(className="title-header", children="FOREX TRADER"),
-                        html.P(
-                            """
-                            This app continually queries csv files and updates Ask and Bid prices
-                            for major currency pairs as well as Stock Charts. You can also virtually
-                            buy and sell stocks and see the profit updates.
-                            """
-                        ),
+                        html.H2(className="title-header", children="FOREX TRADER"),
+                        html.P('Author: Nuertey Odzeyem'),
+                        html.P('Created: July 1st, 2020'),
+                        html.P('Goal: To illustrate ideas to Wayo, Emile, Mbui, Scott, etc.'),
                     ],
+                    style={
+                        'textAlign': 'left',
+                        'color': colors['red_yellow_text']
+                    }
                 ),
                 # Div for realtime clock:
                 html.Div(
@@ -214,15 +231,8 @@ try:
                             children=datetime.datetime.now().strftime("%H:%M:%S"),
                         ),
                     ],
+                    style={'textAlign': 'left', 'color': colors['green_text']}
                 ),
-                # Div for dropdown list:
-                dcc.Dropdown(
-                    id='demo-dropdown',
-                    options=COUNTRY_CODES,
-                    value=country_code
-                ),
-                # Div for dropdown list output container:
-                html.Div(id='dd-output-container'),
                 # Div for News Headlines:
                 html.Div(
                     className="div-news",
@@ -270,8 +280,12 @@ try:
     # Callback to update country of choice for news headlines:
     @app.callback([Output('dd-output-container', 'children'), Output("news", "children")], [Input('demo-dropdown', 'value')])
     def update_output(value):
-        country_code = value
-        return 'You have selected "{}" for top news headlines.'.format(value), update_news()
+        culprit_country_name = value
+        country_code = country_codes.loc[country_codes['label'] == culprit_country_name,'value']
+        country_code = next(iter(country_code), 'no match')
+        print("Nuertey: " + culprit_country_name)
+        print("Odzeyem: " + country_code)
+        return 'You have selected "{}" for top news headlines.'.format(culprit_country_name), update_news(country_code, culprit_country_name)
 
     # Callback to update live clock:
     @app.callback(Output("live_clock", "children"), [Input("interval", "n_intervals")])
@@ -316,14 +330,6 @@ try:
 except Exception as e:
     print("Error! General Exception caught:")
     print(e)
-
-finally:
-    if (connection):
-        connection.close()
-        print("PostgreSQL connection is closed")
-        print()
-
-    print("Ending Mr. Nuertey Odzeyem's stock_trading Dash/PostgreSQL database test...")
 
 if __name__ == "__main__":
     app.run_server(debug=True)
