@@ -7,10 +7,10 @@
 # purpose of this script is to illustrate some teaching ideas to Wayo and 
 # other dear students.
 #
-# @note [1] The current news headlines for the chosen country in the drop
-#           down list are displayed to the user. Clicking on each headline
-#           will open a tab for that news item from the news agency of 
-#           concern. 
+# @note [1] Chose a country from the drop down list for the current news
+#           headlines in that country to be displayed to the user. Clicking 
+#           on each news item headline will open a tab for that news item 
+#           from the news agency of concern. 
 #
 #       [2] Incoming stock trades as captured in the PostgreSQL database
 #           are displayed to the user.
@@ -56,7 +56,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 
 from dash.dependencies import Input, Output, State
-from nuertey_news_config import NEWS_API_COUNTRY_CODES
+from news_config import COUNTRY_CODES
 
 pd.set_option('display.max_rows', 200)
 pd.set_option('display.min_rows', 200)
@@ -76,7 +76,10 @@ try:
     quotes = pd.read_sql('select * from quotes', connection)
     orders = pd.read_sql('select * from orders', connection)
 
-    country_codes = pd.DataFrame(NEWS_API_COUNTRY_CODES)
+    country_codes = pd.DataFrame(COUNTRY_CODES)
+    codes_dictionary = country_codes.to_dict('list')
+    country_code_current_choice = 'ng'
+
     # API Requests for news div
     news_requests = requests.get(
         "https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=da8e2e705b914f9f86ed2e9692e66012"
@@ -215,6 +218,14 @@ try:
                         ),
                     ],
                 ),
+                # Div for dropdown list:
+                dcc.Dropdown(
+                    id='demo-dropdown',
+                    options=COUNTRY_CODES,
+                    value=country_code_current_choice
+                ),
+                # Div for dropdown list output container:
+                html.Div(id='dd-output-container'),
                 # Div for News Headlines:
                 html.Div(
                     className="div-news",
@@ -274,11 +285,10 @@ finally:
     print("Ending Mr. Nuertey Odzeyem's stock_trading Dash/PostgreSQL database test...")
 
 # Callback to update country of choice for news headlines:
-@app.callback(
-    dash.dependencies.Output('dd-output-container', 'children'),
-    [dash.dependencies.Input('demo-dropdown', 'value')])
+@app.callback([Output('dd-output-container', 'children'), Output("news", "children")], [Input('demo-dropdown', 'value')])
 def update_output(value):
-    return 'You have selected "{}" for top news headlines.'.format(value)
+    country_code_current_choice = value
+    return 'You have selected "{}" for top news headlines.'.format(value), update_news()
 
 # Callback to update live clock:
 @app.callback(Output("live_clock", "children"), [Input("interval", "n_intervals")])
