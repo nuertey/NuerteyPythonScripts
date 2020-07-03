@@ -78,6 +78,14 @@ try:
         'cyber_yellow': '#FBD400',
         'lemon_glacier': '#FDFD04',
         'fuchsia': '#FF00FF',
+        'picton_blue': '#3DBDFF', 
+        'electric_blue': '#64EEFA',
+        'pale_aquamarine': '#A4FFEC',
+        'pumpkin': '#FD6E10', 
+        'royal_orange': '#F79039',
+        'rajah': '#F7B155',
+        'feldspar': '#FFD5B2', 
+        'deep_peach': '#F6C7A0',
     }
 
     def get_random_color_not_background():
@@ -106,8 +114,6 @@ try:
     # API Call to update news
     def update_news(the_code=country_code, the_name=culprit_country_name):
         culprit_country_name = the_name
-        #print(culprit_country_name)
-        #print(the_code)
         news_api_url = f"https://newsapi.org/v2/top-headlines?country={the_code}&apiKey={token}"
         reply = requests.get(news_api_url)
         the_composed_news = html.Div([html.P('Placeholder Text'),])
@@ -117,9 +123,7 @@ try:
             if json_dict["totalResults"] > 0:
                 df = pd.DataFrame.from_dict(json_dict["articles"])
                 df = pd.DataFrame(df[["title", "url"]])
-                #print(df)
                 max_rows = 40
-                #pd.set_option('display.max_colwidth', -1)
                 the_composed_news = html.Table(
                     className="table-news",
                     children=[
@@ -309,12 +313,19 @@ try:
                     data=trades.to_dict('records'),
                     style_header={
                         'backgroundColor': 'rgb(30, 30, 30)',
-                        'fontWeight': 'bold'
+                        'fontWeight': 'bold',
+                        'color': colors['fuchsia']
                     },
                     style_cell={
                         'backgroundColor': 'rgb(50, 50, 50)',
                         'color': 'white'
                     },
+                    style_data_conditional=[{
+                        "if": {
+                            'column_id': 'volume_weighted_average_price'
+                        },
+                        "color": colors['cyber_yellow']
+                    }]
                 ),
                 html.H4(
                     children='Incoming Stock Exchange Quotes',
@@ -329,7 +340,8 @@ try:
                     data=quotes.to_dict('records'),
                     style_header={
                         'backgroundColor': 'rgb(30, 30, 30)',
-                        'fontWeight': 'bold'
+                        'fontWeight': 'bold',
+                        'color': colors['blue_text']
                     },
                     style_cell={
                         'backgroundColor': 'rgb(50, 50, 50)',
@@ -340,7 +352,7 @@ try:
                     children='Outgoing Customer Stock Orders',
                     style={
                         'textAlign': 'center',
-                        'color': colors['green_text']
+                        'color': colors['pumpkin']
                     }
                 ),
                 dash_table.DataTable(
@@ -349,7 +361,8 @@ try:
                     data=orders.to_dict('records'),
                     style_header={
                         'backgroundColor': 'rgb(30, 30, 30)',
-                        'fontWeight': 'bold'
+                        'fontWeight': 'bold',
+                        'color': colors['picton_blue']
                     },
                     style_cell={
                         'backgroundColor': 'rgb(50, 50, 50)',
@@ -373,7 +386,7 @@ try:
                     children='Visualization Graphs',
                     style={
                         'textAlign': 'center',
-                        'color': colors['red_text']
+                        'color': colors['electric_blue']
                     }
                 ),
                 # Div for VWAP trace and trades price graphs:
@@ -390,8 +403,6 @@ try:
         culprit_country_name = value
         country_code = country_codes.loc[country_codes['label'] == culprit_country_name,'value']
         country_code = next(iter(country_code), 'no match')
-        #print("Nuertey: " + culprit_country_name)
-        #print("Odzeyem: " + country_code)
         return 'You have selected "{}" for top news headlines.'.format(culprit_country_name), update_news(country_code, culprit_country_name)
 
     # Callback to update live clock:

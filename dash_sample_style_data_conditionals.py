@@ -77,3 +77,14 @@ style_data_conditional=[{
     },
     "color": colors['green_text']
 }]
+
+
+style_data_conditional = [{
+    'if': {
+        'column_id': 'col1',
+        "row_index": x
+    },
+    'backgroundColor': '#3D9970',
+    'color': 'white'
+} for x in df[df['col1']>15].index 
+]
