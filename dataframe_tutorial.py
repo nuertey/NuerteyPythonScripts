@@ -4,6 +4,20 @@ import pandas as pd
 
 pd.set_option('display.max_rows', 100)
 
+# You could use isin with all to check whether all of your col1 elements 
+# contains in col2. For converting to numeric you could use pd.to_numeric:
+s1 = pd.Series([376, 264, 365, 302])
+s2 = pd.Series(['302', 'water', 'nist1950', '264', '365', '376'])
+
+res = s1.isin(pd.to_numeric(s2, errors='coerce')).all()
+
+print(res)
+
+# More detailed steps:
+print(pd.to_numeric(s2, errors='coerce'))
+
+print(s1.isin(pd.to_numeric(s2, errors='coerce')))
+
 # ===================================================================
 # General Comment:
 
