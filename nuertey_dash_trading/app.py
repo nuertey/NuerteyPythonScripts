@@ -278,7 +278,7 @@ try:
         html.Div(
             className="nine columns div-right-panel",
             children=[
-                html.H2(
+                html.H4(
                     children='Incoming Stock Exchange Trades + Calculated VWAP',
                     style={
                         'textAlign': 'center',
@@ -301,8 +301,16 @@ try:
                     id='stock-trades',
                     columns=[{"name": i, "id": i} for i in trades.columns],
                     data=trades.to_dict('records'),
+                    style_header={
+                        'backgroundColor': 'rgb(30, 30, 30)',
+                        'fontWeight': 'bold'
+                    },
+                    style_cell={
+                        'backgroundColor': 'rgb(50, 50, 50)',
+                        'color': 'white'
+                    },
                 ),
-                html.H2(
+                html.H4(
                     children='Incoming Stock Exchange Quotes',
                     style={
                         'textAlign': 'center',
@@ -313,8 +321,16 @@ try:
                     id='stock-quotes',
                     columns=[{"name": i, "id": i} for i in quotes.columns],
                     data=quotes.to_dict('records'),
+                    style_header={
+                        'backgroundColor': 'rgb(30, 30, 30)',
+                        'fontWeight': 'bold'
+                    },
+                    style_cell={
+                        'backgroundColor': 'rgb(50, 50, 50)',
+                        'color': 'white'
+                    },
                 ),
-                html.H2(
+                html.H4(
                     children='Outgoing Customer Stock Orders',
                     style={
                         'textAlign': 'center',
@@ -325,8 +341,16 @@ try:
                     id='stock-orders',
                     columns=[{"name": i, "id": i} for i in orders.columns],
                     data=orders.to_dict('records'),
+                    style_header={
+                        'backgroundColor': 'rgb(30, 30, 30)',
+                        'fontWeight': 'bold'
+                    },
+                    style_cell={
+                        'backgroundColor': 'rgb(50, 50, 50)',
+                        'color': 'white'
+                    },
                 ),
-                html.H2(
+                html.H4(
                     children='Visualization Graphs',
                     style={
                         'textAlign': 'center',
