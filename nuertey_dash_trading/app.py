@@ -106,7 +106,8 @@ try:
             if json_dict["totalResults"] > 0:
                 df = pd.DataFrame.from_dict(json_dict["articles"])
                 df = pd.DataFrame(df[["title", "url"]])
-                max_rows = 10
+                #print(df)
+                max_rows = 20
                 #pd.set_option('display.max_colwidth', -1)
                 the_composed_news = html.Table(
                     className="table-news",
@@ -118,10 +119,10 @@ try:
                                         html.A(
                                             className="td-link",
                                             children=df.iloc[i]["title"],
-                                            style={'textAlign': 'left', 
-                                                   'color': colors['red_text']},
                                             href=df.iloc[i]["url"],
                                             target="_blank",
+                                            style={'textAlign': 'left', 
+                                                   'color': colors['red_text']},
                                         )
                                     ]
                                 )
@@ -244,37 +245,43 @@ try:
             'textAlign': 'center',
             'color': colors['text']
         }),
-        # Dash DataTable is an interactive table component designed for 
-        # viewing, editing, and exploring large datasets. DataTable is 
-        # rendered with standard, semantic HTML <table/> markup, which 
-        # makes it accessible, responsive, and easy to style. This component 
-        # was written from scratch in React.js specifically for the Dash
-        # community. Its API was designed to be ergonomic and its behavior
-        # is completely customizable through its properties. 7 months in 
-        # the making, this is the most complex Dash component that Plotly
-        # has written, all from the ground-up using React and TypeScript. 
-        # DataTable was designed with a featureset that allows for Dash
-        # users to create complex, spreadsheet driven applications with 
-        # no compromises:
-        dash_table.DataTable(
-            id='stock-trades',
-            columns=[{"name": i, "id": i} for i in trades.columns],
-            data=trades.to_dict('records'),
+        # Right Panel Div
+        html.Div(
+            className="nine columns div-right-panel",
+            children=[
+                # Dash DataTable is an interactive table component designed for 
+                # viewing, editing, and exploring large datasets. DataTable is 
+                # rendered with standard, semantic HTML <table/> markup, which 
+                # makes it accessible, responsive, and easy to style. This component 
+                # was written from scratch in React.js specifically for the Dash
+                # community. Its API was designed to be ergonomic and its behavior
+                # is completely customizable through its properties. 7 months in 
+                # the making, this is the most complex Dash component that Plotly
+                # has written, all from the ground-up using React and TypeScript. 
+                # DataTable was designed with a featureset that allows for Dash
+                # users to create complex, spreadsheet driven applications with 
+                # no compromises:
+                dash_table.DataTable(
+                    id='stock-trades',
+                    columns=[{"name": i, "id": i} for i in trades.columns],
+                    data=trades.to_dict('records'),
+                ),
+                dash_table.DataTable(
+                    id='stock-quotes',
+                    columns=[{"name": i, "id": i} for i in quotes.columns],
+                    data=quotes.to_dict('records'),
+                ),
+                dash_table.DataTable(
+                    id='stock-orders',
+                    columns=[{"name": i, "id": i} for i in orders.columns],
+                    data=orders.to_dict('records'),
+                ),
+                # Div for VWAP trace and trades price graphs:
+                dcc.Graph(id='graph-1', 
+                    figure=figure1
+                )
+            ],
         ),
-        dash_table.DataTable(
-            id='stock-quotes',
-            columns=[{"name": i, "id": i} for i in quotes.columns],
-            data=quotes.to_dict('records'),
-        ),
-        dash_table.DataTable(
-            id='stock-orders',
-            columns=[{"name": i, "id": i} for i in orders.columns],
-            data=orders.to_dict('records'),
-        ),
-        # Div for VWAP trace and trades price graphs:
-        dcc.Graph(id='graph-1', 
-            figure=figure1
-        )
     ])
 
     # Callback to update country of choice for news headlines:
