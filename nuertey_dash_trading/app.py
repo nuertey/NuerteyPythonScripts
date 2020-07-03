@@ -103,6 +103,17 @@ try:
     quotes = pd.read_sql('select * from quotes', connection)
     orders = pd.read_sql('select * from orders', connection)
 
+    #print(orders[orders['side'] == "B"].index)
+    #print()
+    #culprit_buy_timestamps = orders.loc[orders[orders['side'] == "B"].index, 'timestamped']
+    #print(culprit_buy_timestamps)
+    #print()
+
+    # To return only the selected rows:
+    #print(quotes['timestamped'].isin(culprit_buy_timestamps))
+    #print()
+    #print(quotes.loc[quotes[quotes['timestamped'].isin(culprit_buy_timestamps)].index, 'ask_price'])
+
     country_codes = pd.DataFrame(COUNTRY_CODES)
     codes_dictionary = country_codes.to_dict('list')
     country_code = 'ng' # Default country code = Nigeria for testing and to prick Wayo and Emile's interest.

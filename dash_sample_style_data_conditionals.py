@@ -81,10 +81,9 @@ style_data_conditional=[{
 
 style_data_conditional = [{
     'if': {
-        'column_id': 'col1',
+        'column_id': 'ask_price',
         "row_index": x
     },
-    'backgroundColor': '#3D9970',
-    'color': 'white'
-} for x in df[df['col1']>15].index 
+    'color': colors['red_text']
+} for x in quotes[quotes['timestamped'].isin(orders.loc[orders[orders['side'] == "B"].index, 'timestamped'])].index 
 ]

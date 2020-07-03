@@ -444,6 +444,7 @@ print()
 print(df1.iloc[[1, 3, 5], [1, 3]])
 print()
 
+print("nuertey")
 print(df1.iloc[1:3, :])
 print()
 
@@ -579,10 +580,11 @@ print(dfd)
 print()
 
 # Previous behavior, where you wish to get the 0th and the 2nd elements from the index in the ‘A’ column.
-print(dfd.ix[[0, 2], 'A'])
+#print(dfd.ix[[0, 2], 'A'])
 print()
 
 # Using .loc. Here we will select the appropriate indexes from the index, then use label indexing.
+print("Odzeyem")
 print(dfd.loc[dfd.index[[0, 2]], 'A'])
 print()
 
@@ -612,7 +614,7 @@ print()
 print(s.loc[[1, 2]])
 print()
 
-print(s.loc[[1, 2, 3]])
+#print(s.loc[[1, 2, 3]])
 print()
 
 # Unlike the current behavior, passing list-likes to .loc with any non-matching elements will raise
