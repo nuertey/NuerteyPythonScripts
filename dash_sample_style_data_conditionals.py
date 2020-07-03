@@ -89,4 +89,11 @@ style_data_conditional = [{
     },
     'color': colors['red_text']
 } for x in quotes[quotes['timestamped'].isin(orders.loc[orders[orders['side'] == "B"].index, 'timestamped'])].index 
+] + [{
+    'if': {
+        'column_id': 'bid_price',
+        "row_index": x
+    },
+    'color': colors['green_text']
+} for x in quotes[quotes['timestamped'].isin(orders.loc[orders[orders['side'] == "S"].index, 'timestamped'])].index 
 ]

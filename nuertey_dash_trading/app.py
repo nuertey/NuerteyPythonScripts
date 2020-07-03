@@ -23,14 +23,16 @@
 #           user.
 #
 #       [5] Within the quotes table, good Buys, that is, "Ask prices less
-#           than or equal to the current VWAP" will change color from ...
-#           to green.
+#           than or equal to the current VWAP" will change color to red.
 #
 #       [6] Within the quotes table, good Sells, that is, "Bid prices 
 #           greater than or equal to the current VWAP" will change color
-#           from ... to red.
+#           to green.
 #
-#       [7] The rolling VWAP as calculated and captured in the PostgreSQL 
+#       [7] Note that per \'Customer\' requirements, only one order side
+#           (BUY or SELL) can be traded at a time.
+#
+#       [8] The rolling VWAP as calculated and captured in the PostgreSQL 
 #           database will be plotted and continuously updated for the user.
 #               
 # @warning  None
@@ -59,7 +61,6 @@ from news_config import COUNTRY_CODES
 
 pd.set_option('display.max_rows', 200)
 pd.set_option('display.min_rows', 200)
-#pd.set_option('display.expand_frame_repr', True)
 
 try:
     app = dash.Dash(
@@ -176,7 +177,8 @@ try:
             ]
         )
 
-    # Create the VWAP trace contrasted with the stock trades price:
+    # Create the VWAP trace contrasted with the stock trades and customer
+    # order price:
     figure1 = go.Figure()
     figure1.add_trace(go.Scatter(x=trades['timestamped'], y=trades['price'],
                         mode='lines+markers',
@@ -337,6 +339,27 @@ try:
                         'color': colors['fuchsia']
                     }
                 ),
+                html.H5(
+                    children='* Green = Great Quoted Price! Nuertey\'s Automatic VWAP Stock Trading Algorithm Will Decide To Sell.',
+                    style={
+                        'textAlign': 'left',
+                        'color': colors['green_text']
+                    }
+                ),
+                html.H5(
+                    children='* Red = Great Quoted Price! Nuertey\'s Automatic VWAP Stock Trading Algorithm Will Decide To Buy.',
+                    style={
+                        'textAlign': 'left',
+                        'color': colors['red_text']
+                    }
+                ),
+                html.H5(
+                    children='* Note that per \'Customer\' requirements, only one order side (BUY or SELL) is traded at a time.',
+                    style={
+                        'textAlign': 'left',
+                        'color': colors['cyber_yellow']
+                    }
+                ),
                 dash_table.DataTable(
                     id='stock-quotes',
                     columns=[{"name": i, "id": i} for i in quotes.columns],
@@ -357,6 +380,13 @@ try:
                         },
                         'color': colors['red_text']
                     } for x in quotes[quotes['timestamped'].isin(orders.loc[orders[orders['side'] == "B"].index, 'timestamped'])].index 
+                    ] + [{
+                        'if': {
+                            'column_id': 'bid_price',
+                            "row_index": x
+                        },
+                        'color': colors['green_text']
+                    } for x in quotes[quotes['timestamped'].isin(orders.loc[orders[orders['side'] == "S"].index, 'timestamped'])].index 
                     ]
                 ),
                 html.H4(
