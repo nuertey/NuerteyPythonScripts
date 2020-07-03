@@ -103,17 +103,6 @@ try:
     quotes = pd.read_sql('select * from quotes', connection)
     orders = pd.read_sql('select * from orders', connection)
 
-    #print(orders[orders['side'] == "B"].index)
-    #print()
-    #culprit_buy_timestamps = orders.loc[orders[orders['side'] == "B"].index, 'timestamped']
-    #print(culprit_buy_timestamps)
-    #print()
-
-    # To return only the selected rows:
-    #print(quotes['timestamped'].isin(culprit_buy_timestamps))
-    #print()
-    #print(quotes.loc[quotes[quotes['timestamped'].isin(culprit_buy_timestamps)].index, 'ask_price'])
-
     country_codes = pd.DataFrame(COUNTRY_CODES)
     codes_dictionary = country_codes.to_dict('list')
     country_code = 'ng' # Default country code = Nigeria for testing and to prick Wayo and Emile's interest.
@@ -195,8 +184,11 @@ try:
     figure1.add_trace(go.Scatter(x=trades['timestamped'], y=trades['volume_weighted_average_price'],
                         mode='lines+markers',
                         name='Volume-Weighted Average Price (VWAP)'))
+    figure1.add_trace(go.Scatter(x=orders['timestamped'], y=orders['price'],
+                        mode='lines+markers',
+                        name='Customer Stock Orders Price'))
     figure1.update_layout(
-        title="Stock Exchange Trades Price Versus Volume-Weighted Average Price (VWAP)",
+        title="Stock Exchange Trades Price Versus Volume-Weighted Average Price (VWAP) Versus Customer Stock Orders Price",
         xaxis_title="Timestamp",
         yaxis_title="Price"
     )
@@ -358,6 +350,14 @@ try:
                         'backgroundColor': 'rgb(50, 50, 50)',
                         'color': 'white'
                     },
+                    style_data_conditional = [{
+                        'if': {
+                            'column_id': 'ask_price',
+                            "row_index": x
+                        },
+                        'color': colors['red_text']
+                    } for x in quotes[quotes['timestamped'].isin(orders.loc[orders[orders['side'] == "B"].index, 'timestamped'])].index 
+                    ]
                 ),
                 html.H4(
                     children='Outgoing Customer Stock Orders',
@@ -421,10 +421,11 @@ try:
     def update_time(n):
         return datetime.datetime.now().strftime("%H:%M:%S")
 
-    # Callback to update trades table and generated graph:
-    @app.callback([Output('stock-trades', 'data'), Output('graph-1', 'figure')], [Input("i_tris", "n_intervals")])
+    # Callback to update trades table, orders table and generated graph:
+    @app.callback([Output('stock-trades', 'data'), Output('stock-orders', 'data'), Output('graph-1', 'figure')], [Input("i_tris", "n_intervals")])
     def update_trades_and_graph(n):
         trades = pd.read_sql('select * from trades', connection)
+        orders = pd.read_sql('select * from orders', connection)
 
         # Create the VWAP trace contrasted with the stock trades price:
         fig = go.Figure()
@@ -434,13 +435,16 @@ try:
         fig.add_trace(go.Scatter(x=trades['timestamped'], y=trades['volume_weighted_average_price'],
                             mode='lines+markers',
                             name='Volume-Weighted Average Price (VWAP)'))
+        fig.add_trace(go.Scatter(x=orders['timestamped'], y=orders['price'],
+                            mode='lines+markers',
+                            name='Customer Stock Orders Price'))
         fig.update_layout(
-            title="Stock Exchange Trades Price Versus Volume-Weighted Average Price (VWAP)",
+            title="Stock Exchange Trades Price Versus Volume-Weighted Average Price (VWAP) Versus Customer Stock Orders Price",
             xaxis_title="Timestamp",
             yaxis_title="Price"
         )
 
-        return trades.to_dict('records'), fig
+        return trades.to_dict('records'), orders.to_dict('records'), fig
 
     # Callback to update quotes table:
     @app.callback(Output('stock-quotes', 'data'), [Input("i_tris", "n_intervals")])
@@ -448,13 +452,6 @@ try:
         quotes = pd.read_sql('select * from quotes', connection)
 
         return quotes.to_dict('records')
-
-    # Callback to update orders table:
-    @app.callback(Output('stock-orders', 'data'), [Input("i_tris", "n_intervals")])
-    def update_orders(n):
-        orders = pd.read_sql('select * from orders', connection)
-
-        return orders.to_dict('records')
 
 except Exception as e:
     print("Error! General Exception caught:")

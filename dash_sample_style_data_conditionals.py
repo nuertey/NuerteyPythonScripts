@@ -78,6 +78,9 @@ style_data_conditional=[{
     "color": colors['green_text']
 }]
 
+# The error happens because you compare two pandas.Series objects with different indices. A simple solution could be to compare just the values in the series. Try it:
+# TBD Nuertey Odzeyem, can use this approach too as an alternative to .isin() but .isin() is preferred.
+if df1['choice'].values != df2['choice'].values
 
 style_data_conditional = [{
     'if': {
