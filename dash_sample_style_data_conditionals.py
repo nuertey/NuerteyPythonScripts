@@ -19,18 +19,17 @@ the_sells = (orders['side'] == 'S') and (orders['price'] == quotes['bid_price'])
             }
 
         style_data_conditional=[
-                {
-            "if": {"row_index": index},
-                "backgroundColor": "#93FFDD",
-                'color': 'black',
-                'fontWeight': 'bold',
-                'textAlign': 'left'
+        {
+            "if": {"row_index": (orders['side'] == 'B')},
+                'color': colors['cyber_yellow'],
+                'fontWeight': 'bold'
         },
-                {
+        {
             'if': {'column_id': 'Goal'},
                 'fontWeight': 'bold',
                 'backgroundColor':'#E0F9FF',
-                'textAlign': 'center'}],
+                'textAlign': 'center'
+        }],
 
     style_cell_conditional=[
         {
@@ -62,3 +61,19 @@ style_data_conditional=[
             'backgroundColor' : '#FF7373'
     } for i in col_list
 ]
+
+style_data_conditional=[{
+    "if": {
+        'column_id': 'price',
+        'filter_query': '{side} eq "B"'
+        #                ^     ^ <-- required braces
+    },
+    "color": colors['cyber_yellow']
+}] + [{
+    "if": {
+        'column_id': 'price',
+        'filter_query': '{side} eq "S"'
+        #                ^     ^ <-- required braces
+    },
+    "color": colors['green_text']
+}]
