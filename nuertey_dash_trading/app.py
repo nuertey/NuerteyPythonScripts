@@ -43,6 +43,7 @@ import os
 import sys
 import json
 import base64
+import random
 import datetime
 import requests
 import psycopg2
@@ -69,10 +70,14 @@ try:
         'background': '#111111',
         'text': '#7FDBFF',
         'red_text': '#F8051B',
+        'yellow_text': '#FCF804',
         'green_yellow_text': '#B1FA08',
         'green_text': '#0CFA08',
         'blue_text': '#041EFC',
-        'red_yellow_text': '#FC5E04'
+        'red_yellow_text': '#FC5E04',
+        'cyber_yellow': '#FBD400',
+        'lemon_glacier': '#FDFD04',
+        'fuchsia': '#FF00FF',
     }
 
     connect_str = "dbname='stock_trading' user='nuertey' host='localhost' " + \
@@ -95,8 +100,8 @@ try:
     # API Call to update news
     def update_news(the_code=country_code, the_name=culprit_country_name):
         culprit_country_name = the_name
-        print(culprit_country_name)
-        print(the_code)
+        #print(culprit_country_name)
+        #print(the_code)
         news_api_url = f"https://newsapi.org/v2/top-headlines?country={the_code}&apiKey={token}"
         reply = requests.get(news_api_url)
         the_composed_news = html.Div([html.P('Placeholder Text'),])
@@ -107,7 +112,7 @@ try:
                 df = pd.DataFrame.from_dict(json_dict["articles"])
                 df = pd.DataFrame(df[["title", "url"]])
                 #print(df)
-                max_rows = 20
+                max_rows = 40
                 #pd.set_option('display.max_colwidth', -1)
                 the_composed_news = html.Table(
                     className="table-news",
@@ -122,7 +127,7 @@ try:
                                             href=df.iloc[i]["url"],
                                             target="_blank",
                                             style={'textAlign': 'left', 
-                                                   'color': colors['red_text']},
+                                                   'color': random.choice(list(colors.values()))},
                                         )
                                     ]
                                 )
@@ -190,7 +195,7 @@ try:
             children='Nuertey Odzeyem\'s VWAP Stock Trading Dash Web Application',
             style={
                 'textAlign': 'center',
-                'color': colors['text']
+                'color': colors['cyber_yellow']
             }
         ),
         # Div for dropdown list:
@@ -200,7 +205,7 @@ try:
             value=culprit_country_name
         ),
         # Div for dropdown list output container:
-        html.Div(id='dd-output-container'),
+        html.Div(id='dd-output-container', style={'color': colors['lemon_glacier']}),
         # Left Panel Div
         html.Div(
             className="three columns div-left-panel",
@@ -213,9 +218,9 @@ try:
                             className="author-image", src=app.get_asset_url("nuertey_image_dressy2.png")
                         ),
                         html.H2(className="title-header", children="FOREX TRADER"),
-                        html.P('Author: Nuertey Odzeyem'),
-                        html.P('Created: July 1st, 2020'),
-                        html.P('Goal: To illustrate ideas to Wayo, Emile, Mbui, Scott, etc.'),
+                        html.P(children=[html.Strong('Author: Nuertey Odzeyem')]),
+                        html.P(children=[html.Strong('Created: July 1st, 2020')]),
+                        html.P(children=[html.Strong('Goal: To illustrate ideas to Wayo, Emile, Mbui, Scott, etc.')]),
                     ],
                     style={
                         'textAlign': 'left',
@@ -243,7 +248,7 @@ try:
         ),
         html.Div(children='Extended application description from header here...', style={
             'textAlign': 'center',
-            'color': colors['text']
+            'color': colors['fuchsia']
         }),
         # Right Panel Div
         html.Div(
@@ -290,8 +295,8 @@ try:
         culprit_country_name = value
         country_code = country_codes.loc[country_codes['label'] == culprit_country_name,'value']
         country_code = next(iter(country_code), 'no match')
-        print("Nuertey: " + culprit_country_name)
-        print("Odzeyem: " + country_code)
+        #print("Nuertey: " + culprit_country_name)
+        #print("Odzeyem: " + country_code)
         return 'You have selected "{}" for top news headlines.'.format(culprit_country_name), update_news(country_code, culprit_country_name)
 
     # Callback to update live clock:
