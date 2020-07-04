@@ -177,20 +177,16 @@ try:
             ]
         )
 
-    # Create the VWAP trace contrasted with the stock trades and customer
-    # order price:
+    # Create the VWAP trace contrasted with the stock trades price:
     figure1 = go.Figure()
-    figure1.add_trace(go.Scatter(x=trades['timestamped'], y=trades['price'],
+    figure1.add_trace(go.Scatter(x=trades.index, y=trades['price'],
                         mode='lines+markers',
                         name='Stock Exchange Trades Price'))
-    figure1.add_trace(go.Scatter(x=trades['timestamped'], y=trades['volume_weighted_average_price'],
+    figure1.add_trace(go.Scatter(x=trades.index, y=trades['volume_weighted_average_price'],
                         mode='lines+markers',
                         name='Volume-Weighted Average Price (VWAP)'))
-    figure1.add_trace(go.Scatter(x=orders['timestamped'], y=orders['price'],
-                        mode='lines+markers',
-                        name='Customer Stock Orders Price'))
     figure1.update_layout(
-        title="Stock Exchange Trades Price Versus Volume-Weighted Average Price (VWAP) Versus Customer Stock Orders Price",
+        title="Stock Exchange Trades Price Versus Volume-Weighted Average Price (VWAP)",
         xaxis_title="Timestamp",
         yaxis_title="Price"
     )
@@ -458,23 +454,20 @@ try:
         orders = pd.read_sql('select * from orders', connection)
 
         # Create the VWAP trace contrasted with the stock trades price:
-        fig = go.Figure()
-        fig.add_trace(go.Scatter(x=trades['timestamped'], y=trades['price'],
+        figure1 = go.Figure()
+        figure1.add_trace(go.Scatter(x=trades.index, y=trades['price'],
                             mode='lines+markers',
                             name='Stock Exchange Trades Price'))
-        fig.add_trace(go.Scatter(x=trades['timestamped'], y=trades['volume_weighted_average_price'],
+        figure1.add_trace(go.Scatter(x=trades.index, y=trades['volume_weighted_average_price'],
                             mode='lines+markers',
                             name='Volume-Weighted Average Price (VWAP)'))
-        fig.add_trace(go.Scatter(x=orders['timestamped'], y=orders['price'],
-                            mode='lines+markers',
-                            name='Customer Stock Orders Price'))
-        fig.update_layout(
-            title="Stock Exchange Trades Price Versus Volume-Weighted Average Price (VWAP) Versus Customer Stock Orders Price",
+        figure1.update_layout(
+            title="Stock Exchange Trades Price Versus Volume-Weighted Average Price (VWAP)",
             xaxis_title="Timestamp",
             yaxis_title="Price"
         )
 
-        return trades.to_dict('records'), orders.to_dict('records'), fig
+        return trades.to_dict('records'), orders.to_dict('records'), figure1
 
     # Callback to update quotes table:
     @app.callback(Output('stock-quotes', 'data'), [Input("i_tris", "n_intervals")])
