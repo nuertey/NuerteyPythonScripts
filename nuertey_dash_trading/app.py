@@ -66,6 +66,7 @@ try:
     app = dash.Dash(
         __name__, meta_tags=[{"name": "viewport", "content": "width=device-width"}]
     )
+    server = app.server
 
     colors = {
         'background': '#111111',
@@ -110,7 +111,7 @@ try:
     culprit_country_name = country_codes.loc[country_codes['value'] == country_code,'label']
     culprit_country_name = next(iter(culprit_country_name), 'no match')
 
-    token = open("../.newsapi_token").read().rstrip('\n')
+    token = open(".newsapi_token").read().rstrip('\n')
 
     # API Call to update news
     def update_news(the_code=country_code, the_name=culprit_country_name):
