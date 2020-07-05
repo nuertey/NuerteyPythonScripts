@@ -44,11 +44,10 @@
 import os
 import sys
 import json
-import base64
 import random
 import datetime
 import requests
-import psycopg2
+#import psycopg2
 import pandas as pd
 from http import HTTPStatus
 import dash
@@ -96,14 +95,22 @@ try:
             color_pick = colors['cyber_yellow']
         return color_pick
 
-    connect_str = "dbname='stock_trading' user='nuertey' host='localhost' " + \
-                  "password='krobo2003'"
+    #connect_str = "dbname='stock_trading' user='nuertey' host='127.0.0.1' " + \
+    #              "password='krobo2003'"
 
-    connection = psycopg2.connect(connect_str)
+    #connection = psycopg2.connect(connect_str)
 
-    trades = pd.read_sql('select * from trades', connection)
-    quotes = pd.read_sql('select * from quotes', connection)
-    orders = pd.read_sql('select * from orders', connection)
+    #trades = pd.read_sql('select * from trades', connection)
+    #quotes = pd.read_sql('select * from quotes', connection)
+    #orders = pd.read_sql('select * from orders', connection)
+
+    #trades.to_csv("trades.csv", index = False, header=True)
+    #quotes.to_csv("quotes.csv", index = False, header=True)
+    #orders.to_csv("orders.csv", index = False, header=True)
+    
+    trades = pd.read_csv("trades.csv")
+    quotes = pd.read_csv("quotes.csv")
+    orders = pd.read_csv("orders.csv")
 
     country_codes = pd.DataFrame(COUNTRY_CODES)
     codes_dictionary = country_codes.to_dict('list')
@@ -451,8 +458,10 @@ try:
     # Callback to update trades table, orders table and generated graph:
     @app.callback([Output('stock-trades', 'data'), Output('stock-orders', 'data'), Output('graph-1', 'figure')], [Input("i_tris", "n_intervals")])
     def update_trades_and_graph(n):
-        trades = pd.read_sql('select * from trades', connection)
-        orders = pd.read_sql('select * from orders', connection)
+        #trades = pd.read_sql('select * from trades', connection)
+        #orders = pd.read_sql('select * from orders', connection)
+        trades = pd.read_csv("trades.csv")
+        orders = pd.read_csv("orders.csv")
 
         # Create the VWAP trace contrasted with the stock trades price:
         figure1 = go.Figure()
@@ -473,7 +482,8 @@ try:
     # Callback to update quotes table:
     @app.callback(Output('stock-quotes', 'data'), [Input("i_tris", "n_intervals")])
     def update_quotes(n):
-        quotes = pd.read_sql('select * from quotes', connection)
+        #quotes = pd.read_sql('select * from quotes', connection)
+        quotes = pd.read_csv("quotes.csv")
 
         return quotes.to_dict('records')
 
