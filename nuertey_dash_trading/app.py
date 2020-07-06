@@ -4,8 +4,8 @@
 # Nuertey's first full-blown Dash web application that presents an automatic
 # Trading Application dashboard to the user. It effectively allows the user
 # to visualize Nuertey's VWAP Stock Trading Algorithm in action. A secondary
-# purpose of this script is to illustrate some teaching ideas to Wayo and 
-# other dear students.
+# purpose of this script is to illustrate some teaching ideas to Wayo, 
+# Emile, Mbui, Scott and other dear students.
 #
 # @note [1] Chose a country from the drop down list for the current news
 #           headlines in that country to be displayed to the user. Clicking 
