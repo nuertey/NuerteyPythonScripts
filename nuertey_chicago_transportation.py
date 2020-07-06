@@ -21,11 +21,12 @@ from sodapy import Socrata
 
 # Unauthenticated client only works with public data sets. Note 'None'
 # in place of application token, and no username or password:
-socrata_domain = "data.cityofchicago.org"
-socrata_dataset_identifier = "m6dm-c72p"
+chicago_socrata_domain = "data.cityofchicago.org"
+rideshare_trips_dataset_identifier = "m6dm-c72p"
+community_areas_dataset_identifier = "igwz-8jzy"
 socrata_token = None
 
-client = Socrata(socrata_domain, socrata_token)
+client = Socrata(chicago_socrata_domain, socrata_token)
 
 # By default, the Socrata connection will timeout after 10 seconds.
 # You are able to increase the timeout limit for the Socrata client 
@@ -41,19 +42,28 @@ print(
 )
 
 try:
-    # First 2000 results, returned as JSON from API / converted to Python 
-    # list of dictionaries by sodapy.
-    #results = client.get(socrata_dataset_identifier, limit=2000)
-    results = client.get(socrata_dataset_identifier)
+    # Returned as JSON from API and converted to Python list of 
+    # dictionaries by sodapy.
+    results = client.get(rideshare_trips_dataset_identifier)
 
     # Convert to pandas DataFrame
     results_df = pd.DataFrame.from_dict(results)
 
     #results_df.set_index('trip_id', inplace=True)
-
     #print(results_df.transpose())
     #print()
     results_df['rounded_miles'] = results_df['trip_miles'].astype(float).apply(lambda x: round(x, 0))
+
+    results = client.get(community_areas_dataset_identifier)
+    areas_df = pd.DataFrame.from_dict(results)
+    print(areas_df)
+    print()
+
+    results_df['pickup_community_area_name'] = [areas_df[areas_df['area_num_1'] == area_number].community for area_number in results_df['pickup_community_area']] 
+
+    print(results_df.pickup_community_area_name.unique())
+    print()
+
     figure1 = px.bar(results_df, 
                      x="rounded_miles", 
                      y="pickup_community_area", 
@@ -61,6 +71,8 @@ try:
                      orientation='h',
                      hover_data=["trip_total", "tip"],
                      title='City Of Chicago RideShare Trip Mileage Frequency')
+    figure1.data[-1].name = 'Diner'
+    figure1.data[-1].showlegend = True
     figure1.show()
 
     # SoQL Clauses
