@@ -42,6 +42,12 @@ client = Socrata("data.cityofchicago.org",
 # change the timeout variable to an arbitrarily large number of seconds
 client.timeout = 100
 
+print(
+    "Domain: {domain:}\nSession: {session:}\nURI Prefix: {uri_prefix:}".format(
+        **client.__dict__
+    )
+)
+
 try:
     # First 2000 results, returned as JSON from API / converted to Python 
     # list of dictionaries by sodapy.
