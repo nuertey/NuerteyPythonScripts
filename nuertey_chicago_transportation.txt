@@ -1,0 +1,66 @@
+Transportation Network Providers - Trips
+
+Transportation
+
+View Data
+All trips, starting November 2018, reported by Transportation Network Providers (sometimes called rideshare companies) to the City of Chicago as part of routine reporting required by ordinance.
+
+Access this Dataset via SODA API
+The Socrata Open Data API (SODA) provides programmatic access to this dataset including the ability to filter, query, and aggregate data.
+
+API Endpoint:
+https://data.cityofchicago.org/resource/m6dm-c72p.json
+
+Updated May 27, 2020
+Data Provided by City of Chicago
+
+Data Owner    Chicago Department of Business Affairs & Consumer Protection
+Time Period   November 2018 to present
+Frequency Data are updated quarterly
+
+What's in this Dataset?
+
+Rows
+    152M
+Columns
+    21
+Each row is a
+    Trip
+
+Columns in this Dataset
+Column Name Description Type
+
+Trip ID 
+A unique identifier for the trip.
+    
+Plain Text
+    
+Trip Start Timestamp    
+When the trip started, rounded to the nearest 15 minutes.
+    
+Date & Time
+    
+Trip End Timestamp  
+When the trip ended, rounded to the nearest 15 minutes.
+    
+Date & Time
+    
+Trip Seconds    
+Time of the trip in seconds.
+    
+Number
+    
+Trip Miles  
+Distance of the trip in miles.
+    
+Number
+    
+Pickup Census Tract 
+The Census Tract where the trip began.This column often will be blank for locations outside Chicago.
+    
+Plain Text
+    
+Dropoff Census Tract    
+The Census Tract where the trip ended. This column often will be blank for locations outside Chicago.
+    
+Plain Text
