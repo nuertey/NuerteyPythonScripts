@@ -8,6 +8,17 @@ import pandas as pd
 import plotly.express as px
 from sodapy import Socrata
 
+#df = px.data.tips()
+#print(df)
+#fig = px.bar(df, x="total_bill", y="sex", color='day', orientation='h',
+#             hover_data=["tip", "size"],
+#             height=400,
+#             title='Restaurant bills')
+#fig.show()
+
+# https://data.cityofchicago.org/api/views/igwz-8jzy/
+# https://dev.socrata.com/foundry/data.cityofchicago.org/igwz-8jzy
+
 # Unauthenticated client only works with public data sets. Note 'None'
 # in place of application token, and no username or password:
 socrata_domain = "data.cityofchicago.org"
@@ -36,19 +47,21 @@ try:
     results = client.get(socrata_dataset_identifier)
 
     # Convert to pandas DataFrame
-    #results_df = pd.DataFrame.from_records(results)
     results_df = pd.DataFrame.from_dict(results)
 
-    results_df.set_index('trip_id', inplace=True)
-    print(results_df.transpose().head())
-    print()
+    #results_df.set_index('trip_id', inplace=True)
 
-    #figure1 = px.bar(results_df['trip_miles'], 
-    #                 x="Trip Frequency", y="Trip Miles", 
-    #                 color='frequency', orientation='h',
-    #                 hover_data=["fare", "tip"],
-    #                 title='City Of Chicago RideShare Trip Mileage Frequency')
-    #figure1.show()
+    #print(results_df.transpose())
+    #print()
+    results_df['rounded_miles'] = results_df['trip_miles'].astype(float).apply(lambda x: round(x, 0))
+    figure1 = px.bar(results_df, 
+                     x="rounded_miles", 
+                     y="pickup_community_area", 
+                     color='rounded_miles', 
+                     orientation='h',
+                     hover_data=["trip_total", "tip"],
+                     title='City Of Chicago RideShare Trip Mileage Frequency')
+    figure1.show()
 
     # SoQL Clauses
     #
