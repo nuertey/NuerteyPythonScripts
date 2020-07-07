@@ -8,6 +8,9 @@ import pandas as pd
 import plotly.express as px
 from sodapy import Socrata
 
+pd.set_option('display.max_rows', 200)
+pd.set_option('display.min_rows', 200)
+
 #df = px.data.tips()
 #print(df)
 #fig = px.bar(df, x="total_bill", y="sex", color='day', orientation='h',
@@ -56,11 +59,13 @@ try:
 
     results = client.get(community_areas_dataset_identifier)
     areas_df = pd.DataFrame.from_dict(results)
-    print(areas_df)
+    #print(areas_df)
+    #print()
+
+    results_df['pickup_community_area_name'] = areas_df[areas_df['area_num_1'].isin(results_df['pickup_community_area'])].community
+
+    print(results_df['pickup_community_area_name'])
     print()
-
-    results_df['pickup_community_area_name'] = [areas_df[areas_df['area_num_1'] == area_number].community for area_number in results_df['pickup_community_area']] 
-
     print(results_df.pickup_community_area_name.unique())
     print()
 
@@ -68,11 +73,11 @@ try:
                      x="rounded_miles", 
                      y="pickup_community_area", 
                      color='rounded_miles', 
-                     orientation='h',
-                     hover_data=["trip_total", "tip"],
+                     #orientation='h',
+                     hover_data=["trip_total", "tip", "pickup_community_area_name"],
                      title='City Of Chicago RideShare Trip Mileage Frequency')
-    figure1.data[-1].name = 'Diner'
-    figure1.data[-1].showlegend = True
+    #figure1.data[-1].name = 'pickup_community_area_name'
+    #figure1.data[-1].showlegend = True
     figure1.show()
 
     # SoQL Clauses
