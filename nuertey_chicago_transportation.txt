@@ -1,3 +1,125 @@
+Attached is a graph showing the results of some programming fun that I did today to analyze all the Lyft, Uber and other ridesharing rides taken in Chicago. I obtained the raw data from the City of Chicago and then massaged, manipulated and analyzed it myself. Then I plotted it. Some interesting trends obvious from the graph:
+
+1) Majority of the rides tend to be 15 miles or less, however the O'Hare community area has the highest incidence of hailed long rides (i.e. approximately 35 miles or more).
+
+2) Most rides were hailed from the Near North Side community area, followed by the Near West Side community area and followed by the Loop community area.
+
+3) Most riders did not tip at all (tip = $0 on the hover panel on the graph) but the few riders that did, tipped about $30.
+
+Check out the graph attached for more interesting trends. Enjoy. I basically set this project goal for myself today because I wanted to test my data science manipulation techniques with Python on a live dataset (so millions of entries).
+
+======================================================================
+
+(MyEnv37) rena@PurpleOS:~/postgrestest$ python nuertey_chicago_transportation.py
+WARNING:root:Requests made without an app_token will be subject to strict throttling limits.
+Domain: data.cityofchicago.org
+Session: <requests.sessions.Session object at 0x7f0a25858050>
+URI Prefix: https://
+the_geom      object
+perimeter     object
+area          object
+comarea       object
+comarea_id    object
+area_numbe    object
+community     object
+area_num_1    object
+shape_area    object
+shape_len     object
+dtype: object
+
+the_geom      object
+perimeter     object
+area          object
+comarea       object
+comarea_id    object
+area_numbe    object
+community     object
+area_num_1     int64
+shape_area    object
+shape_len     object
+dtype: object
+
+    area_num_1               community
+9            1             ROGERS PARK
+19           2              WEST RIDGE
+30           3                  UPTOWN
+5            4          LINCOLN SQUARE
+47           5            NORTH CENTER
+44           6               LAKE VIEW
+67           7            LINCOLN PARK
+36           8         NEAR NORTH SIDE
+76           9             EDISON PARK
+35          10            NORWOOD PARK
+10          11          JEFFERSON PARK
+11          12             FOREST GLEN
+12          13              NORTH PARK
+13          14             ALBANY PARK
+14          15            PORTAGE PARK
+15          16             IRVING PARK
+16          17                 DUNNING
+17          18               MONTCLARE
+18          19          BELMONT CRAGIN
+20          20                 HERMOSA
+21          21                AVONDALE
+22          22            LOGAN SQUARE
+23          23           HUMBOLDT PARK
+24          24               WEST TOWN
+25          25                  AUSTIN
+26          26      WEST GARFIELD PARK
+27          27      EAST GARFIELD PARK
+28          28          NEAR WEST SIDE
+29          29          NORTH LAWNDALE
+31          30          SOUTH LAWNDALE
+32          31         LOWER WEST SIDE
+37          32                    LOOP
+33          33         NEAR SOUTH SIDE
+34          34           ARMOUR SQUARE
+0           35                 DOUGLAS
+1           36                 OAKLAND
+2           37             FULLER PARK
+3           38         GRAND BOULEVARD
+4           39                 KENWOOD
+6           40         WASHINGTON PARK
+7           41               HYDE PARK
+8           42                WOODLAWN
+38          43             SOUTH SHORE
+39          44                 CHATHAM
+40          45             AVALON PARK
+41          46           SOUTH CHICAGO
+42          47                BURNSIDE
+45          48         CALUMET HEIGHTS
+46          49                ROSELAND
+48          50                 PULLMAN
+49          51           SOUTH DEERING
+50          52               EAST SIDE
+51          53            WEST PULLMAN
+52          54               RIVERDALE
+53          55               HEGEWISCH
+54          56          GARFIELD RIDGE
+55          57          ARCHER HEIGHTS
+56          58           BRIGHTON PARK
+43          59           MCKINLEY PARK
+57          60              BRIDGEPORT
+58          61                NEW CITY
+59          62             WEST ELSDON
+60          63               GAGE PARK
+61          64                CLEARING
+62          65               WEST LAWN
+63          66            CHICAGO LAWN
+64          67          WEST ENGLEWOOD
+65          68               ENGLEWOOD
+66          69  GREATER GRAND CROSSING
+68          70                 ASHBURN
+69          71          AUBURN GRESHAM
+70          72                 BEVERLY
+71          73      WASHINGTON HEIGHTS
+72          74         MOUNT GREENWOOD
+73          75             MORGAN PARK
+74          76                   OHARE
+75          77               EDGEWATER
+
+======================================================================
+
 Transportation Network Providers - Trips
 
 Transportation

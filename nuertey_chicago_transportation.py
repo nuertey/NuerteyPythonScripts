@@ -59,25 +59,45 @@ try:
 
     results = client.get(community_areas_dataset_identifier)
     areas_df = pd.DataFrame.from_dict(results)
-    #print(areas_df)
+    areas_df = areas_df.infer_objects()
+    print(areas_df.dtypes)
+    print()
+    areas_df['area_num_1'] = areas_df['area_num_1'].astype(int)
+    print(areas_df.dtypes)
+    print()
+
+    results_df['pickup_community_area_name'] = results_df['pickup_community_area'].map(areas_df.set_index('area_num_1')['community'])
+
+    #print(results_df['pickup_community_area_name'])
+    #print()
+    #print(results_df.pickup_community_area_name.unique())
     #print()
 
-    results_df['pickup_community_area_name'] = areas_df[areas_df['area_num_1'].isin(results_df['pickup_community_area'])].community
-
-    print(results_df['pickup_community_area_name'])
-    print()
-    print(results_df.pickup_community_area_name.unique())
+    ordered_community_areas = areas_df.sort_values(by=['area_num_1'], ascending=True)
+    print(ordered_community_areas[['area_num_1', 'community']])
     print()
 
     figure1 = px.bar(results_df, 
-                     x="rounded_miles", 
                      y="pickup_community_area", 
                      color='rounded_miles', 
                      #orientation='h',
                      hover_data=["trip_total", "tip", "pickup_community_area_name"],
-                     title='City Of Chicago RideShare Trip Mileage Frequency')
-    #figure1.data[-1].name = 'pickup_community_area_name'
-    #figure1.data[-1].showlegend = True
+                     title='Nuertey Odzeyem Analysis Of City Of Chicago RideShare Trip Mileage Frequency')
+    figure1.data[-1].showlegend = True
+
+    figure1.update_layout(
+        autosize=True,
+        yaxis=dict(
+            title_text="Pickup Community Area",
+            ticktext=ordered_community_areas['community'],
+            tickvals=ordered_community_areas['area_num_1'],
+            tickmode="array",
+            titlefont=dict(size=30),
+        )
+    )
+
+    figure1.update_yaxes(automargin=True)
+
     figure1.show()
 
     # SoQL Clauses
