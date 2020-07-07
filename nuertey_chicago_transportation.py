@@ -36,7 +36,7 @@ client = Socrata(chicago_socrata_domain, socrata_token)
 # by updating the 'timeout' instance variable like so:
 #
 # change the timeout variable to an arbitrarily large number of seconds
-client.timeout = 1200
+client.timeout = 19200
 
 print(
     "Domain: {domain:}\nSession: {session:}\nURI Prefix: {uri_prefix:}".format(
@@ -47,10 +47,12 @@ print(
 try:
     # Returned as JSON from API and converted to Python list of 
     # dictionaries by sodapy.
-    results = client.get(rideshare_trips_dataset_identifier)
+    results = client.get(rideshare_trips_dataset_identifier, limit=100000)
 
     # Convert to pandas DataFrame
     results_df = pd.DataFrame.from_dict(results)
+    print(results_df.shape)
+    print()
 
     #results_df.set_index('trip_id', inplace=True)
     #print(results_df.transpose())
@@ -59,6 +61,8 @@ try:
 
     results = client.get(community_areas_dataset_identifier)
     areas_df = pd.DataFrame.from_dict(results)
+    print(areas_df.shape)
+    print()
     areas_df = areas_df.infer_objects()
     print(areas_df.dtypes)
     print()
