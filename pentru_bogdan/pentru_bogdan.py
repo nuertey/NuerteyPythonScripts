@@ -26,14 +26,16 @@ pd.set_option('display.min_rows', 50)
 # Unauthenticated client only works with public data sets. Note 'None'
 # in place of application token, and no username or password:
 
+# https://data.cityofnewyork.us/resource/g2t5-u7v8.json
+
 # The Host Name for the API endpoint (the https:// part will be added automatically)
 data_url = 'data.cityofnewyork.us'    
 
 # The data set at the API endpoint (311 data in this case)
-data_set = 'erm2-nwe9'    
+data_set = 'g2t5-u7v8'    
 
 # Application token:
-app_token ='xyz123xyz123xyz123xyz123'
+app_token = None
 
 # Create the client to point to the API endpoint
 client = Socrata(data_url, app_token) 
@@ -55,19 +57,10 @@ print(
 try:
     # Returned as JSON from API and converted to Python list of 
     # dictionaries by sodapy.
-    results = client.get(data_set, limit=2000)
-
-    # Convert the list of dictionaries to a Pandas data frame
-    df = pd.DataFrame.from_records(results)
-    print(df)
-    print()
+    results = client.get(data_set, limit=50)
 
     # Convert the list of dictionaries to a Pandas DataFrame
     results_df = pd.DataFrame.from_dict(results)
-
-    # For debugging, show us how the data looks:
-    print(results_df.shape)
-    print()
 
     print(results_df)
     print()
