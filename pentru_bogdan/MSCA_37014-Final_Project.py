@@ -77,6 +77,16 @@ print()
 # Center the map on Amsterdam, Noord-Holland, The Netherlands per its 
 # requisite latitude and longitude:
 # ==========
+
+# Note that the API reference for gmplot states that:
+#
+# "While most functionality should be available as-is, some features 
+# require a Google Maps API key".
+#
+# If needed, Google Maps API key can be obtained for free from here:
+#
+# https://developers.google.com/maps/documentation/javascript/get-api-key
+#
 gmap = gmplot.GoogleMapPlotter(52.3676, 4.9041, 14, apikey="")
 
 # Draw the map:
