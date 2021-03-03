@@ -20,10 +20,16 @@
 
 # make sure to install these packages before running:
 # pip install pandas
+# pip install gmplot
 
 import pandas as pd
+
 import gzip # There is no need to pip install this module as it is 
             # contained within the standard library.
+
+import gmplot # gmplot is a matplotlib-like interface to generate the 
+              # HTML and javascript to render all the data we would like 
+              # represented on top of Google Maps.
 
 pd.set_option('display.max_rows', 50)
 pd.set_option('display.min_rows', 50)
@@ -56,3 +62,25 @@ airbnb_data = airbnb_dataset_df.infer_objects()
 print('Data type of each column of cleaned up Airbnb Dataframe for Amsterdam after conversion:')
 print(airbnb_data.dtypes)
 print()
+
+amsterdam_host_location = airbnb_data['host_location']
+
+print(amsterdam_host_location)
+print()
+
+amsterdam_host_neighbourhood = airbnb_data['host_neighbourhood']
+
+print(amsterdam_host_neighbourhood)
+print()
+
+# ==========
+# Center the map on Amsterdam, Noord-Holland, The Netherlands per its 
+# requisite latitude and longitude:
+# ==========
+gmap = gmplot.GoogleMapPlotter(52.3676, 4.9041, 14, apikey="")
+
+# Draw the map:
+gmap.draw('./amsterdam_map.html')
+
+
+
