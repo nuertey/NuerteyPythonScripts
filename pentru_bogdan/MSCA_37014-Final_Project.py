@@ -76,6 +76,10 @@ print()
 # ==========
 # Center the map on Amsterdam, Noord-Holland, The Netherlands per its 
 # requisite latitude and longitude:
+#
+# Great reference for the gmplot package is here:
+#
+# https://pypi.org/project/gmplot/
 # ==========
 
 # Note that the API reference for gmplot states that:
