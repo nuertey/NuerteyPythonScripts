@@ -48,3 +48,11 @@ airbnb_dataset_raw = the_compressed_file.read()
 airbnb_dataset_df = pd.read_csv(file_name)
 print(airbnb_dataset_df)
 print()
+
+# To ensure that we will have no issues plotting/visualizing the data,
+# infer their proper data types:
+airbnb_data = airbnb_dataset_df.infer_objects()
+
+print('Data type of each column of cleaned up Airbnb Dataframe for Amsterdam after conversion:')
+print(airbnb_data.dtypes)
+print()
