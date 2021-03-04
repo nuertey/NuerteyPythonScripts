@@ -1,0 +1,217 @@
+(MyEnv37) rena@PurpleOS:~/postgrestest/pentru_bogdan$ python MSCA_37014-Final_Project.py
+             id                            listing_url       scrape_id  ... calculated_host_listings_count_private_rooms calculated_host_listings_count_shared_rooms reviews_per_month
+0          2818      https://www.airbnb.com/rooms/2818  20210208155251  ...                                            1                                           0              1.92
+1         20168     https://www.airbnb.com/rooms/20168  20210208155251  ...                                            2                                           0              2.54
+2         25428     https://www.airbnb.com/rooms/25428  20210208155251  ...                                            0                                           0              0.13
+3         27886     https://www.airbnb.com/rooms/27886  20210208155251  ...                                            1                                           0              1.98
+4         28871     https://www.airbnb.com/rooms/28871  20210208155251  ...                                            2                                           0              2.63
+5         29051     https://www.airbnb.com/rooms/29051  20210208155251  ...                                            2                                           0              3.98
+6         31080     https://www.airbnb.com/rooms/31080  20210208155251  ...                                            0                                           0              0.28
+7         41125     https://www.airbnb.com/rooms/41125  20210208155251  ...                                            0                                           0              0.72
+8         43109     https://www.airbnb.com/rooms/43109  20210208155251  ...                                            0                                           0              0.47
+9         44129     https://www.airbnb.com/rooms/44129  20210208155251  ...                                            0                                           0              1.40
+10        46386     https://www.airbnb.com/rooms/46386  20210208155251  ...                                            0                                           0              0.02
+11        49552     https://www.airbnb.com/rooms/49552  20210208155251  ...                                            0                                           0              2.94
+12        49790     https://www.airbnb.com/rooms/49790  20210208155251  ...                                            0                                           0              0.87
+13        50515     https://www.airbnb.com/rooms/50515  20210208155251  ...                                            0                                           0              0.20
+14        50523     https://www.airbnb.com/rooms/50523  20210208155251  ...                                            1                                           0              2.50
+15        52490     https://www.airbnb.com/rooms/52490  20210208155251  ...                                            1                                           0              0.82
+16        53067     https://www.airbnb.com/rooms/53067  20210208155251  ...                                            1                                           0              2.84
+17        53671     https://www.airbnb.com/rooms/53671  20210208155251  ...                                            1                                           0              2.58
+18        55256     https://www.airbnb.com/rooms/55256  20210208155251  ...                                            1                                           0              1.47
+19        55621     https://www.airbnb.com/rooms/55621  20210208155251  ...                                            0                                           0              0.26
+20        55807     https://www.airbnb.com/rooms/55807  20210208155251  ...                                            1                                           0              1.26
+21        55868     https://www.airbnb.com/rooms/55868  20210208155251  ...                                            0                                           0              0.77
+22        56703     https://www.airbnb.com/rooms/56703  20210208155251  ...                                            0                                           0               NaN
+23        58211     https://www.airbnb.com/rooms/58211  20210208155251  ...                                            1                                           0              1.18
+24        62015     https://www.airbnb.com/rooms/62015  20210208155251  ...                                            0                                           0              0.24
+...         ...                                    ...             ...  ...                                          ...                                         ...               ...
+18266  48005583  https://www.airbnb.com/rooms/48005583  20210208155251  ...                                            0                                           0               NaN
+18267  48008046  https://www.airbnb.com/rooms/48008046  20210208155251  ...                                            0                                           0               NaN
+18268  48008092  https://www.airbnb.com/rooms/48008092  20210208155251  ...                                            0                                           0               NaN
+18269  48008123  https://www.airbnb.com/rooms/48008123  20210208155251  ...                                            0                                           0               NaN
+18270  48008144  https://www.airbnb.com/rooms/48008144  20210208155251  ...                                            0                                           0               NaN
+18271  48028679  https://www.airbnb.com/rooms/48028679  20210208155251  ...                                            1                                           0               NaN
+18272  48036961  https://www.airbnb.com/rooms/48036961  20210208155251  ...                                            0                                           0               NaN
+18273  48036978  https://www.airbnb.com/rooms/48036978  20210208155251  ...                                            0                                           0               NaN
+18274  48037184  https://www.airbnb.com/rooms/48037184  20210208155251  ...                                            0                                           0               NaN
+18275  48037288  https://www.airbnb.com/rooms/48037288  20210208155251  ...                                            0                                           0               NaN
+18276  48037306  https://www.airbnb.com/rooms/48037306  20210208155251  ...                                            0                                           0               NaN
+18277  48037887  https://www.airbnb.com/rooms/48037887  20210208155251  ...                                            0                                           0               NaN
+18278  48037901  https://www.airbnb.com/rooms/48037901  20210208155251  ...                                            0                                           0               NaN
+18279  48037915  https://www.airbnb.com/rooms/48037915  20210208155251  ...                                            0                                           0               NaN
+18280  48038731  https://www.airbnb.com/rooms/48038731  20210208155251  ...                                            0                                           0               NaN
+18281  48050993  https://www.airbnb.com/rooms/48050993  20210208155251  ...                                            0                                           0               NaN
+18282  48051449  https://www.airbnb.com/rooms/48051449  20210208155251  ...                                            0                                           0               NaN
+18283  48051751  https://www.airbnb.com/rooms/48051751  20210208155251  ...                                            0                                           0               NaN
+18284  48051918  https://www.airbnb.com/rooms/48051918  20210208155251  ...                                            0                                           0               NaN
+18285  48052174  https://www.airbnb.com/rooms/48052174  20210208155251  ...                                            0                                           0               NaN
+18286  48052590  https://www.airbnb.com/rooms/48052590  20210208155251  ...                                            1                                           0               NaN
+18287  48062763  https://www.airbnb.com/rooms/48062763  20210208155251  ...                                            1                                           0               NaN
+18288  48065391  https://www.airbnb.com/rooms/48065391  20210208155251  ...                                            0                                           0               NaN
+18289  48066023  https://www.airbnb.com/rooms/48066023  20210208155251  ...                                            0                                           0               NaN
+18290  48077862  https://www.airbnb.com/rooms/48077862  20210208155251  ...                                            0                                           2               NaN
+
+[18291 rows x 74 columns]
+
+Data type of each column of cleaned up Airbnb Dataframe for Amsterdam after conversion:
+id                                                int64
+listing_url                                      object
+scrape_id                                         int64
+last_scraped                                     object
+name                                             object
+description                                      object
+neighborhood_overview                            object
+picture_url                                      object
+host_id                                           int64
+host_url                                         object
+host_name                                        object
+host_since                                       object
+host_location                                    object
+host_about                                       object
+host_response_time                               object
+host_response_rate                               object
+host_acceptance_rate                             object
+host_is_superhost                                object
+host_thumbnail_url                               object
+host_picture_url                                 object
+host_neighbourhood                               object
+host_listings_count                             float64
+host_total_listings_count                       float64
+host_verifications                               object
+host_has_profile_pic                             object
+                                                 ...   
+has_availability                                 object
+availability_30                                   int64
+availability_60                                   int64
+availability_90                                   int64
+availability_365                                  int64
+calendar_last_scraped                            object
+number_of_reviews                                 int64
+number_of_reviews_ltm                             int64
+number_of_reviews_l30d                            int64
+first_review                                     object
+last_review                                      object
+review_scores_rating                            float64
+review_scores_accuracy                          float64
+review_scores_cleanliness                       float64
+review_scores_checkin                           float64
+review_scores_communication                     float64
+review_scores_location                          float64
+review_scores_value                             float64
+license                                         float64
+instant_bookable                                 object
+calculated_host_listings_count                    int64
+calculated_host_listings_count_entire_homes       int64
+calculated_host_listings_count_private_rooms      int64
+calculated_host_listings_count_shared_rooms       int64
+reviews_per_month                               float64
+Length: 74, dtype: object
+
+0        Amsterdam, Noord-Holland, The Netherlands
+1        Amsterdam, Noord-Holland, The Netherlands
+2                New York, New York, United States
+3        Amsterdam, Noord-Holland, The Netherlands
+4        Amsterdam, Noord-Holland, The Netherlands
+5        Amsterdam, Noord-Holland, The Netherlands
+6        Amsterdam, Noord-Holland, The Netherlands
+7            Amsterdam, Noord-Holland, Netherlands
+8        Amsterdam, Noord-Holland, The Netherlands
+9        Amsterdam, Noord-Holland, The Netherlands
+10       Amsterdam, Noord-Holland, The Netherlands
+11       Amsterdam, Noord-Holland, The Netherlands
+12       Amsterdam, Noord-Holland, The Netherlands
+13           Amsterdam, North Holland, Netherlands
+14       Amsterdam, Noord-Holland, The Netherlands
+15       Amsterdam, Noord-Holland, The Netherlands
+16           Amsterdam, North Holland, Netherlands
+17       Amsterdam, Noord-Holland, The Netherlands
+18       Amsterdam, Noord-Holland, The Netherlands
+19       Amsterdam, Noord-Holland, The Netherlands
+20       Amsterdam, Noord-Holland, The Netherlands
+21       Amsterdam, Noord-Holland, The Netherlands
+22           Amsterdam, North Holland, Netherlands
+23       Amsterdam, Noord-Holland, The Netherlands
+24       Amsterdam, Noord-Holland, The Netherlands
+                           ...                    
+18266                                           NL
+18267        Amsterdam, North Holland, Netherlands
+18268        Amsterdam, North Holland, Netherlands
+18269        Amsterdam, North Holland, Netherlands
+18270        Amsterdam, North Holland, Netherlands
+18271        Amsterdam, North Holland, Netherlands
+18272        Amsterdam, North Holland, Netherlands
+18273        Amsterdam, North Holland, Netherlands
+18274        Amsterdam, North Holland, Netherlands
+18275        Amsterdam, North Holland, Netherlands
+18276        Amsterdam, North Holland, Netherlands
+18277        Amsterdam, North Holland, Netherlands
+18278        Amsterdam, North Holland, Netherlands
+18279        Amsterdam, North Holland, Netherlands
+18280                                           NL
+18281                                           NL
+18282                                           NL
+18283                                           NL
+18284                                           NL
+18285                                           NL
+18286                                           NL
+18287        Amsterdam, North Holland, Netherlands
+18288        Amsterdam, North Holland, Netherlands
+18289        Amsterdam, North Holland, Netherlands
+18290        Amsterdam, North Holland, Netherlands
+Name: host_location, Length: 18291, dtype: object
+
+0                        Indische Buurt
+1                        Grachtengordel
+2                        Grachtengordel
+3                   Westelijke Eilanden
+4                     Amsterdam Centrum
+5                     Amsterdam Centrum
+6                   Hoofddorppleinbuurt
+7                               Jordaan
+8                        Grachtengordel
+9                               Jordaan
+10                              De Pijp
+11                       Grachtengordel
+12                             Oud-West
+13                             Oud-West
+14                       Grachtengordel
+15                              Zeeburg
+16                              De Pijp
+17       Spaarndammer en Zeeheldenbuurt
+18                Nieuwmarkt en Lastage
+19                              De Pijp
+20                             Oud-West
+21                       Museumkwartier
+22                      Oosterparkbuurt
+23                       Grachtengordel
+24                       Indische Buurt
+                      ...              
+18266                               NaN
+18267                               NaN
+18268                               NaN
+18269                               NaN
+18270                               NaN
+18271                               NaN
+18272                               NaN
+18273                               NaN
+18274                               NaN
+18275                               NaN
+18276                               NaN
+18277                               NaN
+18278                               NaN
+18279                               NaN
+18280                               NaN
+18281                               NaN
+18282                               NaN
+18283                               NaN
+18284                               NaN
+18285                               NaN
+18286                               NaN
+18287                               NaN
+18288                               NaN
+18289                               NaN
+18290                    Grachtengordel
+Name: host_neighbourhood, Length: 18291, dtype: object
+
+(MyEnv37) rena@PurpleOS:~/postgrestest/pentru_bogdan$ 
