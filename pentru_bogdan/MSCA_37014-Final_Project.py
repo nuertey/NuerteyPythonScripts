@@ -130,30 +130,43 @@ print(airbnb_data_dropped[['host_name', 'host_since', 'host_response_time',
      'number_of_reviews', 'review_scores_rating', 'calculated_host_listings_count']])
 print()
 
-# ==========
-# Center the map on Amsterdam, Noord-Holland, The Netherlands per its 
-# requisite latitude and longitude:
-#
-# Great reference for the gmplot package is here:
-#
-# https://pypi.org/project/gmplot/
-# ==========
+# ====================================================================
+# Center a satellite map on Amsterdam, Noord-Holland, The Netherlands
+# per its requisite latitude and longitude:
+# ====================================================================
+# To plot on Mapbox maps with Plotly, a Mapbox account and a public 
+# Mapbox Access Token is needed. Let's just use mine:
+token = open(".mapbox_token").read() 
 
-# Note that the API reference for gmplot states that:
-#
-# "While most functionality should be available as-is, some features 
-# require a Google Maps API key".
-#
-# If needed, Google Maps API key can be obtained for free from here:
-#
-# https://developers.google.com/maps/documentation/javascript/get-api-key
-#
-#gmap = gmplot.GoogleMapPlotter(52.3676, 4.9041, 14, apikey="")
+figure0_1 = go.Figure(go.Scattermapbox(
+    mode = "markers+text+lines",
+    lon = [4.9041], lat = [52.3676],
+    marker = {'size': 20, 'symbol': ["car"]},
+    text = ["Transportation"],textposition = "bottom right"))
 
-# Draw the map:
-#gmap.draw('./amsterdam_map.html')
+figure0_1.update_layout(
+    title='Amsterdam, Noord-Holland, The Netherlands',
+    autosize=True,
+    hovermode='closest',
+    showlegend=False,
+    mapbox=dict(
+        accesstoken=token,
+        bearing=0,
+        center=dict(
+            lat=52.3676,
+            lon=4.9041
+        ),
+        pitch=0,
+        zoom=10,
+        style='satellite-streets'
+    ),
+)
 
+figure0_1.show()
+
+# ============================================
 # Some column data visualizations, line graph:
+# ============================================
 figure1 = go.Figure()
 figure1.add_trace(go.Scatter(x=airbnb_data_dropped['host_since'], 
                             y=airbnb_data_dropped['number_of_reviews'],
