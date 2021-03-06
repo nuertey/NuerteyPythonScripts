@@ -19,10 +19,12 @@
 #!/usr/bin/env python
 
 # make sure to install these packages before running:
+# pip install numpy
 # pip install pandas
 # pip install plotly
 
 import math
+import numpy as np
 import pandas as pd
 
 import gzip # There is no need to pip install this module as it is 
@@ -39,11 +41,14 @@ pd.set_option('display.max_rows', 50)
 pd.set_option('display.min_rows', 50)
 
 def percentage2float(percent_value):
-    input_value = float(percent_value)
+    try:
+        input_value = float(percent_value)
 
-    if math.isnan(input_value):
-        result_value = float(0)
-    else:
+        if math.isnan(input_value):
+            result_value = float(0)
+        else:
+            result_value = input_value/100
+    except Exception as e:
         result_value = float(percent_value.strip('%'))/100
 
     return result_value
@@ -162,21 +167,47 @@ print()
 #figure1.show()
 
 # Some column data visualizations, bar chart:
-figure2 = px.bar(airbnb_data_dropped, x="host_acceptance_rate",y="host_name", 
-                 color='review_scores_rating', orientation='h',
-                 hover_data=["host_name", "host_neighbourhood", 
-                             "host_acceptance_rate", "review_scores_rating"],
-                 title='Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Acceptance Rate')
+#figure2 = px.bar(airbnb_data_dropped, x="host_acceptance_rate",y="host_name", 
+#                 color='review_scores_rating', orientation='h',
+#                 hover_data=["host_name", "host_neighbourhood", 
+#                             "host_acceptance_rate", "review_scores_rating"],
+#                 title='Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Acceptance Rate')
+#
+##figure2.update_traces(marker_color='violet')
+#figure2.update_layout(title='Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Acceptance Rate',
+#                     xaxis_title='Host Acceptance Rate',
+#                     yaxis_title='Host Name (Hover Mouse For Host Neighbourhood)')
+#
+#figure2.show()
 
-#figure2.update_traces(marker_color='violet')
-figure2.update_layout(title='Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Acceptance Rate',
-                     xaxis_title='Host Acceptance Rate',
-                     yaxis_title='Host Name (Hover Mouse For Host Neighbourhood)')
+# Employ a list for now in the list comprehension for faster processing:
+wide_data_rate = [percentage2float(x) for x in airbnb_data_dropped['host_acceptance_rate']]
+#print(wide_data_rate)
+#print()
 
-figure2.show()
+cols = ['host_acceptance_rate']
 
-wide_data_format['host_acceptance_rate'] = [percentage2float(x) for x in airbnb_data_dropped['host_acceptance_rate']]
+# Now create the dataframe from the complete list as this approach is much much faster:
+wide_data_format = pd.DataFrame(wide_data_rate, columns=cols, index=airbnb_data_dropped.index)
 
-fig = px.bar(airbnb_data_dropped, x=["host_acceptance_rate", "number_of_reviews", "review_scores_rating"], y="host_name", orientation='h', title="Wide-Form Input")
+# Append more columns of interest directly from the existing dataframe
+# after performing any necessary transformations:
+wide_data_format['number_of_reviews'] = airbnb_data_dropped['number_of_reviews'].astype(float).apply(lambda x: round(x, 0))
+
+wide_data_format['review_scores_rating'] = airbnb_data_dropped['review_scores_rating'].fillna(0)
+wide_data_format['host_name'] = airbnb_data_dropped['host_name']
+
+print(wide_data_format)
+print()
+
+print('Data type of each column of wide format data:')
+print(wide_data_format.dtypes)
+print()
+
+# The above transformations were all necessary because to plot "Bar chart
+# with Wide Format Data", all the columns must be of the same type, which
+# is not the case with our original data.
+fig = px.bar(wide_data_format, x=["host_acceptance_rate", "number_of_reviews", "review_scores_rating"], y="host_name", orientation='h', title="Wide-Form Input")
+
 fig.show()
 
