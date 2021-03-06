@@ -27,7 +27,7 @@ import pandas as pd
 import gzip # There is no need to pip install this module as it is 
             # contained within the standard library.
 
-import gmplot # gmplot is a matplotlib-like interface to generate the 
+#import gmplot # gmplot is a matplotlib-like interface to generate the 
               # HTML and javascript to render all the data we would like 
               # represented on top of Google Maps.
 
@@ -55,6 +55,10 @@ airbnb_dataset_df = pd.read_csv(file_name)
 print(airbnb_dataset_df)
 print()
 
+print('Dataset dimensions of cleaned up Airbnb Dataframe for Amsterdam after conversion:')
+print(airbnb_dataset_df.shape)
+print()
+
 # To ensure that we will have no issues plotting/visualizing the data,
 # infer their proper data types:
 airbnb_data = airbnb_dataset_df.infer_objects()
@@ -63,15 +67,50 @@ print('Data type of each column of cleaned up Airbnb Dataframe for Amsterdam aft
 print(airbnb_data.dtypes)
 print()
 
-amsterdam_host_location = airbnb_data['host_location']
+# Enable for debug. For now we don't care about 'name' as these are just 
+# the Airbnb listing descriptions such as:
+#
+# 0                 Quiet Garden View Room & Super Fast WiFi
+# 1             Studio with private bathroom in the centre 1
+# 2          Lovely, spacious 1 bed apt in Center(with lift)
+# 3        Romantic, stylish B&B houseboat in canal district
+#amsterdam_host_name = airbnb_data['name']
+#print(amsterdam_host_name)
+#print()
 
-print(amsterdam_host_location)
+# Enable for debug. For now we don't care about 'host_location' since
+# we know they will all point to "Amsterdam, Noord-Holland, The Netherlands"  
+# for corresponding data columns that are not 'NaN'. 
+#amsterdam_host_location = airbnb_data['host_location']
+#print(amsterdam_host_location)
+#print()
+
+# Drop all rows in the overall dataframe in which 'host_neighbourhood'
+# is 'NaN'. Note that if you want to keep the resulting DataFrame of
+# valid entries in the same variable, you must set:
+#
+# airbnb_data.dropna(subset=['host_neighbourhood'], inplace=True)
+airbnb_data_dropped = airbnb_data.dropna(subset=['host_neighbourhood']) 
+
+# For debug:
+#print(airbnb_data_dropped)
+#print()
+
+print('Dataset dimensions of cleaned up (and DROPPED) Airbnb Dataframe for Amsterdam after conversion:')
+print(airbnb_data_dropped.shape)
 print()
 
-amsterdam_host_neighbourhood = airbnb_data['host_neighbourhood']
-
+amsterdam_host_neighbourhood = airbnb_data_dropped['host_neighbourhood']
 print(amsterdam_host_neighbourhood)
 print()
+
+# Output some of the 'interesting' columns so we see what kind of data
+# to be potentially visualized that we are playing with:
+print(airbnb_data_dropped[['host_name', 'host_since', 'host_response_time',
+     'host_response_rate', 'host_acceptance_rate', 'host_listings_count',
+     'host_total_listings_count', 'number_of_reviews', 'review_scores_rating']])
+print()
+
 
 # ==========
 # Center the map on Amsterdam, Noord-Holland, The Netherlands per its 
@@ -91,10 +130,10 @@ print()
 #
 # https://developers.google.com/maps/documentation/javascript/get-api-key
 #
-gmap = gmplot.GoogleMapPlotter(52.3676, 4.9041, 14, apikey="")
+#gmap = gmplot.GoogleMapPlotter(52.3676, 4.9041, 14, apikey="")
 
 # Draw the map:
-gmap.draw('./amsterdam_map.html')
+#gmap.draw('./amsterdam_map.html')
 
 
 
