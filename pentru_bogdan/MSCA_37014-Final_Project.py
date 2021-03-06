@@ -196,6 +196,7 @@ wide_data_format['number_of_reviews'] = airbnb_data_dropped['number_of_reviews']
 
 wide_data_format['review_scores_rating'] = airbnb_data_dropped['review_scores_rating'].fillna(0)
 wide_data_format['host_name'] = airbnb_data_dropped['host_name']
+wide_data_format['host_neighbourhood'] = airbnb_data_dropped['host_neighbourhood']
 
 print(wide_data_format)
 print()
@@ -207,7 +208,11 @@ print()
 # The above transformations were all necessary because to plot "Bar chart
 # with Wide Format Data", all the columns must be of the same type, which
 # is not the case with our original data.
-fig = px.bar(wide_data_format, x=["host_acceptance_rate", "number_of_reviews", "review_scores_rating"], y="host_name", orientation='h', title="Wide-Form Input")
+figure3 = px.bar(wide_data_format, x=["host_acceptance_rate", "number_of_reviews", "review_scores_rating"], y="host_name", orientation='h', hover_data=["host_name", "host_neighbourhood", "host_acceptance_rate", "review_scores_rating"], title="Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Acceptance Rate")
 
-fig.show()
+figure3.show()
 
+figure4 = px.bar(wide_data_format, x="host_name", y=["host_acceptance_rate", "number_of_reviews", "review_scores_rating"], hover_data=["host_name", "host_neighbourhood", "host_acceptance_rate", "review_scores_rating"], title="Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Acceptance Rate")
+
+figure4.update_xaxes(type='category')
+figure4.show()
