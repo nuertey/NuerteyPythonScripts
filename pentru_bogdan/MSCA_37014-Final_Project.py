@@ -27,9 +27,12 @@ import pandas as pd
 import gzip # There is no need to pip install this module as it is 
             # contained within the standard library.
 
-#import gmplot # gmplot is a matplotlib-like interface to generate the 
-              # HTML and javascript to render all the data we would like 
-              # represented on top of Google Maps.
+import plotly.graph_objects as go # low-level interface to figures, 
+                                  # traces and layout
+
+import plotly.express as px # Plotly Express is the easy-to-use, high-level
+                            # interface to Plotly, which operates on "tidy"
+                            # data and produces easy-to-style figures.
 
 pd.set_option('display.max_rows', 50)
 pd.set_option('display.min_rows', 50)
@@ -107,10 +110,9 @@ print()
 # Output some of the 'interesting' columns so we see what kind of data
 # to be potentially visualized that we are playing with:
 print(airbnb_data_dropped[['host_name', 'host_since', 'host_response_time',
-     'host_response_rate', 'host_acceptance_rate', 'host_listings_count',
-     'host_total_listings_count', 'number_of_reviews', 'review_scores_rating']])
+     'host_response_rate', 'host_acceptance_rate', 'host_total_listings_count',
+     'number_of_reviews', 'review_scores_rating']])
 print()
-
 
 # ==========
 # Center the map on Amsterdam, Noord-Holland, The Netherlands per its 
@@ -135,5 +137,35 @@ print()
 # Draw the map:
 #gmap.draw('./amsterdam_map.html')
 
+# Some column data visualizations, line graph:
+#figure1 = go.Figure()
+#figure1.add_trace(go.Scatter(x=airbnb_data_dropped['host_since'], 
+#                            y=airbnb_data_dropped['number_of_reviews'],
+#                            mode='markers',
+#                            name='Number of Reviews',
+#                            line=dict(color='red', width=1)
+#))
+#figure1.update_layout(title='Amsterdam, Noord-Holland - Airbnb Host Since Date/Number Of Reviews',
+#                     xaxis_title='Airbnb Host Since Date',
+#                     yaxis_title='Number Of Reviews')
+#figure1.show()
+
+# Some column data visualizations, bar chart:
+#figure2 = px.bar(airbnb_data_dropped, x="host_acceptance_rate",y="host_name", 
+#                 color='review_scores_rating',
+#                 hover_data=["host_name", "host_neighbourhood", 
+#                             "host_acceptance_rate", "review_scores_rating"],
+#                 title='Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Acceptance Rate')
+
+# figure2.update_traces(marker_color='violet')
+#figure2.update_layout(title='Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Acceptance Rate',
+#                     xaxis_title='Host Acceptance Rate',
+#                     yaxis_title='Host Name (Hover Mouse For Host Neighbourhood)')
+
+figure2 = px.bar(airbnb_data_dropped, x="host_acceptance_rate",y="host_name", 
+                 hover_data=["host_name", "host_neighbourhood", 
+                             "host_acceptance_rate", "review_scores_rating"],
+                 title='Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Acceptance Rate')
+figure2.show()
 
 
