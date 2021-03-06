@@ -154,31 +154,25 @@ print()
 #gmap.draw('./amsterdam_map.html')
 
 # Some column data visualizations, line graph:
-#figure1 = go.Figure()
-#figure1.add_trace(go.Scatter(x=airbnb_data_dropped['host_since'], 
-#                            y=airbnb_data_dropped['number_of_reviews'],
-#                            mode='markers',
-#                            name='Number of Reviews',
-#                            line=dict(color='red', width=1)
-#))
-#figure1.update_layout(title='Amsterdam, Noord-Holland - Airbnb Host Since Date/Number Of Reviews',
-#                     xaxis_title='Airbnb Host Since Date',
-#                     yaxis_title='Number Of Reviews')
-#figure1.show()
+figure1 = go.Figure()
+figure1.add_trace(go.Scatter(x=airbnb_data_dropped['host_since'], 
+                            y=airbnb_data_dropped['number_of_reviews'],
+                            mode='markers',
+                            name='Number of Reviews',
+                            line=dict(color='red', width=1)
+))
+figure1.update_layout(title='Amsterdam, Noord-Holland - Airbnb Host Since Date/Number Of Reviews',
+                     xaxis_title='Airbnb Host Since Date',
+                     yaxis_title='Number Of Reviews')
+figure1.show()
 
-# Some column data visualizations, bar chart:
-#figure2 = px.bar(airbnb_data_dropped, x="host_acceptance_rate",y="host_name", 
-#                 color='review_scores_rating', orientation='h',
-#                 hover_data=["host_name", "host_neighbourhood", 
-#                             "host_acceptance_rate", "review_scores_rating"],
-#                 title='Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Acceptance Rate')
+# ======================================================================
+# Attempt to plot "Bar chart with Wide Format Data" i.e. 3 columns of data
+# at once. All the columns must be of the same type, which is not the case
+# with our original data. So the transformations to follow are necessary.
 #
-##figure2.update_traces(marker_color='violet')
-#figure2.update_layout(title='Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Acceptance Rate',
-#                     xaxis_title='Host Acceptance Rate',
-#                     yaxis_title='Host Name (Hover Mouse For Host Neighbourhood)')
-#
-#figure2.show()
+# https://plotly.com/python/bar-charts/
+# ======================================================================
 
 # Employ a list for now in the list comprehension for faster processing:
 wide_data_rate = [percentage2float(x) for x in airbnb_data_dropped['host_acceptance_rate']]
@@ -206,13 +200,42 @@ print(wide_data_format.dtypes)
 print()
 
 # The above transformations were all necessary because to plot "Bar chart
-# with Wide Format Data", all the columns must be of the same type, which
-# is not the case with our original data.
-figure3 = px.bar(wide_data_format, x=["host_acceptance_rate", "number_of_reviews", "review_scores_rating"], y="host_name", orientation='h', hover_data=["host_name", "host_neighbourhood", "host_acceptance_rate", "review_scores_rating"], title="Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Acceptance Rate")
+# with Wide Format Data" i.e. 3 columns of data at once, all the columns
+# must be of the same type, which is not the case with our original data.
+figure3 = px.bar(wide_data_format, x=["host_acceptance_rate", "number_of_reviews", "review_scores_rating"], y="host_name", orientation='h', hover_data=["host_name", "host_neighbourhood", "host_acceptance_rate", "review_scores_rating"], opacity=1, title="Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Acceptance Rate")
+
+# Attempt to make the background transparent.
+figure3.update_layout({
+     'plot_bgcolor': 'rgba(0, 0, 0, 0)',
+     'paper_bgcolor': 'rgba(0, 0, 0, 0)',
+})
 
 figure3.show()
 
-figure4 = px.bar(wide_data_format, x="host_name", y=["host_acceptance_rate", "number_of_reviews", "review_scores_rating"], hover_data=["host_name", "host_neighbourhood", "host_acceptance_rate", "review_scores_rating"], title="Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Acceptance Rate")
+figure4 = px.bar(wide_data_format, x="host_name", y=["host_acceptance_rate", "number_of_reviews", "review_scores_rating"], opacity=1, title="Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Acceptance Rate")
 
 figure4.update_xaxes(type='category')
+
+# Attempt to make the background transparent.
+figure4.update_layout({
+     'plot_bgcolor': 'rgba(0, 0, 0, 0)',
+     'paper_bgcolor': 'rgba(0, 0, 0, 0)',
+})
+
 figure4.show()
+
+# ===================================================================
+# Some column data visualizations, bar chart with just 1 column data:
+# ===================================================================
+figure2 = px.bar(wide_data_format, x="number_of_reviews",y="host_name", 
+                 color='review_scores_rating', orientation='h',
+                 hover_data=["host_name", "host_neighbourhood", 
+                             "host_acceptance_rate", "review_scores_rating"],
+                 title='Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Number of Reviews')
+
+#figure2.update_traces(marker_color='violet')
+figure2.update_layout(title='Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Number of Reviews',
+                     xaxis_title='Number of Reviews',
+                     yaxis_title='Host Name (Hover Mouse For Host Neighbourhood)')
+
+figure2.show()
