@@ -127,7 +127,7 @@ print()
 # to be potentially visualized that we are playing with:
 print(airbnb_data_dropped[['host_name', 'host_since', 'host_response_time',
      'host_response_rate', 'host_acceptance_rate', 'host_total_listings_count',
-     'number_of_reviews', 'review_scores_rating']])
+     'number_of_reviews', 'review_scores_rating', 'calculated_host_listings_count']])
 print()
 
 # ==========
@@ -165,6 +165,40 @@ figure1.update_layout(title='Amsterdam, Noord-Holland - Airbnb Host Since Date/N
                      xaxis_title='Airbnb Host Since Date',
                      yaxis_title='Number Of Reviews')
 figure1.show()
+
+# ======================================================================
+# Histograms follow here:
+#
+# Aggregate 'calculated_host_listings_count' column data for each unique
+# neighbourhood. That sounds like an interesting dataset to visualize.
+# i.e. which neighbourhoods have the most listings etc.
+# ======================================================================
+print('Unique Amsterdam neighbourhoods:')
+print(airbnb_data_dropped.host_neighbourhood.unique())
+print()
+
+neighbourhood_stats = airbnb_data_dropped.groupby(["host_neighbourhood"]).calculated_host_listings_count.sum().reset_index()
+sorted_neighbourhood_stats = neighbourhood_stats.sort_values(by=['calculated_host_listings_count'], ascending=True)
+
+print(sorted_neighbourhood_stats)
+print()
+
+figure1_2 = px.histogram(neighbourhood_stats, x="host_neighbourhood", y="calculated_host_listings_count")
+figure1_2.show()
+
+figure1_3 = px.histogram(sorted_neighbourhood_stats, x="host_neighbourhood", y="calculated_host_listings_count")
+figure1_3.show()
+
+# I "prepared" the data for the above histograms manually with Pandas
+# for better visualization, but we can also have plotly automagically do
+# the aggregation for us through the "Aggregation Function" and superimpose
+# both on the same plot for us:
+#
+# https://plotly.com/python/histograms/
+figure1_4 = go.Figure()
+figure1_4.add_trace(go.Histogram(histfunc="count", y=airbnb_data_dropped['calculated_host_listings_count'], x=airbnb_data_dropped['host_neighbourhood'], name="count of listings"))
+figure1_4.add_trace(go.Histogram(histfunc="sum", y=airbnb_data_dropped['calculated_host_listings_count'], x=airbnb_data_dropped['host_neighbourhood'], name="cumulative sum for neighborhood"))
+figure1_4.show()
 
 # ======================================================================
 # Attempt to plot "Bar chart with Wide Format Data" i.e. 3 columns of data
