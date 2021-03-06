@@ -227,15 +227,23 @@ figure4.show()
 # ===================================================================
 # Some column data visualizations, bar chart with just 1 column data:
 # ===================================================================
-figure2 = px.bar(wide_data_format, x="number_of_reviews",y="host_name", 
-                 color='review_scores_rating', orientation='h',
+figure2 = px.bar(wide_data_format, x="host_name",y="number_of_reviews", 
+                 color='review_scores_rating',
                  hover_data=["host_name", "host_neighbourhood", 
                              "host_acceptance_rate", "review_scores_rating"],
                  title='Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Number of Reviews')
 
 #figure2.update_traces(marker_color='violet')
 figure2.update_layout(title='Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Number of Reviews',
-                     xaxis_title='Number of Reviews',
-                     yaxis_title='Host Name (Hover Mouse For Host Neighbourhood)')
+                     xaxis_title='Host Name (Hover Mouse For Host Neighbourhood)',
+                     yaxis_title='Number of Reviews')
+
+figure2.update_xaxes(type='category')
+
+# Attempt to make the background transparent.
+figure2.update_layout({
+     'plot_bgcolor': 'rgba(0, 0, 0, 0)',
+     'paper_bgcolor': 'rgba(0, 0, 0, 0)',
+})
 
 figure2.show()
