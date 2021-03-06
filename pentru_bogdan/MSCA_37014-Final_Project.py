@@ -20,8 +20,9 @@
 
 # make sure to install these packages before running:
 # pip install pandas
-# pip install gmplot
+# pip install plotly
 
+import math
 import pandas as pd
 
 import gzip # There is no need to pip install this module as it is 
@@ -36,6 +37,16 @@ import plotly.express as px # Plotly Express is the easy-to-use, high-level
 
 pd.set_option('display.max_rows', 50)
 pd.set_option('display.min_rows', 50)
+
+def percentage2float(percent_value):
+    input_value = float(percent_value)
+
+    if math.isnan(input_value):
+        result_value = float(0)
+    else:
+        result_value = float(percent_value.strip('%'))/100
+
+    return result_value
 
 file_name = './listings.csv.gz'
 
@@ -151,21 +162,21 @@ print()
 #figure1.show()
 
 # Some column data visualizations, bar chart:
-#figure2 = px.bar(airbnb_data_dropped, x="host_acceptance_rate",y="host_name", 
-#                 color='review_scores_rating',
-#                 hover_data=["host_name", "host_neighbourhood", 
-#                             "host_acceptance_rate", "review_scores_rating"],
-#                 title='Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Acceptance Rate')
-
-# figure2.update_traces(marker_color='violet')
-#figure2.update_layout(title='Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Acceptance Rate',
-#                     xaxis_title='Host Acceptance Rate',
-#                     yaxis_title='Host Name (Hover Mouse For Host Neighbourhood)')
-
 figure2 = px.bar(airbnb_data_dropped, x="host_acceptance_rate",y="host_name", 
+                 color='review_scores_rating', orientation='h',
                  hover_data=["host_name", "host_neighbourhood", 
                              "host_acceptance_rate", "review_scores_rating"],
                  title='Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Acceptance Rate')
+
+#figure2.update_traces(marker_color='violet')
+figure2.update_layout(title='Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Acceptance Rate',
+                     xaxis_title='Host Acceptance Rate',
+                     yaxis_title='Host Name (Hover Mouse For Host Neighbourhood)')
+
 figure2.show()
 
+wide_data_format['host_acceptance_rate'] = [percentage2float(x) for x in airbnb_data_dropped['host_acceptance_rate']]
+
+fig = px.bar(airbnb_data_dropped, x=["host_acceptance_rate", "number_of_reviews", "review_scores_rating"], y="host_name", orientation='h', title="Wide-Form Input")
+fig.show()
 
