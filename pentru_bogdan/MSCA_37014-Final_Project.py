@@ -37,8 +37,8 @@ import plotly.express as px # Plotly Express is the easy-to-use, high-level
                             # interface to Plotly, which operates on "tidy"
                             # data and produces easy-to-style figures.
 
-pd.set_option('display.max_rows', 50)
-pd.set_option('display.min_rows', 50)
+pd.set_option('display.max_rows', 100)
+pd.set_option('display.min_rows', 100)
 
 def percentage2float(percent_value):
     try:
@@ -138,14 +138,84 @@ print()
 # Mapbox Access Token is needed. Let's just use mine:
 token = open(".mapbox_token").read() 
 
-figure0_1 = go.Figure(go.Scattermapbox(
-    mode = "markers+text+lines",
-    lon = [4.9041], lat = [52.3676],
-    marker = {'size': 20, 'symbol': ["car"]},
-    text = ["Transportation"],textposition = "bottom right"))
+#figure0_1 = go.Figure(go.Scattermapbox(
+#    mode = "markers+text+lines",
+#    lon = [4.9041], lat = [52.3676],
+#    marker = {'size': 20, 'symbol': ["car"]},
+#    text = ["Transportation"],textposition = "bottom right"))
+#
+#figure0_1.update_layout(
+#    title='Amsterdam, Noord-Holland, The Netherlands',
+#    autosize=True,
+#    hovermode='closest',
+#    showlegend=False,
+#    mapbox=dict(
+#        accesstoken=token,
+#        bearing=0,
+#        center=dict(
+#            lat=52.3676,
+#            lon=4.9041
+#        ),
+#        pitch=0,
+#        zoom=10,
+#        style='satellite-streets'
+#    ),
+#)
+#
+#figure0_1.show()
 
-figure0_1.update_layout(
-    title='Amsterdam, Noord-Holland, The Netherlands',
+# Ensure we have the same row dimensions for these before plotting:
+#host_neighbourhood_unique = airbnb_data_dropped.host_neighbourhood.unique()
+#latitude_unique = airbnb_data_dropped.latitude.unique()
+#longitude_unique = airbnb_data_dropped.longitude.unique()
+
+# The above seems to give incorrect dimensions, probably because of 
+# lingering decimal points and misspelt neighbourhoods so use the below
+# approach instead for correct results. 
+host_neighbourhood_unique = airbnb_data_dropped.host_neighbourhood
+latitude_unique = airbnb_data_dropped.latitude
+longitude_unique = airbnb_data_dropped.longitude
+
+print('Unique Neighbourhood, Latitude and Longitude of Amsterdam neighbourhoods:')
+print(host_neighbourhood_unique)
+print(len(host_neighbourhood_unique))
+print()
+print(latitude_unique)
+print(len(latitude_unique))
+print()
+print(longitude_unique)
+print(len(longitude_unique))
+print()
+
+figure0_2 = go.Figure()
+
+figure0_2.add_trace(go.Scattermapbox(
+        lat=latitude_unique,
+        lon=longitude_unique,
+        mode='markers',
+        marker=go.scattermapbox.Marker(
+            size=17,
+            color='rgb(255, 0, 0)',
+            opacity=0.7
+        ),
+        text=host_neighbourhood_unique,
+        hoverinfo='text'
+    ))
+
+figure0_2.add_trace(go.Scattermapbox(
+        lat=latitude_unique,
+        lon=longitude_unique,
+        mode='markers',
+        marker=go.scattermapbox.Marker(
+            size=8,
+            color='rgb(242, 177, 172)',
+            opacity=0.7
+        ),
+        hoverinfo='none'
+    ))
+
+figure0_2.update_layout(
+    title='Amsterdam, Noord-Holland, The Netherlands - AirBnB Host Listings',
     autosize=True,
     hovermode='closest',
     showlegend=False,
@@ -157,27 +227,27 @@ figure0_1.update_layout(
             lon=4.9041
         ),
         pitch=0,
-        zoom=10,
+        zoom=12,
         style='satellite-streets'
     ),
 )
 
-figure0_1.show()
+figure0_2.show()
 
 # ============================================
 # Some column data visualizations, line graph:
 # ============================================
-figure1 = go.Figure()
-figure1.add_trace(go.Scatter(x=airbnb_data_dropped['host_since'], 
-                            y=airbnb_data_dropped['number_of_reviews'],
-                            mode='markers',
-                            name='Number of Reviews',
-                            line=dict(color='red', width=1)
-))
-figure1.update_layout(title='Amsterdam, Noord-Holland - Airbnb Host Since Date/Number Of Reviews',
-                     xaxis_title='Airbnb Host Since Date',
-                     yaxis_title='Number Of Reviews')
-figure1.show()
+#figure1 = go.Figure()
+#figure1.add_trace(go.Scatter(x=airbnb_data_dropped['host_since'], 
+#                            y=airbnb_data_dropped['number_of_reviews'],
+#                            mode='markers',
+#                            name='Number of Reviews',
+#                            line=dict(color='red', width=1)
+#))
+#figure1.update_layout(title='Amsterdam, Noord-Holland - Airbnb Host Since Date/Number Of Reviews',
+#                     xaxis_title='Airbnb Host Since Date',
+#                     yaxis_title='Number Of Reviews')
+#figure1.show()
 
 # ======================================================================
 # Histograms follow here:
@@ -190,17 +260,22 @@ print('Unique Amsterdam neighbourhoods:')
 print(airbnb_data_dropped.host_neighbourhood.unique())
 print()
 
+# This CLEANSED dataset seems very weird so don't use it.
+print('Unique Amsterdam neighbourhoods (CLEANSED):')
+print(airbnb_data_dropped.neighbourhood_cleansed.unique())
+print()
+
 neighbourhood_stats = airbnb_data_dropped.groupby(["host_neighbourhood"]).calculated_host_listings_count.sum().reset_index()
 sorted_neighbourhood_stats = neighbourhood_stats.sort_values(by=['calculated_host_listings_count'], ascending=True)
 
 print(sorted_neighbourhood_stats)
 print()
 
-figure1_2 = px.histogram(neighbourhood_stats, x="host_neighbourhood", y="calculated_host_listings_count")
-figure1_2.show()
-
-figure1_3 = px.histogram(sorted_neighbourhood_stats, x="host_neighbourhood", y="calculated_host_listings_count")
-figure1_3.show()
+#figure1_2 = px.histogram(neighbourhood_stats, x="host_neighbourhood", y="calculated_host_listings_count")
+#figure1_2.show()
+#
+#figure1_3 = px.histogram(sorted_neighbourhood_stats, x="host_neighbourhood", y="calculated_host_listings_count")
+#figure1_3.show()
 
 # I "prepared" the data for the above histograms manually with Pandas
 # for better visualization, but we can also have plotly automagically do
@@ -208,10 +283,20 @@ figure1_3.show()
 # both on the same plot for us:
 #
 # https://plotly.com/python/histograms/
-figure1_4 = go.Figure()
-figure1_4.add_trace(go.Histogram(histfunc="count", y=airbnb_data_dropped['calculated_host_listings_count'], x=airbnb_data_dropped['host_neighbourhood'], name="count of listings"))
-figure1_4.add_trace(go.Histogram(histfunc="sum", y=airbnb_data_dropped['calculated_host_listings_count'], x=airbnb_data_dropped['host_neighbourhood'], name="cumulative sum for neighborhood"))
-figure1_4.show()
+#figure1_4 = go.Figure()
+#figure1_4.add_trace(go.Histogram(histfunc="count", y=airbnb_data_dropped['calculated_host_listings_count'], x=airbnb_data_dropped['host_neighbourhood'], name="count of listings"))
+#figure1_4.add_trace(go.Histogram(histfunc="sum", y=airbnb_data_dropped['calculated_host_listings_count'], x=airbnb_data_dropped['host_neighbourhood'], name="cumulative sum for neighborhood"))
+#figure1_4.show()
+
+# At this juncture, and judging from the above histogram visualizations
+# and the printed output, sorted_neighbourhood_stats, one can roughly
+# estimate that since the host_neighbourhood of Jordaan has the most 
+# listings (8143), it will perhaps have lower listing prices than
+# host_neighbourhood's such as LB of Hillingdon, Friedrichshain, Fulham,
+# Hampstead, Shepherd's Bush, etc., which have only 1. They would perhaps
+# command the highest prices. I am basing this on the strict economic 
+# interpretation that scarcity increases value, demand and attraction.
+
 
 # ======================================================================
 # Attempt to plot "Bar chart with Wide Format Data" i.e. 3 columns of data
@@ -249,48 +334,71 @@ print()
 # The above transformations were all necessary because to plot "Bar chart
 # with Wide Format Data" i.e. 3 columns of data at once, all the columns
 # must be of the same type, which is not the case with our original data.
-figure3 = px.bar(wide_data_format, x=["host_acceptance_rate", "number_of_reviews", "review_scores_rating"], y="host_name", orientation='h', hover_data=["host_name", "host_neighbourhood", "host_acceptance_rate", "review_scores_rating"], opacity=1, title="Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Acceptance Rate")
-
-# Attempt to make the background transparent.
-figure3.update_layout({
-     'plot_bgcolor': 'rgba(0, 0, 0, 0)',
-     'paper_bgcolor': 'rgba(0, 0, 0, 0)',
-})
-
-figure3.show()
-
-figure4 = px.bar(wide_data_format, x="host_name", y=["host_acceptance_rate", "number_of_reviews", "review_scores_rating"], opacity=1, title="Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Acceptance Rate")
-
-figure4.update_xaxes(type='category')
-
-# Attempt to make the background transparent.
-figure4.update_layout({
-     'plot_bgcolor': 'rgba(0, 0, 0, 0)',
-     'paper_bgcolor': 'rgba(0, 0, 0, 0)',
-})
-
-figure4.show()
+#figure3 = px.bar(wide_data_format, x=["host_acceptance_rate", "number_of_reviews", "review_scores_rating"], y="host_name", orientation='h', hover_data=["host_name", "host_neighbourhood", "host_acceptance_rate", "review_scores_rating"], opacity=1, title="Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Acceptance Rate")
+#
+## Attempt to make the background transparent.
+#figure3.update_layout({
+#     'plot_bgcolor': 'rgba(0, 0, 0, 0)',
+#     'paper_bgcolor': 'rgba(0, 0, 0, 0)',
+#})
+#
+#figure3.show()
+#
+#figure4 = px.bar(wide_data_format, x="host_name", y=["host_acceptance_rate", "number_of_reviews", "review_scores_rating"], opacity=1, title="Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Acceptance Rate")
+#
+#figure4.update_xaxes(type='category')
+#
+## Attempt to make the background transparent.
+#figure4.update_layout({
+#     'plot_bgcolor': 'rgba(0, 0, 0, 0)',
+#     'paper_bgcolor': 'rgba(0, 0, 0, 0)',
+#})
+#
+#figure4.show()
 
 # ===================================================================
 # Some column data visualizations, bar chart with just 1 column data:
 # ===================================================================
-figure2 = px.bar(wide_data_format, x="host_name",y="number_of_reviews", 
-                 color='review_scores_rating',
-                 hover_data=["host_name", "host_neighbourhood", 
-                             "host_acceptance_rate", "review_scores_rating"],
-                 title='Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Number of Reviews')
+#figure2 = px.bar(wide_data_format, x="host_name",y="number_of_reviews", 
+#                 color='review_scores_rating',
+#                 hover_data=["host_name", "host_neighbourhood", 
+#                             "host_acceptance_rate", "review_scores_rating"],
+#                 title='Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Number of Reviews')
+#
+##figure2.update_traces(marker_color='violet')
+#figure2.update_layout(title='Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Number of Reviews',
+#                     xaxis_title='Host Name (Hover Mouse For Host Neighbourhood)',
+#                     yaxis_title='Number of Reviews')
+#
+#figure2.update_xaxes(type='category')
+#
+## Attempt to make the background transparent.
+#figure2.update_layout({
+#     'plot_bgcolor': 'rgba(0, 0, 0, 0)',
+#     'paper_bgcolor': 'rgba(0, 0, 0, 0)',
+#})
+#
+#figure2.show()
 
-#figure2.update_traces(marker_color='violet')
-figure2.update_layout(title='Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Number of Reviews',
-                     xaxis_title='Host Name (Hover Mouse For Host Neighbourhood)',
-                     yaxis_title='Number of Reviews')
+# ===================================================================
+# Analysis/dataset inspection to select variables for OLS prediction:
+# ===================================================================
+# Output some of the 'interesting' columns so we see what kind of data
+# to be potentially used for prediction that we are playing with:
+print('Preparing for prediction 1:')
 
-figure2.update_xaxes(type='category')
+# neighbourhood all point to "Amsterdam, Noord-Holland, The Netherlands"
+# so don't care:
+# neighbourhood_group_cleansed is all NaNs so ignore:
+# neighbourhood_cleansed seems weird so as a caution don't use it. Prefer
+# host_neighbourhood:
+print(airbnb_data_dropped[['neighborhood_overview', 'host_about', 'host_is_superhost',
+     'host_identity_verified', 'latitude', 'longitude']])
+print()
 
-# Attempt to make the background transparent.
-figure2.update_layout({
-     'plot_bgcolor': 'rgba(0, 0, 0, 0)',
-     'paper_bgcolor': 'rgba(0, 0, 0, 0)',
-})
+print('Preparing for prediction 2:')
+# bathrooms is all NaNs so ignore:
+print(airbnb_data_dropped[['property_type', 'room_type', 'accommodates',
+     'bathrooms_text', 'bedrooms', 'beds', 'amenities', 'price']])
+print()
 
-figure2.show()
