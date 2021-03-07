@@ -17,7 +17,15 @@ import plotly.express as px # Plotly Express is the easy-to-use, high-level
                             # interface to Plotly, which operates on "tidy"
                             # data and produces easy-to-style figures.
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
+df = sns.load_dataset('iris')
+#df.head()
+print(df)
+print()
+sns.boxplot(y=df["species"], x=df["sepal_length"]);
+plt.show()
 
 # To plot on Mapbox maps with Plotly, a Mapbox account and a public 
 # Mapbox Access Token is needed. Let's just use mine:
