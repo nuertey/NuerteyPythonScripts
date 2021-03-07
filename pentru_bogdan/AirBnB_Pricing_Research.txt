@@ -54,7 +54,7 @@ bathrooms_text                                   object
 bedrooms                                        float64
 beds                                            float64
 amenities                                        object
-price                                            object
+price                                           float64
 minimum_nights                                    int64
 maximum_nights                                    int64
 minimum_minimum_nights                          float64
@@ -94,6 +94,7 @@ dtype: object
 Dataset dimensions of cleaned up (and DROPPED) Airbnb Dataframe for Amsterdam after conversion:
 (12157, 74)
 
+
 ========================================================================
 
 Price Prediction in the Sharing Economy A Case Study with Airbnb.pdf
@@ -104,6 +105,36 @@ on price versus variables outside of the host’s ability to control. The result
 within the host’s control appear to have more of an impact on price versus variables outside of
 the host’s control. Also, when variables inside and outside of the host’s control are combined,
 they prove most accurate when predicting the price of a listing."
+
+...
+
+For this study, host-controlled variables will be defined as any
+features of the listing provided by the host and the details of the host. Prior research has
+associated these factors as potential drivers of price (Chen and Xie, 2017; Gibbs et al., 2017).
+Listing attributes considered include the type of accommodation, number of rooms, listing size,
+listing location, view from listing, and listing facilities. The host attributes considered include
+level of professionalism, years of experience, degree of trustworthiness, and the host’s
+responsiveness. (Ert et al., 2016; Li et al., 2015; Wu, 2016).
+
+...
+
+One study also determined the importance of location through comparisons between a
+general linear model (GLM) and a geographically weighted regression (GWR) model, with the
+GWR model proving to be more accurate with a higher adjusted R-squared. (Zhang et al. 2017).
+Social factors, such as listing review score, host responsiveness, and total number of reviews,
+were shown to have a correlation with consumers spending more money on an Airbnb listing
+(Tang & Sangani 2015). It has also been shown that factors relating to listing size, property
+characteristics, amenities, services, rental rules, and customer reviews significantly affect listing
+prices (Dogru & Pekin 2017).
+
+2.4 Superhost Status
+One of the most important host attributes: “Superhost status” is defined by Airbnb as “hosts who
+provide a shining example for other hosts, and extraordinary experiences for their guests.”3 A
+host must meet a certain criterion set by Airbnb to receive the “Superhost” badge.4 Based on
+previous studies, hosts with a “Superhost” badge typically post their listings at higher prices
+when they receive more reviews and higher ratings. (Liang et al. 2017). High quality host photos,
+“Superhost” Status, ratings, and reviews were confirmed to have a significant contribution to
+listing prices (Liang et al., 2017).
 
 ========================================================================
 https://www.airbnb.com/resources/hosting-homes/a/setting-a-pricing-strategy-15
