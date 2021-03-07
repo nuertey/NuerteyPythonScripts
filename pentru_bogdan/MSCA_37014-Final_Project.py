@@ -44,7 +44,7 @@ pd.set_option('display.min_rows', 100)
 pd.options.mode.chained_assignment = None
 
 # For logarithm divide-by-zero warnings
-#np.seterr(divide = 'ignore') 
+np.seterr(divide = 'ignore') 
 #np.seterr(divide = 'warn') 
 
 def percentage2float(percent_value):
@@ -281,11 +281,11 @@ sorted_neighbourhood_stats = neighbourhood_stats.sort_values(by=['calculated_hos
 print(sorted_neighbourhood_stats)
 print()
 
-figure1_2 = px.histogram(neighbourhood_stats, x="host_neighbourhood", y="calculated_host_listings_count")
-figure1_2.show()
+#figure1_2 = px.histogram(neighbourhood_stats, x="host_neighbourhood", y="calculated_host_listings_count")
+#figure1_2.show()
 
-figure1_3 = px.histogram(sorted_neighbourhood_stats, x="host_neighbourhood", y="calculated_host_listings_count")
-figure1_3.show()
+#figure1_3 = px.histogram(sorted_neighbourhood_stats, x="host_neighbourhood", y="calculated_host_listings_count")
+#figure1_3.show()
 
 # I "prepared" the data for the above histograms manually with Pandas
 # for better visualization, but we can also have plotly automagically do
@@ -293,10 +293,10 @@ figure1_3.show()
 # both on the same plot for us:
 #
 # https://plotly.com/python/histograms/
-figure1_4 = go.Figure()
-figure1_4.add_trace(go.Histogram(histfunc="count", y=airbnb_data_dropped['calculated_host_listings_count'], x=airbnb_data_dropped['host_neighbourhood'], name="count of listings"))
-figure1_4.add_trace(go.Histogram(histfunc="sum", y=airbnb_data_dropped['calculated_host_listings_count'], x=airbnb_data_dropped['host_neighbourhood'], name="cumulative sum for neighborhood"))
-figure1_4.show()
+#figure1_4 = go.Figure()
+#figure1_4.add_trace(go.Histogram(histfunc="count", y=airbnb_data_dropped['calculated_host_listings_count'], x=airbnb_data_dropped['host_neighbourhood'], name="count of listings"))
+#figure1_4.add_trace(go.Histogram(histfunc="sum", y=airbnb_data_dropped['calculated_host_listings_count'], x=airbnb_data_dropped['host_neighbourhood'], name="cumulative sum for neighborhood"))
+#figure1_4.show()
 
 # At this juncture, and judging from the above histogram visualizations
 # and the printed output, sorted_neighbourhood_stats, one can roughly
@@ -455,8 +455,15 @@ print()
 figure5 = go.Figure()
 figure5.add_trace(go.Histogram(x=airbnb_data_dropped["price"], 
                                name='listing price',
-                               marker_color='#EC2029', #Pigment Red
+                               marker_color='#0023FF', #Bluebonnet
                                opacity=0.75))
+figure5.update_layout(
+    title_text='Listing Price Histogram', # title of plot
+    xaxis_title_text='Price', # xaxis label
+    yaxis_title_text='Frequency', # yaxis label
+    bargap=0.2, # gap between bars of adjacent location coordinates
+    bargroupgap=0.1 # gap between bars of the same location coordinates
+)
 figure5.show()
 
 figure6 = go.Figure()
@@ -464,4 +471,25 @@ figure6.add_trace(go.Histogram(x=np.log(airbnb_data_dropped["price"]),
                                         name='logarithm of listing price',
                                         marker_color='#E36414', #Metallic Orange
                                         opacity=0.75))
+figure6.update_layout(
+    title_text='Logarithm of Listing Price Histogram', # title of plot
+    xaxis_title_text='Logarithm of Price', # xaxis label
+    yaxis_title_text='Frequency', # yaxis label
+    bargap=0.2, # gap between bars of adjacent location coordinates
+    bargroupgap=0.1 # gap between bars of the same location coordinates
+)
 figure6.show()
+
+print('Maximum listing price details:')
+max_price_details = airbnb_data_dropped[airbnb_data_dropped['price']==airbnb_data_dropped['price'].max()]
+print(max_price_details[['amenities', 'host_since', 'host_neighbourhood',
+     'price', 'property_type', 'number_of_reviews', 'review_scores_rating',
+     'accommodates']])
+print()
+
+print('Minimum listing price details:')
+min_price_details = airbnb_data_dropped[airbnb_data_dropped['price']==airbnb_data_dropped['price'].min()]
+print(min_price_details[['amenities', 'host_since', 'host_neighbourhood',
+     'price', 'property_type', 'number_of_reviews', 'review_scores_rating',
+     'accommodates']])
+print()
