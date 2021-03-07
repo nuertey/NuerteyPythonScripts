@@ -101,7 +101,6 @@ try:
     )
 
     figure1.update_yaxes(automargin=True)
-
     figure1.show()
 
     # SoQL Clauses

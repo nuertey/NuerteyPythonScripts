@@ -23,6 +23,32 @@ import pandas as pd
 # Mapbox Access Token is needed. Let's just use mine:
 token = open(".mapbox_token").read() 
 
+figure0_1 = go.Figure(go.Scattermapbox(
+    mode = "markers+text+lines",
+    lon = [4.9041], lat = [52.3676],
+    marker = {'size': 20, 'symbol': ["car"]},
+    text = ["Transportation"],textposition = "bottom right"))
+
+figure0_1.update_layout(
+    title='Amsterdam, Noord-Holland, The Netherlands',
+    autosize=True,
+    hovermode='closest',
+    showlegend=False,
+    mapbox=dict(
+        accesstoken=token,
+        bearing=0,
+        center=dict(
+            lat=52.3676,
+            lon=4.9041
+        ),
+        pitch=0,
+        zoom=10,
+        style='satellite-streets'
+    ),
+)
+
+figure0_1.show()
+
 # ==========
 # Example 1:
 # ==========
