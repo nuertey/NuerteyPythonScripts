@@ -26,6 +26,8 @@
 import math
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 import gzip # There is no need to pip install this module as it is 
             # contained within the standard library.
@@ -39,6 +41,7 @@ import plotly.express as px # Plotly Express is the easy-to-use, high-level
 
 pd.set_option('display.max_rows', 100)
 pd.set_option('display.min_rows', 100)
+pd.options.mode.chained_assignment = None
 
 def percentage2float(percent_value):
     try:
@@ -82,10 +85,6 @@ print()
 # infer their proper data types:
 airbnb_data = airbnb_dataset_df.infer_objects()
 
-print('Data type of each column of cleaned up Airbnb Dataframe for Amsterdam after conversion:')
-print(airbnb_data.dtypes)
-print()
-
 # Enable for debug. For now we don't care about 'name' as these are just 
 # the Airbnb listing descriptions such as:
 #
@@ -110,6 +109,13 @@ print()
 #
 # airbnb_data.dropna(subset=['host_neighbourhood'], inplace=True)
 airbnb_data_dropped = airbnb_data.dropna(subset=['host_neighbourhood']) 
+
+# Further cleanups:
+airbnb_data_dropped['price'] = airbnb_data_dropped['price'].replace('[\$,]', '', regex=True).astype(float)
+
+print('Data type of each column of cleaned up Airbnb Dataframe for Amsterdam after conversion:')
+print(airbnb_data_dropped.dtypes)
+print()
 
 # For debug:
 #print(airbnb_data_dropped)
@@ -177,62 +183,62 @@ latitude_unique = airbnb_data_dropped.latitude
 longitude_unique = airbnb_data_dropped.longitude
 
 print('Unique Neighbourhood, Latitude and Longitude of Amsterdam neighbourhoods:')
-print(host_neighbourhood_unique)
+#print(host_neighbourhood_unique)
 print(len(host_neighbourhood_unique))
 print()
-print(latitude_unique)
+#print(latitude_unique)
 print(len(latitude_unique))
 print()
-print(longitude_unique)
+#print(longitude_unique)
 print(len(longitude_unique))
 print()
 
-figure0_2 = go.Figure()
-
-figure0_2.add_trace(go.Scattermapbox(
-        lat=latitude_unique,
-        lon=longitude_unique,
-        mode='markers',
-        marker=go.scattermapbox.Marker(
-            size=17,
-            color='rgb(255, 0, 0)',
-            opacity=0.7
-        ),
-        text=host_neighbourhood_unique,
-        hoverinfo='text'
-    ))
-
-figure0_2.add_trace(go.Scattermapbox(
-        lat=latitude_unique,
-        lon=longitude_unique,
-        mode='markers',
-        marker=go.scattermapbox.Marker(
-            size=8,
-            color='rgb(242, 177, 172)',
-            opacity=0.7
-        ),
-        hoverinfo='none'
-    ))
-
-figure0_2.update_layout(
-    title='Amsterdam, Noord-Holland, The Netherlands - AirBnB Host Listings',
-    autosize=True,
-    hovermode='closest',
-    showlegend=False,
-    mapbox=dict(
-        accesstoken=token,
-        bearing=0,
-        center=dict(
-            lat=52.3676,
-            lon=4.9041
-        ),
-        pitch=0,
-        zoom=12,
-        style='satellite-streets'
-    ),
-)
-
-figure0_2.show()
+#figure0_2 = go.Figure()
+#
+#figure0_2.add_trace(go.Scattermapbox(
+#        lat=latitude_unique,
+#        lon=longitude_unique,
+#        mode='markers',
+#        marker=go.scattermapbox.Marker(
+#            size=17,
+#            color='rgb(255, 0, 0)',
+#            opacity=0.7
+#        ),
+#        text=host_neighbourhood_unique,
+#        hoverinfo='text'
+#    ))
+#
+#figure0_2.add_trace(go.Scattermapbox(
+#        lat=latitude_unique,
+#        lon=longitude_unique,
+#        mode='markers',
+#        marker=go.scattermapbox.Marker(
+#            size=8,
+#            color='rgb(242, 177, 172)',
+#            opacity=0.7
+#        ),
+#        hoverinfo='none'
+#    ))
+#
+#figure0_2.update_layout(
+#    title='Amsterdam, Noord-Holland, The Netherlands - AirBnB Host Listings',
+#    autosize=True,
+#    hovermode='closest',
+#    showlegend=False,
+#    mapbox=dict(
+#        accesstoken=token,
+#        bearing=0,
+#        center=dict(
+#            lat=52.3676,
+#            lon=4.9041
+#        ),
+#        pitch=0,
+#        zoom=12,
+#        style='satellite-streets'
+#    ),
+#)
+#
+#figure0_2.show()
 
 # ============================================
 # Some column data visualizations, line graph:
@@ -402,3 +408,40 @@ print(airbnb_data_dropped[['property_type', 'room_type', 'accommodates',
      'bathrooms_text', 'bedrooms', 'beds', 'amenities', 'price']])
 print()
 
+# Boxplots of 'price' distributions grouped by the values of a third 
+# variable can be created using the option by. Here are some examples.
+
+# A box plot (or box-and-whisker plot) shows the distribution of quantitative
+# data in a way that facilitates comparisons between variables or across
+# levels of a categorical variable. The box shows the quartiles of the 
+# dataset while the whiskers extend to show the rest of the distribution,
+# except for points that are determined to be “outliers” using a method
+# that is a function of the inter-quartile range.
+
+# Further, per Wikipedia:
+#
+# "The spacings between the different parts of the box indicate the degree
+# of dispersion (spread) and skewness in the data, and show outliers. 
+# In addition to the points themselves, they allow one to visually 
+# estimate various L-estimators, notably the interquartile range, 
+# midhinge, range, mid-range, and trimean."
+
+# boxplot1.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["accommodates"])
+plt.show()
+
+# boxplot2.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["property_type"])
+plt.show()
+
+# boxplot3.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["bathrooms_text"])
+plt.show()
+
+# boxplot4.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["host_neighbourhood"])
+plt.show()
+
+# boxplot5.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["calculated_host_listings_count"])
+plt.show()
