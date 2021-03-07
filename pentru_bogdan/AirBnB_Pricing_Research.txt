@@ -1,0 +1,149 @@
+=======================================================
+BOGDAN'S AMSTERDAM VARIABLES TO BE USED FOR ESTIMATION:
+=======================================================
+- Variables Within The Host’s Control
+host_since                                       object
+
+- Variables Beyond The Host’s Control
+
+
+- Variable To Be Predicted (Using OLS Regression)
+
+ - Listing Price
+
+=========================================================
+ALL COLUMNS OF CLEANED UP AIRBNB DATAFRAME FOR AMSTERDAM:
+=========================================================
+
+id                                                int64
+listing_url                                      object
+scrape_id                                         int64
+last_scraped                                     object
+name                                             object
+description                                      object
+neighborhood_overview                            object
+picture_url                                      object
+host_id                                           int64
+host_url                                         object
+host_name                                        object
+host_since                                       object
+host_location                                    object
+host_about                                       object
+host_response_time                               object
+host_response_rate                               object
+host_acceptance_rate                             object
+host_is_superhost                                object
+host_thumbnail_url                               object
+host_picture_url                                 object
+host_neighbourhood                               object
+host_listings_count                             float64
+host_total_listings_count                       float64
+host_verifications                               object
+host_has_profile_pic                             object
+host_identity_verified                           object
+neighbourhood                                    object
+neighbourhood_cleansed                           object
+neighbourhood_group_cleansed                    float64
+latitude                                        float64
+longitude                                       float64
+property_type                                    object
+room_type                                        object
+accommodates                                      int64
+bathrooms                                       float64
+bathrooms_text                                   object
+bedrooms                                        float64
+beds                                            float64
+amenities                                        object
+price                                            object
+minimum_nights                                    int64
+maximum_nights                                    int64
+minimum_minimum_nights                          float64
+maximum_minimum_nights                          float64
+minimum_maximum_nights                          float64
+maximum_maximum_nights                          float64
+minimum_nights_avg_ntm                          float64
+maximum_nights_avg_ntm                          float64
+calendar_updated                                float64
+has_availability                                 object
+availability_30                                   int64
+availability_60                                   int64
+availability_90                                   int64
+availability_365                                  int64
+calendar_last_scraped                            object
+number_of_reviews                                 int64
+number_of_reviews_ltm                             int64
+number_of_reviews_l30d                            int64
+first_review                                     object
+last_review                                      object
+review_scores_rating                            float64
+review_scores_accuracy                          float64
+review_scores_cleanliness                       float64
+review_scores_checkin                           float64
+review_scores_communication                     float64
+review_scores_location                          float64
+review_scores_value                             float64
+license                                         float64
+instant_bookable                                 object
+calculated_host_listings_count                    int64
+calculated_host_listings_count_entire_homes       int64
+calculated_host_listings_count_private_rooms      int64
+calculated_host_listings_count_shared_rooms       int64
+reviews_per_month                               float64
+dtype: object
+
+Dataset dimensions of cleaned up (and DROPPED) Airbnb Dataframe for Amsterdam after conversion:
+(12157, 74)
+
+========================================================================
+
+Price Prediction in the Sharing Economy A Case Study with Airbnb.pdf
+
+"Looking at two U.S. cities with developed Airbnb markets, this study aims to use linear
+regression analysis to determine the significance that variables inside of the host’s control have
+on price versus variables outside of the host’s ability to control. The results show that variables
+within the host’s control appear to have more of an impact on price versus variables outside of
+the host’s control. Also, when variables inside and outside of the host’s control are combined,
+they prove most accurate when predicting the price of a listing."
+
+========================================================================
+https://www.airbnb.com/resources/hosting-homes/a/setting-a-pricing-strategy-15
+
+"Whatever your financial goals, a savvy pricing strategy is key to success. But reaching your earning goals can be a bit of a balancing act, with variables changing day to day and week to week. Here are some helpful insights, along with a few tools and tips to simplify the process.
+
+Think like a guest
+
+Price is one of the main factors guests consider when choosing where to stay. No matter how beautiful your space, if it’s priced higher than comparable listings in the area, there’s a good chance you’ll miss out on bookings.
+
+Do a little market research
+
+Start by searching Airbnb for similar spaces in your area, taking into consideration:
+
+    Your property type (private room, entire home, etc.)
+    The number of beds/bedrooms you provide
+    The number of guests you can accommodate 
+    Your available amenities
+
+Make sure to check multiple dates in the future. Listings with competitive pricing tend to book up first, so don’t make the mistake of benchmarking against properties still available just a week or two away—those are likely to be the ones that weren’t booked because they were priced too high. Thinking ahead will also help you learn how hosts near you adjust pricing seasonally, on weekends, and for special events or holidays.
+
+- Consider your location and amenities
+
+Remember that things you’re factoring into your pricing may not be obvious to guests. For instance, the safety and beauty of your neighborhood may mean nothing to someone who doesn’t know your town, so be sure to call them out in your listing. Aspects of your great hospitality like breakfast or a welcome basket full of treats might also help you warrant a higher price, but you’ll need to make them super clear in your listing and photos.
+
+Stand out with great pricing
+
+“When you’re just starting out, it’s a good idea to have a competitive price,” says host Ros from Durban, South Africa. Guests are hesitant to book listings with no reviews, so for new hosts, setting your price a little lower than your ideal number is a great way to attract guests. Once you have a few positive reviews under your belt, you can raise your price to match the demand in your area. Competitive pricing can also help your listing rank higher in search.
+
+Use the Smart Pricing tool
+
+Want to take away some of the guesswork? Turn on Smart Pricing. Airbnb’s pricing tool takes into account over 70 different factors—plus controls you’ve set—to determine the best price for each available night on your calendar. Your pricing will automatically update depending on things like:
+
+    Lead time: As a check-in date approaches
+
+    Local popularity: The number of people searching for home stays in your area
+
+    Seasonality: Predictable seasonal changes in demand for home stays in your area
+
+    Listing popularity: How many views and bookings your listing receives 
+
+    Review history: Your amount of positive reviews from successful stays
+"
