@@ -43,6 +43,10 @@ pd.set_option('display.max_rows', 100)
 pd.set_option('display.min_rows', 100)
 pd.options.mode.chained_assignment = None
 
+# For logarithm divide-by-zero warnings
+#np.seterr(divide = 'ignore') 
+#np.seterr(divide = 'warn') 
+
 def percentage2float(percent_value):
     try:
         input_value = float(percent_value)
@@ -277,11 +281,11 @@ sorted_neighbourhood_stats = neighbourhood_stats.sort_values(by=['calculated_hos
 print(sorted_neighbourhood_stats)
 print()
 
-#figure1_2 = px.histogram(neighbourhood_stats, x="host_neighbourhood", y="calculated_host_listings_count")
-#figure1_2.show()
-#
-#figure1_3 = px.histogram(sorted_neighbourhood_stats, x="host_neighbourhood", y="calculated_host_listings_count")
-#figure1_3.show()
+figure1_2 = px.histogram(neighbourhood_stats, x="host_neighbourhood", y="calculated_host_listings_count")
+figure1_2.show()
+
+figure1_3 = px.histogram(sorted_neighbourhood_stats, x="host_neighbourhood", y="calculated_host_listings_count")
+figure1_3.show()
 
 # I "prepared" the data for the above histograms manually with Pandas
 # for better visualization, but we can also have plotly automagically do
@@ -289,10 +293,10 @@ print()
 # both on the same plot for us:
 #
 # https://plotly.com/python/histograms/
-#figure1_4 = go.Figure()
-#figure1_4.add_trace(go.Histogram(histfunc="count", y=airbnb_data_dropped['calculated_host_listings_count'], x=airbnb_data_dropped['host_neighbourhood'], name="count of listings"))
-#figure1_4.add_trace(go.Histogram(histfunc="sum", y=airbnb_data_dropped['calculated_host_listings_count'], x=airbnb_data_dropped['host_neighbourhood'], name="cumulative sum for neighborhood"))
-#figure1_4.show()
+figure1_4 = go.Figure()
+figure1_4.add_trace(go.Histogram(histfunc="count", y=airbnb_data_dropped['calculated_host_listings_count'], x=airbnb_data_dropped['host_neighbourhood'], name="count of listings"))
+figure1_4.add_trace(go.Histogram(histfunc="sum", y=airbnb_data_dropped['calculated_host_listings_count'], x=airbnb_data_dropped['host_neighbourhood'], name="cumulative sum for neighborhood"))
+figure1_4.show()
 
 # At this juncture, and judging from the above histogram visualizations
 # and the printed output, sorted_neighbourhood_stats, one can roughly
@@ -426,22 +430,38 @@ print()
 # estimate various L-estimators, notably the interquartile range, 
 # midhinge, range, mid-range, and trimean."
 
-# boxplot1.png
-sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["accommodates"])
-plt.show()
+## boxplot1.png
+#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["accommodates"])
+#plt.show()
+#
+## boxplot2.png
+#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["property_type"])
+#plt.show()
+#
+## boxplot3.png
+#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["bathrooms_text"])
+#plt.show()
+#
+## boxplot4.png
+#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["host_neighbourhood"])
+#plt.show()
+#
+## boxplot5.png
+#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["calculated_host_listings_count"])
+#plt.show()
 
-# boxplot2.png
-sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["property_type"])
-plt.show()
+# Histograms of listing price and log of listing price for further price
+# data visualization and comparison:
+figure5 = go.Figure()
+figure5.add_trace(go.Histogram(x=airbnb_data_dropped["price"], 
+                               name='listing price',
+                               marker_color='#EC2029', #Pigment Red
+                               opacity=0.75))
+figure5.show()
 
-# boxplot3.png
-sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["bathrooms_text"])
-plt.show()
-
-# boxplot4.png
-sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["host_neighbourhood"])
-plt.show()
-
-# boxplot5.png
-sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["calculated_host_listings_count"])
-plt.show()
+figure6 = go.Figure()
+figure6.add_trace(go.Histogram(x=np.log(airbnb_data_dropped["price"]), 
+                                        name='logarithm of listing price',
+                                        marker_color='#E36414', #Metallic Orange
+                                        opacity=0.75))
+figure6.show()
