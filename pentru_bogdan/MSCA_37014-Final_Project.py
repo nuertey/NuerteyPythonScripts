@@ -462,6 +462,14 @@ print()
 #sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["beds"])
 #plt.show()
 
+## boxplot9_1.png
+#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["host_is_superhost"])
+#plt.show()
+#
+## boxplot9_2.png
+#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["host_identity_verified"])
+#plt.show()
+
 # Histograms of listing price and log of listing price for further price
 # data visualization and comparison:
 figure5 = go.Figure()
