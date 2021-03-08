@@ -1,14 +1,21 @@
 =======================================================
 BOGDAN'S AMSTERDAM VARIABLES TO BE USED FOR ESTIMATION:
 =======================================================
-- Variables Within The Host’s Control
-host_since                                       object
-
-- Variables Beyond The Host’s Control
-
+- Variables
+host_is_superhost                                object
+host_neighbourhood                               object
+host_identity_verified                           object
+property_type                                    object
+room_type                                        object
+accommodates                                      int64
+bathrooms_text                                   object
+bedrooms                                        float64
+beds                                            float64
+number_of_reviews                                 int64
+review_scores_rating                            float64
+calculated_host_listings_count                    int64
 
 - Variable To Be Predicted (Using OLS Regression)
-
  - Listing Price
    - Outliers: price > 3000? 4000? *2000? [Mr B, Go through all the generated boxplot pictures and see if you agree with me that the listing price outliers should price > ~2000]
 =========================================================
