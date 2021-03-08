@@ -565,6 +565,7 @@ print()
 print(outliers_data_dropped["bathrooms_text"].value_counts())
 print()
 
+# Convert categorical variable into dummy/indicator variables:
 dummies_superhost = pd.get_dummies(outliers_data_dropped["host_is_superhost"])
 print(dummies_superhost)
 print()
