@@ -10,7 +10,7 @@ host_since                                       object
 - Variable To Be Predicted (Using OLS Regression)
 
  - Listing Price
-
+   - Outliers: price > 3000? 4000? *2000? [Mr B, Go through all the generated boxplot pictures and see if you agree with me that the listing price outliers should price > ~2000]
 =========================================================
 ALL COLUMNS OF CLEANED UP AIRBNB DATAFRAME FOR AMSTERDAM:
 =========================================================

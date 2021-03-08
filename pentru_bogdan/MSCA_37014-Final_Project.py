@@ -38,6 +38,7 @@ import plotly.graph_objects as go # low-level interface to figures,
 import plotly.express as px # Plotly Express is the easy-to-use, high-level
                             # interface to Plotly, which operates on "tidy"
                             # data and produces easy-to-style figures.
+from scipy import stats
 
 pd.set_option('display.max_rows', 100)
 pd.set_option('display.min_rows', 100)
@@ -470,18 +471,21 @@ print()
 #sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["host_identity_verified"])
 #plt.show()
 
-# boxplot9_3.png
-sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["number_of_reviews"])
-plt.show()
+## boxplot9_3.png
+#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["number_of_reviews"])
+#plt.show()
+#
+## boxplot9_4.png
+#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["review_scores_rating"])
+#plt.show()
 
-# boxplot9_4.png
-sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["review_scores_rating"])
-plt.show()
+# Based upon analysis of the various boxplots, removing outliers: price > 2000
+outliers_data_dropped = airbnb_data_dropped[airbnb_data_dropped["price"] < 2000]
 
 # Histograms of listing price and log of listing price for further price
 # data visualization and comparison:
 figure5 = go.Figure()
-figure5.add_trace(go.Histogram(x=airbnb_data_dropped["price"], 
+figure5.add_trace(go.Histogram(x=outliers_data_dropped["price"], 
                                name='listing price',
                                marker_color='#0023FF', #Bluebonnet
                                opacity=0.75))
@@ -495,7 +499,7 @@ figure5.update_layout(
 figure5.show()
 
 figure6 = go.Figure()
-figure6.add_trace(go.Histogram(x=np.log(airbnb_data_dropped["price"]), 
+figure6.add_trace(go.Histogram(x=np.log(outliers_data_dropped["price"]), 
                                         name='logarithm of listing price',
                                         marker_color='#E36414', #Metallic Orange
                                         opacity=0.75))
@@ -509,14 +513,14 @@ figure6.update_layout(
 figure6.show()
 
 print('Maximum listing price details:')
-max_price_details = airbnb_data_dropped[airbnb_data_dropped['price']==airbnb_data_dropped['price'].max()]
+max_price_details = outliers_data_dropped[outliers_data_dropped['price']==outliers_data_dropped['price'].max()]
 print(max_price_details[['amenities', 'host_since', 'host_neighbourhood',
      'price', 'property_type', 'number_of_reviews', 'review_scores_rating',
      'accommodates']])
 print()
 
 print('Minimum listing price details:')
-min_price_details = airbnb_data_dropped[airbnb_data_dropped['price']==airbnb_data_dropped['price'].min()]
+min_price_details = outliers_data_dropped[outliers_data_dropped['price']==outliers_data_dropped['price'].min()]
 print(min_price_details[['amenities', 'host_since', 'host_neighbourhood',
      'price', 'property_type', 'number_of_reviews', 'review_scores_rating',
      'accommodates']])
