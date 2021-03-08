@@ -40,6 +40,11 @@ import plotly.express as px # Plotly Express is the easy-to-use, high-level
                             # data and produces easy-to-style figures.
 from scipy import stats
 
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+import statsmodels.api as sm
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+
 pd.set_option('display.max_rows', 100)
 pd.set_option('display.min_rows', 100)
 pd.options.mode.chained_assignment = None
@@ -128,6 +133,14 @@ print()
 
 print('Dataset dimensions of cleaned up (and DROPPED) Airbnb Dataframe for Amsterdam after conversion:')
 print(airbnb_data_dropped.shape)
+print()
+
+print('Generated descriptive and summary statistics for Airbnb Dataframe for Amsterdam after cleanup:')
+print(airbnb_data_dropped.describe())
+print()
+
+print('Printed concise summary of the DataFrame:')
+print(airbnb_data_dropped.info())
 print()
 
 amsterdam_host_neighbourhood = airbnb_data_dropped['host_neighbourhood']
@@ -484,33 +497,33 @@ outliers_data_dropped = airbnb_data_dropped[airbnb_data_dropped["price"] < 2000]
 
 # Histograms of listing price and log of listing price for further price
 # data visualization and comparison:
-figure5 = go.Figure()
-figure5.add_trace(go.Histogram(x=outliers_data_dropped["price"], 
-                               name='listing price',
-                               marker_color='#0023FF', #Bluebonnet
-                               opacity=0.75))
-figure5.update_layout(
-    title_text='Listing Price Histogram', # title of plot
-    xaxis_title_text='Price', # xaxis label
-    yaxis_title_text='Frequency', # yaxis label
-    bargap=0.2, # gap between bars of adjacent location coordinates
-    bargroupgap=0.1 # gap between bars of the same location coordinates
-)
-figure5.show()
-
-figure6 = go.Figure()
-figure6.add_trace(go.Histogram(x=np.log(outliers_data_dropped["price"]), 
-                                        name='logarithm of listing price',
-                                        marker_color='#E36414', #Metallic Orange
-                                        opacity=0.75))
-figure6.update_layout(
-    title_text='Logarithm of Listing Price Histogram', # title of plot
-    xaxis_title_text='Logarithm of Price', # xaxis label
-    yaxis_title_text='Frequency', # yaxis label
-    bargap=0.2, # gap between bars of adjacent location coordinates
-    bargroupgap=0.1 # gap between bars of the same location coordinates
-)
-figure6.show()
+#figure5 = go.Figure()
+#figure5.add_trace(go.Histogram(x=outliers_data_dropped["price"], 
+#                               name='listing price',
+#                               marker_color='#0023FF', #Bluebonnet
+#                               opacity=0.75))
+#figure5.update_layout(
+#    title_text='Listing Price Histogram', # title of plot
+#    xaxis_title_text='Price', # xaxis label
+#    yaxis_title_text='Frequency', # yaxis label
+#    bargap=0.2, # gap between bars of adjacent location coordinates
+#    bargroupgap=0.1 # gap between bars of the same location coordinates
+#)
+#figure5.show()
+#
+#figure6 = go.Figure()
+#figure6.add_trace(go.Histogram(x=np.log(outliers_data_dropped["price"]), 
+#                                        name='logarithm of listing price',
+#                                        marker_color='#E36414', #Metallic Orange
+#                                        opacity=0.75))
+#figure6.update_layout(
+#    title_text='Logarithm of Listing Price Histogram', # title of plot
+#    xaxis_title_text='Logarithm of Price', # xaxis label
+#    yaxis_title_text='Frequency', # yaxis label
+#    bargap=0.2, # gap between bars of adjacent location coordinates
+#    bargroupgap=0.1 # gap between bars of the same location coordinates
+#)
+#figure6.show()
 
 print('Maximum listing price details:')
 max_price_details = outliers_data_dropped[outliers_data_dropped['price']==outliers_data_dropped['price'].max()]
@@ -524,4 +537,54 @@ min_price_details = outliers_data_dropped[outliers_data_dropped['price']==outlie
 print(min_price_details[['amenities', 'host_since', 'host_neighbourhood',
      'price', 'property_type', 'number_of_reviews', 'review_scores_rating',
      'accommodates']])
+print()
+
+#=================================
+# OLS Prediction Preparation here:
+#=================================
+# - VARIABLES:
+#
+# host_is_superhost                                object
+# host_neighbourhood                               object
+# host_identity_verified                           object
+# property_type                                    object
+# room_type                                        object
+# accommodates                                      int64
+# bathrooms_text                                   object
+# bedrooms                                        float64
+# beds                                            float64
+# number_of_reviews                                 int64
+# review_scores_rating                            float64
+# calculated_host_listings_count                    int64
+
+# Sanity check (and simplify if possible) category-type variables:
+print(outliers_data_dropped["property_type"].value_counts())
+print()
+print(outliers_data_dropped["room_type"].value_counts())
+print()
+print(outliers_data_dropped["bathrooms_text"].value_counts())
+print()
+
+dummies_superhost = pd.get_dummies(outliers_data_dropped["host_is_superhost"])
+print(dummies_superhost)
+print()
+
+dummies_neighbourhood = pd.get_dummies(outliers_data_dropped["host_neighbourhood"])
+print(dummies_neighbourhood)
+print()
+
+dummies_identity_verified = pd.get_dummies(outliers_data_dropped["host_identity_verified"])
+print(dummies_identity_verified)
+print()
+
+dummies_property_type = pd.get_dummies(outliers_data_dropped["property_type"])
+print(dummies_property_type)
+print()
+
+dummies_room_type = pd.get_dummies(outliers_data_dropped["room_type"])
+print(dummies_room_type)
+print()
+
+dummies_bathrooms_text = pd.get_dummies(outliers_data_dropped["bathrooms_text"])
+print(dummies_bathrooms_text)
 print()
