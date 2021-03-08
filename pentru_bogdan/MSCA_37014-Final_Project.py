@@ -78,8 +78,8 @@ airbnb_dataset_raw = the_compressed_file.read()
 #
 # Reference: http://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html
 airbnb_dataset_df = pd.read_csv(file_name)
-print(airbnb_dataset_df)
-print()
+#print(airbnb_dataset_df)
+#print()
 
 print('Dataset dimensions of cleaned up Airbnb Dataframe for Amsterdam after conversion:')
 print(airbnb_dataset_df.shape)
@@ -271,9 +271,9 @@ print(airbnb_data_dropped.host_neighbourhood.unique())
 print()
 
 # This CLEANSED dataset seems very weird so don't use it.
-print('Unique Amsterdam neighbourhoods (CLEANSED):')
-print(airbnb_data_dropped.neighbourhood_cleansed.unique())
-print()
+#print('Unique Amsterdam neighbourhoods (CLEANSED):')
+#print(airbnb_data_dropped.neighbourhood_cleansed.unique())
+#print()
 
 neighbourhood_stats = airbnb_data_dropped.groupby(["host_neighbourhood"]).calculated_host_listings_count.sum().reset_index()
 sorted_neighbourhood_stats = neighbourhood_stats.sort_values(by=['calculated_host_listings_count'], ascending=True)
@@ -403,7 +403,7 @@ print('Preparing for prediction 1:')
 # neighbourhood_cleansed seems weird so as a caution don't use it. Prefer
 # host_neighbourhood:
 print(airbnb_data_dropped[['neighborhood_overview', 'host_about', 'host_is_superhost',
-     'host_identity_verified', 'latitude', 'longitude']])
+     'host_identity_verified']])
 print()
 
 print('Preparing for prediction 2:')
@@ -448,6 +448,18 @@ print()
 #
 ## boxplot5.png
 #sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["calculated_host_listings_count"])
+#plt.show()
+
+## boxplot6.png
+#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["room_type"])
+#plt.show()
+
+## boxplot7.png
+#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["bedrooms"])
+#plt.show()
+#
+## boxplot8.png
+#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["beds"])
 #plt.show()
 
 # Histograms of listing price and log of listing price for further price
