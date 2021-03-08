@@ -344,7 +344,8 @@ wide_data_format = pd.DataFrame(wide_data_rate, columns=cols, index=airbnb_data_
 # after performing any necessary transformations:
 wide_data_format['number_of_reviews'] = airbnb_data_dropped['number_of_reviews'].astype(float).apply(lambda x: round(x, 0))
 
-wide_data_format['review_scores_rating'] = airbnb_data_dropped['review_scores_rating'].fillna(0)
+airbnb_data_dropped['review_scores_rating'] = airbnb_data_dropped['review_scores_rating'].fillna(0)
+wide_data_format['review_scores_rating'] = airbnb_data_dropped['review_scores_rating']
 wide_data_format['host_name'] = airbnb_data_dropped['host_name']
 wide_data_format['host_neighbourhood'] = airbnb_data_dropped['host_neighbourhood']
 
@@ -426,6 +427,12 @@ print(airbnb_data_dropped[['property_type', 'room_type', 'accommodates',
      'bathrooms_text', 'bedrooms', 'beds', 'amenities', 'price']])
 print()
 
+# As we are about to begin, ensure to replace all NaNs in other interested
+# category variables with equivalent '0'-like values.
+airbnb_data_dropped['bathrooms_text'] = airbnb_data_dropped['bathrooms_text'].fillna("0 baths")
+airbnb_data_dropped['bedrooms'] = airbnb_data_dropped['bedrooms'].fillna(0)
+airbnb_data_dropped['beds'] = airbnb_data_dropped['beds'].fillna(0)
+
 # Boxplots of 'price' distributions grouped by the values of a third 
 # variable can be created using the option by. Here are some examples.
 
@@ -444,56 +451,58 @@ print()
 # estimate various L-estimators, notably the interquartile range, 
 # midhinge, range, mid-range, and trimean."
 
-## boxplot1.png
-#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["accommodates"])
-#plt.show()
-#
-## boxplot2.png
-#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["property_type"])
-#plt.show()
-#
-## boxplot3.png
-#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["bathrooms_text"])
-#plt.show()
-#
-## boxplot4.png
-#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["host_neighbourhood"])
-#plt.show()
-#
-## boxplot5.png
-#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["calculated_host_listings_count"])
-#plt.show()
+# boxplot1.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["accommodates"])
+plt.show()
 
-## boxplot6.png
-#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["room_type"])
-#plt.show()
+# boxplot2.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["property_type"])
+plt.show()
 
-## boxplot7.png
-#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["bedrooms"])
-#plt.show()
-#
-## boxplot8.png
-#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["beds"])
-#plt.show()
+# boxplot3.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["bathrooms_text"])
+plt.show()
 
-## boxplot9_1.png
-#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["host_is_superhost"])
-#plt.show()
-#
-## boxplot9_2.png
-#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["host_identity_verified"])
-#plt.show()
+# boxplot4.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["host_neighbourhood"])
+plt.show()
 
-## boxplot9_3.png
-#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["number_of_reviews"])
-#plt.show()
-#
-## boxplot9_4.png
-#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["review_scores_rating"])
-#plt.show()
+# boxplot5.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["calculated_host_listings_count"])
+plt.show()
+
+# boxplot6.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["room_type"])
+plt.show()
+
+# boxplot7.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["bedrooms"])
+plt.show()
+
+# boxplot8.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["beds"])
+plt.show()
+
+# boxplot9_1.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["host_is_superhost"])
+plt.show()
+
+# boxplot9_2.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["host_identity_verified"])
+plt.show()
+
+# boxplot9_3.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["number_of_reviews"])
+plt.show()
+
+# boxplot9_4.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["review_scores_rating"])
+plt.show()
 
 # Based upon analysis of the various boxplots, removing outliers: price > 2000
 outliers_data_dropped = airbnb_data_dropped[airbnb_data_dropped["price"] < 2000]
+
+logarithm_listing_price = np.log(outliers_data_dropped["price"])
 
 # Histograms of listing price and log of listing price for further price
 # data visualization and comparison:
@@ -512,10 +521,10 @@ outliers_data_dropped = airbnb_data_dropped[airbnb_data_dropped["price"] < 2000]
 #figure5.show()
 #
 #figure6 = go.Figure()
-#figure6.add_trace(go.Histogram(x=np.log(outliers_data_dropped["price"]), 
-#                                        name='logarithm of listing price',
-#                                        marker_color='#E36414', #Metallic Orange
-#                                        opacity=0.75))
+#figure6.add_trace(go.Histogram(x=logarithm_listing_price, 
+#                                 name='logarithm of listing price',
+#                                 marker_color='#E36414', #Metallic Orange
+#                                 opacity=0.75))
 #figure6.update_layout(
 #    title_text='Logarithm of Listing Price Histogram', # title of plot
 #    xaxis_title_text='Logarithm of Price', # xaxis label
@@ -565,27 +574,63 @@ print()
 print(outliers_data_dropped["bathrooms_text"].value_counts())
 print()
 
-# Convert categorical variable into dummy/indicator variables:
-dummies_superhost = pd.get_dummies(outliers_data_dropped["host_is_superhost"])
-print(dummies_superhost)
+print(outliers_data_dropped.info())
 print()
+
+# Convert categorical variable into dummy/indicator variables. Note that
+# it is recommended leaving "drop_first=False" (the default). If drop_first=True,
+# you have no way to know from the dummies dataframe alone what the name
+# of the "first" dummy category column/variable was, so that operation
+# becomes non-invertible. Also, further note that by default, dummy_na=False.
+# This is precisely what we want, and that option would have only caused
+# issues if our category variables had had NaN values. But we have already
+# ensured that this is not the case by our previous 'cleanings' operations,
+# and have confirmed so with the "outliers_data_dropped.info()" call on line 577.
+dummies_superhost = pd.get_dummies(outliers_data_dropped["host_is_superhost"],
+                                   drop_first=False, dummy_na=False)
+#print(dummies_superhost)
+#print()
 
 dummies_neighbourhood = pd.get_dummies(outliers_data_dropped["host_neighbourhood"])
-print(dummies_neighbourhood)
-print()
+#print(dummies_neighbourhood)
+#print()
 
 dummies_identity_verified = pd.get_dummies(outliers_data_dropped["host_identity_verified"])
-print(dummies_identity_verified)
-print()
+#print(dummies_identity_verified)
+#print()
 
 dummies_property_type = pd.get_dummies(outliers_data_dropped["property_type"])
-print(dummies_property_type)
-print()
+#print(dummies_property_type)
+#print()
 
 dummies_room_type = pd.get_dummies(outliers_data_dropped["room_type"])
-print(dummies_room_type)
-print()
+#print(dummies_room_type)
+#print()
 
 dummies_bathrooms_text = pd.get_dummies(outliers_data_dropped["bathrooms_text"])
-print(dummies_bathrooms_text)
+#print(dummies_bathrooms_text)
+#print()
+
+# More verifications of dimension matches:
+print(len(logarithm_listing_price))
 print()
+
+print(len(dummies_superhost))
+print()
+
+print(len(dummies_neighbourhood))
+print()
+
+print(len(dummies_identity_verified))
+print()
+
+print(len(dummies_property_type))
+print()
+
+print(len(dummies_room_type))
+print()
+
+print(len(dummies_bathrooms_text))
+print()
+
+
