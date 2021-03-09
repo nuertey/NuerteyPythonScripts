@@ -25,6 +25,7 @@
 
 import math
 import numpy as np
+from numpy import inf
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -451,53 +452,53 @@ airbnb_data_dropped['beds'] = airbnb_data_dropped['beds'].fillna(0)
 # estimate various L-estimators, notably the interquartile range, 
 # midhinge, range, mid-range, and trimean."
 
-# boxplot1.png
-sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["accommodates"])
-plt.show()
-
-# boxplot2.png
-sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["property_type"])
-plt.show()
-
-# boxplot3.png
-sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["bathrooms_text"])
-plt.show()
-
-# boxplot4.png
-sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["host_neighbourhood"])
-plt.show()
-
-# boxplot5.png
-sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["calculated_host_listings_count"])
-plt.show()
-
-# boxplot6.png
-sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["room_type"])
-plt.show()
-
-# boxplot7.png
-sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["bedrooms"])
-plt.show()
-
-# boxplot8.png
-sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["beds"])
-plt.show()
-
-# boxplot9_1.png
-sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["host_is_superhost"])
-plt.show()
-
-# boxplot9_2.png
-sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["host_identity_verified"])
-plt.show()
-
-# boxplot9_3.png
-sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["number_of_reviews"])
-plt.show()
-
-# boxplot9_4.png
-sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["review_scores_rating"])
-plt.show()
+## boxplot1.png
+#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["accommodates"])
+#plt.show()
+#
+## boxplot2.png
+#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["property_type"])
+#plt.show()
+#
+## boxplot3.png
+#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["bathrooms_text"])
+#plt.show()
+#
+## boxplot4.png
+#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["host_neighbourhood"])
+#plt.show()
+#
+## boxplot5.png
+#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["calculated_host_listings_count"])
+#plt.show()
+#
+## boxplot6.png
+#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["room_type"])
+#plt.show()
+#
+## boxplot7.png
+#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["bedrooms"])
+#plt.show()
+#
+## boxplot8.png
+#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["beds"])
+#plt.show()
+#
+## boxplot9_1.png
+#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["host_is_superhost"])
+#plt.show()
+#
+## boxplot9_2.png
+#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["host_identity_verified"])
+#plt.show()
+#
+## boxplot9_3.png
+#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["number_of_reviews"])
+#plt.show()
+#
+## boxplot9_4.png
+#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["review_scores_rating"])
+#plt.show()
 
 # Based upon analysis of the various boxplots, removing outliers: price > 2000
 outliers_data_dropped = airbnb_data_dropped[airbnb_data_dropped["price"] < 2000]
@@ -566,15 +567,23 @@ print()
 # review_scores_rating                            float64
 # calculated_host_listings_count                    int64
 
-# Sanity check (and simplify if possible) category-type variables:
-print(outliers_data_dropped["property_type"].value_counts())
-print()
-print(outliers_data_dropped["room_type"].value_counts())
-print()
-print(outliers_data_dropped["bathrooms_text"].value_counts())
+print(outliers_data_dropped.info())
 print()
 
-print(outliers_data_dropped.info())
+# Sanity check (and simplify if possible) category-type variables:
+#print(outliers_data_dropped["property_type"].value_counts())
+#print()
+#print(outliers_data_dropped["room_type"].value_counts())
+#print()
+#print(outliers_data_dropped["bathrooms_text"].value_counts())
+#print()
+
+ols_model_data_frame = outliers_data_dropped[['accommodates', 'bedrooms', 'beds', 'number_of_reviews', 'review_scores_rating', 'calculated_host_listings_count']].copy()
+
+print(ols_model_data_frame.info())
+print()
+
+print(ols_model_data_frame)
 print()
 
 # Convert categorical variable into dummy/indicator variables. Note that
@@ -588,6 +597,7 @@ print()
 # and have confirmed so with the "outliers_data_dropped.info()" call on line 577.
 dummies_superhost = pd.get_dummies(outliers_data_dropped["host_is_superhost"],
                                    drop_first=False, dummy_na=False)
+dummies_superhost.columns = ['false', 'true']
 #print(dummies_superhost)
 #print()
 
@@ -596,6 +606,7 @@ dummies_neighbourhood = pd.get_dummies(outliers_data_dropped["host_neighbourhood
 #print()
 
 dummies_identity_verified = pd.get_dummies(outliers_data_dropped["host_identity_verified"])
+dummies_identity_verified.columns = ['no', 'yes']
 #print(dummies_identity_verified)
 #print()
 
@@ -612,25 +623,81 @@ dummies_bathrooms_text = pd.get_dummies(outliers_data_dropped["bathrooms_text"])
 #print()
 
 # More verifications of dimension matches:
-print(len(logarithm_listing_price))
+#print(len(logarithm_listing_price))
+#print()
+#
+#print(len(dummies_superhost))
+#print()
+#
+#print(len(dummies_neighbourhood))
+#print()
+#
+#print(len(dummies_identity_verified))
+#print()
+#
+#print(len(dummies_property_type))
+#print()
+#
+#print(len(dummies_room_type))
+#print()
+#
+#print(len(dummies_bathrooms_text))
+#print()
+
+# Ensure the target variable 'log_price' is Normally distributed, and
+# its kurtosis and skewness are normal. Just as a comparison try the same
+# with the false presumption that unadulterated 'price' it self is the 
+# target variable:
+
+# Skewness  A measure of the symmetry of the data about the mean. 
+# Normally-distributed errors should be symmetrically distributed about 
+# the mean (equal amounts above and below the line).
+# 
+# Kurtosis  A measure of the shape of the distribution. Compares the 
+# amount of data close to the mean with those far away from the mean 
+# (in the tails).
+# 
+# Source: https://www.datarobot.com/blog/ordinary-least-squares-in-python/
+
+# Plot a histogram and kernel density estimate:
+sns.distplot(outliers_data_dropped['price'], kde=True)
+figure10 = plt.figure()
+result = stats.probplot(outliers_data_dropped['price'], plot=plt)
+plt.show()
+
+# Observed printout:
+#
+# Skewness: 4.169105
+# Kurtosis: 35.177666
+print("Skewness: %f" % outliers_data_dropped['price'].skew())
+print("Kurtosis: %f" % outliers_data_dropped['price'].kurt())
 print()
 
-print(len(dummies_superhost))
+# Seaborn will not like infinity in the dataset so detect them, observe if
+# they are actually there, and replace with reasonable values.
+print(logarithm_listing_price[logarithm_listing_price == -inf])
 print()
 
-print(len(dummies_neighbourhood))
+# This one was not detected so no need to worry about +infinity
+print(logarithm_listing_price[logarithm_listing_price == inf])
 print()
 
-print(len(dummies_identity_verified))
+# Replace -infinity with 0.
+logarithm_listing_price[logarithm_listing_price == -inf] = 0
+
+sns.distplot(logarithm_listing_price, kde=True)
+figure11 = plt.figure()
+result = stats.probplot(logarithm_listing_price, plot=plt)
+plt.show()
+
+# Observed printout:
+#
+# Skewness: -0.385103
+# Kurtosis: 5.437960
+print("Skewness: %f" % logarithm_listing_price.skew())
+print("Kurtosis: %f" % logarithm_listing_price.kurt())
 print()
 
-print(len(dummies_property_type))
-print()
-
-print(len(dummies_room_type))
-print()
-
-print(len(dummies_bathrooms_text))
-print()
-
-
+# Obviously the better values are the logarithm of the listing price as 
+# even a visual inspection of our earlier histograms already indicated.
+# So we will rather use that as our target variable in our OLS prediction.
