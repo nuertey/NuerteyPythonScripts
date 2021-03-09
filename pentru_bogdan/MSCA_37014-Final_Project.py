@@ -591,18 +591,16 @@ ols_model_data_frame = outliers_data_dropped[['accommodates', 'bedrooms', 'beds'
 # and have confirmed so with the "outliers_data_dropped.info()" call on line 577.
 dummies_superhost = pd.get_dummies(outliers_data_dropped["host_is_superhost"],
                                    drop_first=False, dummy_na=False)
-dummies_superhost.columns = ['false_0', 'true_1']
-print(dummies_superhost)
-print()
-#del dummies_superhost[dummies_superhost.columns[-1]]
+dummies_superhost.columns = ['false', 'true'] # Differentiate from dummies_identity_verified
+#print(dummies_superhost)
+#print()
 
 dummies_neighbourhood = pd.get_dummies(outliers_data_dropped["host_neighbourhood"])
 #print(dummies_neighbourhood)
 #print()
-#del dummies_neighbourhood[dummies_neighbourhood.columns[-1]]
 
 dummies_identity_verified = pd.get_dummies(outliers_data_dropped["host_identity_verified"])
-dummies_identity_verified.columns = ['no', 'yes']
+dummies_identity_verified.columns = ['no', 'yes'] # Differentiate from dummies_superhost
 #print(dummies_identity_verified)
 #print()
 
@@ -625,48 +623,40 @@ for dummy in dummies:
     new_column_names = dummy.columns.str.strip().str.replace('\s+', '_')
     dummy.columns = new_column_names
 
-print(dummies_bathrooms_text)
-print()
+#print(dummies_bathrooms_text)
+#print()
 
 # More verifications of dimension matches:
 #print(len(logarithm_listing_price))
 #print()
 #
-print(len(dummies_superhost))
-print()
-
-print(len(dummies_neighbourhood))
-print()
-
-print(len(dummies_identity_verified))
-print()
-
-print(len(dummies_property_type))
-print()
-
-print(len(dummies_room_type))
-print()
-
-print(len(dummies_bathrooms_text))
-print()
+#print(len(dummies_superhost))
+#print()
+#
+#print(len(dummies_neighbourhood))
+#print()
+#
+#print(len(dummies_identity_verified))
+#print()
+#
+#print(len(dummies_property_type))
+#print()
+#
+#print(len(dummies_room_type))
+#print()
+#
+#print(len(dummies_bathrooms_text))
+#print()
 
 # For debugging Python esoteric syntax for Pandas DataFrame slicing:
-print(list(dummies_superhost.columns.values))
-print()
+#print(list(dummies_superhost.columns.values))
+#print()
 
-# Concatenate dummy variables to our ols_model_data_frame:
-#ols_model_df = pd.concat([ols_model_data_frame, dummies_superhost, dummies_neighbourhood], axis=1)
-#ols_model_df = pd.concat([ols_model_data_frame, dummies_superhost], axis=1)
-#ols_model_df = ols_model_data_frame.append(dummies_superhost)
-#ols_model_data_frame[['false', 'true']] = dummies_superhost[['false', 'true']]
-#df[['C', 'D', 'E']] = df2[['C', 'D', 'E']]
+# Add new columns of dummy variables to our ols_model_data_frame:
+for dummy in dummies:
+    ols_model_data_frame[list(dummy.columns.values)] = dummy[list(dummy.columns.values)]
 
-#for col in dummies_superhost.columns:
-#    df_large.at[new_id, core_col] = df_small.at[new_id, core_col]
-#ols_model_data_frame.loc[dummies_superhost.index, dummies_superhost.columns] = dummies_superhost
-#ols_model_data_frame[[list(dummies_superhost.columns.values)]] = dummies_superhost[[list(dummies_superhost.columns.values)]]
-ols_model_data_frame[list(dummies_superhost.columns.values)] = dummies_superhost[list(dummies_superhost.columns.values)]
-
+# Our complete variables DataFrame for modeling:
 print(ols_model_data_frame)
 print()
 
