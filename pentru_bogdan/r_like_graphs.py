@@ -42,12 +42,16 @@ def diagnostic_plots(X, y, model_fit=None):
 
     # model values
     model_fitted_y = model_fit.fittedvalues
+    #print(model_fitted_y)
+    #print()
     # model residuals
     model_residuals = model_fit.resid
     # normalized residuals
     model_norm_residuals = model_fit.get_influence().resid_studentized_internal
     # absolute squared normalized residuals
     model_norm_residuals_abs_sqrt = np.sqrt(np.abs(model_norm_residuals))
+    #print(model_norm_residuals_abs_sqrt)
+    #print()
     # absolute residuals
     model_abs_resid = np.abs(model_residuals)
     # leverage, from statsmodels internals
@@ -99,11 +103,27 @@ def diagnostic_plots(X, y, model_fit=None):
 
     # annotations
     abs_sq_norm_resid = np.flip(np.argsort(model_norm_residuals_abs_sqrt), 0)
-    abs_sq_norm_resid_top_3 = abs_sq_norm_resid[:3]
-    for i in abs_norm_resid_top_3:
-        plot_lm_3.axes[0].annotate(i,
-                                 xy=(model_fitted_y[i],
-                                     model_norm_residuals_abs_sqrt[i]));
+    #print(abs_sq_norm_resid)
+    #print()
+    print(abs_sq_norm_resid[3])
+    print()
+    abs_sq_norm_resid_top_3 = abs_sq_norm_resid[:2]
+    #abs_sq_norm_resid_top_3 = [10573 11509 5264]
+    # Correct for index that does not exist by taking the very next one. 
+    #abs_sq_norm_resid_top_3[2] = abs_sq_norm_resid[3] 
+    #abs_sq_norm_resid_top_3 = np.where(abs_sq_norm_resid_top_3 == 11568, 5264, abs_sq_norm_resid_top_3)
+    print(abs_norm_resid_top_3)
+    print()
+    #print(model_fitted_y[abs_sq_norm_resid[3]], model_norm_residuals_abs_sqrt[abs_sq_norm_resid[3]])
+    #print()
+    #for i in abs_norm_resid_top_3:
+    #    print(i)
+    #    print()
+    #    print(model_fitted_y[i], model_norm_residuals_abs_sqrt[i])
+    #    print()
+    #    plot_lm_3.axes[0].annotate(i,
+    #                             xy=(model_fitted_y[i],
+    #                                 model_norm_residuals_abs_sqrt[i]));
 
 
     plot_lm_4 = plt.figure();
@@ -127,9 +147,9 @@ def diagnostic_plots(X, y, model_fit=None):
                                      model_norm_residuals[i]));
 
     p = len(model_fit.params) # number of model parameters
-    graph(lambda x: np.sqrt((0.5 * p * (1 - x)) / x),
+    graph(lambda x: np.sqrt(np.abs((0.5 * p * (1 - x)) / x)),
         np.linspace(0.001, max(model_leverage), 50),
         'Cook\'s distance') # 0.5 line
-    graph(lambda x: np.sqrt((1 * p * (1 - x)) / x),
+    graph(lambda x: np.sqrt(np.abs((1 * p * (1 - x)) / x)),
         np.linspace(0.001, max(model_leverage), 50)) # 1 line
     plot_lm_4.legend(loc='upper right');
