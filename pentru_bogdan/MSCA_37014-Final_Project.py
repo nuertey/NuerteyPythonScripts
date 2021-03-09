@@ -45,6 +45,10 @@ import statsmodels.api as sm
 import statsmodels.formula.api as smf
 from statsmodels.sandbox.regression.predstd import wls_prediction_std
 from statsmodels.stats.outliers_influence import variance_inflation_factor
+from statsmodels.graphics.gofplots import ProbPlot
+
+# For instructor-provided "R like graphs!":
+from r_like_graphs import diagnostic_plots
 
 pd.set_option('display.max_rows', 100)
 pd.set_option('display.min_rows', 100)
@@ -771,6 +775,7 @@ ols_model_data_frame = sm.add_constant(ols_model_data_frame, prepend=False)
 
 # Describe the model:
 ols_model = sm.OLS(logarithm_listing_price, ols_model_data_frame)
+#ols_model = sm.OLS(outliers_data_dropped['price'], ols_model_data_frame)
 
 # Fit the model:
 results = ols_model.fit()
@@ -788,18 +793,18 @@ print()
 #figure12 = plt.figure(figsize=(15,8))
 #figure12 = sm.graphics.plot_regress_exog(results, "number_of_reviews", fig=figure12)
 #plt.show()
-
-# This produces our four regression plots for "calculated_host_listings_count"
+#
+## This produces our four regression plots for "calculated_host_listings_count"
 #figure13 = plt.figure(figsize=(15,8))
 #figure13 = sm.graphics.plot_regress_exog(results, "calculated_host_listings_count", fig=figure13)
 #plt.show()
-
-# This produces our four regression plots for "accommodates"
+#
+## This produces our four regression plots for "accommodates"
 #figure14 = plt.figure(figsize=(15,8))
 #figure14 = sm.graphics.plot_regress_exog(results, "accommodates", fig=figure14)
 #plt.show()
-
-# This produces our four regression plots for "bedrooms"
+#
+## This produces our four regression plots for "bedrooms"
 #figure15 = plt.figure(figsize=(15,8))
 #figure15 = sm.graphics.plot_regress_exog(results, "bedrooms", fig=figure15)
 #plt.show()
@@ -809,6 +814,7 @@ print()
 #
 #fig, ax = plt.subplots(figsize=(8,6))
 #ax.plot(logarithm_listing_price, 'o', label="Data")
+##ax.plot(outliers_data_dropped['price'], 'o', label="Data")
 #ax.plot(results.fittedvalues, 'r--.', label="Predicted")
 #ax.plot(iv_u, 'r--')
 #ax.plot(iv_l, 'r--')
@@ -836,7 +842,10 @@ print()
 #plt.show()
 
 # Plot partial regression for 'number_of_reviews':
-sm.graphics.plot_partregress(endog='price', exog_i='number_of_reviews',
-                             exog_others=['bedrooms', 'review_scores_rating', 'calculated_host_listings_count'],
-                             data=outliers_data_dropped, obs_labels=False)
-plt.show()
+#sm.graphics.plot_partregress(endog='price', exog_i='number_of_reviews',
+#                             exog_others=['bedrooms', 'review_scores_rating', 'calculated_host_listings_count'],
+#                             data=outliers_data_dropped, obs_labels=False)
+#plt.show()
+
+diagnostic_plots(ols_model_data_frame, logarithm_listing_price)
+#diagnostic_plots(ols_model_data_frame, outliers_data_dropped['price'])
