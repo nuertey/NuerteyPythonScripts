@@ -682,8 +682,9 @@ print(the_correlation_matrix2.info())
 print()
 
 # Visualize as correlation_matrix_1.png then:
-sns.set_theme()
-sns.heatmap(the_correlation_matrix2, annot=True);
+#sns.set_theme()
+cmap = sns.color_palette("flare", as_cmap=True)
+sns.heatmap(the_correlation_matrix2, cmap=cmap, vmin=-0.5, vmax=0.5, center=0);
 plt.show()
 
 # Visualize as correlation_matrix_2.png then:
