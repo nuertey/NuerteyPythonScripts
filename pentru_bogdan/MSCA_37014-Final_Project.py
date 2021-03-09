@@ -805,12 +805,38 @@ print()
 #plt.show()
 
 # Draw a plot to compare the true relationship to OLS predictions:
-prstd, iv_l, iv_u = wls_prediction_std(results)
+#prstd, iv_l, iv_u = wls_prediction_std(results)
+#
+#fig, ax = plt.subplots(figsize=(8,6))
+#ax.plot(logarithm_listing_price, 'o', label="Data")
+#ax.plot(results.fittedvalues, 'r--.', label="Predicted")
+#ax.plot(iv_u, 'r--')
+#ax.plot(iv_l, 'r--')
+#legend = ax.legend(loc="best")
+#plt.show()
 
-fig, ax = plt.subplots(figsize=(8,6))
-ax.plot(logarithm_listing_price, 'o', label="Data")
-ax.plot(results.fittedvalues, 'r--.', label="Predicted")
-ax.plot(iv_u, 'r--')
-ax.plot(iv_l, 'r--')
-legend = ax.legend(loc="best")
+# ==================================================================
+# Diagnostics, Goodness-of-Fit and Specification tests on the model:
+# ==================================================================
+
+# Full list of attributes:
+#print(dir(results))
+#print()
+
+# Rainbow test for linearity:
+stat_F_test, pvalue_test = sm.stats.linear_rainbow(results)
+print("stat_F_test, pvalue_test")
+print(stat_F_test, pvalue_test)
+print()
+
+# Plot partial regression for 'accommodates':
+#sm.graphics.plot_partregress(endog='price', exog_i='accommodates',
+#                             exog_others=['bedrooms', 'number_of_reviews', 'calculated_host_listings_count'],
+#                             data=outliers_data_dropped, obs_labels=False)
+#plt.show()
+
+# Plot partial regression for 'number_of_reviews':
+sm.graphics.plot_partregress(endog='price', exog_i='number_of_reviews',
+                             exog_others=['bedrooms', 'review_scores_rating', 'calculated_host_listings_count'],
+                             data=outliers_data_dropped, obs_labels=False)
 plt.show()
