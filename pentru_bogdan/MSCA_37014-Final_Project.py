@@ -43,7 +43,7 @@ from scipy import stats
 
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
-import statsmodels.api as sm
+from statsmodels.sandbox.regression.predstd import wls_prediction_std
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 
 pd.set_option('display.max_rows', 100)
@@ -580,12 +580,6 @@ print()
 
 ols_model_data_frame = outliers_data_dropped[['accommodates', 'bedrooms', 'beds', 'number_of_reviews', 'review_scores_rating', 'calculated_host_listings_count']].copy()
 
-print(ols_model_data_frame.info())
-print()
-
-print(ols_model_data_frame)
-print()
-
 # Convert categorical variable into dummy/indicator variables. Note that
 # it is recommended leaving "drop_first=False" (the default). If drop_first=True,
 # you have no way to know from the dummies dataframe alone what the name
@@ -598,12 +592,14 @@ print()
 dummies_superhost = pd.get_dummies(outliers_data_dropped["host_is_superhost"],
                                    drop_first=False, dummy_na=False)
 dummies_superhost.columns = ['false', 'true']
-#print(dummies_superhost)
-#print()
+print(dummies_superhost)
+print()
+#del dummies_superhost[dummies_superhost.columns[-1]]
 
 dummies_neighbourhood = pd.get_dummies(outliers_data_dropped["host_neighbourhood"])
 #print(dummies_neighbourhood)
 #print()
+#del dummies_neighbourhood[dummies_neighbourhood.columns[-1]]
 
 dummies_identity_verified = pd.get_dummies(outliers_data_dropped["host_identity_verified"])
 dummies_identity_verified.columns = ['no', 'yes']
@@ -644,6 +640,28 @@ dummies_bathrooms_text = pd.get_dummies(outliers_data_dropped["bathrooms_text"])
 #print(len(dummies_bathrooms_text))
 #print()
 
+# Concatenate dummy variables to our ols_model_data_frame:
+#ols_model_df = pd.concat([ols_model_data_frame, dummies_superhost, dummies_neighbourhood], axis=1)
+#ols_model_df = pd.concat([ols_model_data_frame, dummies_superhost], axis=1)
+#ols_model_df = ols_model_data_frame.append(dummies_superhost)
+#ols_model_data_frame[['false', 'true']] = dummies_superhost[['false', 'true']]
+#df[['C', 'D', 'E']] = df2[['C', 'D', 'E']]
+
+#for col in dummies_superhost.columns:
+#    df_large.at[new_id, core_col] = df_small.at[new_id, core_col]
+#ols_model_data_frame.loc[dummies_superhost.index, dummies_superhost.columns] = dummies_superhost
+#ols_model_data_frame[[dummies_superhost.columns]] = dummies_superhost[[dummies_superhost.columns]]
+
+print(ols_model_data_frame)
+print()
+
+print(ols_model_data_frame.info())
+print()
+
+# Debugging Python esoteric syntax for Pandas DataFrame slicing:
+print(list(dummies_superhost.columns.values))
+print()
+
 # Ensure the target variable 'log_price' is Normally distributed, and
 # its kurtosis and skewness are normal. Just as a comparison try the same
 # with the false presumption that unadulterated 'price' it self is the 
@@ -660,10 +678,10 @@ dummies_bathrooms_text = pd.get_dummies(outliers_data_dropped["bathrooms_text"])
 # Source: https://www.datarobot.com/blog/ordinary-least-squares-in-python/
 
 # Plot a histogram and kernel density estimate:
-sns.distplot(outliers_data_dropped['price'], kde=True)
-figure10 = plt.figure()
-result = stats.probplot(outliers_data_dropped['price'], plot=plt)
-plt.show()
+#sns.distplot(outliers_data_dropped['price'], kde=True)
+#figure10 = plt.figure()
+#result = stats.probplot(outliers_data_dropped['price'], plot=plt)
+#plt.show()
 
 # Observed printout:
 #
@@ -685,10 +703,10 @@ print()
 # Replace -infinity with 0.
 logarithm_listing_price[logarithm_listing_price == -inf] = 0
 
-sns.distplot(logarithm_listing_price, kde=True)
-figure11 = plt.figure()
-result = stats.probplot(logarithm_listing_price, plot=plt)
-plt.show()
+#sns.distplot(logarithm_listing_price, kde=True)
+#figure11 = plt.figure()
+#result = stats.probplot(logarithm_listing_price, plot=plt)
+#plt.show()
 
 # Observed printout:
 #
@@ -698,6 +716,9 @@ print("Skewness: %f" % logarithm_listing_price.skew())
 print("Kurtosis: %f" % logarithm_listing_price.kurt())
 print()
 
+# ======================================================================
 # Obviously the better values are the logarithm of the listing price as 
 # even a visual inspection of our earlier histograms already indicated.
 # So we will rather use that as our target variable in our OLS prediction.
+# ======================================================================
+
