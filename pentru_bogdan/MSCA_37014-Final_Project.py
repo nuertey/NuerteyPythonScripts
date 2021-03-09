@@ -657,11 +657,45 @@ for dummy in dummies:
     ols_model_data_frame[list(dummy.columns.values)] = dummy[list(dummy.columns.values)]
 
 # Our complete variables DataFrame for modeling:
-print(ols_model_data_frame)
-print()
+#print(ols_model_data_frame)
+#print()
 
 print(ols_model_data_frame.info())
 print()
+
+# Calculate our correlation matrix with Numpy then:
+our_np_array = ols_model_data_frame.values # We want a numpy array
+the_correlation_matrix = np.corrcoef(our_np_array.T)
+print("Using Numpy, here is our computed correlation matrix:")
+print(the_correlation_matrix)
+print()
+
+print(the_correlation_matrix.shape)
+print()
+
+# Calculate our correlation matrix with Pandas.DataFrame then:
+the_correlation_matrix2 = ols_model_data_frame.corr()
+print("For validation,using inherent Pandas DataFrame, here is our computed correlation matrix:")
+print(the_correlation_matrix2)
+print()
+print(the_correlation_matrix2.info())
+print()
+
+# Visualize as correlation_matrix_1.png then:
+sns.set_theme()
+sns.heatmap(the_correlation_matrix2, annot=True);
+plt.show()
+
+# Visualize as correlation_matrix_2.png then:
+#mask = np.triu(np.ones_like(the_correlation_matrix2, dtype=bool))
+#f, ax = plt.subplots(figsize=(9, 9))
+#cmap = sns.diverging_palette(240, 20, as_cmap=True)
+## cmap = sns.choose_diverging_palette()
+#_ = sns.heatmap(
+#    the_correlation_matrix2, mask=mask, cmap=cmap, vmax=.3, center=0, square=True,
+#    linewidths=.5, cbar_kws={"shrink": .5}
+#    )
+#plt.show()
 
 # Ensure the target variable 'log_price' is Normally distributed, and
 # its kurtosis and skewness are normal. Just as a comparison try the same
@@ -694,12 +728,12 @@ print()
 
 # Seaborn will not like infinity in the dataset so detect them, observe if
 # they are actually there, and replace with reasonable values.
-print(logarithm_listing_price[logarithm_listing_price == -inf])
-print()
+#print(logarithm_listing_price[logarithm_listing_price == -inf])
+#print()
 
 # This one was not detected so no need to worry about +infinity
-print(logarithm_listing_price[logarithm_listing_price == inf])
-print()
+#print(logarithm_listing_price[logarithm_listing_price == inf])
+#print()
 
 # Replace -infinity with 0.
 logarithm_listing_price[logarithm_listing_price == -inf] = 0
