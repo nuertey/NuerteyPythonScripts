@@ -504,6 +504,9 @@ airbnb_data_dropped['beds'] = airbnb_data_dropped['beds'].fillna(0)
 outliers_data_dropped = airbnb_data_dropped[airbnb_data_dropped["price"] < 2000]
 
 logarithm_listing_price = np.log(outliers_data_dropped["price"])
+#print("Logarithm of Listing Price:")
+#print(logarithm_listing_price)
+#print()
 
 # Histograms of listing price and log of listing price for further price
 # data visualization and comparison:
@@ -675,7 +678,7 @@ print()
 
 # Calculate our correlation matrix with Pandas.DataFrame then:
 the_correlation_matrix2 = ols_model_data_frame.corr()
-print("For validation,using inherent Pandas DataFrame, here is our computed correlation matrix:")
+print("For validation, using inherent Pandas DataFrame, here is our computed correlation matrix:")
 print(the_correlation_matrix2)
 print()
 print(the_correlation_matrix2.info())
@@ -683,9 +686,9 @@ print()
 
 # Visualize as correlation_matrix_1.png then:
 #sns.set_theme()
-cmap = sns.color_palette("flare", as_cmap=True)
-sns.heatmap(the_correlation_matrix2, cmap=cmap, vmin=-0.5, vmax=0.5, center=0);
-plt.show()
+#cmap = sns.color_palette("flare", as_cmap=True)
+#sns.heatmap(the_correlation_matrix2, cmap=cmap, vmin=-0.5, vmax=0.5, center=0);
+#plt.show()
 
 # Visualize as correlation_matrix_2.png then:
 #mask = np.triu(np.ones_like(the_correlation_matrix2, dtype=bool))
@@ -758,3 +761,56 @@ print()
 # So we will rather use that as our target variable in our OLS prediction.
 # ======================================================================
 
+# ===============
+# OLS Regression:
+# ===============
+
+# Specify the constant term. Note that an intercept is not included by 
+# default and should be added by the user:
+ols_model_data_frame = sm.add_constant(ols_model_data_frame, prepend=False)
+
+# Describe the model:
+ols_model = sm.OLS(logarithm_listing_price, ols_model_data_frame)
+
+# Fit the model:
+results = ols_model.fit()
+
+# OLS Regression results and summary:
+print(results.summary())
+print()
+
+# TBD: Outline and interpret what the summary means here.
+
+print(results.params)
+print()
+
+# This produces our four regression plots for "number_of_reviews"
+#figure12 = plt.figure(figsize=(15,8))
+#figure12 = sm.graphics.plot_regress_exog(results, "number_of_reviews", fig=figure12)
+#plt.show()
+
+# This produces our four regression plots for "calculated_host_listings_count"
+#figure13 = plt.figure(figsize=(15,8))
+#figure13 = sm.graphics.plot_regress_exog(results, "calculated_host_listings_count", fig=figure13)
+#plt.show()
+
+# This produces our four regression plots for "accommodates"
+#figure14 = plt.figure(figsize=(15,8))
+#figure14 = sm.graphics.plot_regress_exog(results, "accommodates", fig=figure14)
+#plt.show()
+
+# This produces our four regression plots for "bedrooms"
+#figure15 = plt.figure(figsize=(15,8))
+#figure15 = sm.graphics.plot_regress_exog(results, "bedrooms", fig=figure15)
+#plt.show()
+
+# Draw a plot to compare the true relationship to OLS predictions:
+prstd, iv_l, iv_u = wls_prediction_std(results)
+
+fig, ax = plt.subplots(figsize=(8,6))
+ax.plot(logarithm_listing_price, 'o', label="Data")
+ax.plot(results.fittedvalues, 'r--.', label="Predicted")
+ax.plot(iv_u, 'r--')
+ax.plot(iv_l, 'r--')
+legend = ax.legend(loc="best")
+plt.show()

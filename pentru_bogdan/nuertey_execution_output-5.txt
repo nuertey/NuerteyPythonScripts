@@ -1,0 +1,1065 @@
+(MyEnv37) rena@PurpleOS:~/postgrestest/pentru_bogdan$ python MSCA_37014-Final_Project.py 
+Dataset dimensions of cleaned up Airbnb Dataframe for Amsterdam after conversion:
+(18291, 74)
+
+Data type of each column of cleaned up Airbnb Dataframe for Amsterdam after conversion:
+id                                                int64
+listing_url                                      object
+scrape_id                                         int64
+last_scraped                                     object
+name                                             object
+description                                      object
+neighborhood_overview                            object
+picture_url                                      object
+host_id                                           int64
+host_url                                         object
+host_name                                        object
+host_since                                       object
+host_location                                    object
+host_about                                       object
+host_response_time                               object
+host_response_rate                               object
+host_acceptance_rate                             object
+host_is_superhost                                object
+host_thumbnail_url                               object
+host_picture_url                                 object
+host_neighbourhood                               object
+host_listings_count                             float64
+host_total_listings_count                       float64
+host_verifications                               object
+host_has_profile_pic                             object
+host_identity_verified                           object
+neighbourhood                                    object
+neighbourhood_cleansed                           object
+neighbourhood_group_cleansed                    float64
+latitude                                        float64
+longitude                                       float64
+property_type                                    object
+room_type                                        object
+accommodates                                      int64
+bathrooms                                       float64
+bathrooms_text                                   object
+bedrooms                                        float64
+beds                                            float64
+amenities                                        object
+price                                           float64
+minimum_nights                                    int64
+maximum_nights                                    int64
+minimum_minimum_nights                          float64
+maximum_minimum_nights                          float64
+minimum_maximum_nights                          float64
+maximum_maximum_nights                          float64
+minimum_nights_avg_ntm                          float64
+maximum_nights_avg_ntm                          float64
+calendar_updated                                float64
+has_availability                                 object
+availability_30                                   int64
+availability_60                                   int64
+availability_90                                   int64
+availability_365                                  int64
+calendar_last_scraped                            object
+number_of_reviews                                 int64
+number_of_reviews_ltm                             int64
+number_of_reviews_l30d                            int64
+first_review                                     object
+last_review                                      object
+review_scores_rating                            float64
+review_scores_accuracy                          float64
+review_scores_cleanliness                       float64
+review_scores_checkin                           float64
+review_scores_communication                     float64
+review_scores_location                          float64
+review_scores_value                             float64
+license                                         float64
+instant_bookable                                 object
+calculated_host_listings_count                    int64
+calculated_host_listings_count_entire_homes       int64
+calculated_host_listings_count_private_rooms      int64
+calculated_host_listings_count_shared_rooms       int64
+reviews_per_month                               float64
+dtype: object
+
+Dataset dimensions of cleaned up (and DROPPED) Airbnb Dataframe for Amsterdam after conversion:
+(12157, 74)
+
+Generated descriptive and summary statistics for Airbnb Dataframe for Amsterdam after cleanup:
+                 id     scrape_id       host_id  ...  calculated_host_listings_count_private_rooms  calculated_host_listings_count_shared_rooms  reviews_per_month
+count  1.215700e+04  1.215700e+04  1.215700e+04  ...                                  12157.000000                                 12157.000000       10898.000000
+mean   1.930328e+07  2.021021e+13  5.932953e+07  ...                                      0.416139                                     0.009460           0.604120
+std    1.209604e+07  0.000000e+00  7.560638e+07  ...                                      1.204213                                     0.169662           1.103286
+min    2.818000e+03  2.021021e+13  3.159000e+03  ...                                      0.000000                                     0.000000           0.010000
+25%    9.322312e+06  2.021021e+13  8.241179e+06  ...                                      0.000000                                     0.000000           0.120000
+50%    1.850449e+07  2.021021e+13  2.461430e+07  ...                                      0.000000                                     0.000000           0.280000
+75%    2.826973e+07  2.021021e+13  7.816219e+07  ...                                      0.000000                                     0.000000           0.570000
+max    4.807786e+07  2.021021e+13  3.313686e+08  ...                                     16.000000                                     5.000000          35.530000
+
+[8 rows x 42 columns]
+
+Printed concise summary of the DataFrame:
+<class 'pandas.core.frame.DataFrame'>
+Int64Index: 12157 entries, 0 to 18290
+Data columns (total 74 columns):
+ #   Column                                        Non-Null Count  Dtype  
+---  ------                                        --------------  -----  
+ 0   id                                            12157 non-null  int64  
+ 1   listing_url                                   12157 non-null  object 
+ 2   scrape_id                                     12157 non-null  int64  
+ 3   last_scraped                                  12157 non-null  object 
+ 4   name                                          12139 non-null  object 
+ 5   description                                   12047 non-null  object 
+ 6   neighborhood_overview                         8232 non-null   object 
+ 7   picture_url                                   12157 non-null  object 
+ 8   host_id                                       12157 non-null  int64  
+ 9   host_url                                      12157 non-null  object 
+ 10  host_name                                     12157 non-null  object 
+ 11  host_since                                    12157 non-null  object 
+ 12  host_location                                 12139 non-null  object 
+ 13  host_about                                    7283 non-null   object 
+ 14  host_response_time                            2511 non-null   object 
+ 15  host_response_rate                            2511 non-null   object 
+ 16  host_acceptance_rate                          5071 non-null   object 
+ 17  host_is_superhost                             12157 non-null  object 
+ 18  host_thumbnail_url                            12157 non-null  object 
+ 19  host_picture_url                              12157 non-null  object 
+ 20  host_neighbourhood                            12157 non-null  object 
+ 21  host_listings_count                           12157 non-null  float64
+ 22  host_total_listings_count                     12157 non-null  float64
+ 23  host_verifications                            12157 non-null  object 
+ 24  host_has_profile_pic                          12157 non-null  object 
+ 25  host_identity_verified                        12157 non-null  object 
+ 26  neighbourhood                                 8232 non-null   object 
+ 27  neighbourhood_cleansed                        12157 non-null  object 
+ 28  neighbourhood_group_cleansed                  0 non-null      float64
+ 29  latitude                                      12157 non-null  float64
+ 30  longitude                                     12157 non-null  float64
+ 31  property_type                                 12157 non-null  object 
+ 32  room_type                                     12157 non-null  object 
+ 33  accommodates                                  12157 non-null  int64  
+ 34  bathrooms                                     0 non-null      float64
+ 35  bathrooms_text                                12142 non-null  object 
+ 36  bedrooms                                      11565 non-null  float64
+ 37  beds                                          12113 non-null  float64
+ 38  amenities                                     12157 non-null  object 
+ 39  price                                         12157 non-null  float64
+ 40  minimum_nights                                12157 non-null  int64  
+ 41  maximum_nights                                12157 non-null  int64  
+ 42  minimum_minimum_nights                        12157 non-null  float64
+ 43  maximum_minimum_nights                        12157 non-null  float64
+ 44  minimum_maximum_nights                        12157 non-null  float64
+ 45  maximum_maximum_nights                        12157 non-null  float64
+ 46  minimum_nights_avg_ntm                        12157 non-null  float64
+ 47  maximum_nights_avg_ntm                        12157 non-null  float64
+ 48  calendar_updated                              0 non-null      float64
+ 49  has_availability                              12157 non-null  object 
+ 50  availability_30                               12157 non-null  int64  
+ 51  availability_60                               12157 non-null  int64  
+ 52  availability_90                               12157 non-null  int64  
+ 53  availability_365                              12157 non-null  int64  
+ 54  calendar_last_scraped                         12157 non-null  object 
+ 55  number_of_reviews                             12157 non-null  int64  
+ 56  number_of_reviews_ltm                         12157 non-null  int64  
+ 57  number_of_reviews_l30d                        12157 non-null  int64  
+ 58  first_review                                  10898 non-null  object 
+ 59  last_review                                   10898 non-null  object 
+ 60  review_scores_rating                          10731 non-null  float64
+ 61  review_scores_accuracy                        10724 non-null  float64
+ 62  review_scores_cleanliness                     10724 non-null  float64
+ 63  review_scores_checkin                         10719 non-null  float64
+ 64  review_scores_communication                   10724 non-null  float64
+ 65  review_scores_location                        10721 non-null  float64
+ 66  review_scores_value                           10721 non-null  float64
+ 67  license                                       0 non-null      float64
+ 68  instant_bookable                              12157 non-null  object 
+ 69  calculated_host_listings_count                12157 non-null  int64  
+ 70  calculated_host_listings_count_entire_homes   12157 non-null  int64  
+ 71  calculated_host_listings_count_private_rooms  12157 non-null  int64  
+ 72  calculated_host_listings_count_shared_rooms   12157 non-null  int64  
+ 73  reviews_per_month                             10898 non-null  float64
+dtypes: float64(25), int64(17), object(32)
+memory usage: 7.0+ MB
+None
+
+0                         Indische Buurt
+1                         Grachtengordel
+2                         Grachtengordel
+3                    Westelijke Eilanden
+4                      Amsterdam Centrum
+5                      Amsterdam Centrum
+6                    Hoofddorppleinbuurt
+7                                Jordaan
+8                         Grachtengordel
+9                                Jordaan
+10                               De Pijp
+11                        Grachtengordel
+12                              Oud-West
+13                              Oud-West
+14                        Grachtengordel
+15                               Zeeburg
+16                               De Pijp
+17        Spaarndammer en Zeeheldenbuurt
+18                 Nieuwmarkt en Lastage
+19                               De Pijp
+20                              Oud-West
+21                        Museumkwartier
+22                       Oosterparkbuurt
+23                        Grachtengordel
+24                        Indische Buurt
+25                         Bos en Lommer
+26                              Oud-West
+27                               De Pijp
+28                             De Wallen
+29                             De Wallen
+30                       Banne Buiksloot
+31                        Indische Buurt
+32                        Indische Buurt
+33                              Oud-West
+34                              Oud-West
+35        Spaarndammer en Zeeheldenbuurt
+36                        Grachtengordel
+37                               Jordaan
+38                     Amsterdam Centrum
+39                               De Pijp
+40                              Oud-West
+41                              Oud-West
+42                               De Pijp
+43                           Slotervaart
+44       Oostelijke Eilanden en Kadijken
+45                              Oud-West
+46                               De Pijp
+47                              Oud-Zuid
+48                        Indische Buurt
+49                              Oud-West
+                      ...               
+17989                  Amsterdam Centrum
+17998                     Grachtengordel
+18038                          Docklands
+18049                          Docklands
+18050                      Rivierenbuurt
+18073                            De Pijp
+18075           Weesperbuurt en Plantage
+18078                      Bos en Lommer
+18081                     Grachtengordel
+18085                           Oud-West
+18087                           Recoleta
+18093                           Oud-Zuid
+18098                  Amsterdam Centrum
+18107                  Amsterdam Centrum
+18119                           Oud-West
+18120                            Jordaan
+18121                     Grachtengordel
+18135                           Oud-West
+18142                  Amsterdam Centrum
+18146                           Oud-West
+18148                            Jordaan
+18149                    Oosterparkbuurt
+18150                  Amsterdam Centrum
+18155                          Docklands
+18160           Weesperbuurt en Plantage
+18161           Weesperbuurt en Plantage
+18171                            Jordaan
+18174                Hoofddorppleinbuurt
+18176                     Indische Buurt
+18178                     Grachtengordel
+18179                     Grachtengordel
+18180                     Grachtengordel
+18205                           Westpunt
+18210           Weesperbuurt en Plantage
+18212           Weesperbuurt en Plantage
+18214                     Grachtengordel
+18215                     Grachtengordel
+18216                     Grachtengordel
+18217                     Grachtengordel
+18218                     Grachtengordel
+18221                Westelijke Eilanden
+18222                Westelijke Eilanden
+18223                Westelijke Eilanden
+18231                       LB of Harrow
+18232                            Jordaan
+18243                            Zeeburg
+18245                     Grachtengordel
+18251                           Oud-West
+18252                            Jordaan
+18290                     Grachtengordel
+Name: host_neighbourhood, Length: 12157, dtype: object
+
+                       host_name  host_since  host_response_time host_response_rate  ... host_total_listings_count  number_of_reviews  review_scores_rating  calculated_host_listings_count
+0                         Daniel  2008-09-24                 NaN                NaN  ...                       1.0                278                  98.0                               1
+1                      Alexander  2009-12-02                 NaN                NaN  ...                       2.0                339                  89.0                               2
+2                           Joan  2009-11-20                 NaN                NaN  ...                       2.0                  5                 100.0                               1
+3                           Flip  2010-03-23      within an hour               100%  ...                       1.0                219                  99.0                               1
+4                          Edwin  2010-05-13      within an hour               100%  ...                       2.0                336                  97.0                               2
+5                          Edwin  2010-05-13      within an hour               100%  ...                       2.0                480                  95.0                               2
+6                         Nienke  2010-05-27                 NaN                NaN  ...                       1.0                 32                  95.0                               1
+7                          Fatih  2010-07-23                 NaN                NaN  ...                       1.0                 89                  96.0                               1
+8                          Aukje  2010-08-01                 NaN                NaN  ...                       0.0                 59                  98.0                               1
+9                        Tatiana  2010-08-01      within an hour               100%  ...                       4.0                179                  98.0                               1
+10                         Joost  2010-08-20                 NaN                NaN  ...                       1.0                  3                  93.0                               1
+11                   Joanna & MP  2010-09-06      within an hour               100%  ...                       1.0                368                  98.0                               1
+12                         Klaas  2010-09-07                 NaN                NaN  ...                       0.0                103                  99.0                               1
+13                         Karin  2010-09-12        within a day                50%  ...                       1.0                 17                  95.0                               1
+14                       Raymond  2010-09-12                 NaN                NaN  ...                       1.0                307                  97.0                               1
+15                    VictorLuke  2010-07-30                 NaN                NaN  ...                       1.0                102                  92.0                               1
+16                          DoJo  2010-09-27                 NaN                NaN  ...                       1.0                354                  93.0                               1
+17                         Georg  2010-09-28                 NaN                NaN  ...                       1.0                309                  91.0                               1
+18                         Lotte  2010-10-13                 NaN                NaN  ...                       1.0                179                  92.0                               1
+19                       Bharati  2010-10-15                 NaN                NaN  ...                       1.0                 32                  95.0                               1
+20                     Rai & Clo  2010-10-17                 NaN                NaN  ...                       1.0                157                  97.0                               1
+21                      Cornelie  2010-10-17                 NaN                NaN  ...                       1.0                 95                  97.0                               1
+22                        Camiel  2010-10-23        within a day                70%  ...                       3.0                  0                   NaN                               3
+23                        Marcel  2010-11-04      within an hour               100%  ...                       4.0                124                  98.0                               1
+24                       Jessica  2010-11-27                 NaN                NaN  ...                       1.0                 30                  98.0                               1
+25                           Jan  2010-12-01                 NaN                NaN  ...                       1.0                  0                   NaN                               1
+26                         Conny  2010-12-01                 NaN                NaN  ...                       1.0                103                  98.0                               1
+27                          Dene  2011-01-04        within a day                50%  ...                       3.0                 16                  94.0                               2
+28                        Manuel  2011-01-06        within a day                50%  ...                       2.0                659                  96.0                               3
+29                        Manuel  2011-01-06        within a day                50%  ...                       2.0                579                  96.0                               3
+30                        Nadira  2011-01-08                 NaN                NaN  ...                       1.0                108                  95.0                               1
+31                          Tina  2011-02-19        within a day                67%  ...                       3.0                254                  95.0                               3
+32                          Tina  2011-02-19        within a day                67%  ...                       3.0                324                  94.0                               3
+33                 Edwin + Karin  2011-02-20  within a few hours               100%  ...                       2.0                 33                  99.0                               2
+34                 Edwin + Karin  2011-02-20  within a few hours               100%  ...                       2.0                 16                  97.0                               2
+35                         Guido  2011-02-25                 NaN                NaN  ...                       1.0                 64                  97.0                               1
+36                          Riks  2011-03-11                 NaN                NaN  ...                       3.0                218                  95.0                               2
+37                        Shawna  2010-07-31      within an hour               100%  ...                       1.0                859                  89.0                               1
+38                        Rudolf  2011-03-19  within a few hours               100%  ...                       2.0                131                  96.0                               2
+39                        Daniel  2011-03-22      within an hour               100%  ...                       1.0                157                  94.0                               1
+40                      Stefania  2011-03-23                 NaN                NaN  ...                      29.0                 94                  95.0                               5
+41                            Ym  2009-12-22      within an hour               100%  ...                       1.0                 11                  85.0                               1
+42                       Michiel  2011-04-08                 NaN                NaN  ...                       1.0                 44                  95.0                               1
+43                        Gianni  2010-08-09      within an hour               100%  ...                       2.0                196                  91.0                               2
+44                       Marieke  2010-09-30      within an hour               100%  ...                       1.0                 37                  95.0                               1
+45                        Jorien  2011-05-06                 NaN                NaN  ...                       1.0                  3                 100.0                               1
+46                         Jessy  2011-05-30                 NaN                NaN  ...                       1.0                 29                  97.0                               1
+47                       Paulien  2011-06-07                 NaN                NaN  ...                       0.0                 24                  90.0                               1
+48                         Cindy  2011-06-11                 NaN                NaN  ...                       2.0                 86                  95.0                               2
+49                          Remy  2011-06-18                 NaN                NaN  ...                       1.0                  4                  95.0                               1
+...                          ...         ...                 ...                ...  ...                       ...                ...                   ...                             ...
+17989                        Tom  2019-11-25      within an hour               100%  ...                       3.0                  0                   NaN                               4
+17998         Marcel And Pauline  2018-03-13      within an hour                89%  ...                      21.0                  0                   NaN                              27
+18038                      James  2012-03-29      within an hour               100%  ...                       7.0                  3                 100.0                              10
+18049                      James  2012-03-29      within an hour               100%  ...                       7.0                  1                 100.0                              10
+18050                      Tommy  2014-05-30  within a few hours                80%  ...                       2.0                 10                  98.0                               2
+18073                     Martin  2017-07-23      within an hour               100%  ...                       2.0                  0                   NaN                               2
+18075                 Eva & Kobe  2015-10-16                 NaN                NaN  ...                      22.0                  0                   NaN                               4
+18078                        Ana  2015-12-23        within a day               100%  ...                       2.0                  0                   NaN                               2
+18081                     Vivian  2016-10-11  within a few hours               100%  ...                       1.0                  0                   NaN                               2
+18085                        Bob  2016-07-31                 NaN                NaN  ...                       1.0                  0                   NaN                               2
+18087                   Agustina  2015-11-18      within an hour               100%  ...                       2.0                  0                   NaN                               1
+18093                    Martijn  2016-04-05                 NaN                NaN  ...                      85.0                  0                   NaN                              81
+18098                   Caterina  2020-01-15  a few days or more                41%  ...                       8.0                  1                  80.0                              13
+18107                   Caterina  2020-01-15  a few days or more                41%  ...                       8.0                  1                 100.0                              13
+18119                    Silvana  2011-05-22        within a day               100%  ...                       4.0                  0                   NaN                               6
+18120                      Rowan  2015-11-10  within a few hours                90%  ...                       4.0                  7                 100.0                               4
+18121                      Menno  2013-06-20  within a few hours               100%  ...                       0.0                  0                   NaN                               2
+18135                    Silvana  2011-05-22        within a day               100%  ...                       4.0                  0                   NaN                               6
+18142                   Caterina  2020-01-15  a few days or more                41%  ...                       8.0                  3                 100.0                              13
+18146             Superhost Neil  2012-12-21      within an hour               100%  ...                      18.0                  0                   NaN                               6
+18148                      Lydia  2017-11-18      within an hour                90%  ...                       8.0                  6                  93.0                               4
+18149                     Thomas  2013-01-24                 NaN                NaN  ...                       1.0                  0                   NaN                               1
+18150                      Dario  2020-01-07      within an hour                63%  ...                      30.0                  1                 100.0                              14
+18155                      James  2012-03-29      within an hour               100%  ...                       7.0                  0                   NaN                              10
+18160             Zoku Amsterdam  2015-04-09      within an hour               100%  ...                       4.0                  0                   NaN                               6
+18161             Zoku Amsterdam  2015-04-09      within an hour               100%  ...                       4.0                  0                   NaN                               6
+18171                    Phillip  2013-08-19                 NaN                NaN  ...                       1.0                  0                   NaN                               2
+18174                      Ewoud  2013-06-10        within a day                60%  ...                       1.0                  0                   NaN                               3
+18176                    Matilde  2020-01-01  within a few hours                53%  ...                       2.0                  0                   NaN                               2
+18178                    Pauline  2014-09-10      within an hour               100%  ...                      12.0                  0                   NaN                              21
+18179                    Pauline  2014-09-10      within an hour               100%  ...                      12.0                  0                   NaN                              21
+18180                    Pauline  2014-09-10      within an hour               100%  ...                      12.0                  0                   NaN                              21
+18205                 TravelNest  2019-11-20      within an hour               100%  ...                    1324.0                  0                   NaN                               2
+18210             Zoku Amsterdam  2015-04-09      within an hour               100%  ...                       4.0                  0                   NaN                               6
+18212             Zoku Amsterdam  2015-04-09      within an hour               100%  ...                       4.0                  0                   NaN                               6
+18214                    Pauline  2014-09-10      within an hour               100%  ...                      12.0                  0                   NaN                              21
+18215                    Pauline  2014-09-10      within an hour               100%  ...                      12.0                  0                   NaN                              21
+18216                    Pauline  2014-09-10      within an hour               100%  ...                      12.0                  0                   NaN                              21
+18217                    Pauline  2014-09-10      within an hour               100%  ...                      12.0                  0                   NaN                              21
+18218                    Pauline  2014-09-10      within an hour               100%  ...                      12.0                  0                   NaN                              21
+18221                      Remco  2013-04-06      within an hour                93%  ...                      18.0                  0                   NaN                              13
+18222                      Remco  2013-04-06      within an hour                93%  ...                      18.0                  0                   NaN                              13
+18223                      Remco  2013-04-06      within an hour                93%  ...                      18.0                  0                   NaN                              13
+18231              Team Gospodin  2018-02-24      within an hour               100%  ...                    7235.0                  0                   NaN                               1
+18232                     Samson  2016-07-24      within an hour               100%  ...                       1.0                  0                   NaN                               2
+18243                      Mayya  2014-01-18                 NaN                NaN  ...                       1.0                  0                   NaN                               2
+18245  City Apartments Amsterdam  2012-10-17      within an hour                86%  ...                      15.0                  0                   NaN                              14
+18251                        Kim  2012-05-24                 NaN                NaN  ...                       1.0                  0                   NaN                               2
+18252             Wendy And Bram  2011-12-02      within an hour               100%  ...                      98.0                  0                   NaN                              85
+18290                    Suzanne  2018-06-27  within a few hours               100%  ...                       9.0                  0                   NaN                              12
+
+[12157 rows x 9 columns]
+
+Unique Neighbourhood, Latitude and Longitude of Amsterdam neighbourhoods:
+12157
+
+12157
+
+12157
+
+Unique Amsterdam neighbourhoods:
+['Indische Buurt' 'Grachtengordel' 'Westelijke Eilanden'
+ 'Amsterdam Centrum' 'Hoofddorppleinbuurt' 'Jordaan' 'De Pijp' 'Oud-West'
+ 'Zeeburg' 'Spaarndammer en Zeeheldenbuurt' 'Nieuwmarkt en Lastage'
+ 'Museumkwartier' 'Oosterparkbuurt' 'Bos en Lommer' 'De Wallen'
+ 'Banne Buiksloot' 'Slotervaart' 'Oostelijke Eilanden en Kadijken'
+ 'Oud-Zuid' 'Weesperbuurt en Plantage' 'Rivierenbuurt' 'Stadionbuurt'
+ 'Watergraafsmeer' 'Slotermeer-Noordoost' 'Oost' 'Frederik Hendrikbuurt'
+ 'Buitenveldert-West' 'IJplein en Vogelbuurt' 'Volewijck'
+ 'Beguinage-Dixmude' 'Oostzanerwerf' 'Nieuwendam-Noord'
+ 'Tuindorp Oostzaan' 'Buiksloterham' 'Osdorp' 'Overtoomse Veld'
+ 'La Latina' 'Nieuwendammerdijk en Buiksloterdijk' 'Tuindorp Nieuwendam'
+ 'Landelijk Noord' 'Buitenveldert-Oost' 'Slotermeer-Zuidwest'
+ 'Tuindorp Buiksloot' 'San Nicolás' 'Kadoelen' 'Buikslotermeer'
+ 'Nieuwendammerham' 'Palermo' 'South Kensington' 'Cannaregio'
+ 'Teplyy Stan' 'Cannes' 'La Sagrada Família' 'Stockwell' 'Friedrichshain'
+ "Shepherd's Bush" 'Bugis/Kampong Glam' 'Yehuda Hamaccabi' 'Esquilino'
+ 'Sant Antoni' 'Montparnasse' 'Camberwell' 'Belváros' 'Docklands'
+ 'Hampstead' 'Carabacel' 'Città Studi' 'LB of Hillingdon' 'Queenstown'
+ 'Williamsburg' 'Le Plateau' 'East Wall' 'Fulham' 'Westpunt' 'Recoleta'
+ 'LB of Harrow']
+
+                     host_neighbourhood  calculated_host_listings_count
+31                     LB of Hillingdon                               1
+21                       Friedrichshain                               1
+22                               Fulham                               1
+24                            Hampstead                               1
+56                      Shepherd's Bush                               1
+52                             Recoleta                               1
+30                         LB of Harrow                               1
+32                            La Latina                               1
+33                   La Sagrada Família                               1
+35                           Le Plateau                               1
+36                         Montparnasse                               1
+74                     Yehuda Hamaccabi                               1
+55                          Sant Antoni                               1
+54                          San Nicolás                               1
+64                          Teplyy Stan                               1
+51                           Queenstown                               1
+19                            Esquilino                               1
+18                            East Wall                               1
+63                            Stockwell                               1
+60                     South Kensington                               1
+10                           Camberwell                               1
+3                              Belváros                               1
+11                           Cannaregio                               1
+13                            Carabacel                               1
+73                         Williamsburg                               1
+14                          Città Studi                               1
+2                     Beguinage-Dixmude                               1
+5                    Bugis/Kampong Glam                               1
+12                               Cannes                               2
+50                              Palermo                               2
+40                     Nieuwendammerham                               2
+72                             Westpunt                               4
+39  Nieuwendammerdijk en Buiksloterdijk                              20
+66                  Tuindorp Nieuwendam                              39
+29                             Kadoelen                              40
+34                      Landelijk Noord                              43
+38                     Nieuwendam-Noord                              44
+8                    Buitenveldert-Oost                              49
+65                   Tuindorp Buiksloot                              51
+57                 Slotermeer-Noordoost                              57
+58                  Slotermeer-Zuidwest                              73
+7                        Buikslotermeer                              82
+17                            Docklands                             100
+9                    Buitenveldert-West                             104
+1                       Banne Buiksloot                             107
+45                        Oostzanerwerf                             111
+68                            Volewijck                             114
+6                         Buiksloterham                             123
+67                    Tuindorp Oostzaan                             130
+46                               Osdorp                             148
+49                      Overtoomse Veld                             152
+26                IJplein en Vogelbuurt                             162
+43      Oostelijke Eilanden en Kadijken                             228
+61       Spaarndammer en Zeeheldenbuurt                             233
+75                              Zeeburg                             269
+41                Nieuwmarkt en Lastage                             278
+62                         Stadionbuurt                             282
+69                      Watergraafsmeer                             307
+59                          Slotervaart                             350
+70             Weesperbuurt en Plantage                             358
+42                                 Oost                             366
+71                  Westelijke Eilanden                             370
+20                Frederik Hendrikbuurt                             400
+37                       Museumkwartier                             422
+53                        Rivierenbuurt                             565
+16                            De Wallen                             626
+27                       Indische Buurt                             730
+4                         Bos en Lommer                             733
+25                  Hoofddorppleinbuurt                             895
+0                     Amsterdam Centrum                             920
+15                              De Pijp                            1369
+44                      Oosterparkbuurt                            2263
+23                       Grachtengordel                            2898
+47                             Oud-West                            4398
+48                             Oud-Zuid                            6849
+28                              Jordaan                            8143
+
+       host_acceptance_rate  number_of_reviews  review_scores_rating                  host_name               host_neighbourhood
+0                      1.00              278.0                  98.0                     Daniel                   Indische Buurt
+1                      1.00              339.0                  89.0                  Alexander                   Grachtengordel
+2                      0.00                5.0                 100.0                       Joan                   Grachtengordel
+3                      1.00              219.0                  99.0                       Flip              Westelijke Eilanden
+4                      0.87              336.0                  97.0                      Edwin                Amsterdam Centrum
+5                      0.87              480.0                  95.0                      Edwin                Amsterdam Centrum
+6                      0.00               32.0                  95.0                     Nienke              Hoofddorppleinbuurt
+7                      0.50               89.0                  96.0                      Fatih                          Jordaan
+8                      0.00               59.0                  98.0                      Aukje                   Grachtengordel
+9                      0.25              179.0                  98.0                    Tatiana                          Jordaan
+10                     0.00                3.0                  93.0                      Joost                          De Pijp
+11                     0.93              368.0                  98.0                Joanna & MP                   Grachtengordel
+12                     0.00              103.0                  99.0                      Klaas                         Oud-West
+13                     0.00               17.0                  95.0                      Karin                         Oud-West
+14                     1.00              307.0                  97.0                    Raymond                   Grachtengordel
+15                     0.00              102.0                  92.0                 VictorLuke                          Zeeburg
+16                     1.00              354.0                  93.0                       DoJo                          De Pijp
+17                     1.00              309.0                  91.0                      Georg   Spaarndammer en Zeeheldenbuurt
+18                     0.00              179.0                  92.0                      Lotte            Nieuwmarkt en Lastage
+19                     1.00               32.0                  95.0                    Bharati                          De Pijp
+20                     0.00              157.0                  97.0                  Rai & Clo                         Oud-West
+21                     0.33               95.0                  97.0                   Cornelie                   Museumkwartier
+22                     0.55                0.0                   0.0                     Camiel                  Oosterparkbuurt
+23                     0.98              124.0                  98.0                     Marcel                   Grachtengordel
+24                     1.00               30.0                  98.0                    Jessica                   Indische Buurt
+25                     0.00                0.0                   0.0                        Jan                    Bos en Lommer
+26                     0.00              103.0                  98.0                      Conny                         Oud-West
+27                     0.50               16.0                  94.0                       Dene                          De Pijp
+28                     1.00              659.0                  96.0                     Manuel                        De Wallen
+29                     1.00              579.0                  96.0                     Manuel                        De Wallen
+30                     0.91              108.0                  95.0                     Nadira                  Banne Buiksloot
+31                     0.93              254.0                  95.0                       Tina                   Indische Buurt
+32                     0.93              324.0                  94.0                       Tina                   Indische Buurt
+33                     1.00               33.0                  99.0              Edwin + Karin                         Oud-West
+34                     1.00               16.0                  97.0              Edwin + Karin                         Oud-West
+35                     1.00               64.0                  97.0                      Guido   Spaarndammer en Zeeheldenbuurt
+36                     0.00              218.0                  95.0                       Riks                   Grachtengordel
+37                     1.00              859.0                  89.0                     Shawna                          Jordaan
+38                     1.00              131.0                  96.0                     Rudolf                Amsterdam Centrum
+39                     0.50              157.0                  94.0                     Daniel                          De Pijp
+40                     1.00               94.0                  95.0                   Stefania                         Oud-West
+41                     0.00               11.0                  85.0                         Ym                         Oud-West
+42                     1.00               44.0                  95.0                    Michiel                          De Pijp
+43                     1.00              196.0                  91.0                     Gianni                      Slotervaart
+44                     0.00               37.0                  95.0                    Marieke  Oostelijke Eilanden en Kadijken
+45                     0.00                3.0                 100.0                     Jorien                         Oud-West
+46                     0.00               29.0                  97.0                      Jessy                          De Pijp
+47                     0.00               24.0                  90.0                    Paulien                         Oud-Zuid
+48                     0.00               86.0                  95.0                      Cindy                   Indische Buurt
+49                     0.00                4.0                  95.0                       Remy                         Oud-West
+...                     ...                ...                   ...                        ...                              ...
+17989                  1.00                0.0                   0.0                        Tom                Amsterdam Centrum
+17998                  0.99                0.0                   0.0         Marcel And Pauline                   Grachtengordel
+18038                  0.99                3.0                 100.0                      James                        Docklands
+18049                  0.99                1.0                 100.0                      James                        Docklands
+18050                  0.99               10.0                  98.0                      Tommy                    Rivierenbuurt
+18073                  0.94                0.0                   0.0                     Martin                          De Pijp
+18075                  0.83                0.0                   0.0                 Eva & Kobe         Weesperbuurt en Plantage
+18078                  1.00                0.0                   0.0                        Ana                    Bos en Lommer
+18081                  0.00                0.0                   0.0                     Vivian                   Grachtengordel
+18085                  0.50                0.0                   0.0                        Bob                         Oud-West
+18087                  0.33                0.0                   0.0                   Agustina                         Recoleta
+18093                  0.98                0.0                   0.0                    Martijn                         Oud-Zuid
+18098                  0.98                1.0                  80.0                   Caterina                Amsterdam Centrum
+18107                  0.98                1.0                 100.0                   Caterina                Amsterdam Centrum
+18119                  0.36                0.0                   0.0                    Silvana                         Oud-West
+18120                  0.99                7.0                 100.0                      Rowan                          Jordaan
+18121                  0.00                0.0                   0.0                      Menno                   Grachtengordel
+18135                  0.36                0.0                   0.0                    Silvana                         Oud-West
+18142                  0.98                3.0                 100.0                   Caterina                Amsterdam Centrum
+18146                  1.00                0.0                   0.0             Superhost Neil                         Oud-West
+18148                  0.99                6.0                  93.0                      Lydia                          Jordaan
+18149                  0.00                0.0                   0.0                     Thomas                  Oosterparkbuurt
+18150                  0.96                1.0                 100.0                      Dario                Amsterdam Centrum
+18155                  0.99                0.0                   0.0                      James                        Docklands
+18160                  0.98                0.0                   0.0             Zoku Amsterdam         Weesperbuurt en Plantage
+18161                  0.98                0.0                   0.0             Zoku Amsterdam         Weesperbuurt en Plantage
+18171                  0.00                0.0                   0.0                    Phillip                          Jordaan
+18174                  0.50                0.0                   0.0                      Ewoud              Hoofddorppleinbuurt
+18176                  1.00                0.0                   0.0                    Matilde                   Indische Buurt
+18178                  0.99                0.0                   0.0                    Pauline                   Grachtengordel
+18179                  0.99                0.0                   0.0                    Pauline                   Grachtengordel
+18180                  0.99                0.0                   0.0                    Pauline                   Grachtengordel
+18205                  1.00                0.0                   0.0                 TravelNest                         Westpunt
+18210                  0.98                0.0                   0.0             Zoku Amsterdam         Weesperbuurt en Plantage
+18212                  0.98                0.0                   0.0             Zoku Amsterdam         Weesperbuurt en Plantage
+18214                  0.99                0.0                   0.0                    Pauline                   Grachtengordel
+18215                  0.99                0.0                   0.0                    Pauline                   Grachtengordel
+18216                  0.99                0.0                   0.0                    Pauline                   Grachtengordel
+18217                  0.99                0.0                   0.0                    Pauline                   Grachtengordel
+18218                  0.99                0.0                   0.0                    Pauline                   Grachtengordel
+18221                  0.54                0.0                   0.0                      Remco              Westelijke Eilanden
+18222                  0.54                0.0                   0.0                      Remco              Westelijke Eilanden
+18223                  0.54                0.0                   0.0                      Remco              Westelijke Eilanden
+18231                  0.99                0.0                   0.0              Team Gospodin                     LB of Harrow
+18232                  0.96                0.0                   0.0                     Samson                          Jordaan
+18243                  0.33                0.0                   0.0                      Mayya                          Zeeburg
+18245                  1.00                0.0                   0.0  City Apartments Amsterdam                   Grachtengordel
+18251                  0.00                0.0                   0.0                        Kim                         Oud-West
+18252                  0.95                0.0                   0.0             Wendy And Bram                          Jordaan
+18290                  0.97                0.0                   0.0                    Suzanne                   Grachtengordel
+
+[12157 rows x 5 columns]
+
+Data type of each column of wide format data:
+host_acceptance_rate    float64
+number_of_reviews       float64
+review_scores_rating    float64
+host_name                object
+host_neighbourhood       object
+dtype: object
+
+Preparing for prediction 1:
+                                   neighborhood_overview                                         host_about host_is_superhost host_identity_verified
+0      Indische Buurt ("Indies Neighborhood") is a ne...  Upon arriving in Amsterdam, one can imagine as...                 t                      t
+1      Located just in between famous central canals....                  + (Phone number hidden by Airbnb)                 f                      t
+2                                                    NaN  We are a retired couple who live in NYC, and h...                 t                      f
+3             Central, quiet, safe, clean and beautiful.  Marjan works in "eye" the dutch filmmuseum, an...                 t                      t
+4           Flower market , Leidseplein , Rembrantsplein                                                 Hi                 t                      t
+5      the street is quite lively especially on weeke...                                                 Hi                 t                      t
+6                                                    NaN  (Hidden by Airbnb) Likes:\r\nOrishas, Manu Cha...                 f                      t
+7                                                    NaN  (Hidden by Airbnb) Likes:\r\nMichael Jackson, ...                 t                      t
+8            You almost can't be more central then this.  My name is Aukje\r\nI'm a visual artist and di...                 f                      t
+9      The Jordaan is possibly the most famous neighb...  I am little bit of a nomad. Born in Belarus, r...                 f                      f
+10     De pijp is all about hip shops, cafes, restaur...  Dutch Physician (Cosmetic doctor) living and w...                 f                      t
+11     You will find yourself in a quiet side street ...  Joanna is from London and MP is from Amsterdam...                 t                      t
+12                                                   NaN  hi\r\nIf you want a real comfortable stay, on ...                 f                      f
+13     Our neighborhood is a lovely part of Amsterdam...  My name is Karin I'm an English teacher in Ams...                 f                      t
+14                                                   NaN  Hallo I am Raymond Living in Amsterdam and I h...                 t                      t
+15     The neighbourhood is calm, with a lot of light...  I am a dutchman,  I enjoy travelling,\nlearnin...                 f                      t
+16                                                   NaN  Hi we are Mum and daughter, mum lives on stree...                 t                      t
+17     Around the corner you can sit on the square in...  I have been traveling a lot and like this idea...                 f                      t
+18     It's in the old historical center, just a few ...  As I'm very keen on my apartment, I like to kn...                 f                      t
+19     De PIJP is known for its unique atmosphere and...  Hello and welcome to our spacious apartment. I...                 f                      t
+20                                                   NaN  We like music, dancing, books a good story and...                 f                      f
+21     Our neighborhood is very central, but also qui...  Hi there! \r\n\r\nThank you for visiting my li...                 f                      t
+22                                                   NaN             Travelling from Amsterdam to Hong Kong                 f                      f
+23     En Suite is located on one of the main canals ...  Hallo I am Marcel from the Netherlands and I a...                 t                      t
+24     In this neighborhood is a lot to do: lots of c...  Hi, my name is Jessica and happy to be your ho...                 f                      t
+25                                                   NaN                                                NaN                 f                      f
+26                                                   NaN                                              Conny                 t                      t
+27                                                   NaN  I have lived in De Pijp. Amsterdam for 15 year...                 f                      t
+28     My home is in a 16th century monumental house ...  I am an easygoing and an open-minded guy that ...                 t                      t
+29     My home is in a 16th century monumental house ...  I am an easygoing and an open-minded guy that ...                 t                      t
+30     I live in a quiet neighbourhood in the North o...  I am originally from the Caribbean, living in ...                 t                      f
+31     My neighborhood offers the best of Amsterdam! ...  Welcome! We love our city and would be happy t...                 f                      t
+32     The Cottage room is located in the vibrant fun...  Welcome! We love our city and would be happy t...                 f                      t
+33     The location is very central. All the interest...  We are interested in Graphic- and Industrial D...                 f                      f
+34     All the interresting places you must have been...  We are interested in Graphic- and Industrial D...                 f                      f
+35     studio INN is situated on a very central spot ...  studio INN is situated on a very central spot ...                 t                      t
+36                                                   NaN  Dutch guy, offering single use rooms with priv...                 f                      t
+37     The Elandsgracht is a well known street and ar...  I am a wife, mother and social entrepreneur li...                 t                      t
+38                                                   NaN  Welcome to fabulous Amsterdam! I look forward ...                 f                      t
+39                                                   NaN                                                  .                 t                      t
+40     I love the west area of Amsterdam because it's...  I am Italian but live in Amsterdam since 2000....                 t                      t
+41     Vibrant hype park and museum area with young p...  I am Art and language interested, educated in ...                 f                      f
+42     You will be staying in the south centre side o...  I am from Amsterdam. I am a flight attendant s...                 f                      f
+43                                                   NaN  (Hidden by Airbnb) Likes:\r\nI live in Amsterd...                 t                      t
+44                                                   NaN  Hi, I am Marieke de Bra: part time photography...                 f                      t
+45                                                   NaN  Since I love travelling and meeting locals at ...                 f                      f
+46                                                   NaN  Dear Sir, Madam,\r\n\r\nMy name is Jessy Verho...                 f                      t
+47     Our neighborhood is very homely, lot of people...                                                  .                 f                      t
+48     Yes Bus & Tram are nearby: 50 mtrs & 150 mtrs,...  Hello! I'd like to welcome you to my modern ap...                 f                      t
+49     The neighbourhood is alive with restaurants, c...  Outgoing, eager to explore new territories, pe...                 f                      t
+...                                                  ...                                                ...               ...                    ...
+17989                                                NaN  Damrak Shortstay Amsterdam. Wij verhuren 7 sho...                 f                      t
+17998                                                NaN  We manage and own shortstay licensed apartment...                 f                      t
+18038                                                NaN  Hello, would you like to stay on an Amsterdam ...                 f                      t
+18049                                                NaN  Hello, would you like to stay on an Amsterdam ...                 f                      t
+18050  The Pijp is known for it's lively, artistic at...                                                  .                 t                      t
+18073                                                NaN  During my traveling over the world a lot of pe...                 f                      t
+18075  AMSTERDAM - DE PLANTAGEBUURT<br /><br />Find o...  Hi! We are Eva & Kobe, founders of L’easeaway....                 t                      t
+18078                                                NaN  World citizen, who loves art, music, parties, ...                 f                      f
+18081                                                NaN                                                NaN                 f                      t
+18085  The Erasmuspark next door is a perfect spot fo...                                                NaN                 t                      t
+18087                                                NaN                                                NaN                 f                      t
+18093  Named after the green park the neighbourhood i...  Hi, I'm Martijn, \r\n\r\nWe are a team of prof...                 f                      t
+18098                                                NaN                                                NaN                 f                      t
+18107                                                NaN                                                NaN                 f                      t
+18119  Oud West is in the heart of the city and close...                                                NaN                 f                      t
+18120  Jordan Area, in the centre of the 9-streets Sh...  Dear Guest!\r\n\r\nAfter managing a successful...                 f                      f
+18121                                                NaN                                    See my account.                 f                      t
+18135                                                NaN                                                NaN                 f                      t
+18142                                                NaN                                                NaN                 f                      t
+18146  De Pijp ligt ten zuiden van het Centrum, tusse...  Hi my name is Neil. I work all over the world ...                 t                      t
+18148                                                NaN  Hi! My name is Lydia and I like to use Airbnb ...                 f                      t
+18149                 trendy, young neighbourhood. Safe.                             Berlin; acting, skiing                 f                      t
+18150                                                NaN                                                NaN                 f                      t
+18155                                                NaN  Hello, would you like to stay on an Amsterdam ...                 f                      t
+18160  "Zoku is very conveniently located in the East...  Zoku is a re-invented apartment hotel brand fa...                 t                      t
+18161  "Zoku is very conveniently located in the East...  Zoku is a re-invented apartment hotel brand fa...                 t                      t
+18171                                                NaN  I'm Phillip, originally from El Salvador and h...                 f                      t
+18174                                                NaN             Amsterdam, sightseeing and having fun.                 f                      f
+18176                                                NaN                                                NaN                 f                      t
+18178  Houthaven is a neighbourhood of Amsterdam, Net...  As a soon-to-be-life-coach I love traveling an...                 f                      t
+18179  Houthaven is a neighbourhood of Amsterdam, Net...  As a soon-to-be-life-coach I love traveling an...                 f                      t
+18180  The Apartment is near the city centre and Jord...  As a soon-to-be-life-coach I love traveling an...                 f                      t
+18205                                                NaN  Hello, we are the TravelNest Team offering mor...                 f                      t
+18210  Zoku is very conveniently located in the Easte...  Zoku is a re-invented apartment hotel brand fa...                 t                      t
+18212  "Zoku is very conveniently located in the East...  Zoku is a re-invented apartment hotel brand fa...                 t                      t
+18214  The Apartment is near the city centre and Jord...  As a soon-to-be-life-coach I love traveling an...                 f                      t
+18215  Houthaven is a neighbourhood of Amsterdam, Net...  As a soon-to-be-life-coach I love traveling an...                 f                      t
+18216  Houthaven is a neighbourhood of Amsterdam, Net...  As a soon-to-be-life-coach I love traveling an...                 f                      t
+18217  The Apartment is near the city centre and Jord...  As a soon-to-be-life-coach I love traveling an...                 f                      t
+18218  The Apartment is near the city centre and Jord...  As a soon-to-be-life-coach I love traveling an...                 f                      t
+18221                                                NaN  I am a realtor since 18 years. Some of my hobb...                 f                      t
+18222                                                NaN  I am a realtor since 18 years. Some of my hobb...                 f                      t
+18223                                                NaN  I am a realtor since 18 years. Some of my hobb...                 f                      t
+18231                                                NaN                                                NaN                 f                      t
+18232                                                NaN  friendly 56 year old male with travel experien...                 t                      t
+18243                                                NaN  I am a writer originally from the Mediterranea...                 f                      t
+18245  Het oostelijke gedeelte van de grachtengordel,...  We used to manage a company in changing/redeve...                 f                      t
+18251                                                NaN  During the week I work as a freelance Advertis...                 f                      t
+18252  The lively Elandsgracht with its countless sho...  Hi, we are Wendy and Bram,\n\nWe are a team of...                 f                      t
+18290  The is apartment is only on a 4 minute walking...  I am the General Manager Concierge Services of...                 t                      t
+
+[12157 rows x 4 columns]
+
+Preparing for prediction 2:
+                           property_type        room_type  accommodates    bathrooms_text  bedrooms  beds                                          amenities  price
+0              Private room in apartment     Private room             2  1.5 shared baths       1.0   2.0  ["Hangers", "Coffee maker", "Paid parking on p...   59.0
+1              Private room in townhouse     Private room             2    1 private bath       1.0   1.0  ["Essentials", "Bed linens", "Hot water", "Han...  129.0
+2                       Entire apartment  Entire home/apt             3            1 bath       1.0   1.0  ["Hangers", "Elevator", "Cooking basics", "Dis...  125.0
+3              Private room in houseboat     Private room             2         1.5 baths       1.0   1.0  ["Patio or balcony", "Hangers", "Dishes and si...  125.0
+4              Private room in apartment     Private room             2     1 shared bath       1.0   1.0  ["Hot water", "Essentials", "Smoke alarm", "Ha...   75.0
+5              Private room in apartment     Private room             1     1 shared bath       1.0   1.0  ["Hot water", "Essentials", "Bed linens", "Han...   55.0
+6                       Entire apartment  Entire home/apt             4            1 bath       3.0   3.0  ["Patio or balcony", "Cooking basics", "Dishes...  219.0
+7                       Entire apartment  Entire home/apt             3            1 bath       1.0   1.0  ["Patio or balcony", "Hangers", "Cooking basic...  160.0
+8                       Entire apartment  Entire home/apt             4            1 bath       2.0   4.0  ["Washer", "Heating", "Carbon monoxide alarm",...  211.0
+9                       Entire apartment  Entire home/apt             2         1.5 baths       1.0   1.0  ["Hangers", "Cooking basics", "Lockbox", "Dish...  115.0
+10                      Entire apartment  Entire home/apt             2            1 bath       1.0   1.0  ["Essentials", "Smoke alarm", "Stove", "Hanger...  150.0
+11                    Entire guest suite  Entire home/apt             3            1 bath       2.0   2.0  ["Marie Stella Maris shampoo", "Babysitter rec...  136.0
+12                                  Boat  Entire home/apt             4            1 bath       2.0   2.0  ["Essentials", "Smoke alarm", "Washer", "Heati...  250.0
+13                      Entire townhouse  Entire home/apt             6            1 bath       3.0   3.0  ["Hot water", "Smoke alarm", "Hangers", "Washe...  115.0
+14     Private room in bed and breakfast     Private room             2    1 private bath       1.0   1.0  ["Hot water", "Essentials", "Smoke alarm", "Ha...  118.0
+15             Private room in apartment     Private room             2  1.5 shared baths       1.0   1.0  ["Hot water", "Essentials", "Smoke alarm", "Ha...   75.0
+16            Private room in guesthouse     Private room             2    1 private bath       1.0   0.0  ["Hangers", "Cooking basics", "Dishes and silv...   40.0
+17           Private room in guest suite     Private room             2    1 private bath       1.0   1.0  ["Essentials", "Smoke alarm", "Hangers", "Paid...   75.0
+18             Private room in apartment     Private room             2     1 shared bath       1.0   1.0  ["Hot water", "Bed linens", "Essentials", "Kit...   90.0
+19                      Entire apartment  Entire home/apt             4            1 bath       2.0   2.0  ["Patio or balcony", "Dishes and silverware", ...  222.0
+20             Private room in apartment     Private room             2            1 bath       1.0   1.0  ["Smoke alarm", "Heating", "Iron", "TV", "Hair...   65.0
+21                      Entire apartment  Entire home/apt             4         1.5 baths       2.0   2.0  ["Hot water", "Essentials", "Bed linens", "Han...  149.0
+22                          Entire house  Entire home/apt             2            1 bath       2.0   2.0  ["Essentials", "Kitchen", "Hangers", "Washer",...  155.0
+23             Private room in townhouse     Private room             4           2 baths       2.0   2.0  ["Hangers", "Cooking basics", "Dishes and silv...  135.0
+24                      Entire apartment  Entire home/apt             2         1.5 baths       1.0   1.0  ["Patio or balcony", "Hangers", "Cooking basic...  135.0
+25                      Entire apartment  Entire home/apt             4               NaN       2.0   1.0  ["Washer", "Heating", "TV", "Cable TV", "Wifi"...  750.0
+26                             Houseboat  Entire home/apt             2         1.5 baths       1.0   1.0  ["Hangers", "Coffee maker", "Long term stays a...  189.0
+27                      Entire apartment  Entire home/apt             2            1 bath       1.0   1.0  ["Essentials", "Hot water", "Smoke alarm", "Ha...  106.0
+28             Private room in apartment     Private room             2  1.5 shared baths       1.0   2.0  ["Hangers", "Luggage dropoff allowed", "Room-d...   45.0
+29             Private room in apartment     Private room             2  1.5 shared baths       1.0   1.0  ["Hangers", "Luggage dropoff allowed", "Coffee...   98.0
+30                 Private room in house     Private room             2  1.5 shared baths       1.0   1.0  ["Hot water", "Bed linens", "Essentials", "Han...   40.0
+31             Private room in apartment     Private room             3    1 private bath       1.0   2.0  ["Patio or balcony", "Hangers", "Cooking basic...   55.0
+32             Private room in apartment     Private room             2    1 private bath       1.0   1.0  ["Hot water", "Essentials", "Hangers", "Paid p...   48.0
+33             Private room in apartment     Private room             2    1 private bath       1.0   1.0  ["Hangers", "Room-darkening shades", "Long ter...   80.0
+34             Private room in townhouse     Private room             2    1 private bath       1.0   2.0  ["Cleaning before checkout", "Hangers", "Dishe...   80.0
+35             Room in bed and breakfast       Hotel room             4            1 bath       2.0   2.0  ["Hangers", "Dishes and silverware", "Luggage ...  145.0
+36             Private room in townhouse     Private room             1         1.5 baths       1.0   1.0  ["Hangers", "Coffee maker", "Long term stays a...  109.0
+37                     Entire guesthouse  Entire home/apt             4            1 bath       NaN   2.0  ["Hangers", "Cooking basics", "BBQ grill", "Di...  109.0
+38                      Entire apartment  Entire home/apt             4            1 bath       1.0   2.0  ["Essentials", "Stove", "Smoke alarm", "Washer...  249.0
+39                      Entire apartment  Entire home/apt             2            1 bath       NaN   1.0  ["Essentials", "Smoke alarm", "Hangers", "Heat...   45.0
+40             Room in bed and breakfast       Hotel room             2            1 bath       1.0   1.0  ["Patio or balcony", "Hangers", "Cooking basic...  109.0
+41                      Entire apartment  Entire home/apt             2         1.5 baths       NaN   2.0  ["Patio or balcony", "Cleaning before checkout...   68.0
+42                  Private room in boat     Private room             2  1.5 shared baths       1.0   1.0  ["Patio or balcony", "Cleaning before checkout...   95.0
+43     Private room in bed and breakfast     Private room             2     1 shared bath       1.0   2.0  ["Hot water", "Smoke alarm", "Hangers", "Eleva...   45.0
+44                      Entire apartment  Entire home/apt             2            1 bath       1.0   1.0  ["Hangers", "Cooking basics", "Dishes and silv...  150.0
+45                      Entire apartment  Entire home/apt             4            1 bath       1.0   2.0  ["Essentials", "Hangers", "Washer", "Heating",...  100.0
+46             Private room in apartment     Private room             2    1 private bath       1.0   1.0  ["Washer", "Heating", "Cable TV", "Wifi", "Kit...   80.0
+47                             Houseboat  Entire home/apt             3            1 bath       1.0   1.0  ["Smoke alarm", "Washer", "Heating", "TV", "Ca...  165.0
+48                      Entire apartment  Entire home/apt             3            1 bath       2.0   2.0  ["Essentials", "Smoke alarm", "Hangers", "Paid...  145.0
+49             Private room in apartment     Private room             2     1 shared bath       1.0   1.0  ["Hot water", "Essentials", "Paid parking off ...   37.0
+...                                  ...              ...           ...               ...       ...   ...                                                ...    ...
+17989                   Entire apartment  Entire home/apt             4           2 baths       2.0   2.0     ["Host greets you", "Long term stays allowed"]  150.0
+17998                   Entire apartment  Entire home/apt             4            1 bath       2.0   2.0  ["Essentials", "Smoke alarm", "Hangers", "Heat...   96.0
+18038                   Entire apartment  Entire home/apt             2            1 bath       NaN   1.0  ["Essentials", "Smoke alarm", "Kitchen", "Hang...   70.0
+18049                   Entire apartment  Entire home/apt             3            1 bath       1.0   1.0  ["Essentials", "Smoke alarm", "Kitchen", "Hang...   70.0
+18050                   Entire apartment  Entire home/apt             4         1.5 baths       1.0   2.0  ["Hangers", "Dishes and silverware", "Coffee m...   80.0
+18073          Private room in apartment     Private room             2     1 shared bath       1.0   1.0  ["Patio or balcony", "Hangers", "Luggage dropo...   60.0
+18075          Private room in apartment     Private room             4    1 private bath       1.0   2.0  ["Hangers", "Cooking basics", "Dishes and silv...  119.0
+18078                   Entire apartment  Entire home/apt             2            1 bath       1.0   1.0  ["Hot water", "Essentials", "Kitchen", "Hanger...  135.0
+18081          Private room in apartment     Private room             1  1.5 shared baths       1.0   1.0  ["Essentials", "Smoke alarm", "Kitchen", "Hang...   55.0
+18085                   Entire apartment  Entire home/apt             2            1 bath       1.0   1.0  ["Essentials", "Kitchen", "Private entrance", ...  195.0
+18087                   Entire apartment  Entire home/apt             2            1 bath       1.0   1.0  ["Essentials", "Kitchen", "Long term stays all...   52.0
+18093                   Entire apartment  Entire home/apt             2            1 bath       1.0   1.0  ["Hot water", "Bed linens", "Essentials", "Sto...  100.0
+18098                   Entire apartment  Entire home/apt             4            1 bath       1.0   1.0  ["Essentials", "Hangers", "Heating", "Private ...   79.0
+18107                   Entire apartment  Entire home/apt             4            1 bath       2.0   2.0  ["Essentials", "Heating", "Private entrance", ...   76.0
+18119                   Entire apartment  Entire home/apt             2            1 bath       1.0   1.0  ["Essentials", "Kitchen", "Private entrance", ...  145.0
+18120                        Entire loft  Entire home/apt             4         1.5 baths       NaN   2.0  ["Hangers", "Dishes and silverware", "Luggage ...   56.0
+18121                   Entire apartment  Entire home/apt             4           2 baths       3.0   1.0  ["Baking sheet", "Patio or balcony", "Hangers"...  250.0
+18135                   Entire apartment  Entire home/apt             2            1 bath       1.0   1.0  ["Essentials", "Hangers", "Washer", "Heating",...  135.0
+18142                   Entire apartment  Entire home/apt             2            1 bath       NaN   2.0  ["Hot water", "Essentials", "Hangers", "Heatin...  100.0
+18146                   Entire apartment  Entire home/apt             2         1.5 baths       1.0   1.0  ["Baking sheet", "Patio or balcony", "Hangers"...   77.0
+18148                 Entire guest suite  Entire home/apt             2            1 bath       1.0   0.0  ["Essentials", "Dishes and silverware", "Priva...   50.0
+18149                   Entire apartment  Entire home/apt             4         1.5 baths       2.0   2.0  ["Essentials", "Private entrance", "Dryer", "L...  120.0
+18150                   Entire apartment  Entire home/apt             4            1 bath       2.0   2.0  ["Essentials", "Kitchen", "Heating", "Private ...   67.0
+18155                   Entire apartment  Entire home/apt             2            1 bath       1.0   1.0  ["Essentials", "Bed linens", "Kitchen", "Heati...  120.0
+18160                   Entire apartment  Entire home/apt             2            1 bath       1.0   1.0  ["Essentials", "Smoke alarm", "Kitchen", "Hang...  130.0
+18161                   Entire apartment  Entire home/apt             2            1 bath       1.0   1.0  ["Essentials", "Kitchen", "Building staff", "F...   94.0
+18171          Private room in apartment     Private room             1     1 shared bath       1.0   NaN  ["Essentials", "Washer", "Heating", "Iron", "T...   40.0
+18174                   Entire apartment  Entire home/apt             2           2 baths       1.0   1.0  ["Essentials", "Smoke alarm", "Hangers", "Wash...   85.0
+18176                   Entire apartment  Entire home/apt             4            1 bath       2.0   2.0  ["Hot water", "Smoke alarm", "Kitchen", "Air c...   70.0
+18178                        Entire loft  Entire home/apt             2            1 bath       1.0   1.0  ["Hangers", "Elevator", "Oven", "Long term sta...  110.0
+18179                   Entire apartment  Entire home/apt             2            1 bath       1.0   1.0  ["Hangers", "Elevator", "Oven", "Coffee maker"...  110.0
+18180                   Entire apartment  Entire home/apt             2            1 bath       1.0   1.0  ["Hangers", "Elevator", "Oven", "Long term sta...  110.0
+18205                       Entire house  Entire home/apt             2            1 bath       1.0   1.0  ["Bed linens", "Smoke alarm", "Heating", "Priv...  228.0
+18210          Entire serviced apartment  Entire home/apt             2            1 bath       1.0   1.0  ["Hangers", "Elevator", "Cooking basics", "Dis...  110.0
+18212          Entire serviced apartment  Entire home/apt             2            1 bath       1.0   NaN  ["Essentials", "Smoke alarm", "Free parking on...  130.0
+18214                   Entire apartment  Entire home/apt             2            1 bath       1.0   1.0  ["Hot water", "Bed linens", "Smoke alarm", "St...  110.0
+18215                   Entire apartment  Entire home/apt             2            1 bath       1.0   1.0  ["Hangers", "Elevator", "Oven", "Coffee maker"...  110.0
+18216                   Entire apartment  Entire home/apt             2            1 bath       1.0   1.0  ["Hangers", "Elevator", "Dishes and silverware...  110.0
+18217                   Entire apartment  Entire home/apt             2            1 bath       1.0   1.0  ["Hangers", "Elevator", "Oven", "Coffee maker"...  110.0
+18218                   Entire apartment  Entire home/apt             2            1 bath       1.0   1.0  ["Hangers", "Elevator", "Oven", "Coffee maker"...  110.0
+18221                   Entire apartment  Entire home/apt             2         1.5 baths       1.0   1.0  ["Baking sheet", "Patio or balcony", "Hangers"...   72.0
+18222                   Entire apartment  Entire home/apt             2         1.5 baths       1.0   1.0  ["Patio or balcony", "Hangers", "Cooking basic...   66.0
+18223                   Entire apartment  Entire home/apt             2         1.5 baths       1.0   1.0  ["Baking sheet", "Hangers", "Cooking basics", ...   70.0
+18231  Private room in bed and breakfast     Private room             2    1 private bath       1.0   1.0  ["Essentials", "Bed linens", "Hot water", "Air...  178.0
+18232          Private room in apartment     Private room             2     1 shared bath       1.0   1.0  ["Cooking basics", "Dishes and silverware", "O...   35.0
+18243                   Entire apartment  Entire home/apt             2         1.5 baths       1.0   1.0  ["Essentials", "Smoke alarm", "Free parking on...   85.0
+18245  Private room in bed and breakfast     Private room             2         1.5 baths       1.0   1.0  ["Essentials", "Smoke alarm", "Hangers", "Heat...   59.0
+18251  Private room in bed and breakfast     Private room             2  1.5 shared baths       1.0   1.0  ["Patio or balcony", "Hangers", "Luggage dropo...  125.0
+18252                   Entire apartment  Entire home/apt             4            1 bath       2.0   3.0  ["Patio or balcony", "Cooking basics", "Oven",...  150.0
+18290                   Entire apartment  Entire home/apt             2         1.5 baths       1.0   1.0  ["Patio or balcony", "Hangers", "Cooking basic...  112.0
+
+[12157 rows x 8 columns]
+
+Maximum listing price details:
+                                               amenities  host_since host_neighbourhood   price     property_type  number_of_reviews  review_scores_rating  accommodates
+13280  ["Patio or balcony", "Changing table", "Hanger...  2013-02-18     Grachtengordel  1900.0  Entire townhouse                 13                  98.0             8
+
+Minimum listing price details:
+                                               amenities  host_since     host_neighbourhood  price           property_type  number_of_reviews  review_scores_rating  accommodates
+17143  ["Patio or balcony", "Hangers", "Limited house...  2019-11-11          Bos en Lommer    0.0          Room in hostel                  0                   0.0            10
+17145  ["Smoke alarm", "Bed sheets and pillows", "Toi...  2019-11-13               Oud-West    0.0           Room in hotel                  0                   0.0             3
+17312  ["Smoke alarm", "Bed sheets and pillows", "Air...  2019-11-18         Grachtengordel    0.0           Room in hotel                  0                   0.0             0
+17317  ["Toiletries", "Bed sheets and pillows", "Hang...  2019-12-03      Amsterdam Centrum    0.0           Room in hotel                  0                   0.0             0
+17318  ["Smoke alarm", "Concierge", "Bed sheets and p...  2019-11-22         Grachtengordel    0.0           Room in hotel                  0                   0.0             0
+17327  ["Self-parking \u2014 \u20ac20/day", "Smoke al...  2019-11-13      Amsterdam Centrum    0.0           Room in hotel                  0                   0.0             0
+17328  ["Toiletries", "Bed sheets and pillows", "Hang...  2019-12-10         Grachtengordel    0.0           Room in hotel                  0                   0.0             0
+17330  ["Bed sheets and pillows", "Hangers", "Luggage...  2019-12-18  Nieuwmarkt en Lastage    0.0  Room in boutique hotel                  0                   0.0             0
+17347  ["Bed sheets and pillows", "Hangers", "Luggage...  2019-11-27      Amsterdam Centrum    0.0  Room in boutique hotel                  0                   0.0             0
+
+<class 'pandas.core.frame.DataFrame'>
+Int64Index: 12149 entries, 0 to 18290
+Data columns (total 74 columns):
+ #   Column                                        Non-Null Count  Dtype  
+---  ------                                        --------------  -----  
+ 0   id                                            12149 non-null  int64  
+ 1   listing_url                                   12149 non-null  object 
+ 2   scrape_id                                     12149 non-null  int64  
+ 3   last_scraped                                  12149 non-null  object 
+ 4   name                                          12131 non-null  object 
+ 5   description                                   12039 non-null  object 
+ 6   neighborhood_overview                         8227 non-null   object 
+ 7   picture_url                                   12149 non-null  object 
+ 8   host_id                                       12149 non-null  int64  
+ 9   host_url                                      12149 non-null  object 
+ 10  host_name                                     12149 non-null  object 
+ 11  host_since                                    12149 non-null  object 
+ 12  host_location                                 12131 non-null  object 
+ 13  host_about                                    7279 non-null   object 
+ 14  host_response_time                            2511 non-null   object 
+ 15  host_response_rate                            2511 non-null   object 
+ 16  host_acceptance_rate                          5071 non-null   object 
+ 17  host_is_superhost                             12149 non-null  object 
+ 18  host_thumbnail_url                            12149 non-null  object 
+ 19  host_picture_url                              12149 non-null  object 
+ 20  host_neighbourhood                            12149 non-null  object 
+ 21  host_listings_count                           12149 non-null  float64
+ 22  host_total_listings_count                     12149 non-null  float64
+ 23  host_verifications                            12149 non-null  object 
+ 24  host_has_profile_pic                          12149 non-null  object 
+ 25  host_identity_verified                        12149 non-null  object 
+ 26  neighbourhood                                 8227 non-null   object 
+ 27  neighbourhood_cleansed                        12149 non-null  object 
+ 28  neighbourhood_group_cleansed                  0 non-null      float64
+ 29  latitude                                      12149 non-null  float64
+ 30  longitude                                     12149 non-null  float64
+ 31  property_type                                 12149 non-null  object 
+ 32  room_type                                     12149 non-null  object 
+ 33  accommodates                                  12149 non-null  int64  
+ 34  bathrooms                                     0 non-null      float64
+ 35  bathrooms_text                                12149 non-null  object 
+ 36  bedrooms                                      12149 non-null  float64
+ 37  beds                                          12149 non-null  float64
+ 38  amenities                                     12149 non-null  object 
+ 39  price                                         12149 non-null  float64
+ 40  minimum_nights                                12149 non-null  int64  
+ 41  maximum_nights                                12149 non-null  int64  
+ 42  minimum_minimum_nights                        12149 non-null  float64
+ 43  maximum_minimum_nights                        12149 non-null  float64
+ 44  minimum_maximum_nights                        12149 non-null  float64
+ 45  maximum_maximum_nights                        12149 non-null  float64
+ 46  minimum_nights_avg_ntm                        12149 non-null  float64
+ 47  maximum_nights_avg_ntm                        12149 non-null  float64
+ 48  calendar_updated                              0 non-null      float64
+ 49  has_availability                              12149 non-null  object 
+ 50  availability_30                               12149 non-null  int64  
+ 51  availability_60                               12149 non-null  int64  
+ 52  availability_90                               12149 non-null  int64  
+ 53  availability_365                              12149 non-null  int64  
+ 54  calendar_last_scraped                         12149 non-null  object 
+ 55  number_of_reviews                             12149 non-null  int64  
+ 56  number_of_reviews_ltm                         12149 non-null  int64  
+ 57  number_of_reviews_l30d                        12149 non-null  int64  
+ 58  first_review                                  10893 non-null  object 
+ 59  last_review                                   10893 non-null  object 
+ 60  review_scores_rating                          12149 non-null  float64
+ 61  review_scores_accuracy                        10719 non-null  float64
+ 62  review_scores_cleanliness                     10719 non-null  float64
+ 63  review_scores_checkin                         10714 non-null  float64
+ 64  review_scores_communication                   10719 non-null  float64
+ 65  review_scores_location                        10716 non-null  float64
+ 66  review_scores_value                           10716 non-null  float64
+ 67  license                                       0 non-null      float64
+ 68  instant_bookable                              12149 non-null  object 
+ 69  calculated_host_listings_count                12149 non-null  int64  
+ 70  calculated_host_listings_count_entire_homes   12149 non-null  int64  
+ 71  calculated_host_listings_count_private_rooms  12149 non-null  int64  
+ 72  calculated_host_listings_count_shared_rooms   12149 non-null  int64  
+ 73  reviews_per_month                             10893 non-null  float64
+dtypes: float64(25), int64(17), object(32)
+memory usage: 7.0+ MB
+None
+
+<class 'pandas.core.frame.DataFrame'>
+Int64Index: 12149 entries, 0 to 18290
+Columns: 166 entries, accommodates to Shared_half-bath
+dtypes: float64(3), int64(3), uint8(160)
+memory usage: 2.5 MB
+None
+
+Using Numpy, here is our computed correlation matrix:
+[[ 1.          0.73993201  0.77819851 ... -0.0179691  -0.01799317
+  -0.02976957]
+ [ 0.73993201  1.          0.75899053 ... -0.03084756 -0.01593586
+  -0.02533152]
+ [ 0.77819851  0.75899053  1.         ... -0.00990168 -0.01005496
+   0.00250393]
+ ...
+ [-0.0179691  -0.03084756 -0.00990168 ...  1.         -0.00104908
+  -0.00226832]
+ [-0.01799317 -0.01593586 -0.01005496 ... -0.00104908  1.
+  -0.00106837]
+ [-0.02976957 -0.02533152  0.00250393 ... -0.00226832 -0.00106837
+   1.        ]]
+
+(166, 166)
+
+For validation,using inherent Pandas DataFrame, here is our computed correlation matrix:
+                                     accommodates  bedrooms      beds  number_of_reviews  review_scores_rating  ...  5.5_baths   6_baths  Half-bath  Private_half-bath  Shared_half-bath
+accommodates                             1.000000  0.739932  0.778199          -0.057230             -0.007520  ...   0.037320  0.095264  -0.017969          -0.017993         -0.029770
+bedrooms                                 0.739932  1.000000  0.758991          -0.115459             -0.016475  ...   0.036560  0.139913  -0.030848          -0.015936         -0.025332
+beds                                     0.778199  0.758991  1.000000          -0.026702              0.003380  ...   0.022691  0.099580  -0.009902          -0.010055          0.002504
+number_of_reviews                       -0.057230 -0.115459 -0.026702           1.000000              0.161065  ...  -0.002100 -0.003900  -0.007284           0.015741          0.052729
+review_scores_rating                    -0.007520 -0.016475  0.003380           0.161065              1.000000  ...   0.004059 -0.001168   0.004832          -0.004167          0.014579
+calculated_host_listings_count           0.007390 -0.009342 -0.004092          -0.030929             -0.050910  ...  -0.001771 -0.001771  -0.008346          -0.002500          0.032899
+false                                    0.033084  0.078669  0.017556          -0.371206             -0.138499  ...   0.003671  0.003671   0.004012          -0.012318         -0.015114
+true                                    -0.033084 -0.078669 -0.017556           0.371206              0.138499  ...  -0.003671 -0.003671  -0.004012           0.012318          0.015114
+Amsterdam_Centrum                       -0.009480 -0.045498 -0.031614           0.040536             -0.015547  ...  -0.001249 -0.001249  -0.006498          -0.003060          0.006087
+Banne_Buiksloot                          0.007251  0.020528  0.019143          -0.000585             -0.007862  ...  -0.000725 -0.000725  -0.003769          -0.001775         -0.003839
+Beguinage-Dixmude                        0.008349 -0.004782  0.001721           0.027451              0.001445  ...  -0.000082 -0.000082  -0.000428          -0.000202         -0.000436
+Belváros                                 0.015592  0.005553  0.001721          -0.001650              0.004349  ...  -0.000082 -0.000082  -0.000428          -0.000202         -0.000436
+Bos_en_Lommer                           -0.035062 -0.039374 -0.044651          -0.034755              0.011341  ...  -0.002169 -0.002169   0.004172          -0.005315         -0.003902
+Bugis/Kampong_Glam                       0.001106 -0.004782  0.008711          -0.003750              0.004640  ...  -0.000082 -0.000082  -0.000428          -0.000202         -0.000436
+Buiksloterham                            0.150897  0.097872  0.166893           0.006737              0.006507  ...  -0.000645  0.127720  -0.003353          -0.001579         -0.003414
+Buikslotermeer                           0.020595  0.035867  0.024430          -0.015343             -0.012417  ...  -0.000681 -0.000681  -0.003541          -0.001668         -0.003606
+Buitenveldert-Oost                       0.006645  0.007493 -0.002493          -0.015975             -0.009445  ...  -0.000495 -0.000495  -0.002573          -0.001212         -0.002620
+Buitenveldert-West                       0.028081  0.022102  0.026078          -0.016564             -0.020094  ...  -0.000793 -0.000793  -0.004123          -0.001942         -0.004198
+Camberwell                              -0.006137 -0.004782 -0.005269          -0.002400              0.003188  ...  -0.000082 -0.000082  -0.000428          -0.000202         -0.000436
+Cannaregio                               0.008349  0.005553  0.015701          -0.002700             -0.001168  ...  -0.000082 -0.000082  -0.000428          -0.000202         -0.000436
+Cannes                                   0.001564 -0.006763 -0.002509          -0.004243              0.005124  ...  -0.000116 -0.000116  -0.000606          -0.000285         -0.000617
+Carabacel                               -0.006137 -0.004782 -0.005269          -0.003150              0.004640  ...  -0.000082 -0.000082  -0.000428          -0.000202         -0.000436
+Città_Studi                             -0.006137 -0.004782 -0.005269          -0.003600             -0.001168  ...  -0.000082 -0.000082  -0.000428          -0.000202         -0.000436
+De_Pijp                                 -0.008883 -0.032373 -0.033715           0.002991              0.014303  ...  -0.002805 -0.002805   0.003990           0.019384         -0.014860
+De_Wallen                               -0.019337 -0.038090  0.005152           0.108339              0.000049  ...  -0.001061 -0.001061  -0.005521          -0.002600          0.217500
+Docklands                               -0.014832 -0.015127 -0.012246          -0.009444             -0.017477  ...  -0.000260 -0.000260  -0.001355          -0.000638         -0.001379
+East_Wall                                0.008349  0.005553  0.001721          -0.004050             -0.024402  ...  -0.000082 -0.000082  -0.000428          -0.000202         -0.000436
+Esquilino                               -0.006137 -0.004782 -0.005269          -0.003150              0.001736  ...  -0.000082 -0.000082  -0.000428          -0.000202         -0.000436
+Frederik_Hendrikbuurt                   -0.025291 -0.021084 -0.027379          -0.016505              0.010686  ...  -0.001388 -0.001388  -0.007222          -0.003402          0.050043
+Friedrichshain                           0.008349  0.005553  0.001721          -0.002850              0.004640  ...  -0.000082 -0.000082  -0.000428          -0.000202         -0.000436
+Fulham                                   0.008349 -0.004782  0.001721          -0.003900              0.004640  ...  -0.000082 -0.000082  -0.000428          -0.000202         -0.000436
+Grachtengordel                           0.003562 -0.025672 -0.001408           0.063417             -0.015929  ...   0.035989 -0.002287   0.010225           0.010026         -0.004875
+Hampstead                                0.051806  0.036560  0.050650          -0.004050             -0.024402  ...  -0.000082 -0.000082  -0.000428          -0.000202         -0.000436
+Hoofddorppleinbuurt                     -0.022190 -0.001299 -0.017611          -0.028853              0.004114  ...  -0.001483 -0.001483  -0.007712          -0.003633         -0.007854
+IJplein_en_Vogelbuurt                    0.001918  0.001519  0.004119           0.016177              0.004301  ...  -0.000921 -0.000921  -0.004793          -0.002257         -0.004881
+Indische_Buurt                          -0.049167 -0.051589 -0.063360          -0.036665              0.016247  ...  -0.002115 -0.002115  -0.003093          -0.005181         -0.011202
+Jordaan                                 -0.001826 -0.044687 -0.013295           0.030697              0.006338  ...  -0.002218 -0.002218   0.011198           0.010628         -0.011749
+Kadoelen                                 0.042912  0.048894  0.036007          -0.005359             -0.000574  ...  -0.000495 -0.000495   0.029586          -0.001212         -0.002620
+LB_of_Harrow                            -0.006137 -0.004782 -0.005269          -0.004050             -0.024402  ...  -0.000082 -0.000082  -0.000428          -0.000202         -0.000436
+LB_of_Hillingdon                        -0.013380 -0.015117 -0.005269          -0.003300             -0.000007  ...  -0.000082 -0.000082  -0.000428          -0.000202         -0.000436
+La_Latina                               -0.006137 -0.004782 -0.005269           0.003600              0.001445  ...  -0.000082 -0.000082  -0.000428          -0.000202         -0.000436
+La_Sagrada_Família                      -0.006137 -0.004782 -0.005269           0.010650              0.003769  ...  -0.000082 -0.000082  -0.000428          -0.000202         -0.000436
+Landelijk_Noord                          0.035586  0.051077  0.052161           0.000529             -0.026870  ...  -0.000444 -0.000444  -0.002309          -0.001087         -0.002351
+Le_Plateau                              -0.013380 -0.004782 -0.012259          -0.004050             -0.024402  ...  -0.000082 -0.000082  -0.000428          -0.000202         -0.000436
+Montparnasse                            -0.006137 -0.004782 -0.005269          -0.003750              0.004640  ...  -0.000082 -0.000082  -0.000428          -0.000202         -0.000436
+Museumkwartier                           0.041899  0.052430  0.047412           0.005542             -0.006242  ...  -0.001137 -0.001137  -0.005917          -0.002787         -0.006026
+Nieuwendam-Noord                         0.015035  0.028633  0.024185          -0.003446              0.008741  ...  -0.000521 -0.000521  -0.002713           0.063395         -0.002762
+Nieuwendammerdijk_en_Buiksloterdijk      0.013486  0.024813  0.031368          -0.005029              0.004404  ...  -0.000329 -0.000329   0.046484          -0.000807          0.045586
+Nieuwendammerham                         0.001564 -0.006763 -0.002509          -0.000637              0.001428  ...  -0.000116 -0.000116  -0.000606          -0.000285         -0.000617
+Nieuwmarkt_en_Lastage                   -0.004192 -0.022336 -0.007572           0.049295             -0.008237  ...  -0.001180 -0.001180  -0.006137          -0.002890         -0.006250
+...                                           ...       ...       ...                ...                   ...  ...        ...       ...        ...                ...               ...
+Private_room_in_guesthouse              -0.007958 -0.015127 -0.007823           0.050396              0.009992  ...  -0.000260 -0.000260  -0.001355          -0.000638         -0.001379
+Private_room_in_hostel                  -0.008026 -0.012655  0.001912           0.041456             -0.015170  ...  -0.000218 -0.000218  -0.001133          -0.000534         -0.001154
+Private_room_in_house                   -0.064872 -0.060120 -0.044308           0.086709             -0.009346  ...  -0.001186 -0.001186   0.021040          -0.002905         -0.006281
+Private_room_in_houseboat               -0.018596 -0.030443 -0.020108           0.077127              0.018325  ...  -0.000639 -0.000639  -0.003325          -0.001566         -0.003386
+Private_room_in_island                   0.016929 -0.014071 -0.002509           0.009546             -0.002269  ...  -0.000116 -0.000116  -0.000606          -0.000285         -0.000617
+Private_room_in_loft                    -0.020690 -0.029130 -0.015986           0.074240              0.010956  ...  -0.000501 -0.000501  -0.002608          -0.001229         -0.002656
+Private_room_in_serviced_apartment      -0.000766 -0.006072 -0.011784          -0.008186             -0.010407  ...  -0.000184 -0.000184  -0.000958          -0.000451         -0.000975
+Private_room_in_tiny_house              -0.016965 -0.015317 -0.011784           0.006239              0.008688  ...  -0.000184 -0.000184  -0.000958          -0.000451         -0.000975
+Private_room_in_townhouse               -0.045159 -0.051913 -0.026626           0.144287              0.008209  ...  -0.000859 -0.000859  -0.004470           0.037364         -0.004552
+Private_room_in_villa                   -0.003558 -0.006763 -0.002509           0.016441              0.005740  ...  -0.000116 -0.000116  -0.000606          -0.000285         -0.000617
+Room_in_aparthotel                       0.037416  0.029780  0.046919          -0.004456              0.006562  ...  -0.000116 -0.000116  -0.000606          -0.000285         -0.000617
+Room_in_bed_and_breakfast               -0.023768 -0.027843 -0.016631           0.055736              0.018265  ...  -0.000508 -0.000508  -0.002644          -0.001245         -0.002692
+Room_in_boutique_hotel                  -0.029132 -0.027953 -0.004609           0.034013             -0.023031  ...  -0.000623 -0.000623  -0.003240          -0.001526          0.348369
+Room_in_hostel                           0.022826 -0.014251 -0.017199           0.001299             -0.013762  ...  -0.000143 -0.000143  -0.000742          -0.000349         -0.000755
+Room_in_hotel                           -0.035535 -0.037918 -0.024581          -0.007289             -0.034014  ...  -0.000508 -0.000508  -0.002644          -0.001245         -0.002692
+Room_in_serviced_apartment              -0.012388 -0.012989 -0.005883          -0.005061              0.016548  ...  -0.000349 -0.000349  -0.001818          -0.000856         -0.001851
+Shared_room_in_apartment                -0.023562 -0.019729 -0.008168           0.010994              0.005751  ...  -0.000340 -0.000340  -0.001767          -0.000832         -0.001799
+Shared_room_in_bed_and_breakfast         0.001106 -0.004782 -0.005269           0.007500              0.002026  ...  -0.000082 -0.000082  -0.000428          -0.000202         -0.000436
+Shared_room_in_hostel                   -0.035409 -0.012655 -0.008659           0.048658             -0.002653  ...  -0.000218 -0.000218  -0.001133          -0.000534         -0.001154
+Shared_room_in_house                     0.001564 -0.006763 -0.002509          -0.003183             -0.014796  ...  -0.000116 -0.000116  -0.000606          -0.000285         -0.000617
+Shared_room_in_houseboat                 0.001564 -0.006763  0.007377           0.002227              0.004919  ...  -0.000116 -0.000116  -0.000606          -0.000285         -0.000617
+Tiny_house                              -0.001410 -0.025070 -0.014035          -0.003001             -0.002918  ...  -0.000165 -0.000165  -0.000856          -0.000403         -0.000872
+Tipi                                    -0.013380 -0.004782  0.001721          -0.003900             -0.024402  ...  -0.000082 -0.000082   0.192244          -0.000202         -0.000436
+Yurt                                     0.001564 -0.006763  0.002434          -0.005622             -0.013974  ...  -0.000116 -0.000116  -0.000606          -0.000285         -0.000617
+Entire_home/apt                          0.250725  0.245868  0.169915          -0.353639              0.000759  ...   0.004551  0.004551   0.001863          -0.044318         -0.095825
+Hotel_room                              -0.035626 -0.044761 -0.028264           0.036361             -0.009344  ...  -0.000771 -0.000771  -0.004008          -0.001888         -0.004082
+Shared_room                             -0.034434 -0.025781 -0.010215           0.033492              0.000881  ...  -0.000444 -0.000444  -0.002309          -0.001087         -0.002351
+0_baths                                 -0.038900 -0.038812 -0.038181          -0.008093             -0.056545  ...  -0.000428 -0.000428  -0.002227          -0.001049         -0.002268
+0_shared_baths                          -0.017123 -0.028205 -0.021091           0.004318             -0.017753  ...  -0.000260 -0.000260  -0.001355          -0.000638         -0.001379
+1_bath                                  -0.096619 -0.145305 -0.128730          -0.196026             -0.040034  ...  -0.010917 -0.010917  -0.056789          -0.026748         -0.057834
+1_private_bath                          -0.088512 -0.134379 -0.068589           0.301024              0.046253  ...  -0.002155 -0.002155  -0.011212          -0.005281         -0.011418
+1_shared_bath                           -0.169466 -0.129219 -0.114665           0.091590             -0.005082  ...  -0.002299 -0.002299  -0.011959          -0.005633         -0.012179
+1.5_baths                                0.083255  0.086559  0.046038          -0.008156              0.052752  ...  -0.004421 -0.004421  -0.022996          -0.010831         -0.023419
+1.5_shared_baths                        -0.093532 -0.066546 -0.059852           0.113198              0.016173  ...  -0.001411 -0.001411  -0.007341          -0.003458         -0.007476
+2_baths                                  0.274056  0.326647  0.287019          -0.038524             -0.031045  ...  -0.002004 -0.002004  -0.010423          -0.004909         -0.010615
+2_shared_baths                           0.006321  0.000338  0.013886           0.008809             -0.006231  ...  -0.000340 -0.000340  -0.001767          -0.000832         -0.001799
+2.5_baths                                0.144753  0.191446  0.150381          -0.006584             -0.014209  ...  -0.001071 -0.001071  -0.005572          -0.002624         -0.005674
+2.5_shared_baths                        -0.012276 -0.004397 -0.007044          -0.004501             -0.010470  ...  -0.000165 -0.000165  -0.000856          -0.000403         -0.000872
+3_baths                                  0.157994  0.174118  0.167230          -0.003176             -0.013017  ...  -0.000681 -0.000681  -0.003541          -0.001668         -0.003606
+3_shared_baths                          -0.013801 -0.006763 -0.007452          -0.003819             -0.014385  ...  -0.000116 -0.000116  -0.000606          -0.000285         -0.000617
+3.5_baths                                0.078882  0.117359  0.091210          -0.010284             -0.008797  ...  -0.000451 -0.000451  -0.002348          -0.001106         -0.002391
+3.5_shared_baths                         0.008349  0.015889  0.008711          -0.003750              0.001736  ...  -0.000082 -0.000082  -0.000428          -0.000202         -0.000436
+4_baths                                  0.083465  0.081763  0.103897          -0.001477             -0.016253  ...  -0.000184 -0.000184  -0.000958          -0.000451         -0.000975
+4.5_baths                                0.011808  0.029780  0.017262          -0.001804              0.004508  ...  -0.000116 -0.000116  -0.000606          -0.000285         -0.000617
+5_baths                                  0.073268  0.044397  0.091405           0.013259              0.002660  ...  -0.000116 -0.000116  -0.000606          -0.000285         -0.000617
+5.5_baths                                0.037320  0.036560  0.022691          -0.002100              0.004059  ...   1.000000 -0.000082  -0.000428          -0.000202         -0.000436
+6_baths                                  0.095264  0.139913  0.099580          -0.003900             -0.001168  ...  -0.000082  1.000000  -0.000428          -0.000202         -0.000436
+Half-bath                               -0.017969 -0.030848 -0.009902          -0.007284              0.004832  ...  -0.000428 -0.000428   1.000000          -0.001049         -0.002268
+Private_half-bath                       -0.017993 -0.015936 -0.010055           0.015741             -0.004167  ...  -0.000202 -0.000202  -0.001049           1.000000         -0.001068
+Shared_half-bath                        -0.029770 -0.025332  0.002504           0.052729              0.014579  ...  -0.000436 -0.000436  -0.002268          -0.001068          1.000000
+
+[166 rows x 166 columns]
+
+<class 'pandas.core.frame.DataFrame'>
+Index: 166 entries, accommodates to Shared_half-bath
+Columns: 166 entries, accommodates to Shared_half-bath
+dtypes: float64(166)
+memory usage: 216.6+ KB
+None
+
+Skewness: 4.169105
+Kurtosis: 35.177666
+
+Skewness: -0.385103
+Kurtosis: 5.437960
+
+(MyEnv37) rena@PurpleOS:~/postgrestest/pentru_bogdan$ 
+
