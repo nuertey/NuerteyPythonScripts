@@ -859,20 +859,54 @@ plt.rc('axes', labelsize=15)
 plt.rc('axes', titlesize=18)
 
 model_residuals = results.resid
-figure16 = sm.qqplot(model_residuals)
+#figure16 = sm.qqplot(model_residuals)
+#plt.show()
+#
+## qqplot of the residuals against quantiles of t-distribution with 4 degrees of freedom:
+#figure17 = sm.qqplot(model_residuals, stats.t, distargs=(4,))
+#plt.show()
+#
+## qqplot against same as above, but with mean 3 and std 10:
+#figure18 = sm.qqplot(model_residuals, stats.t, distargs=(4,), loc=3, scale=10)
+#plt.show()
+#
+## Automatically determine parameters for t distribution including the loc and scale:
+#figure19_fit = sm.qqplot(model_residuals, stats.t, fit=True, line="45")
+#plt.show()
+
+#======================================================================
+left = -1.8   #x coordinate for text insert
+fig = plt.figure()
+
+ax = fig.add_subplot(2, 2, 1)
+sm.graphics.qqplot(model_residuals, ax=ax)
+top = ax.get_ylim()[1] * 0.75
+txt = ax.text(left, top, 'no keywords', verticalalignment='top')
+txt.set_bbox(dict(facecolor='k', alpha=0.1))
+
+ax = fig.add_subplot(2, 2, 2)
+sm.graphics.qqplot(model_residuals, line='s', ax=ax)
+top = ax.get_ylim()[1] * 0.75
+txt = ax.text(left, top, "line='s'", verticalalignment='top')
+txt.set_bbox(dict(facecolor='k', alpha=0.1))
+
+ax = fig.add_subplot(2, 2, 3)
+sm.graphics.qqplot(model_residuals, line='45', fit=True, ax=ax)
+ax.set_xlim(-2, 2)
+top = ax.get_ylim()[1] * 0.75
+txt = ax.text(left, top, "line='45', \nfit=True", verticalalignment='top')
+txt.set_bbox(dict(facecolor='k', alpha=0.1))
+
+ax = fig.add_subplot(2, 2, 4)
+sm.graphics.qqplot(model_residuals, dist=stats.t, line='45', fit=True, ax=ax)
+ax.set_xlim(-2, 2)
+top = ax.get_ylim()[1] * 0.75
+txt = ax.text(left, top, "dist=stats.t, \nline='45', \nfit=True",
+              verticalalignment='top')
+txt.set_bbox(dict(facecolor='k', alpha=0.1))
+
+fig.tight_layout()
+plt.gcf()
 plt.show()
 
-# qqplot of the residuals against quantiles of t-distribution with 4 degrees of freedom:
-figure17 = sm.qqplot(model_residuals, stats.t, distargs=(4,))
-plt.show()
-
-# qqplot against same as above, but with mean 3 and std 10:
-figure18 = sm.qqplot(model_residuals, stats.t, distargs=(4,), loc=3, scale=10)
-plt.show()
-
-# Automatically determine parameters for t distribution including the loc and scale:
-figure19_fit = sm.qqplot(model_residuals, stats.t, fit=True, line="45")
-plt.show()
-
-
-
+#======================================================================
