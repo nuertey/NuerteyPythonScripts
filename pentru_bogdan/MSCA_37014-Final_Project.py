@@ -304,11 +304,11 @@ sorted_neighbourhood_stats = neighbourhood_stats.sort_values(by=['calculated_hos
 print(sorted_neighbourhood_stats)
 print()
 
-figure1_2 = px.histogram(neighbourhood_stats, x="host_neighbourhood", y="calculated_host_listings_count")
-figure1_2.show()
-
-figure1_3 = px.histogram(sorted_neighbourhood_stats, x="host_neighbourhood", y="calculated_host_listings_count")
-figure1_3.show()
+#figure1_2 = px.histogram(neighbourhood_stats, x="host_neighbourhood", y="calculated_host_listings_count")
+#figure1_2.show()
+#
+#figure1_3 = px.histogram(sorted_neighbourhood_stats, x="host_neighbourhood", y="calculated_host_listings_count")
+#figure1_3.show()
 
 # I "prepared" the data for the above histograms manually with Pandas
 # for better visualization, but we can also have plotly automagically do
@@ -316,10 +316,10 @@ figure1_3.show()
 # both on the same plot for us:
 #
 # https://plotly.com/python/histograms/
-figure1_4 = go.Figure()
-figure1_4.add_trace(go.Histogram(histfunc="count", y=airbnb_data_dropped['calculated_host_listings_count'], x=airbnb_data_dropped['host_neighbourhood'], name="count of listings"))
-figure1_4.add_trace(go.Histogram(histfunc="sum", y=airbnb_data_dropped['calculated_host_listings_count'], x=airbnb_data_dropped['host_neighbourhood'], name="cumulative sum for neighborhood"))
-figure1_4.show()
+#figure1_4 = go.Figure()
+#figure1_4.add_trace(go.Histogram(histfunc="count", y=airbnb_data_dropped['calculated_host_listings_count'], x=airbnb_data_dropped['host_neighbourhood'], name="count of listings"))
+#figure1_4.add_trace(go.Histogram(histfunc="sum", y=airbnb_data_dropped['calculated_host_listings_count'], x=airbnb_data_dropped['host_neighbourhood'], name="cumulative sum for neighborhood"))
+#figure1_4.show()
 
 # At this juncture, and judging from the above histogram visualizations
 # and the printed output, sorted_neighbourhood_stats, one can roughly
@@ -858,7 +858,14 @@ plt.rc('figure', titlesize=18)
 plt.rc('axes', labelsize=15)
 plt.rc('axes', titlesize=18)
 
-model_residuals = results.resid
+model_fitted_y = results.fittedvalues # model targeted values
+model_residuals = results.resid       # model residuals (i.e. error between predicted and actual)
+model_norm_residuals = results.get_influence().resid_studentized_internal # normalized residuals
+model_norm_residuals_abs_sqrt = np.sqrt(np.abs(model_norm_residuals))
+model_abs_resid = np.abs(model_residuals)
+model_leverage = results.get_influence().hat_matrix_diag
+model_cooks = results.get_influence().cooks_distance[0]
+
 #figure16 = sm.qqplot(model_residuals)
 #plt.show()
 #
@@ -875,38 +882,50 @@ model_residuals = results.resid
 #plt.show()
 
 #======================================================================
-left = -1.8   #x coordinate for text insert
-fig = plt.figure()
-
-ax = fig.add_subplot(2, 2, 1)
-sm.graphics.qqplot(model_residuals, ax=ax)
-top = ax.get_ylim()[1] * 0.75
-txt = ax.text(left, top, 'no keywords', verticalalignment='top')
-txt.set_bbox(dict(facecolor='k', alpha=0.1))
-
-ax = fig.add_subplot(2, 2, 2)
-sm.graphics.qqplot(model_residuals, line='s', ax=ax)
-top = ax.get_ylim()[1] * 0.75
-txt = ax.text(left, top, "line='s'", verticalalignment='top')
-txt.set_bbox(dict(facecolor='k', alpha=0.1))
-
-ax = fig.add_subplot(2, 2, 3)
-sm.graphics.qqplot(model_residuals, line='45', fit=True, ax=ax)
-ax.set_xlim(-2, 2)
-top = ax.get_ylim()[1] * 0.75
-txt = ax.text(left, top, "line='45', \nfit=True", verticalalignment='top')
-txt.set_bbox(dict(facecolor='k', alpha=0.1))
-
-ax = fig.add_subplot(2, 2, 4)
-sm.graphics.qqplot(model_residuals, dist=stats.t, line='45', fit=True, ax=ax)
-ax.set_xlim(-2, 2)
-top = ax.get_ylim()[1] * 0.75
-txt = ax.text(left, top, "dist=stats.t, \nline='45', \nfit=True",
-              verticalalignment='top')
-txt.set_bbox(dict(facecolor='k', alpha=0.1))
-
-fig.tight_layout()
-plt.gcf()
-plt.show()
+#left = -1.8   #x coordinate for text insert
+#fig = plt.figure()
+#
+#ax = fig.add_subplot(2, 2, 1)
+#sm.graphics.qqplot(model_residuals, ax=ax)
+#top = ax.get_ylim()[1] * 0.75
+#txt = ax.text(left, top, 'no keywords', verticalalignment='top')
+#txt.set_bbox(dict(facecolor='k', alpha=0.1))
+#
+#ax = fig.add_subplot(2, 2, 2)
+#sm.graphics.qqplot(model_residuals, line='s', ax=ax)
+#top = ax.get_ylim()[1] * 0.75
+#txt = ax.text(left, top, "line='s'", verticalalignment='top')
+#txt.set_bbox(dict(facecolor='k', alpha=0.1))
+#
+#ax = fig.add_subplot(2, 2, 3)
+#sm.graphics.qqplot(model_residuals, line='45', fit=True, ax=ax)
+#ax.set_xlim(-2, 2)
+#top = ax.get_ylim()[1] * 0.75
+#txt = ax.text(left, top, "line='45', \nfit=True", verticalalignment='top')
+#txt.set_bbox(dict(facecolor='k', alpha=0.1))
+#
+#ax = fig.add_subplot(2, 2, 4)
+#sm.graphics.qqplot(model_residuals, dist=stats.t, line='45', fit=True, ax=ax)
+#ax.set_xlim(-2, 2)
+#top = ax.get_ylim()[1] * 0.75
+#txt = ax.text(left, top, "dist=stats.t, \nline='45', \nfit=True",
+#              verticalalignment='top')
+#txt.set_bbox(dict(facecolor='k', alpha=0.1))
+#
+#fig.tight_layout()
+#plt.gcf()
+#plt.show()
 
 #======================================================================
+
+figure20 = plt.figure()
+plt.scatter(model_fitted_y, model_norm_residuals_abs_sqrt, alpha=0.5)
+sns.regplot(model_fitted_y, model_norm_residuals_abs_sqrt,
+          scatter=False,
+          ci=False,
+          lowess=True,
+          line_kws={'color': 'red', 'lw': 1, 'alpha': 0.8})
+figure20.axes[0].set_title('Scale-Location')
+figure20.axes[0].set_xlabel('Fitted values')
+figure20.axes[0].set_ylabel('sqrt of Standardized Residuals')
+plt.show()
