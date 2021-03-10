@@ -1,10 +1,15 @@
 #***********************************************************************
 # @file
 #
-# Python script for Airbnb Consultancy. Its primary goal is to aid Airbnb
-# in better understanding their dataset relating to the price of their 
-# listings on Amsterdam, North Holland, The Netherlands. For reference,
-# this dataset was obtained via the location: 
+# Python script for Airbnb consultancy and analysis. Its primary goal is
+# to aid Airbnb in better understanding how the price of their listings
+# in Amsterdam, North Holland, The Netherlands is affected by other 
+# variables within that same dataset. Specifically, this project aims to
+# show which other specific variables determine an increase or decrease
+# in listing prices. To this end, an OLS model is built and used.
+#
+# For reference, the dataset used in this analysis was obtained via the 
+# location: 
 #
 #          http://insideairbnb.com/get-the-data.html
 #                              ├── listings.csv.gz
@@ -22,6 +27,8 @@
 # pip install numpy
 # pip install pandas
 # pip install plotly
+# pip install seaborn
+# pip install statsmodels
 
 import math
 import numpy as np
@@ -46,9 +53,6 @@ import statsmodels.formula.api as smf
 from statsmodels.sandbox.regression.predstd import wls_prediction_std
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 from statsmodels.graphics.gofplots import ProbPlot
-
-# For instructor-provided "R like graphs!":
-from r_like_graphs import diagnostic_plots
 
 pd.set_option('display.max_rows', 100)
 pd.set_option('display.min_rows', 100)
@@ -595,7 +599,7 @@ ols_model_data_frame = outliers_data_dropped[['accommodates', 'bedrooms', 'beds'
 # This is precisely what we want, and that option would have only caused
 # issues if our category variables had had NaN values. But we have already
 # ensured that this is not the case by our previous 'cleanings' operations,
-# and have confirmed so with the "outliers_data_dropped.info()" call on line 577.
+# and have confirmed so with the "outliers_data_dropped.info()" call on line 581.
 dummies_superhost = pd.get_dummies(outliers_data_dropped["host_is_superhost"],
                                    drop_first=False, dummy_na=False)
 dummies_superhost.columns = ['false', 'true'] # Differentiate from dummies_identity_verified
@@ -707,7 +711,7 @@ print()
 
 # Ensure the target variable 'log_price' is Normally distributed, and
 # its kurtosis and skewness are normal. Just as a comparison try the same
-# with the false presumption that unadulterated 'price' it self is the 
+# with the false presumption that unadulterated 'price' itself is the 
 # target variable:
 
 # Skewness  A measure of the symmetry of the data about the mean. 
@@ -847,5 +851,28 @@ print()
 #                             data=outliers_data_dropped, obs_labels=False)
 #plt.show()
 
-diagnostic_plots(ols_model_data_frame, logarithm_listing_price)
-#diagnostic_plots(ols_model_data_frame, outliers_data_dropped['price'])
+# Q-Q plot of the quantiles of x versus the quantiles/ppf of a distribution.
+plt.style.use('seaborn') # pretty matplotlib plots
+plt.rc('font', size=14)
+plt.rc('figure', titlesize=18)
+plt.rc('axes', labelsize=15)
+plt.rc('axes', titlesize=18)
+
+model_residuals = results.resid
+figure16 = sm.qqplot(model_residuals)
+plt.show()
+
+# qqplot of the residuals against quantiles of t-distribution with 4 degrees of freedom:
+figure17 = sm.qqplot(model_residuals, stats.t, distargs=(4,))
+plt.show()
+
+# qqplot against same as above, but with mean 3 and std 10:
+figure18 = sm.qqplot(model_residuals, stats.t, distargs=(4,), loc=3, scale=10)
+plt.show()
+
+# Automatically determine parameters for t distribution including the loc and scale:
+figure19_fit = sm.qqplot(model_residuals, stats.t, fit=True, line="45")
+plt.show()
+
+
+
