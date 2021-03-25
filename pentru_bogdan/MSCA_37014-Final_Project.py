@@ -171,31 +171,31 @@ print()
 # Mapbox Access Token is needed. Let's just use mine:
 token = open(".mapbox_token").read() 
 
-#figure0_1 = go.Figure(go.Scattermapbox(
-#    mode = "markers+text+lines",
-#    lon = [4.9041], lat = [52.3676],
-#    marker = {'size': 20, 'symbol': ["car"]},
-#    text = ["Transportation"],textposition = "bottom right"))
-#
-#figure0_1.update_layout(
-#    title='Amsterdam, Noord-Holland, The Netherlands',
-#    autosize=True,
-#    hovermode='closest',
-#    showlegend=False,
-#    mapbox=dict(
-#        accesstoken=token,
-#        bearing=0,
-#        center=dict(
-#            lat=52.3676,
-#            lon=4.9041
-#        ),
-#        pitch=0,
-#        zoom=10,
-#        style='satellite-streets'
-#    ),
-#)
-#
-#figure0_1.show()
+figure0_1 = go.Figure(go.Scattermapbox(
+    mode = "markers+text+lines",
+    lon = [4.9041], lat = [52.3676],
+    marker = {'size': 20, 'symbol': ["car"]},
+    text = ["Transportation"],textposition = "bottom right"))
+
+figure0_1.update_layout(
+    title='Amsterdam, Noord-Holland, The Netherlands',
+    autosize=True,
+    hovermode='closest',
+    showlegend=False,
+    mapbox=dict(
+        accesstoken=token,
+        bearing=0,
+        center=dict(
+            lat=52.3676,
+            lon=4.9041
+        ),
+        pitch=0,
+        zoom=10,
+        style='satellite-streets'
+    ),
+)
+
+figure0_1.show()
 
 # Ensure we have the same row dimensions for these before plotting:
 #host_neighbourhood_unique = airbnb_data_dropped.host_neighbourhood.unique()
@@ -220,67 +220,67 @@ print()
 print(len(longitude_unique))
 print()
 
-#figure0_2 = go.Figure()
-#
-#figure0_2.add_trace(go.Scattermapbox(
-#        lat=latitude_unique,
-#        lon=longitude_unique,
-#        mode='markers',
-#        marker=go.scattermapbox.Marker(
-#            size=17,
-#            color='rgb(255, 0, 0)',
-#            opacity=0.7
-#        ),
-#        text=host_neighbourhood_unique,
-#        hoverinfo='text'
-#    ))
-#
-#figure0_2.add_trace(go.Scattermapbox(
-#        lat=latitude_unique,
-#        lon=longitude_unique,
-#        mode='markers',
-#        marker=go.scattermapbox.Marker(
-#            size=8,
-#            color='rgb(242, 177, 172)',
-#            opacity=0.7
-#        ),
-#        hoverinfo='none'
-#    ))
-#
-#figure0_2.update_layout(
-#    title='Amsterdam, Noord-Holland, The Netherlands - AirBnB Host Listings',
-#    autosize=True,
-#    hovermode='closest',
-#    showlegend=False,
-#    mapbox=dict(
-#        accesstoken=token,
-#        bearing=0,
-#        center=dict(
-#            lat=52.3676,
-#            lon=4.9041
-#        ),
-#        pitch=0,
-#        zoom=12,
-#        style='satellite-streets'
-#    ),
-#)
-#
-#figure0_2.show()
+figure0_2 = go.Figure()
+
+figure0_2.add_trace(go.Scattermapbox(
+        lat=latitude_unique,
+        lon=longitude_unique,
+        mode='markers',
+        marker=go.scattermapbox.Marker(
+            size=17,
+            color='rgb(255, 0, 0)',
+            opacity=0.7
+        ),
+        text=host_neighbourhood_unique,
+        hoverinfo='text'
+    ))
+
+figure0_2.add_trace(go.Scattermapbox(
+        lat=latitude_unique,
+        lon=longitude_unique,
+        mode='markers',
+        marker=go.scattermapbox.Marker(
+            size=8,
+            color='rgb(242, 177, 172)',
+            opacity=0.7
+        ),
+        hoverinfo='none'
+    ))
+
+figure0_2.update_layout(
+    title='Amsterdam, Noord-Holland, The Netherlands - AirBnB Host Listings',
+    autosize=True,
+    hovermode='closest',
+    showlegend=False,
+    mapbox=dict(
+        accesstoken=token,
+        bearing=0,
+        center=dict(
+            lat=52.3676,
+            lon=4.9041
+        ),
+        pitch=0,
+        zoom=12,
+        style='satellite-streets'
+    ),
+)
+
+figure0_2.show()
 
 # ============================================
 # Some column data visualizations, line graph:
 # ============================================
-#figure1 = go.Figure()
-#figure1.add_trace(go.Scatter(x=airbnb_data_dropped['host_since'], 
-#                            y=airbnb_data_dropped['number_of_reviews'],
-#                            mode='markers',
-#                            name='Number of Reviews',
-#                            line=dict(color='red', width=1)
-#))
-#figure1.update_layout(title='Amsterdam, Noord-Holland - Airbnb Host Since Date/Number Of Reviews',
-#                     xaxis_title='Airbnb Host Since Date',
-#                     yaxis_title='Number Of Reviews')
-#figure1.show()
+figure1 = go.Figure()
+figure1.add_trace(go.Scatter(x=airbnb_data_dropped['host_since'], 
+                            y=airbnb_data_dropped['number_of_reviews'],
+                            mode='markers',
+                            name='Number of Reviews',
+                            line=dict(color='red', width=1)
+))
+figure1.update_layout(title='Amsterdam, Noord-Holland - Airbnb Host Since Date/Number Of Reviews',
+                     xaxis_title='Airbnb Host Since Date',
+                     yaxis_title='Number Of Reviews')
+figure1.show()
 
 # ======================================================================
 # Histograms follow here:
@@ -304,11 +304,11 @@ sorted_neighbourhood_stats = neighbourhood_stats.sort_values(by=['calculated_hos
 print(sorted_neighbourhood_stats)
 print()
 
-#figure1_2 = px.histogram(neighbourhood_stats, x="host_neighbourhood", y="calculated_host_listings_count")
-#figure1_2.show()
-#
-#figure1_3 = px.histogram(sorted_neighbourhood_stats, x="host_neighbourhood", y="calculated_host_listings_count")
-#figure1_3.show()
+figure1_2 = px.histogram(neighbourhood_stats, x="host_neighbourhood", y="calculated_host_listings_count")
+figure1_2.show()
+
+figure1_3 = px.histogram(sorted_neighbourhood_stats, x="host_neighbourhood", y="calculated_host_listings_count")
+figure1_3.show()
 
 # I "prepared" the data for the above histograms manually with Pandas
 # for better visualization, but we can also have plotly automagically do
@@ -316,10 +316,10 @@ print()
 # both on the same plot for us:
 #
 # https://plotly.com/python/histograms/
-#figure1_4 = go.Figure()
-#figure1_4.add_trace(go.Histogram(histfunc="count", y=airbnb_data_dropped['calculated_host_listings_count'], x=airbnb_data_dropped['host_neighbourhood'], name="count of listings"))
-#figure1_4.add_trace(go.Histogram(histfunc="sum", y=airbnb_data_dropped['calculated_host_listings_count'], x=airbnb_data_dropped['host_neighbourhood'], name="cumulative sum for neighborhood"))
-#figure1_4.show()
+figure1_4 = go.Figure()
+figure1_4.add_trace(go.Histogram(histfunc="count", y=airbnb_data_dropped['calculated_host_listings_count'], x=airbnb_data_dropped['host_neighbourhood'], name="count of listings"))
+figure1_4.add_trace(go.Histogram(histfunc="sum", y=airbnb_data_dropped['calculated_host_listings_count'], x=airbnb_data_dropped['host_neighbourhood'], name="cumulative sum for neighborhood"))
+figure1_4.show()
 
 # At this juncture, and judging from the above histogram visualizations
 # and the printed output, sorted_neighbourhood_stats, one can roughly
@@ -368,51 +368,51 @@ print()
 # The above transformations were all necessary because to plot "Bar chart
 # with Wide Format Data" i.e. 3 columns of data at once, all the columns
 # must be of the same type, which is not the case with our original data.
-#figure3 = px.bar(wide_data_format, x=["host_acceptance_rate", "number_of_reviews", "review_scores_rating"], y="host_name", orientation='h', hover_data=["host_name", "host_neighbourhood", "host_acceptance_rate", "review_scores_rating"], opacity=1, title="Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Acceptance Rate")
-#
-## Attempt to make the background transparent.
-#figure3.update_layout({
-#     'plot_bgcolor': 'rgba(0, 0, 0, 0)',
-#     'paper_bgcolor': 'rgba(0, 0, 0, 0)',
-#})
-#
-#figure3.show()
-#
-#figure4 = px.bar(wide_data_format, x="host_name", y=["host_acceptance_rate", "number_of_reviews", "review_scores_rating"], opacity=1, title="Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Acceptance Rate")
-#
-#figure4.update_xaxes(type='category')
-#
-## Attempt to make the background transparent.
-#figure4.update_layout({
-#     'plot_bgcolor': 'rgba(0, 0, 0, 0)',
-#     'paper_bgcolor': 'rgba(0, 0, 0, 0)',
-#})
-#
-#figure4.show()
+figure3 = px.bar(wide_data_format, x=["host_acceptance_rate", "number_of_reviews", "review_scores_rating"], y="host_name", orientation='h', hover_data=["host_name", "host_neighbourhood", "host_acceptance_rate", "review_scores_rating"], opacity=1, title="Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Acceptance Rate")
+
+# Attempt to make the background transparent.
+figure3.update_layout({
+     'plot_bgcolor': 'rgba(0, 0, 0, 0)',
+     'paper_bgcolor': 'rgba(0, 0, 0, 0)',
+})
+
+figure3.show()
+
+figure4 = px.bar(wide_data_format, x="host_name", y=["host_acceptance_rate", "number_of_reviews", "review_scores_rating"], opacity=1, title="Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Acceptance Rate")
+
+figure4.update_xaxes(type='category')
+
+# Attempt to make the background transparent.
+figure4.update_layout({
+     'plot_bgcolor': 'rgba(0, 0, 0, 0)',
+     'paper_bgcolor': 'rgba(0, 0, 0, 0)',
+})
+
+figure4.show()
 
 # ===================================================================
 # Some column data visualizations, bar chart with just 1 column data:
 # ===================================================================
-#figure2 = px.bar(wide_data_format, x="host_name",y="number_of_reviews", 
-#                 color='review_scores_rating',
-#                 hover_data=["host_name", "host_neighbourhood", 
-#                             "host_acceptance_rate", "review_scores_rating"],
-#                 title='Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Number of Reviews')
-#
+figure2 = px.bar(wide_data_format, x="host_name",y="number_of_reviews", 
+                 color='review_scores_rating',
+                 hover_data=["host_name", "host_neighbourhood", 
+                             "host_acceptance_rate", "review_scores_rating"],
+                 title='Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Number of Reviews')
+
 ##figure2.update_traces(marker_color='violet')
-#figure2.update_layout(title='Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Number of Reviews',
-#                     xaxis_title='Host Name (Hover Mouse For Host Neighbourhood)',
-#                     yaxis_title='Number of Reviews')
-#
-#figure2.update_xaxes(type='category')
-#
-## Attempt to make the background transparent.
-#figure2.update_layout({
-#     'plot_bgcolor': 'rgba(0, 0, 0, 0)',
-#     'paper_bgcolor': 'rgba(0, 0, 0, 0)',
-#})
-#
-#figure2.show()
+figure2.update_layout(title='Amsterdam, Noord-Holland - Airbnb Host Name/Neighbourhood Versus Number of Reviews',
+                     xaxis_title='Host Name (Hover Mouse For Host Neighbourhood)',
+                     yaxis_title='Number of Reviews')
+
+figure2.update_xaxes(type='category')
+
+# Attempt to make the background transparent.
+figure2.update_layout({
+     'plot_bgcolor': 'rgba(0, 0, 0, 0)',
+     'paper_bgcolor': 'rgba(0, 0, 0, 0)',
+})
+
+figure2.show()
 
 # ===================================================================
 # Analysis/dataset inspection to select variables for OLS prediction:
@@ -460,53 +460,53 @@ airbnb_data_dropped['beds'] = airbnb_data_dropped['beds'].fillna(0)
 # estimate various L-estimators, notably the interquartile range, 
 # midhinge, range, mid-range, and trimean."
 
-## boxplot1.png
-#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["accommodates"])
-#plt.show()
-#
-## boxplot2.png
-#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["property_type"])
-#plt.show()
-#
-## boxplot3.png
-#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["bathrooms_text"])
-#plt.show()
-#
-## boxplot4.png
-#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["host_neighbourhood"])
-#plt.show()
-#
-## boxplot5.png
-#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["calculated_host_listings_count"])
-#plt.show()
-#
-## boxplot6.png
-#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["room_type"])
-#plt.show()
-#
-## boxplot7.png
-#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["bedrooms"])
-#plt.show()
-#
-## boxplot8.png
-#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["beds"])
-#plt.show()
-#
-## boxplot9_1.png
-#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["host_is_superhost"])
-#plt.show()
-#
-## boxplot9_2.png
-#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["host_identity_verified"])
-#plt.show()
-#
-## boxplot9_3.png
-#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["number_of_reviews"])
-#plt.show()
-#
-## boxplot9_4.png
-#sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["review_scores_rating"])
-#plt.show()
+# boxplot1.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["accommodates"])
+plt.show()
+
+# boxplot2.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["property_type"])
+plt.show()
+
+# boxplot3.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["bathrooms_text"])
+plt.show()
+
+# boxplot4.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["host_neighbourhood"])
+plt.show()
+
+# boxplot5.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["calculated_host_listings_count"])
+plt.show()
+
+# boxplot6.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["room_type"])
+plt.show()
+
+# boxplot7.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["bedrooms"])
+plt.show()
+
+# boxplot8.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["beds"])
+plt.show()
+
+# boxplot9_1.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["host_is_superhost"])
+plt.show()
+
+# boxplot9_2.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["host_identity_verified"])
+plt.show()
+
+# boxplot9_3.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["number_of_reviews"])
+plt.show()
+
+# boxplot9_4.png
+sns.boxplot(y=airbnb_data_dropped["price"], x=airbnb_data_dropped["review_scores_rating"])
+plt.show()
 
 # Based upon analysis of the various boxplots, removing outliers: price > 2000
 outliers_data_dropped = airbnb_data_dropped[airbnb_data_dropped["price"] < 2000]
@@ -518,33 +518,46 @@ logarithm_listing_price = np.log(outliers_data_dropped["price"])
 
 # Histograms of listing price and log of listing price for further price
 # data visualization and comparison:
-#figure5 = go.Figure()
-#figure5.add_trace(go.Histogram(x=outliers_data_dropped["price"], 
-#                               name='listing price',
-#                               marker_color='#0023FF', #Bluebonnet
-#                               opacity=0.75))
-#figure5.update_layout(
-#    title_text='Listing Price Histogram', # title of plot
-#    xaxis_title_text='Price', # xaxis label
-#    yaxis_title_text='Frequency', # yaxis label
-#    bargap=0.2, # gap between bars of adjacent location coordinates
-#    bargroupgap=0.1 # gap between bars of the same location coordinates
-#)
-#figure5.show()
-#
-#figure6 = go.Figure()
-#figure6.add_trace(go.Histogram(x=logarithm_listing_price, 
-#                                 name='logarithm of listing price',
-#                                 marker_color='#E36414', #Metallic Orange
-#                                 opacity=0.75))
-#figure6.update_layout(
-#    title_text='Logarithm of Listing Price Histogram', # title of plot
-#    xaxis_title_text='Logarithm of Price', # xaxis label
-#    yaxis_title_text='Frequency', # yaxis label
-#    bargap=0.2, # gap between bars of adjacent location coordinates
-#    bargroupgap=0.1 # gap between bars of the same location coordinates
-#)
-#figure6.show()
+figure5 = go.Figure()
+figure5.add_trace(go.Histogram(x=outliers_data_dropped["price"], 
+                               name='listing price',
+                               marker_color='#0023FF', #Bluebonnet
+                               opacity=0.75))
+figure5.update_layout(
+    title_text='Listing Price Histogram', # title of plot
+    xaxis_title_text='Price', # xaxis label
+    yaxis_title_text='Frequency', # yaxis label
+    bargap=0.2, # gap between bars of adjacent location coordinates
+    bargroupgap=0.1 # gap between bars of the same location coordinates
+)
+figure5.show()
+
+figure6 = go.Figure()
+figure6.add_trace(go.Histogram(x=logarithm_listing_price, 
+                                 name='logarithm of listing price',
+                                 marker_color='#E36414', #Metallic Orange
+                                 opacity=0.75))
+figure6.update_layout(
+    title_text='Logarithm of Listing Price Histogram', # title of plot
+    xaxis_title_text='Logarithm of Price', # xaxis label
+    yaxis_title_text='Frequency', # yaxis label
+    bargap=0.2, # gap between bars of adjacent location coordinates
+    bargroupgap=0.1 # gap between bars of the same location coordinates
+)
+figure6.show()
+
+## Let's see how many nulls and if we have any zeroes:
+bogdan_1 = airbnb_data_dropped[airbnb_data_dropped.review_scores_rating.isnull()]['review_scores_rating']
+bogdan_2 = airbnb_data_dropped[airbnb_data_dropped.review_scores_rating == 0]['review_scores_rating']
+
+print("Nuertey: Number of null values in review_scores_rating : ", airbnb_data_dropped['review_scores_rating'].isna().sum()) 
+
+
+print('Number of null review scores:', bogdan_1.count())
+print('Number of review scores 0.0:', bogdan_2.count())
+print('Total records in dataframe:', len(airbnb_data_dropped.index))
+print(airbnb_data_dropped.info())
+print()
 
 print('Maximum listing price details:')
 max_price_details = outliers_data_dropped[outliers_data_dropped['price']==outliers_data_dropped['price'].max()]
@@ -693,21 +706,21 @@ print(the_correlation_matrix2.info())
 print()
 
 # Visualize as correlation_matrix_1.png then:
-#sns.set_theme()
-#cmap = sns.color_palette("flare", as_cmap=True)
-#sns.heatmap(the_correlation_matrix2, cmap=cmap, vmin=-0.5, vmax=0.5, center=0);
-#plt.show()
+sns.set_theme()
+cmap = sns.color_palette("flare", as_cmap=True)
+sns.heatmap(the_correlation_matrix2, cmap=cmap, vmin=-0.5, vmax=0.5, center=0);
+plt.show()
 
 # Visualize as correlation_matrix_2.png then:
-#mask = np.triu(np.ones_like(the_correlation_matrix2, dtype=bool))
-#f, ax = plt.subplots(figsize=(9, 9))
-#cmap = sns.diverging_palette(240, 20, as_cmap=True)
-## cmap = sns.choose_diverging_palette()
-#_ = sns.heatmap(
-#    the_correlation_matrix2, mask=mask, cmap=cmap, vmax=.3, center=0, square=True,
-#    linewidths=.5, cbar_kws={"shrink": .5}
-#    )
-#plt.show()
+mask = np.triu(np.ones_like(the_correlation_matrix2, dtype=bool))
+f, ax = plt.subplots(figsize=(9, 9))
+cmap = sns.diverging_palette(240, 20, as_cmap=True)
+# cmap = sns.choose_diverging_palette()
+_ = sns.heatmap(
+    the_correlation_matrix2, mask=mask, cmap=cmap, vmax=.3, center=0, square=True,
+    linewidths=.5, cbar_kws={"shrink": .5}
+    )
+plt.show()
 
 # Ensure the target variable 'log_price' is Normally distributed, and
 # its kurtosis and skewness are normal. Just as a comparison try the same
@@ -725,10 +738,10 @@ print()
 # Source: https://www.datarobot.com/blog/ordinary-least-squares-in-python/
 
 # Plot a histogram and kernel density estimate:
-#sns.distplot(outliers_data_dropped['price'], kde=True)
-#figure10 = plt.figure()
-#result = stats.probplot(outliers_data_dropped['price'], plot=plt)
-#plt.show()
+sns.distplot(outliers_data_dropped['price'], kde=True)
+figure10 = plt.figure()
+result = stats.probplot(outliers_data_dropped['price'], plot=plt)
+plt.show()
 
 # Observed printout:
 #
@@ -750,10 +763,10 @@ print()
 # Replace -infinity with 0.
 logarithm_listing_price[logarithm_listing_price == -inf] = 0
 
-#sns.distplot(logarithm_listing_price, kde=True)
-#figure11 = plt.figure()
-#result = stats.probplot(logarithm_listing_price, plot=plt)
-#plt.show()
+sns.distplot(logarithm_listing_price, kde=True)
+figure11 = plt.figure()
+result = stats.probplot(logarithm_listing_price, plot=plt)
+plt.show()
 
 # Observed printout:
 #
@@ -794,36 +807,36 @@ print(results.params)
 print()
 
 # This produces our four regression plots for "number_of_reviews"
-#figure12 = plt.figure(figsize=(15,8))
-#figure12 = sm.graphics.plot_regress_exog(results, "number_of_reviews", fig=figure12)
-#plt.show()
-#
-## This produces our four regression plots for "calculated_host_listings_count"
-#figure13 = plt.figure(figsize=(15,8))
-#figure13 = sm.graphics.plot_regress_exog(results, "calculated_host_listings_count", fig=figure13)
-#plt.show()
-#
-## This produces our four regression plots for "accommodates"
-#figure14 = plt.figure(figsize=(15,8))
-#figure14 = sm.graphics.plot_regress_exog(results, "accommodates", fig=figure14)
-#plt.show()
-#
-## This produces our four regression plots for "bedrooms"
-#figure15 = plt.figure(figsize=(15,8))
-#figure15 = sm.graphics.plot_regress_exog(results, "bedrooms", fig=figure15)
-#plt.show()
+figure12 = plt.figure(figsize=(15,8))
+figure12 = sm.graphics.plot_regress_exog(results, "number_of_reviews", fig=figure12)
+plt.show()
+
+# This produces our four regression plots for "calculated_host_listings_count"
+figure13 = plt.figure(figsize=(15,8))
+figure13 = sm.graphics.plot_regress_exog(results, "calculated_host_listings_count", fig=figure13)
+plt.show()
+
+# This produces our four regression plots for "accommodates"
+figure14 = plt.figure(figsize=(15,8))
+figure14 = sm.graphics.plot_regress_exog(results, "accommodates", fig=figure14)
+plt.show()
+
+# This produces our four regression plots for "bedrooms"
+figure15 = plt.figure(figsize=(15,8))
+figure15 = sm.graphics.plot_regress_exog(results, "bedrooms", fig=figure15)
+plt.show()
 
 # Draw a plot to compare the true relationship to OLS predictions:
-#prstd, iv_l, iv_u = wls_prediction_std(results)
-#
-#fig, ax = plt.subplots(figsize=(8,6))
-#ax.plot(logarithm_listing_price, 'o', label="Data")
-##ax.plot(outliers_data_dropped['price'], 'o', label="Data")
-#ax.plot(results.fittedvalues, 'r--.', label="Predicted")
-#ax.plot(iv_u, 'r--')
-#ax.plot(iv_l, 'r--')
-#legend = ax.legend(loc="best")
-#plt.show()
+prstd, iv_l, iv_u = wls_prediction_std(results)
+
+fig, ax = plt.subplots(figsize=(8,6))
+ax.plot(logarithm_listing_price, 'o', label="Data")
+#ax.plot(outliers_data_dropped['price'], 'o', label="Data")
+ax.plot(results.fittedvalues, 'r--.', label="Predicted")
+ax.plot(iv_u, 'r--')
+ax.plot(iv_l, 'r--')
+legend = ax.legend(loc="best")
+plt.show()
 
 # ==================================================================
 # Diagnostics, Goodness-of-Fit and Specification tests on the model:
@@ -840,16 +853,16 @@ print(stat_F_test, pvalue_test)
 print()
 
 # Plot partial regression for 'accommodates':
-#sm.graphics.plot_partregress(endog='price', exog_i='accommodates',
-#                             exog_others=['bedrooms', 'number_of_reviews', 'calculated_host_listings_count'],
-#                             data=outliers_data_dropped, obs_labels=False)
-#plt.show()
+sm.graphics.plot_partregress(endog='price', exog_i='accommodates',
+                             exog_others=['bedrooms', 'number_of_reviews', 'calculated_host_listings_count'],
+                             data=outliers_data_dropped, obs_labels=False)
+plt.show()
 
 # Plot partial regression for 'number_of_reviews':
-#sm.graphics.plot_partregress(endog='price', exog_i='number_of_reviews',
-#                             exog_others=['bedrooms', 'review_scores_rating', 'calculated_host_listings_count'],
-#                             data=outliers_data_dropped, obs_labels=False)
-#plt.show()
+sm.graphics.plot_partregress(endog='price', exog_i='number_of_reviews',
+                             exog_others=['bedrooms', 'review_scores_rating', 'calculated_host_listings_count'],
+                             data=outliers_data_dropped, obs_labels=False)
+plt.show()
 
 # Q-Q plot of the quantiles of x versus the quantiles/ppf of a distribution.
 plt.style.use('seaborn') # pretty matplotlib plots
@@ -866,58 +879,57 @@ model_abs_resid = np.abs(model_residuals)
 model_leverage = results.get_influence().hat_matrix_diag
 model_cooks = results.get_influence().cooks_distance[0]
 
-#figure16 = sm.qqplot(model_residuals)
-#plt.show()
-#
-## qqplot of the residuals against quantiles of t-distribution with 4 degrees of freedom:
-#figure17 = sm.qqplot(model_residuals, stats.t, distargs=(4,))
-#plt.show()
-#
-## qqplot against same as above, but with mean 3 and std 10:
-#figure18 = sm.qqplot(model_residuals, stats.t, distargs=(4,), loc=3, scale=10)
-#plt.show()
-#
-## Automatically determine parameters for t distribution including the loc and scale:
-#figure19_fit = sm.qqplot(model_residuals, stats.t, fit=True, line="45")
-#plt.show()
+figure16 = sm.qqplot(model_residuals)
+plt.show()
+
+# qqplot of the residuals against quantiles of t-distribution with 4 degrees of freedom:
+figure17 = sm.qqplot(model_residuals, stats.t, distargs=(4,))
+plt.show()
+
+# qqplot against same as above, but with mean 3 and std 10:
+figure18 = sm.qqplot(model_residuals, stats.t, distargs=(4,), loc=3, scale=10)
+plt.show()
+
+# Automatically determine parameters for t distribution including the loc and scale:
+figure19_fit = sm.qqplot(model_residuals, stats.t, fit=True, line="45")
+plt.show()
 
 #======================================================================
-#left = -1.8   #x coordinate for text insert
-#fig = plt.figure()
-#
-#ax = fig.add_subplot(2, 2, 1)
-#sm.graphics.qqplot(model_residuals, ax=ax)
-#top = ax.get_ylim()[1] * 0.75
-#txt = ax.text(left, top, 'no keywords', verticalalignment='top')
-#txt.set_bbox(dict(facecolor='k', alpha=0.1))
-#
-#ax = fig.add_subplot(2, 2, 2)
-#sm.graphics.qqplot(model_residuals, line='s', ax=ax)
-#top = ax.get_ylim()[1] * 0.75
-#txt = ax.text(left, top, "line='s'", verticalalignment='top')
-#txt.set_bbox(dict(facecolor='k', alpha=0.1))
-#
-#ax = fig.add_subplot(2, 2, 3)
-#sm.graphics.qqplot(model_residuals, line='45', fit=True, ax=ax)
-#ax.set_xlim(-2, 2)
-#top = ax.get_ylim()[1] * 0.75
-#txt = ax.text(left, top, "line='45', \nfit=True", verticalalignment='top')
-#txt.set_bbox(dict(facecolor='k', alpha=0.1))
-#
-#ax = fig.add_subplot(2, 2, 4)
-#sm.graphics.qqplot(model_residuals, dist=stats.t, line='45', fit=True, ax=ax)
-#ax.set_xlim(-2, 2)
-#top = ax.get_ylim()[1] * 0.75
-#txt = ax.text(left, top, "dist=stats.t, \nline='45', \nfit=True",
-#              verticalalignment='top')
-#txt.set_bbox(dict(facecolor='k', alpha=0.1))
-#
-#fig.tight_layout()
-#plt.gcf()
-#plt.show()
+left = -1.8   #x coordinate for text insert
+fig = plt.figure()
+
+ax = fig.add_subplot(2, 2, 1)
+sm.graphics.qqplot(model_residuals, ax=ax)
+top = ax.get_ylim()[1] * 0.75
+txt = ax.text(left, top, 'no keywords', verticalalignment='top')
+txt.set_bbox(dict(facecolor='k', alpha=0.1))
+
+ax = fig.add_subplot(2, 2, 2)
+sm.graphics.qqplot(model_residuals, line='s', ax=ax)
+top = ax.get_ylim()[1] * 0.75
+txt = ax.text(left, top, "line='s'", verticalalignment='top')
+txt.set_bbox(dict(facecolor='k', alpha=0.1))
+
+ax = fig.add_subplot(2, 2, 3)
+sm.graphics.qqplot(model_residuals, line='45', fit=True, ax=ax)
+ax.set_xlim(-2, 2)
+top = ax.get_ylim()[1] * 0.75
+txt = ax.text(left, top, "line='45', \nfit=True", verticalalignment='top')
+txt.set_bbox(dict(facecolor='k', alpha=0.1))
+
+ax = fig.add_subplot(2, 2, 4)
+sm.graphics.qqplot(model_residuals, dist=stats.t, line='45', fit=True, ax=ax)
+ax.set_xlim(-2, 2)
+top = ax.get_ylim()[1] * 0.75
+txt = ax.text(left, top, "dist=stats.t, \nline='45', \nfit=True",
+              verticalalignment='top')
+txt.set_bbox(dict(facecolor='k', alpha=0.1))
+
+fig.tight_layout()
+plt.gcf()
+plt.show()
 
 #======================================================================
-
 figure20 = plt.figure()
 plt.scatter(model_fitted_y, model_norm_residuals_abs_sqrt, alpha=0.5)
 sns.regplot(model_fitted_y, model_norm_residuals_abs_sqrt,
