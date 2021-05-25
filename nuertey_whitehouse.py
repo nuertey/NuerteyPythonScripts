@@ -12,7 +12,7 @@
 #   Author: Nuertey Odzeyem
 #**********************************************************************/ 
 import requests
-import json
+import json # json is a built-in module, you don't need to install it with pip.
 import pandas as pd
 
 pd.set_option('display.max_rows', 100)

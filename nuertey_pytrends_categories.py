@@ -18,7 +18,7 @@ from __future__ import print_function
 import json
 from json2html import *
 import pytrends
-import functools
+import functools #  included into the standard library
 import collections
 import numpy as np
 import pandas as pd
