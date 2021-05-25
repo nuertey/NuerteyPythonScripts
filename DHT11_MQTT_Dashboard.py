@@ -67,8 +67,12 @@ def on_message_temperature(mqttc, obj, msg):
     print()
     
     time_now = datetime.datetime.now()
-    sensor_data['Time'].append(time_now)
-    sensor_data['Temperature'].append(msg.payload)
+    
+    # In order to be able to assign to the global name, we need to tell 
+    # the parser to use the global name rather than bind a new local name
+    # - which is what the 'global' keyword does.
+    global sensor_data['Time'].append(time_now)
+    global sensor_data['Temperature'].append(float(msg.payload))
 
 def on_message_humidity(mqttc, obj, msg):
     # This callback will only be called for messages with topics that match:
@@ -76,8 +80,12 @@ def on_message_humidity(mqttc, obj, msg):
     # /Nuertey/Nucleo/F767ZI/Humidity
     print("Humidity: " + msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
     print()
+
+    # In order to be able to assign to the global name, we need to tell 
+    # the parser to use the global name rather than bind a new local name
+    # - which is what the 'global' keyword does.    
+    global sensor_data['Humidity'].append(float(msg.payload))
     
-    sensor_data['Humidity'].append(msg.payload)
     print('Debug -> Cumulative Sensor Data:')
     print(sensor_data)
     print()
@@ -103,7 +111,7 @@ def on_message_humidity(mqttc, obj, msg):
     figure2.append_trace({
         'x': sensor_data['Time'],
         'y': sensor_data['Humidity'],
-        'text': sensor_data['Time'],
+        'text': sensor_data['Time'], # TBD, Nuertey Odzeyem, is this line really needed?
         'name': 'DHT11 Humidity Readings',
         'mode': 'lines+markers',
         'type': 'scatter'
@@ -142,22 +150,20 @@ mqttc.connect("10.50.10.25", 1883, 60)
 
 mqttc.loop_forever()
 
-
-# ============================================
-# Some column data visualizations, line graph:
-# ============================================
-figure1 = go.Figure()
-figure1.add_trace(go.Scatter(x=airbnb_data_dropped['host_since'], 
-                            y=airbnb_data_dropped['number_of_reviews'],
-                            mode='markers',
-                            name='Number of Reviews',
-                            line=dict(color='red', width=1)
-))
-figure1.update_layout(title='Amsterdam, Noord-Holland - Airbnb Host Since Date/Number Of Reviews',
-                     xaxis_title='Airbnb Host Since Date',
-                     yaxis_title='Number Of Reviews')
-figure1.show()
-
+# =========================================================
+# Alternative way of doing the subplots. May not be needed:
+# =========================================================
+#figure1 = go.Figure()
+#figure1.add_trace(go.Scatter(x=airbnb_data_dropped['host_since'], 
+#                            y=airbnb_data_dropped['number_of_reviews'],
+#                            mode='markers',
+#                            name='Number of Reviews',
+#                            line=dict(color='red', width=1)
+#))
+#figure1.update_layout(title='Amsterdam, Noord-Holland - Airbnb Host Since Date/Number Of Reviews',
+#                     xaxis_title='Airbnb Host Since Date',
+#                     yaxis_title='Number Of Reviews')
+#figure1.show()
 
 # Attempt to make the background transparent.
 #figure2.update_layout({
