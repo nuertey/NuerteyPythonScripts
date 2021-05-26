@@ -58,13 +58,6 @@ figure0_1.update_layout(
 
 figure0_1.show()
 
-# Create the graph with subplots: fileopt='extend'
-figure2 = plotly.subplots.make_subplots(rows=2, cols=1, vertical_spacing=0.2)
-figure2['layout']['margin'] = {
-    'l': 30, 'r': 10, 'b': 30, 't': 10
-}
-figure2['layout']['legend'] = {'x': 0, 'y': 1, 'xanchor': 'left'}
-
 def on_connect(mqttc, obj, flags, rc):
     print("rc: " + str(rc))
     print()
@@ -90,7 +83,6 @@ def on_message_humidity(mqttc, obj, msg):
     global sensor_data_time
     global sensor_data_temperature
     global sensor_data_humidity
-    global figure2
     
     # This callback will only be called for messages with topics that match:
     #
@@ -116,23 +108,55 @@ def on_message_humidity(mqttc, obj, msg):
     if first_time:
         first_time = False
 
-        figure2.append_trace({
-            'x': sensor_data_time,
-            'y': sensor_data_temperature,
-            'name': 'DHT11 Temperature Readings',
-            'mode': 'lines+markers',
-            'type': 'scatter'
-        }, 1, 1)
-        figure2.append_trace({
-            'x': sensor_data_time,
-            'y': sensor_data_humidity,
-            'text': sensor_data_time, # TBD, Nuertey Odzeyem, is this line really needed?
-            'name': 'DHT11 Humidity Readings',
-            'mode': 'lines+markers',
-            'type': 'scatter'
-        }, 2, 1)
+        trace0 = go.Scatter(
+            x=sensor_data_time,
+            y=sensor_data_temperature,
+            mode='lines+markers',
+            name='DHT11 Temperature Readings',
+            text=sensor_data_time)
+        )
+
+        trace1 = go.Scatter(
+            x=sensor_data_time,
+            y=sensor_data_humidity,
+            mode='lines+markers',
+            name='DHT11 Humidity Readings',
+            text=sensor_data_time)
+        )
+
+layout = dict(
+        height=350,
+        plot_bgcolor=app_color["graph_bg"],
+        paper_bgcolor=app_color["graph_bg"],
+        font={"color": "#fff"},
+        xaxis={
+            "title": "Wind Speed (mph)",
+            "showgrid": False,
+            "showline": False,
+            "fixedrange": True,
+        },
+        yaxis={
+            "showgrid": False,
+            "showline": False,
+            "zeroline": False,
+            "title": "Number of Samples",
+            "fixedrange": True,
+        },
+        autosize=True,
+        bargap=0.01,
+        bargroupgap=0,
+        hovermode="closest",
+        legend={
+            "orientation": "h",
+            "yanchor": "bottom",
+            "xanchor": "center",
+            "y": 1,
+            "x": 0.5,
+        }
         
-        figure2.show()
+        data = [trace0, trace1]
+        plot_url = plotly.plot(data, layout=layout)
+
     else:
         for i in range(len(sensor_data_time)):
             with figure2.batch_update():
