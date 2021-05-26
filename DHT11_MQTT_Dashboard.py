@@ -128,6 +128,8 @@ def on_message_humidity(mqttc, obj, msg):
     if first_time:
         first_time = False
 
+        # Definitely should think of preferring subplots as the y-axis
+        # represents different quantities.
         trace0 = go.Scatter(
             x=sensor_data_time,
             y=sensor_data_temperature,
@@ -147,24 +149,25 @@ def on_message_humidity(mqttc, obj, msg):
         data = [trace0, trace1]
         
         # Take 1: if there is no data in the plot, 'extend' will create new traces.
-        figure1 = go.Figure(data, layout=layout, filename='extend plot', fileopt='extend')
+        figure1 = go.Figure(data, layout=layout)
+        #figure1 = go.Figure(data, layout=layout, filename='extend plot', fileopt='extend')
         figure1.show()
 
     else:
         trace2 = go.Scatter(
-            x=sensor_data_time[-1], # Shortest and most Pythonic way to get the last element.
-            y=sensor_data_temperature[-1],
+            x=[sensor_data_time[-1]], # Shortest and most Pythonic way to get the last element.
+            y=[sensor_data_temperature[-1]],
             mode='lines+markers',
             name='DHT11 Temperature Readings',
-            text=sensor_data_time[-1]
+            text=[sensor_data_time[-1]]
         )
         
         trace3 = go.Scatter(
-            x=sensor_data_time[-1],
-            y=sensor_data_humidity[-1],
+            x=[sensor_data_time[-1]],
+            y=[sensor_data_humidity[-1]],
             mode='lines+markers',
             name='DHT11 Humidity Readings',
-            text=sensor_data_time[-1]
+            text=[sensor_data_time[-1]]
         )
         
         data = [trace2, trace3]
@@ -183,7 +186,8 @@ def on_message_humidity(mqttc, obj, msg):
         # the memory for a full overwrite of the chart data in one API call.
         #
         # https://plotly.com/python/v3/sending-data-to-charts/
-        figure1 = go.Figure(data, layout=layout, filename='extend plot', fileopt='extend')
+        figure1 = go.Figure(data, layout=layout)
+        #figure1 = go.Figure(data, layout=layout, filename='extend plot', fileopt='extend')
         figure1.show()
         
 def on_publish(mqttc, obj, mid):
