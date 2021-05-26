@@ -13,20 +13,12 @@
 #   Author: Nuertey Odzeyem
 #**********************************************************************/
 #!/usr/bin/env python
-
-import json
-import requests
-from requests.auth import HTTPBasicAuth
-
+    
+import time
 import datetime
 import paho.mqtt.client as mqtt
+import threading
 
-
-import chart_studio               # As overwriting or extending a previously
-import chart_studio.plotly as py  # rendered plot (in the browser) seems not
-                                  # possible with plotly.offline, let's 
-                                  # leverage chart_studio.plotly instead.
-                                  
 import plotly.graph_objects as go # low-level interface to figures, 
                                   # traces and layout
 from plotly.subplots import make_subplots
@@ -34,36 +26,35 @@ from plotly.subplots import make_subplots
 sensor_data_time = []
 sensor_data_temperature = []
 sensor_data_humidity = []
-first_time = True
 
 # Mapbox token for satellite plot:
-#token = open(".mapbox_token").read() 
-#
-#figure0_1 = go.Figure(go.Scattermapbox(
-#    mode = "markers+text+lines",
-#    lon = [-87.961640], lat = [42.152030],
-#    marker = {'size': 20, 'symbol': ["car"]},
-#    text = ["Transportation"],textposition = "bottom right"))
-#
-#figure0_1.update_layout(
-#    title='Buffalo Grove - Illinois',
-#    autosize=True,
-#    hovermode='closest',
-#    showlegend=False,
-#    mapbox=dict(
-#        accesstoken=token,
-#        bearing=0,
-#        center=dict(
-#            lat=42.152030,
-#            lon=-87.961640
-#        ),
-#        pitch=0,
-#        zoom=15,
-#        style='satellite-streets'
-#    ),
-#)
-#
-#figure0_1.show()
+token = open(".mapbox_token").read() 
+
+figure0_1 = go.Figure(go.Scattermapbox(
+    mode = "markers+text+lines",
+    lon = [-87.961640], lat = [42.152030],
+    marker = {'size': 20, 'symbol': ["car"]},
+    text = ["Transportation"],textposition = "bottom right"))
+
+figure0_1.update_layout(
+    title='Buffalo Grove - Illinois',
+    autosize=True,
+    hovermode='closest',
+    showlegend=False,
+    mapbox=dict(
+        accesstoken=token,
+        bearing=0,
+        center=dict(
+            lat=42.152030,
+            lon=-87.961640
+        ),
+        pitch=0,
+        zoom=15,
+        style='satellite-streets'
+    ),
+)
+
+figure0_1.show()
 
 def on_connect(mqttc, obj, flags, rc):
     print("rc: " + str(rc))
@@ -100,58 +91,63 @@ def on_message_humidity(mqttc, obj, msg):
     sensor_data_humidity.append(float(msg.payload))
 
     # For debugging. Disable once testing is completed.
-    print('Debug -> Time:')
-    print(sensor_data_time)
-    print()
+    #print('Debug -> Time:')
+    #print(sensor_data_time)
+    #print()
     print('Debug -> Temperature:')
     print(sensor_data_temperature)
     print()
     print('Debug -> Humidity:')
     print(sensor_data_humidity)
     print()
-
-    # Create the graph with subplots
-    figure1 = make_subplots(rows=2, cols=1, vertical_spacing=0.2)
-    
-    # With magic underscore notation, you can accomplish the same thing
-    # by passing the figure constructor a keyword argument named layout_title_text,
-    # and by passing the go.Scatter constructor a keyword argument named line_color.
-    #layout = dict(
-    #    title={
-    #        "text": "DHT11 Temperature and Humidity Readings"
-    #    },
-    #    xaxis={
-    #        "title": "Timestamp"
-    #    },
-    #    yaxis={
-    #        "title": "Sensor Read Value"
-    #    },
-    #    autosize=True,
-    #    hovermode="closest",
-    #    legend={
-    #        "orientation": "h",
-    #        "yanchor": "bottom",
-    #        "xanchor": "center",
-    #        "y": 1,
-    #        "x": 0.5
-    #    }
-    #)
-
-    if first_time:
-        first_time = False
-
-        #username = 'nuertey'
-        #api_key = '9n5FLcMGSNNncSLT82zZ'
-        #
-        #auth = HTTPBasicAuth(username, api_key)
-        #headers = {'Plotly-Client-Platform': 'python'}
-
-        # This initialization step places a special .plotly/.credentials
-        # file in my home directory. 
-        #chart_studio.tools.set_credentials_file(username=username, api_key=api_key)
         
-        # Definitely should think of preferring subplots as the y-axis
-        # represents different quantities.
+def on_publish(mqttc, obj, mid):
+    print("mid: " + str(mid))
+    print()
+
+def on_subscribe(mqttc, obj, mid, granted_qos):
+    print("Subscribed: " + str(mid) + " " + str(granted_qos))
+    print()
+
+def on_log(mqttc, obj, level, string):
+    print(string)
+    print()
+
+# Called by the MQTT Sensor Data Collector thread
+def do_mqtt_processing_forever():
+    # If you want to use a specific client id, use
+    # mqttc = mqtt.Client("client-id")
+    # but note that the client id must be unique on the broker. Leaving the client
+    # id parameter empty will generate a random id for you.
+    mqttc = mqtt.Client()
+    
+    # Add message callbacks that will only trigger on a specific subscription match.
+    mqttc.message_callback_add("/Nuertey/Nucleo/F767ZI/Temperature", on_message_temperature)
+    mqttc.message_callback_add("/Nuertey/Nucleo/F767ZI/Humidity", on_message_humidity)
+    
+    mqttc.on_connect = on_connect
+    mqttc.on_publish = on_publish
+    mqttc.on_subscribe = on_subscribe
+    # Uncomment to enable debug messages
+    # mqttc.on_log = on_log
+    mqttc.connect("10.50.10.25", 1883, 60)
+    mqttc.subscribe("/Nuertey/Nucleo/F767ZI/#", 0)
+    mqttc.loop_forever()
+
+t = threading.Thread(target=do_mqtt_processing_forever, name="MQTTThread")
+t.daemon = True
+t.start()
+
+# Dashboard graphing is in the main thread context after we have waited 
+# sufficiently enough for a meaningful range of sensor values to accumulate:
+while True:
+    # Wait for 2 minutes
+    time.sleep(120)
+
+    if sensor_data_time and sensor_data_temperature and sensor_data_humidity and (len(sensor_data_time) == len(sensor_data_humidity)):
+        # Grab data accumulated thus far and plot it:
+        figure1 = make_subplots(rows=2, cols=1, vertical_spacing=0.2)
+    
         trace0 = go.Scatter(
             x=sensor_data_time,
             y=sensor_data_temperature,
@@ -167,16 +163,6 @@ def on_message_humidity(mqttc, obj, msg):
             name='DHT11 Humidity Readings',
             text=sensor_data_time
         )
-        
-        #data = [trace0, trace1]
-        
-        # Take 1: if there is no data in the plot, 'extend' will create new traces.
-        #figure1 = go.Figure(data, layout=layout)
-        #figure1.show()
-        
-        #plot_url = py.plot(data, layout=layout, filename='extend plot', fileopt='extend', auto_open=False)
-        #print(plot_url)
-        #print()
         
         figure1.add_trace(
             trace0,
@@ -194,91 +180,3 @@ def on_message_humidity(mqttc, obj, msg):
             yaxis_title="Sensor Read Value"
         )
         figure1.show()
-
-    else:
-        trace2 = go.Scatter(
-            x=sensor_data_time,
-            y=sensor_data_temperature,
-            mode='lines+markers',
-            name='DHT11 Temperature Readings',
-            text=sensor_data_time
-        )
-        
-        trace3 = go.Scatter(
-            x=sensor_data_time,
-            y=sensor_data_humidity,
-            mode='lines+markers',
-            name='DHT11 Humidity Readings',
-            text=sensor_data_time
-        )
-        
-        #data = [trace2, trace3]
-        
-        # A subtle point here: update_traces (documented at:
-        # https://plotly.com/python/creating-and-updating-figures/) would
-        # not do here as we dont want to simply recreate the plot with new
-        # data but in a different browser window. Rather, we want to extend
-        # the existing plot in the existing browser tab with one more data point. 
-        #
-        # Take 2: extend the traces on the plot with the data in the order supplied.
-        # IMPORTANT: filename must match previous.
-        #
-        # Add data to an existing trace by setting fileopt='extend'.
-        # This method is preferred by embedded systems that may not have
-        # the memory for a full overwrite of the chart data in one API call.
-        #
-        # https://plotly.com/python/v3/sending-data-to-charts/
-        #figure1 = go.Figure(data, layout=layout)
-        #figure1.show()
-        
-        #plot_url = py.plot(data, layout=layout, filename='extend plot', fileopt='extend', auto_open=True)
-        #print(plot_url)
-        #print()
-        
-        figure1.add_trace(
-            trace2,
-            row=1, col=1
-        )
-
-        figure1.add_trace(
-            trace3,
-            row=2, col=1
-        )
-        
-        figure1.update_layout(
-            title="DHT11 Temperature and Humidity Readings",
-            xaxis_title="Timestamp",
-            yaxis_title="Sensor Read Value"
-        )
-        figure1.show()
-        
-def on_publish(mqttc, obj, mid):
-    print("mid: " + str(mid))
-    print()
-
-def on_subscribe(mqttc, obj, mid, granted_qos):
-    print("Subscribed: " + str(mid) + " " + str(granted_qos))
-    print()
-
-def on_log(mqttc, obj, level, string):
-    print(string)
-    print()
-
-# If you want to use a specific client id, use
-# mqttc = mqtt.Client("client-id")
-# but note that the client id must be unique on the broker. Leaving the client
-# id parameter empty will generate a random id for you.
-mqttc = mqtt.Client()
-
-# Add message callbacks that will only trigger on a specific subscription match.
-mqttc.message_callback_add("/Nuertey/Nucleo/F767ZI/Temperature", on_message_temperature)
-mqttc.message_callback_add("/Nuertey/Nucleo/F767ZI/Humidity", on_message_humidity)
-
-mqttc.on_connect = on_connect
-mqttc.on_publish = on_publish
-mqttc.on_subscribe = on_subscribe
-# Uncomment to enable debug messages
-# mqttc.on_log = on_log
-mqttc.connect("10.50.10.25", 1883, 60)
-mqttc.subscribe("/Nuertey/Nucleo/F767ZI/#", 0)
-mqttc.loop_forever()
