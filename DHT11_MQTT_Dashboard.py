@@ -29,6 +29,7 @@ import chart_studio.plotly as py  # rendered plot (in the browser) seems not
                                   
 import plotly.graph_objects as go # low-level interface to figures, 
                                   # traces and layout
+from plotly.subplots import make_subplots
 
 sensor_data_time = []
 sensor_data_temperature = []
@@ -36,33 +37,33 @@ sensor_data_humidity = []
 first_time = True
 
 # Mapbox token for satellite plot:
-token = open(".mapbox_token").read() 
-
-figure0_1 = go.Figure(go.Scattermapbox(
-    mode = "markers+text+lines",
-    lon = [-87.961640], lat = [42.152030],
-    marker = {'size': 20, 'symbol': ["car"]},
-    text = ["Transportation"],textposition = "bottom right"))
-
-figure0_1.update_layout(
-    title='Buffalo Grove - Illinois',
-    autosize=True,
-    hovermode='closest',
-    showlegend=False,
-    mapbox=dict(
-        accesstoken=token,
-        bearing=0,
-        center=dict(
-            lat=42.152030,
-            lon=-87.961640
-        ),
-        pitch=0,
-        zoom=15,
-        style='satellite-streets'
-    ),
-)
-
-figure0_1.show()
+#token = open(".mapbox_token").read() 
+#
+#figure0_1 = go.Figure(go.Scattermapbox(
+#    mode = "markers+text+lines",
+#    lon = [-87.961640], lat = [42.152030],
+#    marker = {'size': 20, 'symbol': ["car"]},
+#    text = ["Transportation"],textposition = "bottom right"))
+#
+#figure0_1.update_layout(
+#    title='Buffalo Grove - Illinois',
+#    autosize=True,
+#    hovermode='closest',
+#    showlegend=False,
+#    mapbox=dict(
+#        accesstoken=token,
+#        bearing=0,
+#        center=dict(
+#            lat=42.152030,
+#            lon=-87.961640
+#        ),
+#        pitch=0,
+#        zoom=15,
+#        style='satellite-streets'
+#    ),
+#)
+#
+#figure0_1.show()
 
 def on_connect(mqttc, obj, flags, rc):
     print("rc: " + str(rc))
@@ -109,42 +110,45 @@ def on_message_humidity(mqttc, obj, msg):
     print(sensor_data_humidity)
     print()
 
+    # Create the graph with subplots
+    figure1 = make_subplots(rows=2, cols=1, vertical_spacing=0.2)
+    
     # With magic underscore notation, you can accomplish the same thing
     # by passing the figure constructor a keyword argument named layout_title_text,
     # and by passing the go.Scatter constructor a keyword argument named line_color.
-    layout = dict(
-        title={
-            "text": "DHT11 Temperature and Humidity Readings"
-        },
-        xaxis={
-            "title": "Timestamp"
-        },
-        yaxis={
-            "title": "Sensor Read Value"
-        },
-        autosize=True,
-        hovermode="closest",
-        legend={
-            "orientation": "h",
-            "yanchor": "bottom",
-            "xanchor": "center",
-            "y": 1,
-            "x": 0.5
-        }
-    )
+    #layout = dict(
+    #    title={
+    #        "text": "DHT11 Temperature and Humidity Readings"
+    #    },
+    #    xaxis={
+    #        "title": "Timestamp"
+    #    },
+    #    yaxis={
+    #        "title": "Sensor Read Value"
+    #    },
+    #    autosize=True,
+    #    hovermode="closest",
+    #    legend={
+    #        "orientation": "h",
+    #        "yanchor": "bottom",
+    #        "xanchor": "center",
+    #        "y": 1,
+    #        "x": 0.5
+    #    }
+    #)
 
     if first_time:
         first_time = False
 
-        username = 'nuertey'
-        api_key = '9n5FLcMGSNNncSLT82zZ'
-
-        auth = HTTPBasicAuth(username, api_key)
-        headers = {'Plotly-Client-Platform': 'python'}
+        #username = 'nuertey'
+        #api_key = '9n5FLcMGSNNncSLT82zZ'
+        #
+        #auth = HTTPBasicAuth(username, api_key)
+        #headers = {'Plotly-Client-Platform': 'python'}
 
         # This initialization step places a special .plotly/.credentials
         # file in my home directory. 
-        chart_studio.tools.set_credentials_file(username=username, api_key=api_key)
+        #chart_studio.tools.set_credentials_file(username=username, api_key=api_key)
         
         # Definitely should think of preferring subplots as the y-axis
         # represents different quantities.
@@ -164,15 +168,32 @@ def on_message_humidity(mqttc, obj, msg):
             text=sensor_data_time
         )
         
-        data = [trace0, trace1]
+        #data = [trace0, trace1]
         
         # Take 1: if there is no data in the plot, 'extend' will create new traces.
         #figure1 = go.Figure(data, layout=layout)
         #figure1.show()
         
-        plot_url = py.plot(data, layout=layout, filename='extend plot', fileopt='extend', auto_open=False)
-        print(plot_url)
-        print()
+        #plot_url = py.plot(data, layout=layout, filename='extend plot', fileopt='extend', auto_open=False)
+        #print(plot_url)
+        #print()
+        
+        figure1.add_trace(
+            trace0,
+            row=1, col=1
+        )
+
+        figure1.add_trace(
+            trace1,
+            row=2, col=1
+        )
+        
+        figure1.update_layout(
+            title="DHT11 Temperature and Humidity Readings",
+            xaxis_title="Timestamp",
+            yaxis_title="Sensor Read Value"
+        )
+        figure1.show()
 
     else:
         trace2 = go.Scatter(
@@ -191,7 +212,7 @@ def on_message_humidity(mqttc, obj, msg):
             text=sensor_data_time
         )
         
-        data = [trace2, trace3]
+        #data = [trace2, trace3]
         
         # A subtle point here: update_traces (documented at:
         # https://plotly.com/python/creating-and-updating-figures/) would
@@ -210,9 +231,26 @@ def on_message_humidity(mqttc, obj, msg):
         #figure1 = go.Figure(data, layout=layout)
         #figure1.show()
         
-        plot_url = py.plot(data, layout=layout, filename='extend plot', fileopt='extend', auto_open=True)
-        print(plot_url)
-        print()
+        #plot_url = py.plot(data, layout=layout, filename='extend plot', fileopt='extend', auto_open=True)
+        #print(plot_url)
+        #print()
+        
+        figure1.add_trace(
+            trace2,
+            row=1, col=1
+        )
+
+        figure1.add_trace(
+            trace3,
+            row=2, col=1
+        )
+        
+        figure1.update_layout(
+            title="DHT11 Temperature and Humidity Readings",
+            xaxis_title="Timestamp",
+            yaxis_title="Sensor Read Value"
+        )
+        figure1.show()
         
 def on_publish(mqttc, obj, mid):
     print("mid: " + str(mid))
