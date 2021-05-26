@@ -51,7 +51,7 @@ figure0_1.update_layout(
             lon=-87.961640
         ),
         pitch=0,
-        zoom=20,
+        zoom=15,
         style='satellite-streets'
     ),
 )
@@ -63,6 +63,9 @@ def on_connect(mqttc, obj, flags, rc):
     print()
 
 def on_message_temperature(mqttc, obj, msg):
+    # In order to be able to assign to the global name, we need to tell 
+    # the parser to use the global name rather than bind a new local name
+    # - which is what the 'global' keyword does.
     global sensor_data_time
     global sensor_data_temperature
 
@@ -72,9 +75,6 @@ def on_message_temperature(mqttc, obj, msg):
     print("Temperature: " + msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
     print()
         
-    # In order to be able to assign to the global name, we need to tell 
-    # the parser to use the global name rather than bind a new local name
-    # - which is what the 'global' keyword does.
     sensor_data_time.append(datetime.datetime.now())
     sensor_data_temperature.append(float(msg.payload))
 
@@ -89,10 +89,7 @@ def on_message_humidity(mqttc, obj, msg):
     # /Nuertey/Nucleo/F767ZI/Humidity
     print("Humidity: " + msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
     print()
-
-    # In order to be able to assign to the global name, we need to tell 
-    # the parser to use the global name rather than bind a new local name
-    # - which is what the 'global' keyword does.    
+ 
     sensor_data_humidity.append(float(msg.payload))
 
     print('Debug -> Time:')
@@ -124,47 +121,51 @@ def on_message_humidity(mqttc, obj, msg):
             text=sensor_data_time)
         )
 
-layout = dict(
-        height=350,
-        plot_bgcolor=app_color["graph_bg"],
-        paper_bgcolor=app_color["graph_bg"],
-        font={"color": "#fff"},
-        xaxis={
-            "title": "Wind Speed (mph)",
-            "showgrid": False,
-            "showline": False,
-            "fixedrange": True,
-        },
-        yaxis={
-            "showgrid": False,
-            "showline": False,
-            "zeroline": False,
-            "title": "Number of Samples",
-            "fixedrange": True,
-        },
-        autosize=True,
-        bargap=0.01,
-        bargroupgap=0,
-        hovermode="closest",
-        legend={
-            "orientation": "h",
-            "yanchor": "bottom",
-            "xanchor": "center",
-            "y": 1,
-            "x": 0.5,
-        }
+        layout = dict(
+            title={
+                "text": "DHT11 Temperature and Humidity Readings"
+            },
+            xaxis={
+                "title": "Timestamp"
+            },
+            yaxis={
+                "title": "Sensor Read Value"
+            },
+            autosize=True,
+            hovermode="closest",
+            legend={
+                "orientation": "h",
+                "yanchor": "bottom",
+                "xanchor": "center",
+                "y": 1,
+                "x": 0.5
+            }
+        )
         
         data = [trace0, trace1]
         plot_url = plotly.plot(data, layout=layout)
 
     else:
-        for i in range(len(sensor_data_time)):
-            with figure2.batch_update():
-                figure2.data[0].x = sensor_data_time[:i]
-                figure2.data[0].y = sensor_data_temperature[:i]
-                figure2.data[1].x = sensor_data_time[:i]
-                figure2.data[1].y = sensor_data_humidity[:i]
-        figure2.show()
+        trace2 = go.Scatter(
+            x=sensor_data_time[-1], # Shortest and most Pythonic way to get the last element.
+            y=sensor_data_temperature[-1],
+            mode='lines+markers',
+            name='DHT11 Temperature Readings',
+            text=sensor_data_time[-1])
+        )
+        
+        trace3 = go.Scatter(
+            x=sensor_data_time[-1],
+            y=sensor_data_humidity[-1],
+            mode='lines+markers',
+            name='DHT11 Humidity Readings',
+            text=sensor_data_time[-1])
+        )
+        
+        data = [trace2, trace3]
+        
+        # Extend the traces on the plot with the data in the order supplied.
+        plot_url = plotly.plot(data, fileopt='extend')
 
 def on_publish(mqttc, obj, mid):
     print("mid: " + str(mid))
