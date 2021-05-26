@@ -144,7 +144,7 @@ while True:
     # Wait for 2 minutes
     time.sleep(120)
 
-    if sensor_data_time and sensor_data_temperature and sensor_data_humidity and (len(sensor_data_time) == len(sensor_data_humidity)):
+    if sensor_data_time and sensor_data_temperature and sensor_data_humidity:
         # Grab data accumulated thus far and plot it:
         figure1 = make_subplots(rows=2, cols=1, vertical_spacing=0.2)
     
