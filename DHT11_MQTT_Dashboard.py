@@ -28,6 +28,7 @@ pd.options.mode.chained_assignment = None
 sensor_data_time = []
 sensor_data_temperature = []
 sensor_data_humidity = []
+first_time = True
 
 token = open(".mapbox_token").read() 
 
@@ -57,11 +58,21 @@ figure0_1.update_layout(
 
 figure0_1.show()
 
+# Create the graph with subplots: fileopt='extend'
+figure2 = plotly.subplots.make_subplots(rows=2, cols=1, vertical_spacing=0.2)
+figure2['layout']['margin'] = {
+    'l': 30, 'r': 10, 'b': 30, 't': 10
+}
+figure2['layout']['legend'] = {'x': 0, 'y': 1, 'xanchor': 'left'}
+
 def on_connect(mqttc, obj, flags, rc):
     print("rc: " + str(rc))
     print()
 
 def on_message_temperature(mqttc, obj, msg):
+    global sensor_data_time
+    global sensor_data_temperature
+
     # This callback will only be called for messages with topics that match:
     #
     # /Nuertey/Nucleo/F767ZI/Temperature
@@ -75,6 +86,12 @@ def on_message_temperature(mqttc, obj, msg):
     sensor_data_temperature.append(float(msg.payload))
 
 def on_message_humidity(mqttc, obj, msg):
+    global first_time
+    global sensor_data_time
+    global sensor_data_temperature
+    global sensor_data_humidity
+    global figure2
+    
     # This callback will only be called for messages with topics that match:
     #
     # /Nuertey/Nucleo/F767ZI/Humidity
@@ -96,30 +113,34 @@ def on_message_humidity(mqttc, obj, msg):
     print(sensor_data_humidity)
     print()
 
-    # Create the graph with subplots
-    figure2 = plotly.subplots.make_subplots(rows=2, cols=1, vertical_spacing=0.2)
-    figure2['layout']['margin'] = {
-        'l': 30, 'r': 10, 'b': 30, 't': 10
-    }
-    figure2['layout']['legend'] = {'x': 0, 'y': 1, 'xanchor': 'left'}
+    if first_time:
+        first_time = False
 
-    figure2.append_trace({
-        'x': sensor_data_time,
-        'y': sensor_data_temperature,
-        'name': 'DHT11 Temperature Readings',
-        'mode': 'lines+markers',
-        'type': 'scatter'
-    }, 1, 1)
-    figure2.append_trace({
-        'x': sensor_data_time,
-        'y': sensor_data_humidity,
-        'text': sensor_data_time, # TBD, Nuertey Odzeyem, is this line really needed?
-        'name': 'DHT11 Humidity Readings',
-        'mode': 'lines+markers',
-        'type': 'scatter'
-    }, 2, 1)
-    
-    figure2.show()
+        figure2.append_trace({
+            'x': sensor_data_time,
+            'y': sensor_data_temperature,
+            'name': 'DHT11 Temperature Readings',
+            'mode': 'lines+markers',
+            'type': 'scatter'
+        }, 1, 1)
+        figure2.append_trace({
+            'x': sensor_data_time,
+            'y': sensor_data_humidity,
+            'text': sensor_data_time, # TBD, Nuertey Odzeyem, is this line really needed?
+            'name': 'DHT11 Humidity Readings',
+            'mode': 'lines+markers',
+            'type': 'scatter'
+        }, 2, 1)
+        
+        figure2.show()
+    else:
+        for i in range(len(sensor_data_time)):
+            with figure2.batch_update():
+                figure2.data[0].x = sensor_data_time[:i]
+                figure2.data[0].y = sensor_data_temperature[:i]
+                figure2.data[1].x = sensor_data_time[:i]
+                figure2.data[1].y = sensor_data_humidity[:i]
+        figure2.show()
 
 def on_publish(mqttc, obj, mid):
     print("mid: " + str(mid))
