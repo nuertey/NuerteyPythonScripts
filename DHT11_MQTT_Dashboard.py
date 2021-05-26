@@ -17,7 +17,6 @@
 import datetime
 import pandas as pd
 import paho.mqtt.client as mqtt
-import plotly
 import plotly.graph_objects as go # low-level interface to figures, 
                                   # traces and layout
 
@@ -102,6 +101,30 @@ def on_message_humidity(mqttc, obj, msg):
     print(sensor_data_humidity)
     print()
 
+    # With magic underscore notation, you can accomplish the same thing
+    # by passing the figure constructor a keyword argument named layout_title_text,
+    # and by passing the go.Scatter constructor a keyword argument named line_color.
+    layout = dict(
+        title={
+            "text": "DHT11 Temperature and Humidity Readings"
+        },
+        xaxis={
+            "title": "Timestamp"
+        },
+        yaxis={
+            "title": "Sensor Read Value"
+        },
+        autosize=True,
+        hovermode="closest",
+        legend={
+            "orientation": "h",
+            "yanchor": "bottom",
+            "xanchor": "center",
+            "y": 1,
+            "x": 0.5
+        }
+    )
+
     if first_time:
         first_time = False
 
@@ -110,7 +133,7 @@ def on_message_humidity(mqttc, obj, msg):
             y=sensor_data_temperature,
             mode='lines+markers',
             name='DHT11 Temperature Readings',
-            text=sensor_data_time)
+            text=sensor_data_time
         )
 
         trace1 = go.Scatter(
@@ -118,32 +141,14 @@ def on_message_humidity(mqttc, obj, msg):
             y=sensor_data_humidity,
             mode='lines+markers',
             name='DHT11 Humidity Readings',
-            text=sensor_data_time)
-        )
-
-        layout = dict(
-            title={
-                "text": "DHT11 Temperature and Humidity Readings"
-            },
-            xaxis={
-                "title": "Timestamp"
-            },
-            yaxis={
-                "title": "Sensor Read Value"
-            },
-            autosize=True,
-            hovermode="closest",
-            legend={
-                "orientation": "h",
-                "yanchor": "bottom",
-                "xanchor": "center",
-                "y": 1,
-                "x": 0.5
-            }
+            text=sensor_data_time
         )
         
         data = [trace0, trace1]
-        plot_url = plotly.plot(data, layout=layout)
+        
+        # Take 1: if there is no data in the plot, 'extend' will create new traces.
+        figure1 = go.Figure(data, layout=layout, filename='extend plot', fileopt='extend')
+        figure1.show()
 
     else:
         trace2 = go.Scatter(
@@ -151,7 +156,7 @@ def on_message_humidity(mqttc, obj, msg):
             y=sensor_data_temperature[-1],
             mode='lines+markers',
             name='DHT11 Temperature Readings',
-            text=sensor_data_time[-1])
+            text=sensor_data_time[-1]
         )
         
         trace3 = go.Scatter(
@@ -159,14 +164,28 @@ def on_message_humidity(mqttc, obj, msg):
             y=sensor_data_humidity[-1],
             mode='lines+markers',
             name='DHT11 Humidity Readings',
-            text=sensor_data_time[-1])
+            text=sensor_data_time[-1]
         )
         
         data = [trace2, trace3]
         
-        # Extend the traces on the plot with the data in the order supplied.
-        plot_url = plotly.plot(data, fileopt='extend')
-
+        # A subtle point here: update_traces (documented at:
+        # https://plotly.com/python/creating-and-updating-figures/) would
+        # not do here as we dont want to simply recreate the plot with new
+        # data but in a different browser window. Rather, we want to extend
+        # the existing plot in the existing browser tab with one more data point. 
+        #
+        # Take 2: extend the traces on the plot with the data in the order supplied.
+        # IMPORTANT: filename must match previous.
+        #
+        # Add data to an existing trace by setting fileopt='extend'.
+        # This method is preferred by embedded systems that may not have
+        # the memory for a full overwrite of the chart data in one API call.
+        #
+        # https://plotly.com/python/v3/sending-data-to-charts/
+        figure1 = go.Figure(data, layout=layout, filename='extend plot', fileopt='extend')
+        figure1.show()
+        
 def on_publish(mqttc, obj, mid):
     print("mid: " + str(mid))
     print()
