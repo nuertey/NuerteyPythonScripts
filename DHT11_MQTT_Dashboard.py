@@ -170,25 +170,25 @@ def on_message_humidity(mqttc, obj, msg):
         #figure1 = go.Figure(data, layout=layout)
         #figure1.show()
         
-        plot_url = py.plot(data, layout=layout, filename='extend plot', fileopt='extend', auto_open=True)
+        plot_url = py.plot(data, layout=layout, filename='extend plot', fileopt='extend', auto_open=False)
         print(plot_url)
         print()
 
     else:
         trace2 = go.Scatter(
-            x=[sensor_data_time[-1]], # Shortest and most Pythonic way to get the last element.
-            y=[sensor_data_temperature[-1]],
+            x=sensor_data_time,
+            y=sensor_data_temperature,
             mode='lines+markers',
             name='DHT11 Temperature Readings',
-            text=[sensor_data_time[-1]]
+            text=sensor_data_time
         )
         
         trace3 = go.Scatter(
-            x=[sensor_data_time[-1]],
-            y=[sensor_data_humidity[-1]],
+            x=sensor_data_time,
+            y=sensor_data_humidity,
             mode='lines+markers',
             name='DHT11 Humidity Readings',
-            text=[sensor_data_time[-1]]
+            text=sensor_data_time
         )
         
         data = [trace2, trace3]
