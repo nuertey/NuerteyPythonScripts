@@ -14,21 +14,28 @@
 #**********************************************************************/
 #!/usr/bin/env python
 
+import json
+import requests
+from requests.auth import HTTPBasicAuth
+
 import datetime
-import pandas as pd
 import paho.mqtt.client as mqtt
+
+
+import chart_studio               # As overwriting or extending a previously
+import chart_studio.plotly as py  # rendered plot (in the browser) seems not
+                                  # possible with plotly.offline, let's 
+                                  # leverage chart_studio.plotly instead.
+                                  
 import plotly.graph_objects as go # low-level interface to figures, 
                                   # traces and layout
-
-pd.set_option('display.max_rows', 100)
-pd.set_option('display.min_rows', 100)
-pd.options.mode.chained_assignment = None
 
 sensor_data_time = []
 sensor_data_temperature = []
 sensor_data_humidity = []
 first_time = True
 
+# Mapbox token for satellite plot:
 token = open(".mapbox_token").read() 
 
 figure0_1 = go.Figure(go.Scattermapbox(
@@ -91,6 +98,7 @@ def on_message_humidity(mqttc, obj, msg):
  
     sensor_data_humidity.append(float(msg.payload))
 
+    # For debugging. Disable once testing is completed.
     print('Debug -> Time:')
     print(sensor_data_time)
     print()
@@ -128,6 +136,16 @@ def on_message_humidity(mqttc, obj, msg):
     if first_time:
         first_time = False
 
+        username = 'nuertey'
+        api_key = '9n5FLcMGSNNncSLT82zZ'
+
+        auth = HTTPBasicAuth(username, api_key)
+        headers = {'Plotly-Client-Platform': 'python'}
+
+        # This initialization step places a special .plotly/.credentials
+        # file in my home directory. 
+        chart_studio.tools.set_credentials_file(username=username, api_key=api_key)
+        
         # Definitely should think of preferring subplots as the y-axis
         # represents different quantities.
         trace0 = go.Scatter(
@@ -149,9 +167,12 @@ def on_message_humidity(mqttc, obj, msg):
         data = [trace0, trace1]
         
         # Take 1: if there is no data in the plot, 'extend' will create new traces.
-        figure1 = go.Figure(data, layout=layout)
-        #figure1 = go.Figure(data, layout=layout, filename='extend plot', fileopt='extend')
-        figure1.show()
+        #figure1 = go.Figure(data, layout=layout)
+        #figure1.show()
+        
+        plot_url = py.plot(data, layout=layout, filename='extend plot', fileopt='extend', auto_open=True)
+        print(plot_url)
+        print()
 
     else:
         trace2 = go.Scatter(
@@ -186,9 +207,12 @@ def on_message_humidity(mqttc, obj, msg):
         # the memory for a full overwrite of the chart data in one API call.
         #
         # https://plotly.com/python/v3/sending-data-to-charts/
-        figure1 = go.Figure(data, layout=layout)
-        #figure1 = go.Figure(data, layout=layout, filename='extend plot', fileopt='extend')
-        figure1.show()
+        #figure1 = go.Figure(data, layout=layout)
+        #figure1.show()
+        
+        plot_url = py.plot(data, layout=layout, filename='extend plot', fileopt='extend', auto_open=True)
+        print(plot_url)
+        print()
         
 def on_publish(mqttc, obj, mid):
     print("mid: " + str(mid))
