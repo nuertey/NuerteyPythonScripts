@@ -135,7 +135,7 @@ def do_mqtt_processing_forever():
     mqttc.loop_forever()
 
 t = threading.Thread(target=do_mqtt_processing_forever, name="MQTTThread")
-t.daemon = True
+t.daemon = True # Being a daemon here implies thread will also be killed if the main thread context ends.
 t.start()
 
 # Dashboard graphing is in the main thread context after we have waited 
