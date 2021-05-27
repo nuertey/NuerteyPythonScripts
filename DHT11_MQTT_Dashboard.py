@@ -23,6 +23,10 @@ import plotly.graph_objects as go # low-level interface to figures,
                                   # traces and layout
 from plotly.subplots import make_subplots
 
+# Use this to track whether we are running production code on the peer 
+# (NUCLEO F767ZI, big endian) or development code (Ubuntu Linux, little endian) 
+running_on_target = True
+
 sensor_data_time = []
 sensor_data_temperature = []
 sensor_data_humidity = []
@@ -56,14 +60,22 @@ figure0_1.update_layout(
 
 figure0_1.show()
 
+def network_to_host(payload):
+    global running_on_target
+
+    if running_on_target:
+        ba = bytearray.fromhex(payload)
+        ba.reverse()
+        s = ''.join(format(x, '02x') for x in ba)
+        return float(s)
+    else:
+        return float(payload)
+
 def on_connect(mqttc, obj, flags, rc):
     print("rc: " + str(rc))
     print()
 
 def on_message_temperature(mqttc, obj, msg):
-    # In order to be able to assign to the global name, we need to tell 
-    # the parser to use the global name rather than bind a new local name
-    # - which is what the 'global' keyword does.
     global sensor_data_time
     global sensor_data_temperature
 
@@ -74,7 +86,7 @@ def on_message_temperature(mqttc, obj, msg):
     print()
         
     sensor_data_time.append(datetime.datetime.now())
-    sensor_data_temperature.append(float(msg.payload))
+    sensor_data_temperature.append(network_to_host(msg.payload))
 
 def on_message_humidity(mqttc, obj, msg):
     global first_time
@@ -88,7 +100,7 @@ def on_message_humidity(mqttc, obj, msg):
     print("Humidity: " + msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
     print()
  
-    sensor_data_humidity.append(float(msg.payload))
+    sensor_data_humidity.append(network_to_host(msg.payload))
 
     # For debugging. Disable once testing is completed.
     #print('Debug -> Time:')
