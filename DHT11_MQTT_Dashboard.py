@@ -23,10 +23,6 @@ import plotly.graph_objects as go # low-level interface to figures,
                                   # traces and layout
 from plotly.subplots import make_subplots
 
-# Use this to track whether we are running production code on the peer 
-# (NUCLEO F767ZI, big endian) or development code (Ubuntu Linux, little endian) 
-running_on_target = True
-
 sensor_data_time = []
 sensor_data_temperature = []
 sensor_data_humidity = []
@@ -61,20 +57,9 @@ figure0_1.update_layout(
 figure0_1.show()
 
 def network_to_host(payload):
-    print(type(payload))
-    print()
+    #print(type(payload))
+    #print()
     payload = payload.decode("utf-8")
-    #global running_on_target
-    #
-    #if running_on_target:
-    #    ba = bytearray.fromhex(payload)
-    #    ba.reverse()
-    #    s = ''.join(format(x, '02x') for x in ba)
-    #    return float(s)
-    #else:
-    #    return float(payload)
-    #str(payload).rstrip('\x00')
-    #payload.strip('\x00')
     return float(payload)
 
 def on_connect(mqttc, obj, flags, rc):
@@ -112,12 +97,12 @@ def on_message_humidity(mqttc, obj, msg):
     #print('Debug -> Time:')
     #print(sensor_data_time)
     #print()
-    print('Debug -> Temperature:')
-    print(sensor_data_temperature)
-    print()
-    print('Debug -> Humidity:')
-    print(sensor_data_humidity)
-    print()
+    #print('Debug -> Temperature:')
+    #print(sensor_data_temperature)
+    #print()
+    #print('Debug -> Humidity:')
+    #print(sensor_data_humidity)
+    #print()
         
 def on_publish(mqttc, obj, mid):
     print("mid: " + str(mid))
