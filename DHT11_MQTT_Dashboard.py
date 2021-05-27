@@ -61,15 +61,21 @@ figure0_1.update_layout(
 figure0_1.show()
 
 def network_to_host(payload):
-    global running_on_target
-
-    if running_on_target:
-        ba = bytearray.fromhex(payload)
-        ba.reverse()
-        s = ''.join(format(x, '02x') for x in ba)
-        return float(s)
-    else:
-        return float(payload)
+    print(type(payload))
+    print()
+    payload = payload.decode("utf-8")
+    #global running_on_target
+    #
+    #if running_on_target:
+    #    ba = bytearray.fromhex(payload)
+    #    ba.reverse()
+    #    s = ''.join(format(x, '02x') for x in ba)
+    #    return float(s)
+    #else:
+    #    return float(payload)
+    #str(payload).rstrip('\x00')
+    #payload.strip('\x00')
+    return float(payload)
 
 def on_connect(mqttc, obj, flags, rc):
     print("rc: " + str(rc))
