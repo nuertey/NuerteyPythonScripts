@@ -134,6 +134,9 @@ def do_mqtt_processing_forever():
     # Uncomment to enable debug messages
     # mqttc.on_log = on_log
     mqttc.connect("10.50.10.25", 1883, 60)
+    #mqttc.connect("10.42.0.1", 1883, 60)
+    #mqttc.connect("test.mosquitto.org", 1883, 60)
+    #mqttc.connect("5.196.95.208", 1883, 60)
     mqttc.subscribe("/Nuertey/Nucleo/F767ZI/#", 0)
     mqttc.loop_forever()
 
