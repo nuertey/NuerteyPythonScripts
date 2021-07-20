@@ -144,3 +144,60 @@ assert_is_not(inertia.xaxis.get_label_text(), '',
     msg="Change the x-axis label to something more descriptive.")
 assert_is_not(inertia.yaxis.get_label_text(), '',
     msg="Change the y-axis label to something more descriptive.")
+
+def plot_pair(reduced, clusters):
+    '''
+    Uses seaborn.PairGrid to visualize the data distribution
+    when axes are the first four principal components.
+    Diagonal plots are histograms. The off-diagonal plots are scatter plots.
+    
+    Parameters
+    ----------
+    reduced: A numpy array. Comes from importing delta_reduced.npy
+    
+    Returns
+    -------
+    A seaborn.axisgrid.PairGrid instance.
+    '''
+    
+    df = pd.DataFrame(reduced)
+    df['c'] = clusters
+    subset = [0,1,2,3, 'c']
+    columns = [0,1,2,3]
+    
+    ax = sns.PairGrid(df[subset], vars = columns, hue = 'c')
+    ax = ax.map_diag(plt.hist)
+    ax = ax.map_offdiag(plt.scatter)
+    
+    plt.show()
+    
+    return ax
+    
+k_means, clusters = cluster(reduced, random_state=check_random_state(0), n_clusters=4)
+pg = plot_pair(reduced, clusters)
+
+assert_is_instance(pg.fig, plt.Figure)
+assert_true(len(pg.data.columns) >= 4)
+
+for ax in pg.diag_axes:
+    assert_equal(len(ax.patches), 4 * 10) # 4 clusters with 10 patches in each histogram
+
+for i, j in zip(*np.triu_indices_from(pg.axes, 1)):
+    ax = pg.axes[i, j]
+    x_out, y_out = ax.collections[0].get_offsets().T
+    x_in = reduced[clusters == 0, j] # we only check the first cluster
+    y_in = reduced[clusters == 0, i]
+    assert_array_equal(x_in, x_out)
+    assert_array_equal(y_in, y_out)
+
+for i, j in zip(*np.tril_indices_from(pg.axes, -1)):
+    ax = pg.axes[i, j]
+    x_in = reduced[clusters == 0, j]
+    y_in = reduced[clusters == 0, i]
+    x_out, y_out = ax.collections[0].get_offsets().T
+    assert_array_equal(x_in, x_out)
+    assert_array_equal(y_in, y_out)
+
+for i, j in zip(*np.diag_indices_from(pg.axes)):
+    ax = pg.axes[i, j]
+    assert_equal(len(ax.collections), 0)
