@@ -286,12 +286,15 @@ def standardize(df):
     # YOUR CODE HERE
     scaler = StandardScaler()
     
-    # Bogdan: Debug prints follow...
-    #print('sklearn Scaler type:')
-    #print()
-    #print()
+    # Bogdan: Debug prints (commented out for now) and detailed method/steps
+    # (also commented out for now) to encourage learning follows..., and
+    # then subsequently, that is followed by a 1-line shortcut method of
+    # performing the standardizations:
     
-    scaler = scaler.fit(df)
+    #print('sklearn Scaler type:')    
+    #scaler = scaler.fit(df)
+    #print(scaler)
+    #print()
 
     #print('Computed mean from input DataFrame to be used for later scaling:')
     #print(scaler.mean_)
@@ -302,13 +305,13 @@ def standardize(df):
     #print()
 
     # Perform standardization by centering and scaling:
-    scaled = scaler.transform(df)
-    print('Standardized and scaled DataFrame:')
-    print(scaled)
-    print()
+    #scaled = scaler.transform(df)
+    #print('Standardized and scaled DataFrame:')
+    #print(scaled)
+    #print()
 
     # Bogdan: As an alternative to all the above steps, you can simply do 
-    # it in 1 line as a shortcut:
+    # it in 1 line as a shortcut like so:
     scaled = StandardScaler().fit_transform(df)
     
     return scaled
