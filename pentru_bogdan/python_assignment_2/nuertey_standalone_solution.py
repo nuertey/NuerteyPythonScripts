@@ -264,7 +264,8 @@ max_pos = abs_val.argmax()
 max_val = abs_val.max()
 
 print('"{0}" accounts for {1:0.3f} % of the variance.'.format(df.columns[max_pos], max_val))
-
+print()
+    
 # Please write a function named standardize() where StandardScaler 
 # function of sklearn will be used to scale each feature so that they 
 # have zero mean and unit variance.
@@ -283,8 +284,32 @@ def standardize(df):
     '''
     
     # YOUR CODE HERE
+    scaler = StandardScaler()
     
+    # Bogdan: Debug prints follow...
+    #print('sklearn Scaler type:')
+    #print()
+    #print()
     
+    scaler = scaler.fit(df)
+
+    #print('Computed mean from input DataFrame to be used for later scaling:')
+    #print(scaler.mean_)
+    #print()
+    
+    #print('Computed variance from input DataFrame to be used for later scaling:')
+    #print(scaler.var_)
+    #print()
+
+    # Perform standardization by centering and scaling:
+    scaled = scaler.transform(df)
+    print('Standardized and scaled DataFrame:')
+    print(scaled)
+    print()
+
+    # Bogdan: As an alternative to all the above steps, you can simply do 
+    # it in 1 line as a shortcut:
+    scaled = StandardScaler().fit_transform(df)
     
     return scaled
     
