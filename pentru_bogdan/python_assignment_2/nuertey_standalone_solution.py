@@ -16,6 +16,7 @@
 import numpy as np
 import pandas as pd
 import seaborn as sns
+import matplotlib
 import matplotlib.pyplot as plt
 matplotlib.use('TkAgg')
 import sklearn  # pip install sklearn
@@ -122,3 +123,90 @@ def plot_pairgrid(df):
 
 # Bogdan: Call your function on your new DataFrame:
 pg = plot_pairgrid(aircraft_physical_characteristics_df)
+
+### This is the unittest cell, please just run this cell without any modification once you generated "pg" above
+
+cols = ['Cruising Speed (mph)', 'Range (miles)', 'Engines',
+        'Wingspan (ft)', 'Tail Height (ft)', 'Length (ft)']
+
+assert_is_instance(pg.fig, plt.Figure)
+assert_equal(set(pg.data.columns), set(cols))
+
+for ax in pg.diag_axes:
+    assert_equal(len(ax.patches), 10)
+
+for i, j in zip(*np.triu_indices_from(pg.axes, 1)):
+    ax = pg.axes[i, j]
+    x_in = df[cols[j]]
+    y_in = df[cols[i]]
+    x_out, y_out = ax.collections[0].get_offsets().T
+    assert_array_equal(x_in, x_out)
+    assert_array_equal(y_in, y_out)
+
+for i, j in zip(*np.tril_indices_from(pg.axes, -1)):
+    ax = pg.axes[i, j]
+    x_in = df[cols[j]]
+    y_in = df[cols[i]]
+    x_out, y_out = ax.collections[0].get_offsets().T
+    assert_array_equal(x_in, x_out)
+    assert_array_equal(y_in, y_out)
+
+for i, j in zip(*np.diag_indices_from(pg.axes)):
+    ax = pg.axes[i, j]
+    assert_equal(len(ax.collections), 0)
+
+# Apply PCA
+#
+# I assume we dont know anything about dimensionality reduction techniques
+# and just naively apply principle components to the data.
+#
+# Write a function named fit_pca() that takes a pandas.DataFrame and uses
+# sklearn.decomposition.PCA to fit a PCA model on all values of df.
+def fit_pca(df, n_components):
+    '''
+    Uses sklearn.decomposition.PCA to fit a PCA model on "df".
+
+    Parameters
+    ----------
+    df: A pandas.DataFrame. Comes from delta.csv.
+    n_components: An int. Number of principal components to keep.
+
+    Returns
+    -------
+    An sklearn.decomposition.pca.PCA instance.
+    '''
+
+    # YOUR CODE HERE
+    pca = PCA(n_components)
+    pca.fit(df)
+
+    print('pca.explained_variance_ratio_:')    
+    print(pca.explained_variance_ratio_)
+    print()
+
+    print('pca.singular_values_:')       
+    print(pca.singular_values_)
+    print()
+
+    return pca
+
+# Bogdan: Visual verification of function input arguments, and for 
+# learning purposes:
+print('Number Of Rows In Overall DataFrame:')
+print(df.shape[0])
+print()
+
+print('Number Of Columns In Overall DataFrame:')
+print(df.shape[1])
+print()
+
+print('Number Of Columns In Overall DataFrame (Alternate Method):')
+print(len(df.columns))
+print()
+
+pca_naive = fit_pca(df, n_components=df.shape[1])
+    
+assert_is_instance(pca_naive, PCA)
+assert_almost_equal(pca_naive.explained_variance_ratio_.sum(), 1.0, 3)
+assert_equal(pca_naive.n_components_, df.shape[1])
+assert_equal(pca_naive.whiten, False)
