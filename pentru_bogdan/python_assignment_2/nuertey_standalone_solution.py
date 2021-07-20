@@ -46,3 +46,34 @@ df = pd.read_csv('delta.csv', index_col='Aircraft')
 
 print(df.head())
 print()
+
+# First, let's look at the attributes related to the aircraft physical 
+# characteristics:
+#
+# Cruising Speed (mph) Range (miles) Engines Wingspan (ft) Tail Height 
+# (ft) Length (ft) These six variables are about in the middle of the 
+# data frame (and it's part of your task to figure out where they are 
+# located).
+
+# Bogdan: Here is where they are located:
+#
+# Index: 44 entries, Airbus A319 to MD-DC9-50
+# Data columns (total 33 columns):
+#  #   Column                    Non-Null Count  Dtype  
+# ---  ------                    --------------  -----  
+#  0   Seat Width (Club)         44 non-null     float64
+#  ...
+#  16  Cruising Speed (mph)      44 non-null     int64  
+#  17  Range (miles)             44 non-null     int64  
+#  18  Engines                   44 non-null     int64  
+#  19  Wingspan (ft)             44 non-null     float64
+#  20  Tail Height (ft)          44 non-null     float64
+#  21  Length (ft)               44 non-null     float64
+#  ... 
+#  31  Eco Comfort               44 non-null     int64  
+#  32  Economy                   44 non-null     int64  
+
+print('df.info():')
+print(df.info())
+print()
+
