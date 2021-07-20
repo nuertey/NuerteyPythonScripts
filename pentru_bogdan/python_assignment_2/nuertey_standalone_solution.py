@@ -344,3 +344,44 @@ assert_array_almost_equal(
 # we keep only 10 components
 n_components = 10
 pca = fit_pca(scaled, n_components=n_components)
+
+# Let's take another look to the explained variance of the first 10 
+# principal components from the scaled data.
+def plot_scaled_variance(pca):
+    '''
+    Plots the variance explained by each of the principal components.
+    Features are scaled with sklearn.StandardScaler.
+    
+    Parameters
+    ----------
+    pca: An sklearn.decomposition.pca.PCA instance.
+    
+    Returns
+    -------
+    A matplotlib.Axes instance.
+    '''
+    
+    # YOUR CODE HERE
+    figure3, ax = plt.subplots()
+    ax.plot(list(range(pca.n_components_)), pca.explained_variance_ratio_)
+    
+    ax.set(xlabel='Dimension #', 
+           ylabel='Explained Variance Ratio',
+           title='Fraction of Explained Variance')
+    
+    plt.show() 
+    
+    return ax
+    
+ax = plot_scaled_variance(pca)
+
+assert_is_instance(ax, mpl.axes.Axes)
+assert_equal(len(ax.lines), 1)
+
+assert_is_not(len(ax.title.get_text()), 0, msg="Your plot doesn't have a title.")
+assert_is_not(ax.xaxis.get_label_text(), '', msg="Change the x-axis label to something more descriptive.")
+assert_is_not(ax.yaxis.get_label_text(), '', msg="Change the y-axis label to something more descriptive.")
+
+xdata, ydata = ax.lines[0].get_xydata().T
+assert_array_equal(xdata, list(range(n_components)))
+assert_array_almost_equal(ydata, pca.explained_variance_ratio_)
