@@ -264,3 +264,55 @@ max_pos = abs_val.argmax()
 max_val = abs_val.max()
 
 print('"{0}" accounts for {1:0.3f} % of the variance.'.format(df.columns[max_pos], max_val))
+
+# Please write a function named standardize() where StandardScaler 
+# function of sklearn will be used to scale each feature so that they 
+# have zero mean and unit variance.
+def standardize(df):
+    '''
+    Uses sklearn.preprocessing.StandardScaler to make each features look like
+    a Gaussian with zero mean and unit variance.
+    
+    Parameters
+    ----------
+    df: A pandas.DataFrame
+    
+    Returns
+    -------
+    A numpy array.
+    '''
+    
+    # YOUR CODE HERE
+    
+    
+    
+    return scaled
+    
+scaled = standardize(df)
+
+rng = np.random.RandomState(0)
+n_samples, n_features = 4, 5
+
+df_t1 = pd.DataFrame(
+    rng.randn(n_samples, n_features),
+    index=[i for i in 'abcd'],
+    columns=[c for c  in 'abcde']
+    )
+df_t1.loc[:, 'a'] = 0.0  # make first feature zero
+
+scaled_t1 = standardize(df_t1)
+
+assert_is_not(df_t1, scaled_t1)
+assert_is_instance(scaled_t1, np.ndarray)
+assert_array_almost_equal(
+    scaled_t1.mean(axis=0),
+    n_features * [0.0] # scaled data should have mean zero
+    ) 
+assert_array_almost_equal(
+    scaled_t1.std(axis=0),
+    [0., 1., 1., 1., 1.] # unit variance except for 1st feature
+    )
+    
+# we keep only 10 components
+n_components = 10
+pca = fit_pca(scaled, n_components=n_components)
