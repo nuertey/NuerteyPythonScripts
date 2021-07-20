@@ -78,3 +78,69 @@ for i in range(5):
 assert_true((mindist >= 0.0).all())
 assert_true((labels_gold != -1).all())
 assert_array_equal(labels_gold, cluster_t)
+
+# The scikit-learn documentation on sklearn.cluster.KMeans says that Kmeans
+# cluster has the inertia value in the inertia_ attribute. So we can vary
+# the number of clusters in KMeans, plot KMeans.inertia_ as a function of
+# the number of clusters, and pick the "elbow" in the plot.
+#
+# Always use check_random_state(0) to seed the random number generator.
+def plot_inertia(array, start=1, end=10):
+    '''
+    Increase the number of clusters from "start" to "end" (inclusive).
+    Finds the inertia of k-means clustering for different k.
+    Plots inertia as a function of the number of clusters.
+
+    
+    Parameters
+    ----------
+    array: A numpy array.
+    start: An int. Default: 1
+    end: An int. Default: 10
+    
+    Returns
+    -------
+    A matplotlib.Axes instance.
+    '''
+    #Your code is here 
+    x_axis = list(range(start, end+1))
+    inertia = [] 
+
+    for i in x_axis:
+        model = KMeans(n_clusters=i, random_state=check_random_state(0)).fit(array)
+        inertia.append(model.inertia_)
+   
+    #print(x_axis)
+    #print()
+    
+    #print(inertia)
+    #print()
+    
+    fig, ax = plt.subplots(figsize=(10,6))
+    
+    ax.set_title('The elbow method')
+    ax.set_ylabel('Inertia')
+    ax.set_xlabel('Number of clusters')
+    plt.plot(x_axis, inertia)
+    plt.show() 
+    
+    return ax
+    
+inertia = plot_inertia(reduced)
+
+assert_is_instance(inertia, mpl.axes.Axes)
+assert_true(len(inertia.lines) >= 1)
+
+xdata, ydata = inertia.lines[0].get_xydata().T
+
+for i in range(1, 11):
+    k_means_t, cluster_t = cluster(reduced, random_state=check_random_state(0), n_clusters=i)
+    assert_array_equal(xdata[i - 1], i)
+    assert_almost_equal(ydata[i - 1], k_means_t.inertia_)
+
+assert_is_not(len(inertia.title.get_text()), 0,
+    msg="Your plot doesn't have a title.")
+assert_is_not(inertia.xaxis.get_label_text(), '',
+    msg="Change the x-axis label to something more descriptive.")
+assert_is_not(inertia.yaxis.get_label_text(), '',
+    msg="Change the y-axis label to something more descriptive.")
