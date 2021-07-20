@@ -385,3 +385,39 @@ assert_is_not(ax.yaxis.get_label_text(), '', msg="Change the y-axis label to som
 xdata, ydata = ax.lines[0].get_xydata().T
 assert_array_equal(xdata, list(range(n_components)))
 assert_array_almost_equal(ydata, pca.explained_variance_ratio_)
+
+# Write a function named reduce() that takes a PCA model (that is already
+# trained on array) and a Numpy array, and applies dimensional reduction
+# on the array.
+def reduce(pca, array):
+    '''
+    Applies the `pca` model on array.
+    
+    Parameters
+    ----------
+    pca: An sklearn.decomposition.PCA instance.
+    
+    Returns
+    -------
+    A Numpy array
+    '''
+    
+    # YOUR CODE HERE
+    reduced = pca.fit_transform(array)
+
+    return reduced
+    
+reduced = reduce(pca, scaled)
+
+assert_is_instance(reduced, np.ndarray)
+assert_array_almost_equal(reduced, pca.fit_transform(scaled))
+
+# Save the reduced data to the same directory of your notebook  as 'delta_reeuced.npy' that we will use later on
+np.save('delta_reduced.npy', reduced)
+
+# ======================================================================
+# Problem 2. Clustering
+#
+# We will use the first 10 principal components of the Delta Airline data
+# set that we created in the first step.
+# ======================================================================
