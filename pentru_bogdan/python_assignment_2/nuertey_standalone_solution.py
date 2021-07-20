@@ -16,9 +16,9 @@
 import numpy as np
 import pandas as pd
 import seaborn as sns
-import matplotlib
+import matplotlib as mpl
 import matplotlib.pyplot as plt
-matplotlib.use('TkAgg')
+mpl.use('TkAgg')
 import sklearn  # pip install sklearn
 import pickle   # pip install pickle-mixin
 
@@ -180,6 +180,10 @@ def fit_pca(df, n_components):
     pca = PCA(n_components)
     pca.fit(df)
 
+    print('pca.components_:')    
+    print(pca.components_)
+    print()
+
     print('pca.explained_variance_ratio_:')    
     print(pca.explained_variance_ratio_)
     print()
@@ -204,9 +208,59 @@ print('Number Of Columns In Overall DataFrame (Alternate Method):')
 print(len(df.columns))
 print()
 
+# Bogdan: Call your function on the original DataFrame with the requisite
+# input arguments :
 pca_naive = fit_pca(df, n_components=df.shape[1])
     
 assert_is_instance(pca_naive, PCA)
 assert_almost_equal(pca_naive.explained_variance_ratio_.sum(), 1.0, 3)
 assert_equal(pca_naive.n_components_, df.shape[1])
 assert_equal(pca_naive.whiten, False)
+
+def plot_naive_variance(pca):
+    '''
+    Plots the variance explained by each of the principal components.
+    Attributes are not scaled, hence a naive approach.
+    
+    Parameters
+    ----------
+    pca: An sklearn.decomposition.pca.PCA instance.
+    
+    Returns
+    -------
+    A matplotlib.Axes instance.
+    '''
+    
+    # YOUR CODE HERE
+    figure2, ax = plt.subplots()
+    ax.plot(list(range(pca.n_components_)), pca.explained_variance_ratio_)
+    
+    ax.set(xlabel='Dimension #', 
+           ylabel='Explained Variance Ratio',
+           title='Fraction of Explained Variance')
+    
+    plt.show() 
+
+    return ax
+    
+naive_var = plot_naive_variance(pca_naive)
+
+assert_is_instance(naive_var, mpl.axes.Axes)
+assert_equal(len(naive_var.lines), 1)
+
+assert_is_not(len(naive_var.title.get_text()), 0,
+    msg="Your plot doesn't have a title.")
+assert_is_not(naive_var.xaxis.get_label_text(), '',
+    msg="Change the x-axis label to something more descriptive.")
+assert_is_not(naive_var.yaxis.get_label_text(), '',
+    msg="Change the y-axis label to something more descriptive.")
+
+xdata, ydata = naive_var.lines[0].get_xydata().T
+assert_array_equal(xdata, list(range(df.shape[1])))
+assert_array_almost_equal(ydata, pca_naive.explained_variance_ratio_)
+
+abs_val = np.abs(pca_naive.components_[0])
+max_pos = abs_val.argmax()
+max_val = abs_val.max()
+
+print('"{0}" accounts for {1:0.3f} % of the variance.'.format(df.columns[max_pos], max_val))
