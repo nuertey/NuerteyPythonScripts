@@ -42,14 +42,43 @@ df = pd.read_csv('delta.csv', index_col='Aircraft')
 n_components = 3
 n_points = df.shape[0]
 
-# Create figure
-fig = plt.figure(figsize=(15, 8))
-fig.suptitle("Manifold Learning with %i points"  % (n_points), fontsize=14)
+# Bogdan: Form a new DataFrame for subsequent easier processing:
+aircraft_physical_characteristics_df = df[['Cruising Speed (mph)', 
+                                           'Range (miles)',
+                                           'Wingspan (ft)']]
 
-# Add 3d scatter plot
-ax = fig.add_subplot(2, 1, 1, projection='3d')
-ax.scatter(df[:, 0], df[:, 1], df[:, 2], c=color, cmap=plt.cm.Spectral)
-ax.view_init(4, -72)
+# Bogdan: Visual verification of new DataFrame:
+print(aircraft_physical_characteristics_df)
+print()
+
+def plot_pairgrid(df):
+    '''
+    Uses seaborn.PairGrid to visualize the attributes related to the six physical characteristics.
+    Diagonal plots are histograms. The off-diagonal plots are scatter plots.
+    
+    Parameters
+    ----------
+    df: A pandas.DataFrame. Comes from importing delta.csv.
+    
+    Returns
+    -------
+    A seaborn.axisgrid.PairGrid instance.
+    '''
+    
+    # YOUR CODE HERE
+    plt.style.use('seaborn') # pretty matplotlib plots
+    ax = sns.PairGrid(df)
+    
+    # Bogdan: Ensure to plot a different function on the diagonal to 
+    # show the univariate distribution of the variable in each column:
+    ax.map_diag(plt.hist)
+    ax.map_offdiag(plt.scatter);
+    plt.show()
+    
+    return ax
+
+# Bogdan: Call your function on your new DataFrame:
+pg = plot_pairgrid(aircraft_physical_characteristics_df)
 
 t_SNE = TSNE(n_components=n_components, init='pca', random_state=0)
 df_embedded = t_SNE.fit_transform(df)
@@ -60,11 +89,4 @@ print()
 print(df_embedded)
 print()
 
-ax = fig.add_subplot(2, 1, 2)
-ax.scatter(df_embedded[:, 0], df_embedded[:, 1], df_embedded[:, 1], c=color, cmap=plt.cm.Spectral)
-ax.set_title("t-distributed Stochastic Neighbor Embedding")
-ax.xaxis.set_major_formatter(NullFormatter())
-ax.yaxis.set_major_formatter(NullFormatter())
-ax.axis('tight')
-
-plt.show()
+pg = plot_pairgrid(df_embedded)
