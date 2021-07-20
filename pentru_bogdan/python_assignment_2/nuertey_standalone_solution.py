@@ -16,8 +16,8 @@
 import numpy as np
 import pandas as pd
 import seaborn as sns
-import matplotlib as mpl
 import matplotlib.pyplot as plt
+matplotlib.use('TkAgg')
 import sklearn  # pip install sklearn
 import pickle   # pip install pickle-mixin
 
@@ -77,3 +77,48 @@ print('df.info():')
 print(df.info())
 print()
 
+# Bogdan: Form a new DataFrame for subsequent easier processing:
+aircraft_physical_characteristics_df = df[['Cruising Speed (mph)', 
+                                           'Range (miles)',
+                                           'Engines',
+                                           'Wingspan (ft)', 
+                                           'Tail Height (ft)', 
+                                           'Length (ft)']]
+
+# Bogdan: Visual verification of new DataFrame:
+print(aircraft_physical_characteristics_df)
+print()
+
+# Write a function named plot_pairgrid() that takes a pandas.DataFrame 
+# and uses seaborn.PairGrid to visualize the attributes related to the 
+# six physical characteristics listed above. The plots on the diagonal 
+# should be histograms of corresponding attributes, and the off-diagonal
+# should be scatter plots.
+def plot_pairgrid(df):
+    '''
+    Uses seaborn.PairGrid to visualize the attributes related to the six physical characteristics.
+    Diagonal plots are histograms. The off-diagonal plots are scatter plots.
+    
+    Parameters
+    ----------
+    df: A pandas.DataFrame. Comes from importing delta.csv.
+    
+    Returns
+    -------
+    A seaborn.axisgrid.PairGrid instance.
+    '''
+    
+    # YOUR CODE HERE
+    plt.style.use('seaborn') # pretty matplotlib plots
+    ax = sns.PairGrid(df)
+    
+    # Bogdan: Ensure to plot a different function on the diagonal to 
+    # show the univariate distribution of the variable in each column:
+    ax.map_diag(plt.hist)
+    ax.map_offdiag(plt.scatter);
+    plt.show()
+    
+    return ax
+
+# Bogdan: Call your function on your new DataFrame:
+pg = plot_pairgrid(aircraft_physical_characteristics_df)
