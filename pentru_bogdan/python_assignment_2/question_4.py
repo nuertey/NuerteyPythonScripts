@@ -88,11 +88,12 @@ rgb_values = sns.color_palette("Set2", len(color_labels))
 color_map = dict(zip(color_labels, rgb_values))
 
 # Finally use the mapped values
-plt.scatter(xs, ys, c=df.index.map(color_map))
+fig, ax = plt.subplots(figsize=(10,6))
 
-plt.xlabel('df_embedded[:, 0]')
-plt.ylabel('df_embedded[:, 1]')
-plt.title('Manifold Learning With t-distributed Stochastic Neighbor Embedding')
+ax.set_title('Manifold Learning With t-distributed Stochastic Neighbor Embedding')
+ax.set_ylabel('df_embedded[:, 0]')
+ax.set_xlabel('df_embedded[:, 1]')
+plt.scatter(xs, ys, c=df.index.map(color_map))
 
 plt.show()
 
