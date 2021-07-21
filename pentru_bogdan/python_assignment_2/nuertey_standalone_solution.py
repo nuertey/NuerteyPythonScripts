@@ -415,9 +415,4 @@ assert_array_almost_equal(reduced, pca.fit_transform(scaled))
 # Save the reduced data to the same directory of your notebook  as 'delta_reeuced.npy' that we will use later on
 np.save('delta_reduced.npy', reduced)
 
-# ======================================================================
-# Problem 2. Clustering
-#
-# We will use the first 10 principal components of the Delta Airline data
-# set that we created in the first step.
-# ======================================================================
+

@@ -17,6 +17,13 @@ pd.set_option('display.max_rows', 100)
 pd.set_option('display.min_rows', 100)
 pd.options.mode.chained_assignment = None
 
+# ======================================================================
+# Problem 2. Clustering
+#
+# We will use the first 10 principal components of the Delta Airline data
+# set that we created in the first step.
+# ======================================================================
+
 ## Reload the the first 10 components of delta dataset
 reduced = np.load('delta_reduced.npy')
 
@@ -29,7 +36,7 @@ print()
 # clustering, i.e. which cluster each data point belongs to. Please remember
 # how we were generating and using the labels for seeds, movements, iris etc.
 #
-# Use default values for all parameters in KMeans() execept for n_clusters 
+# Use default values for all parameters in KMeans() except for n_clusters 
 # and random_state.
 def cluster(array, random_state, n_clusters=4):
     '''
