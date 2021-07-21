@@ -104,11 +104,28 @@ plt.show()
 #
 # Projection onto the first 2 principal components
 # ----------------------------------------------------------------------
+def draw_vector(v0, v1, ax=None):
+    ax = ax or plt.gca()
+    arrowprops=dict(arrowstyle='->',
+                    linewidth=2,
+                    shrinkA=0, shrinkB=0)
+    ax.annotate('', v1, v0, arrowprops=arrowprops)
+
 df_pca = decomposition.PCA(n_components=n_components).fit_transform(df)
 
+print('pca.components_:')
+print(pca.components_)
+print()
+
+print('pca.explained_variance_:')
+print(pca.explained_variance_)
+print()
+
+print('df_pca.shape:')
 print(df_pca.shape)
 print()
 
+print('df_pca:')
 print(df_pca)
 print()
 
@@ -117,13 +134,15 @@ ys_pca = df_pca[:, 1]
 
 figure7, ax = plt.subplots(figsize=(10,6))
 
-ax.set_title('Manifold Learning With t-distributed Stochastic Neighbor Embedding')
+ax.set_title('Principal Component Analysis (PCA) of Delta Airlines Dataset')
 ax.set_ylabel('df_pca[:, 0]')
 ax.set_xlabel('df_pca[:, 1]')
 
 plt.scatter(xs_pca, ys_pca, c=xs)
 
 plt.show()
+
+
 
 # ----------------------------------------------------------------------
 # Bogdan: I archived the plot above as nuertey_figure_6.png. So at this
