@@ -7,8 +7,9 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import sklearn
 
-from sklearn import manifold
+from sklearn import manifold, decomposition
 from sklearn.manifold import TSNE
+from sklearn.decomposition import PCA
 from sklearn.utils import check_random_state
 
 from nose.tools import assert_equal, assert_is_instance, assert_true, assert_is_not
@@ -58,7 +59,7 @@ n_points = df.shape[0]
 #
 # PCA initialization cannot be used with precomputed distances and is
 # usually more globally stable than random initialization.
-model = TSNE(n_components=n_components, init='pca', random_state=check_random_state(0))
+model = manifold.TSNE(n_components=n_components, init='pca', random_state=check_random_state(0))
 df_embedded = model.fit_transform(df)
 
 print(df_embedded.shape)
@@ -88,12 +89,39 @@ rgb_values = sns.color_palette("Set2", len(color_labels))
 color_map = dict(zip(color_labels, rgb_values))
 
 # Finally use the mapped values
-fig, ax = plt.subplots(figsize=(10,6))
+figure6, ax = plt.subplots(figsize=(10,6))
 
 ax.set_title('Manifold Learning With t-distributed Stochastic Neighbor Embedding')
 ax.set_ylabel('df_embedded[:, 0]')
 ax.set_xlabel('df_embedded[:, 1]')
-plt.scatter(xs, ys, c=df.index.map(color_map))
+#plt.scatter(xs, ys, c=df.index.map(color_map))
+plt.scatter(xs, ys, c=xs)
+
+plt.show()
+
+# ----------------------------------------------------------------------
+# PCA
+#
+# Projection onto the first 2 principal components
+# ----------------------------------------------------------------------
+df_pca = decomposition.PCA(n_components=n_components).fit_transform(df)
+
+print(df_pca.shape)
+print()
+
+print(df_pca)
+print()
+
+xs_pca = df_pca[:, 0]
+ys_pca = df_pca[:, 1]
+
+figure7, ax = plt.subplots(figsize=(10,6))
+
+ax.set_title('Manifold Learning With t-distributed Stochastic Neighbor Embedding')
+ax.set_ylabel('df_pca[:, 0]')
+ax.set_xlabel('df_pca[:, 1]')
+
+plt.scatter(xs_pca, ys_pca, c=xs)
 
 plt.show()
 
