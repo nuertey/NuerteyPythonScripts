@@ -83,7 +83,8 @@ plt.xlabel('df_embedded[:, 0]')
 plt.ylabel('df_embedded[:, 1]')
 plt.title('Manifold Learning With t-distributed Stochastic Neighbor Embedding')
 #plt.scatter(xs, ys, c=df['Engines'])
-plt.scatter(xs, ys, c=df['Cruising Speed (mph)'])
+#plt.scatter(xs, ys, c=df['Cruising Speed (mph)'])
+sns.scatterplot([:, 0], [:, 1], data=df_embedded, hue='continent')
 plt.show()
 
 print(df_iris_embedded.shape)
@@ -105,3 +106,12 @@ print()
 #plt.title('Manifold Learning With t-distributed Stochastic Neighbor Embedding')
 #plt.scatter(xs_iris, ys_iris, c=df_iris['Species'])
 #plt.show()
+
+fig, ax = plt.subplots()
+colors = {'setosa': 'red', 'versicolor': 'blue', 'virginica': 'green', 'nan': 'black'}
+dfnan = df_iris.index
+dfnan = dfnan.replace(np.nan, 'nan')
+for c, subdf in dfnan.groupby('species'):
+    ax.scatter(subdf['sepal_length'], subdf['sepal_width'], c=colors[c], label=c)
+
+plt.show()
