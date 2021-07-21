@@ -33,20 +33,12 @@ pd.options.mode.chained_assignment = None
 # Apply t-SNE reduction to delta.csv file and compare/discuss the results with PCA.
 
 df = pd.read_csv('delta.csv', index_col='Aircraft')
-df_iris = pd.read_csv('Iris.csv', index_col='Species')
 
 print('df.info():')
 print(df.info())
 print()
 
 print(df)
-print()
-
-print('df_iris.info():')
-print(df_iris.info())
-print()
-
-print(df_iris)
 print()
 
 # Dimension of the embedded space must be lower than 4.
@@ -68,7 +60,6 @@ n_points = df.shape[0]
 # usually more globally stable than random initialization.
 model = TSNE(n_components=n_components, init='pca', random_state=check_random_state(0))
 df_embedded = model.fit_transform(df)
-df_iris_embedded = model.fit_transform(df_iris)
 
 print(df_embedded.shape)
 print()
@@ -79,39 +70,37 @@ print()
 xs = df_embedded[:, 0]
 ys = df_embedded[:, 1]
 
+sns.palplot(sns.color_palette("muted"))
+
+color_labels = set(df.index)
+#color_labels = df.index.unique()
+
+print(color_labels)
+print()
+
+print(len(color_labels))
+print()
+
+# List of colors in the color palettes
+rgb_values = sns.color_palette("Set2", len(color_labels))
+
+# Map aircraft to the colors
+color_map = dict(zip(color_labels, rgb_values))
+
+# Finally use the mapped values
+plt.scatter(xs, ys, c=df.index.map(color_map))
+
 plt.xlabel('df_embedded[:, 0]')
 plt.ylabel('df_embedded[:, 1]')
 plt.title('Manifold Learning With t-distributed Stochastic Neighbor Embedding')
-#plt.scatter(xs, ys, c=df['Engines'])
-#plt.scatter(xs, ys, c=df['Cruising Speed (mph)'])
-sns.scatterplot([:, 0], [:, 1], data=df_embedded, hue='continent')
-plt.show()
-
-print(df_iris_embedded.shape)
-print()
-
-print(df_iris_embedded)
-print()
-
-xs_iris = df_iris_embedded[:, 0]
-ys_iris = df_iris_embedded[:, 1]
-
-#species = {'North America':'red', 'Europe':'green', 'Asia':'blue', 'Australia':'yellow'}
-
-print(set(df_iris.index))
-print()
-
-#plt.xlabel('df_iris_embedded[:, 0]')
-#plt.ylabel('df_iris_embedded[:, 1]')
-#plt.title('Manifold Learning With t-distributed Stochastic Neighbor Embedding')
-#plt.scatter(xs_iris, ys_iris, c=df_iris['Species'])
-#plt.show()
-
-fig, ax = plt.subplots()
-colors = {'setosa': 'red', 'versicolor': 'blue', 'virginica': 'green', 'nan': 'black'}
-dfnan = df_iris.index
-dfnan = dfnan.replace(np.nan, 'nan')
-for c, subdf in dfnan.groupby('species'):
-    ax.scatter(subdf['sepal_length'], subdf['sepal_width'], c=colors[c], label=c)
 
 plt.show()
+
+# ----------------------------------------------------------------------
+# Bogdan: I archived the plot above as nuertey_figure_6.png. So at this
+# juncture, as your professor put it, "[now]... compare/discuss the results
+# with PCA [previous questions' answer]. Please submit your code [above]
+# and output [nuertey_figure_6.png and console output resulting from
+# "print(df_embedded)"; line 67 above], and write down 3-4 sentences that
+# you observed from the results."
+# ----------------------------------------------------------------------
