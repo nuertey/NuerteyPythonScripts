@@ -1,3 +1,16 @@
+PCA vs. t-SNE
+
+Although both PCA and t-SNE have their own advantages and disadvantages, some key differences between PCA and t-SNE can be noted as follows:
+
+    t-SNE is computationally expensive and can take several hours on million-sample datasets where PCA will finish in seconds or minutes.
+    PCA it is a mathematical technique, but t-SNE is a probabilistic one.
+    Linear dimensionality reduction algorithms, like PCA, concentrate on placing dissimilar data points far apart in a lower dimension representation. But in order to represent high dimension data on low dimension, non-linear manifold, it is essential that similar data points must be represented close together, which is something t-SNE does not PCA.
+    Sometimes in t-SNE different runs with the same hyperparameters may produce different results hence multiple plots must be observed before making any assessment with t-SNE, while this is not the case with PCA.
+    Since PCA is a linear algorithm, it will not be able to interpret the complex polynomial relationship between features while t-SNE is made to capture exactly that.
+
+Reference: https://www.datacamp.com/community/tutorials/introduction-t-sne
+
+========================================================================
 
 Some Thoughts on Manifold Methods
 
