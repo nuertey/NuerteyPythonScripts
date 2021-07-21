@@ -12,6 +12,7 @@ from matplotlib.ticker import NullFormatter
 
 from sklearn import manifold
 from sklearn.manifold import TSNE
+from sklearn.utils import check_random_state
 
 from nose.tools import assert_equal, assert_is_instance, assert_true, assert_is_not
 from numpy.testing import assert_array_equal, assert_array_almost_equal, assert_almost_equal
@@ -39,49 +40,25 @@ pd.options.mode.chained_assignment = None
 
 df = pd.read_csv('delta.csv', index_col='Aircraft')
 
-n_components = 3
+# Dimension of the embedded space must be lower than 4.
+n_components = 3 
+
+# The learning rate for t-SNE is usually in the range [10.0, 1000.0]. If
+# the learning rate is too high, the data may look like a ‘ball’ with any
+# point approximately equidistant from its nearest neighbours. If the 
+# learning rate is too low, most points may look compressed in a dense 
+# cloud with few outliers. If the cost function gets stuck in a bad local
+# minimum increasing the learning rate may help.
+learning_rate = 100
+
 n_points = df.shape[0]
 
-# Bogdan: Form a new DataFrame for subsequent easier processing:
-aircraft_physical_characteristics_df = df[['Cruising Speed (mph)', 
-                                           'Range (miles)',
-                                           'Wingspan (ft)']]
-
-# Bogdan: Visual verification of new DataFrame:
-print(aircraft_physical_characteristics_df)
-print()
-
-def plot_pairgrid(df):
-    '''
-    Uses seaborn.PairGrid to visualize the attributes related to the six physical characteristics.
-    Diagonal plots are histograms. The off-diagonal plots are scatter plots.
-    
-    Parameters
-    ----------
-    df: A pandas.DataFrame. Comes from importing delta.csv.
-    
-    Returns
-    -------
-    A seaborn.axisgrid.PairGrid instance.
-    '''
-    
-    # YOUR CODE HERE
-    plt.style.use('seaborn') # pretty matplotlib plots
-    ax = sns.PairGrid(df)
-    
-    # Bogdan: Ensure to plot a different function on the diagonal to 
-    # show the univariate distribution of the variable in each column:
-    ax.map_diag(plt.hist)
-    ax.map_offdiag(plt.scatter);
-    plt.show()
-    
-    return ax
-
-# Bogdan: Call your function on your new DataFrame:
-pg = plot_pairgrid(aircraft_physical_characteristics_df)
-
-t_SNE = TSNE(n_components=n_components, init='pca', random_state=0)
-df_embedded = t_SNE.fit_transform(df)
+# init{‘random’, ‘pca’} 
+#
+# PCA initialization cannot be used with precomputed distances and is
+# usually more globally stable than random initialization.
+model = TSNE(n_components=n_components, init='pca', random_state=check_random_state(0))
+df_embedded = model.fit_transform(df)
 
 print(df_embedded.shape)
 print()
@@ -89,4 +66,4 @@ print()
 print(df_embedded)
 print()
 
-pg = plot_pairgrid(df_embedded)
+
