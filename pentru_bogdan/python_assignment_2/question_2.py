@@ -210,7 +210,7 @@ for i, j in zip(*np.diag_indices_from(pg.axes)):
     assert_equal(len(ax.collections), 0)
 
 # Experimental addendums:
-k_means, clusters = cluster(reduced, random_state=check_random_state(0), n_clusters=4)
+k_means, clusters = cluster(reduced, random_state=check_random_state(0), n_clusters=2)
 pg = plot_pair(reduced, clusters)
 
 # Save the clusters (i.e. labels) to the same directory of your notebook

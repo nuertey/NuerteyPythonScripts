@@ -81,22 +81,21 @@ print()
 xs = df_embedded[:, 0]
 ys = df_embedded[:, 1]
 
-sns.palplot(sns.color_palette("muted"))
-
-color_labels = set(df.index)
-#color_labels = df.index.unique()
-
-print(color_labels)
-print()
-
-print(len(color_labels))
-print()
-
-# List of colors in the color palettes
-rgb_values = sns.color_palette("Set2", len(color_labels))
-
-# Map aircraft to the colors
-color_map = dict(zip(color_labels, rgb_values))
+#sns.palplot(sns.color_palette("muted"))
+#
+#color_labels = set(df.index)
+#
+#print(color_labels)
+#print()
+#
+#print(len(color_labels))
+#print()
+#
+## List of colors in the color palettes
+#rgb_values = sns.color_palette("Set2", len(color_labels))
+#
+## Map aircraft to the colors
+#color_map = dict(zip(color_labels, rgb_values))
 
 # Finally use the mapped values
 figure6, ax = plt.subplots(figsize=(10,6))
@@ -114,13 +113,8 @@ plt.show()
 #
 # Projection onto the first 2 principal components
 # ----------------------------------------------------------------------
-def draw_vector(v0, v1, ax=None):
-    ax = ax or plt.gca()
-    arrowprops=dict(arrowstyle='->',
-                    linewidth=2,
-                    shrinkA=0, shrinkB=0)
-    ax.annotate('', v1, v0, arrowprops=arrowprops)
 
+# Shortcut as always is available:
 # df_pca = decomposition.PCA(n_components=n_components).fit_transform(df)
 
 pca = PCA(n_components=n_components, whiten=True)
@@ -152,45 +146,9 @@ ax.set_title('Principal Component Analysis (PCA) of Delta Airlines Dataset')
 ax.set_ylabel('df_pca[:, 0]')
 ax.set_xlabel('df_pca[:, 1]')
 
-plt.scatter(xs_pca, ys_pca, c=xs_pca)
+plt.scatter(xs_pca, ys_pca, c=cluster_labels)
 
 plt.show()
-
-# ----------------------------------------------------------------------
-# More visualization plots:
-# ----------------------------------------------------------------------
-
-# To obtain the original data, we can perform the inverse transform:
-df_inverse_new = pca.inverse_transform(df_pca)
-
-print('df_inverse_new:')
-print(df_inverse_new)
-print()
-
-print('df_inverse_new.shape:')
-print(df_inverse_new.shape)
-print()
-
-fig, ax = plt.subplots(1, 2, figsize=(16, 6))
-fig.subplots_adjust(left=0.0625, right=0.95, wspace=0.1)
-
-# plot data
-#ax[0].scatter(df_inverse_new[:, 0], df_inverse_new[:, 1], alpha=0.2)
-ax[0].scatter(xs_pca, ys_pca, alpha=0.2)
-for length, vector in zip(pca.explained_variance_, pca.components_):
-    v = vector * 3 * np.sqrt(length)
-    draw_vector(pca.mean_, pca.mean_ + v, ax=ax[0])
-ax[0].axis('equal');
-ax[0].set(xlabel='x', ylabel='y', title='input components')
-
-# plot principal components
-ax[1].scatter(xs_pca, ys_pca, alpha=0.2)
-draw_vector([0, 0], [0, 3], ax=ax[1])
-draw_vector([0, 0], [3, 0], ax=ax[1])
-ax[1].axis('equal')
-ax[1].set(xlabel='output component 1', ylabel='output component 2',
-          title='principal components',
-          xlim=(-5, 5), ylim=(-3, 3.1))
 
 # ----------------------------------------------------------------------
 # Bogdan: I archived the plot above as nuertey_figure_6-*.png. So at this
