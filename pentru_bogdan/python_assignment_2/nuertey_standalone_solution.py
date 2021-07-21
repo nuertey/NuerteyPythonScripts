@@ -412,7 +412,7 @@ reduced = reduce(pca, scaled)
 assert_is_instance(reduced, np.ndarray)
 assert_array_almost_equal(reduced, pca.fit_transform(scaled))
 
-# Save the reduced data to the same directory of your notebook  as 'delta_reeuced.npy' that we will use later on
+# Save the reduced data to the same directory of your notebook  as 'delta_reduced.npy' that we will use later on
 np.save('delta_reduced.npy', reduced)
 
 
