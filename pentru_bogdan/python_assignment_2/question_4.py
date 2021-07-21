@@ -40,8 +40,15 @@ pd.options.mode.chained_assignment = None
 
 df = pd.read_csv('delta.csv', index_col='Aircraft')
 
+print('df.info():')
+print(df.info())
+print()
+
+print(df)
+print()
+
 # Dimension of the embedded space must be lower than 4.
-n_components = 3 
+n_components = 2 
 
 # The learning rate for t-SNE is usually in the range [10.0, 1000.0]. If
 # the learning rate is too high, the data may look like a ‘ball’ with any
@@ -66,4 +73,18 @@ print()
 print(df_embedded)
 print()
 
+xs = df_embedded[:, 0]
+ys = df_embedded[:, 1]
 
+#print(xs)
+#print()
+#
+#print(ys)
+#print()
+
+plt.xlabel('df_embedded[:, 0]')
+plt.ylabel('df_embedded[:, 1]')
+plt.title('Manifold Learning With t-distributed Stochastic Neighbor Embedding')
+#plt.scatter(xs, ys, c=df['Engines'])
+plt.scatter(xs, ys, c=df['Cruising Speed (mph)'])
+plt.show()
