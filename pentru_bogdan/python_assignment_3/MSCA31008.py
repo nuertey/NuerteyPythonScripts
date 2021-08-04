@@ -38,7 +38,8 @@ pd.options.mode.chained_assignment = None
 # Since you told me to skip the cleaning of the data, I will jump to 
 # using your DataFrame now:
 # ... 
-cleaned_training_df = pd.read_csv('Training_Data_cleaned.csv')
+#cleaned_training_df = pd.read_csv('Training_Data_cleaned.csv')
+cleaned_training_df = pd.read_csv('Training_Data_cleaned_no_index.csv')
 
 print('cleaned_training_df.head():')
 print(cleaned_training_df.head())
