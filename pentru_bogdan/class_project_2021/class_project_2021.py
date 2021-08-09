@@ -31,17 +31,24 @@ def strip_text_from_numbers(laptop_resolution_input):
 #        print()
 
     head = laptop_resolution_input.rstrip('0123456789')
-    tail = laptop_resolution_input[len(head):]
+    pixel_counts = laptop_resolution_input.rstrip('x')
+    vertical_pixel_counts = laptop_resolution_input[len(head):]
 
-    #print("head:")    
-    #print(head)
-    #print()
-
-#    print("tail:") 
-#    print(tail)
-#    print()
+    print("pixel_counts:")    
+    print(pixel_counts)
+    print()
     
-    return tail
+    #pixel_counts_list = [int(i) for i in pixel_counts.split() if i.isdigit()]
+    
+    vertical_separator = 'x'
+    
+    pixel_counts_list = pixel_counts.partition(vertical_separator)
+    
+    print("pixel_counts_list:")    
+    print(pixel_counts_list)
+    print()
+    
+    return vertical_pixel_counts
 
     #return items
 
@@ -58,10 +65,6 @@ print()
 print('laptops_data_df[\'ScreenResolution\']:')
 print(laptops_data_df['ScreenResolution'])
 print()
-
-# Split on your separator at most once, and take the first piece:
-
-vertical_separator = 'x'
 
 # laptops_resolution_data_df['HorizontalPixelCounts']
 
@@ -80,14 +83,6 @@ vertical_separator = 'x'
 #print('laptops_resolution_data_df[\'EncodedPixelCounts\']:')
 #print(laptops_resolution_data_df['EncodedPixelCounts'])
 #print()
-
-#match = re.match(r"([a-z]+)([0-9]+)", laptops_data_df['ScreenResolution'], re.I)
-#if match:
-#    items = match.groups()
-#print(items)
-#print()
-
-#laptops_resolution_data_df = []
 
 # Example of a list comprehension in Python which gives faster processing:
 #laptops_resolution_data_df['VerticalPixelCounts'] = [strip_text_from_numbers(laptop_resolution_string) for laptop_resolution_string in laptops_data_df['ScreenResolution']]
