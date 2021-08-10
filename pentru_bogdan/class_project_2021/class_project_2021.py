@@ -24,7 +24,7 @@ laptops_resolution_vertical_data = []
 laptops_resolution_encoded_data = []
 
 def strip_text_from_numbers(laptop_resolution_input):
-    match = re.match(r"([a-zA-Z\s]*)([0-9]+)[^r]([0-9]+)", laptop_resolution_input, re.I)
+    match = re.match(r"([a-zA-Z+/\s]*)([0-9]+)[^r]([0-9]+)", laptop_resolution_input, re.I)
     if match:
         items = match.groups()
         
