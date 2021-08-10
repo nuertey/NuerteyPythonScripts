@@ -23,8 +23,10 @@ laptops_resolution_horizontal_data = []
 laptops_resolution_vertical_data = []
 laptops_resolution_encoded_data = []
 
+error_count = 0
+
 def strip_text_from_numbers(laptop_resolution_input):
-    match = re.match(r"([a-zA-Z+/\s]*)([0-9]+)[^r]([0-9]+)", laptop_resolution_input, re.I)
+    match = re.match(r"([a-zA-Z+/\s4K]*)([0-9]+)[^r]([0-9]+)", laptop_resolution_input, re.I)
     if match:
         items = match.groups()
         
@@ -53,7 +55,14 @@ def strip_text_from_numbers(laptop_resolution_input):
         laptops_resolution_horizontal_data.append(horizontal_pixel_counts)
         laptops_resolution_vertical_data.append(vertical_pixel_counts)
         laptops_resolution_encoded_data.append(encoded_pixel_counts)
-        # End of function. Void return.
+    else:
+        global error_count
+        error_count = error_count + 1
+        print("Could not match on this string [%d]:", error_count)
+        print(laptop_resolution_input)
+        print()
+        
+    # End of function. Void return.
     
 laptops_data_df = pd.read_csv('laptops.csv')
 
