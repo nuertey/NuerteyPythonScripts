@@ -27,6 +27,7 @@ def strip_text_from_numbers(laptop_resolution_input):
     match = re.match(r"([a-zA-Z\s]*)([0-9]+)[^r]([0-9]+)", laptop_resolution_input, re.I)
     if match:
         items = match.groups()
+        
         # Uncomment to view output for debug and further understanding:
         #print("items:")
         #print(items)
@@ -36,17 +37,18 @@ def strip_text_from_numbers(laptop_resolution_input):
         vertical_pixel_counts = items[-1]
         encoded_pixel_counts = int(str(horizontal_pixel_counts) + str(vertical_pixel_counts))
     
-        print("horizontal_pixel_counts:")    
-        print(horizontal_pixel_counts)
-        print()
+        # Uncomment to view output for debug and further understanding:
+        #print("horizontal_pixel_counts:")    
+        #print(horizontal_pixel_counts)
+        #print()
 
-        print("vertical_pixel_counts:")    
-        print(vertical_pixel_counts)
-        print()
+        #print("vertical_pixel_counts:")    
+        #print(vertical_pixel_counts)
+        #print()
 
-        print("encoded_pixel_counts:")    
-        print(encoded_pixel_counts)
-        print()
+        #print("encoded_pixel_counts:")    
+        #print(encoded_pixel_counts)
+        #print()
                 
         laptops_resolution_horizontal_data.append(horizontal_pixel_counts)
         laptops_resolution_vertical_data.append(vertical_pixel_counts)
@@ -67,38 +69,33 @@ print('laptops_data_df[\'ScreenResolution\']:')
 print(laptops_data_df['ScreenResolution'])
 print()
 
-# laptops_resolution_data_df['HorizontalPixelCounts']
-
-# laptops_resolution_data_df['VerticalPixelCounts'] = laptops_data_df['ScreenResolution'].partition(vertical_separator)
-
-#laptops_resolution_data_df['EncodedPixelCounts']
-
-# print('laptops_resolution_data_df[\'HorizontalPixelCounts\']:')
-# print(laptops_resolution_data_df['HorizontalPixelCounts'])
-# print()
-
-#print('laptops_resolution_data_df[\'VerticalPixelCounts\']:')
-#print(laptops_resolution_data_df['VerticalPixelCounts'])
-#print()
-
-#print('laptops_resolution_data_df[\'EncodedPixelCounts\']:')
-#print(laptops_resolution_data_df['EncodedPixelCounts'])
-#print()
-
-#laptops_resolution_data_df['VerticalPixelCounts'] = [strip_text_from_numbers(laptop_resolution_string) for laptop_resolution_string in laptops_data_df['ScreenResolution']]
-#
-
 # Example of a list comprehension in Python which gives faster processing:
 [strip_text_from_numbers(laptop_resolution_string) for laptop_resolution_string in laptops_data_df['ScreenResolution']]
 
-print('laptops_resolution_horizontal_data:')
-print(laptops_resolution_horizontal_data)
+# Uncomment to view output for debug and further understanding:
+#print('laptops_resolution_horizontal_data:')
+#print(laptops_resolution_horizontal_data)
+#print()
+
+#print('laptops_resolution_vertical_data:')
+#print(laptops_resolution_vertical_data)
+#print()
+
+#print('laptops_resolution_encoded_data:')
+#print(laptops_resolution_encoded_data)
+#print()
+
+# Creating a DataFrame for easier manipulation, analysis and processing:
+resolution_data_df = pd.DataFrame(
+    {'HorizontalPixelCounts': laptops_resolution_horizontal_data,
+     'VerticalPixelCounts': laptops_resolution_vertical_data,
+     'EncodedPixelCounts': laptops_resolution_encoded_data
+    })
+
+print('resolution_data_df:')
+print(resolution_data_df)
 print()
 
-print('laptops_resolution_vertical_data:')
-print(laptops_resolution_vertical_data)
-print()
-
-print('laptops_resolution_encoded_data:')
-print(laptops_resolution_encoded_data)
+print('resolution_data_df.info():')
+print(resolution_data_df.info())
 print()
