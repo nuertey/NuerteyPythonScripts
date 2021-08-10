@@ -20,7 +20,7 @@ pd.set_option('display.min_rows', 100)
 pd.options.mode.chained_assignment = None
 
 def strip_text_from_numbers(laptop_resolution_input):
-    match = re.match(r"([a-z]+)([0-9]+)", laptop_resolution_input, re.I)
+    match = re.match(r"([a-zA-Z\s]*)([0-9]+)[^r]([0-9]+)", laptop_resolution_input, re.I)
     if match:
         items = match.groups()
         print("items:")
@@ -34,9 +34,9 @@ def strip_text_from_numbers(laptop_resolution_input):
     pixel_counts = laptop_resolution_input.rstrip('x')
     vertical_pixel_counts = laptop_resolution_input[len(head):]
 
-    print("pixel_counts:")    
-    print(pixel_counts)
-    print()
+#    print("pixel_counts:")    
+#    print(pixel_counts)
+#    print()
     
     #pixel_counts_list = [int(i) for i in pixel_counts.split() if i.isdigit()]
     
@@ -44,9 +44,9 @@ def strip_text_from_numbers(laptop_resolution_input):
     
     pixel_counts_list = pixel_counts.partition(vertical_separator)
     
-    print("pixel_counts_list:")    
-    print(pixel_counts_list)
-    print()
+#    print("pixel_counts_list:")    
+#    print(pixel_counts_list)
+#    print()
     
     return vertical_pixel_counts
 
