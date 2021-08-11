@@ -25,6 +25,10 @@ laptops_resolution_encoded_data = []
 
 error_count = 0
 
+screen_resolution_encoded_option_2 = []
+
+screen_resolution_decoded_option_2 = []
+
 def strip_text_from_numbers(laptop_resolution_input):
     match = re.match(r"([a-zA-Z+/\s4K]*)([0-9]+)[^r]([0-9]+)", laptop_resolution_input, re.I)
     if match:
@@ -62,6 +66,19 @@ def strip_text_from_numbers(laptop_resolution_input):
         print(laptop_resolution_input)
         print()
         
+    # End of function. Void return.
+
+def encode_decode_screen_resolution_option_2(laptop_resolution_input):
+    the_bytes_representation = str(laptop_resolution_input).encode('utf-8')
+    the_integer_representation = int.from_bytes(the_bytes_representation, 'little')
+    
+    screen_resolution_encoded_option_2.append(the_integer_representation)
+
+    recovered_bytes = the_integer_representation.to_bytes((the_integer_representation.bit_length() + 7) // 8, 'little')
+    recovered_string = recovered_bytes.decode('utf-8')
+    
+    screen_resolution_decoded_option_2.append(recovered_string)
+    
     # End of function. Void return.
     
 laptops_data_df = pd.read_csv('laptops.csv')
@@ -107,4 +124,29 @@ print()
 
 print('resolution_data_df.info():')
 print(resolution_data_df.info())
+print()
+
+# ======================================================================
+# Option 2 for encoding and decoding, which might, make more sense. Of
+# course it depends on what you intend to use this data for. Think of it
+# with your group.... There is also "the bytes" value if the integer is
+# too big. Such encodings and decodings "is more logical" than the manual
+# stripping you had wanted me to do. Of course, your mileage may vary:
+# ======================================================================
+[encode_decode_screen_resolution_option_2(laptop_resolution_string) for laptop_resolution_string in laptops_data_df['ScreenResolution']]
+
+# Creating a DataFrame for easier manipulation, analysis and processing:
+option_2_data_df = pd.DataFrame(
+    {'EncodedScreenResolution': screen_resolution_encoded_option_2,
+     'DecodedScreenResolution': screen_resolution_decoded_option_2
+    })
+
+option_2_data_df['OriginalScreenResolution'] = laptops_data_df['ScreenResolution'].values
+
+print('option_2_data_df:')
+print(option_2_data_df)
+print()
+
+print('option_2_data_df.info():')
+print(option_2_data_df.info())
 print()
