@@ -29,8 +29,12 @@ for _ in tqdm.tqdm(range(10)):
 
     C = []
     A = time.time()
-    for r in zip(t['a'], t['b']):
-        C.append((r[0], r[1]))
+    # Nuertey Odzeyem addendum: the following zip() approach also works
+    # for getting at the index of the DataFrame:
+    for r in zip(t.index, t['a'], t['b']):
+        C.append((r[1], r[2]))
+        #print("t.index")
+        #print(r[0])
     B.append({"method": "zip", "time": time.time()-A})
 
     C = []
@@ -53,6 +57,7 @@ for _ in tqdm.tqdm(range(10)):
     t.apply(tuple, axis=1).tolist()
     B.append({"method": "apply", "time": time.time()-A})
 
+print()
 print(f'Python {sys.version} on {sys.platform}')
 print(f"Pandas version {pd.__version__}")
 print(
