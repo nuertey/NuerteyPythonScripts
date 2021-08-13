@@ -14,6 +14,10 @@
 
 import re
 import pandas as pd
+from collections import defaultdict # This is the best way to get an 'invertible'
+                                    # mapping from our EncodedPixelCounts to 'your
+                                    # intended logical value-based approach...'.  
+from nose.tools import assert_equal
 
 pd.set_option('display.max_rows', 100)
 pd.set_option('display.min_rows', 100)
@@ -118,13 +122,74 @@ resolution_data_df = pd.DataFrame(
      'EncodedPixelCounts': laptops_resolution_encoded_data
     })
 
-print('resolution_data_df:')
-print(resolution_data_df)
+print('Count of UNIQUE EncodedPixelCounts for VALIDATING our mapping results later:')
+print(resolution_data_df.EncodedPixelCounts.nunique())
 print()
+
+print('SORTED EncodedPixelCounts (ALL, including duplicates) for visual VALIDATION:')
+print(sorted(resolution_data_df['EncodedPixelCounts']))
+print()
+
+# Leverage a simple dictionary of key='sorted EncodedPixelCounts',
+# value='value-based approach number signifying better resolution'
+resolution_data_dictionary = defaultdict(int)
+
+# Ascending sort by default, hence will give us smallest to largest EncodedPixelCounts
+# which will result in giving us a numeric number starting from 1 for the lowest
+# resolution and incrementing by 1 to the largest resolution. Note that 
+# duplicate resolutions will have the same EncodedPixelCounts and hence
+# should have the same dictionary value:  
+for dictionary_key in sorted(resolution_data_df['EncodedPixelCounts']):
+    # For keys already in the dictionary, we do NOT want the numeric
+    # value mapping to increment, so do nothing in that case; otherwise:
+    if dictionary_key not in resolution_data_dictionary:
+        # New key for a higher resolution hence increment its numeric
+        # value mapping and append it to the mapping dictionary. This 
+        # should effectively give us, 'higher resolution, higher numeric
+        # value mapping'. 
+        resolution_data_dictionary[dictionary_key] += 1
+
+# Validation step:
+assert_equal(len(resolution_data_dictionary), resolution_data_df.EncodedPixelCounts.nunique())
+
+print('resolution_data_dictionary.items()')
+print(resolution_data_dictionary.items())
+print()
+
+temporary_list = []
+
+# Store the equivalent NumericValueMapping in our DataFrame that we are
+# going to be using as our "Master Mapping Table" going forward:
+for current_row in zip(resolution_data_df.index, resolution_data_df['EncodedPixelCounts']):
+    temporary_list.append(resolution_data_dictionary[current_row[1]])
+    # You can access the current index if you need to with the following:
+    # current_row[0]
+
+resolution_data_df['NumericValueMapping'] = temporary_list
+
+# You can store the original string description in the same DataFrame
+# for easier visual validation, and, to aid the invertibility function: 
+resolution_data_df['OriginalScreenResolution'] = laptops_data_df['ScreenResolution'].values
+
+# View the relevant "Master Mapping Table" for visual validation:
+print('Relevant columns in Master Mapping Table:')
+print(resolution_data_df[['EncodedPixelCounts', 'NumericValueMapping', 'OriginalScreenResolution']])
+print()
+
+# For debug, can view the complete (all columns) of the "Master Mapping Table": 
+#print('Relevant columns in Master Mapping Table:')
+#print('resolution_data_df:')
+#print(resolution_data_df)
+#print()
 
 print('resolution_data_df.info():')
 print(resolution_data_df.info())
 print()
+
+# Henceforth we can easily and simply prove the invertibility of the numeric
+# value mapping by leveraging the "Master Mapping Table" index:
+
+
 
 # ======================================================================
 # Option 2 for encoding and decoding, which might, make more sense. Of
