@@ -130,38 +130,47 @@ print('SORTED EncodedPixelCounts (ALL, including duplicates) for visual VALIDATI
 print(sorted(resolution_data_df['EncodedPixelCounts']))
 print()
 
-# Leverage a simple dictionary of key='sorted EncodedPixelCounts',
-# value='value-based approach number signifying better resolution'
-resolution_data_dictionary = defaultdict(int)
-
-# Ascending sort by default, hence will give us smallest to largest EncodedPixelCounts
-# which will result in giving us a numeric number starting from 1 for the lowest
-# resolution and incrementing by 1 to the largest resolution. Note that 
-# duplicate resolutions will have the same EncodedPixelCounts and hence
-# should have the same dictionary value:  
-for dictionary_key in sorted(resolution_data_df['EncodedPixelCounts']):
-    # For keys already in the dictionary, we do NOT want the numeric
-    # value mapping to increment, so do nothing in that case; otherwise:
-    if dictionary_key not in resolution_data_dictionary:
-        # New key for a higher resolution hence increment its numeric
-        # value mapping and append it to the mapping dictionary. This 
-        # should effectively give us, 'higher resolution, higher numeric
-        # value mapping'. 
-        resolution_data_dictionary[dictionary_key] += 1
-
-# Validation step:
-assert_equal(len(resolution_data_dictionary), resolution_data_df.EncodedPixelCounts.nunique())
-
-print('resolution_data_dictionary.items()')
-print(resolution_data_dictionary.items())
+sorted_unique_list = sorted(resolution_data_df.EncodedPixelCounts.unique())
+sorted_unique_df = pd.DataFrame(
+    {'EncodedPixelCounts': sorted_unique_list
+    })
+print('SORTED and UNIQUE EncodedPixelCounts DataFrame for visual VALIDATION:')
+print(sorted_unique_df)
 print()
+
+## Leverage a simple dictionary of key='sorted EncodedPixelCounts',
+## value='value-based approach number signifying better resolution'
+#resolution_data_dictionary = defaultdict(int)
+#
+## Ascending sort by default, hence will give us smallest to largest EncodedPixelCounts
+## which will result in giving us a numeric number starting from 1 for the lowest
+## resolution and incrementing by 1 to the largest resolution. Note that 
+## duplicate resolutions will have the same EncodedPixelCounts and hence
+## should have the same dictionary value:  
+#for dictionary_key in sorted(resolution_data_df['EncodedPixelCounts']):
+#    # For keys already in the dictionary, we do NOT want the numeric
+#    # value mapping to increment, so do nothing in that case; otherwise:
+#    if dictionary_key not in resolution_data_dictionary:
+#        # New key for a higher resolution hence increment its numeric
+#        # value mapping and append it to the mapping dictionary. This 
+#        # should effectively give us, 'higher resolution, higher numeric
+#        # value mapping'. 
+#        resolution_data_dictionary[dictionary_key] += 1
+#
+## Validation step:
+#assert_equal(len(resolution_data_dictionary), resolution_data_df.EncodedPixelCounts.nunique())
+#
+#print('resolution_data_dictionary.items()')
+#print(resolution_data_dictionary.items())
+#print()
 
 temporary_list = []
 
 # Store the equivalent NumericValueMapping in our DataFrame that we are
 # going to be using as our "Master Mapping Table" going forward:
 for current_row in zip(resolution_data_df.index, resolution_data_df['EncodedPixelCounts']):
-    temporary_list.append(resolution_data_dictionary[current_row[1]])
+    temporary_index = sorted_unique_df.index[sorted_unique_df['EncodedPixelCounts'] == current_row[1]].values
+    temporary_list.append((temporary_index[0] + 1))
     # You can access the current index if you need to with the following:
     # current_row[0]
 
