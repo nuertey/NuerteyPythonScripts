@@ -179,12 +179,21 @@ print('resolution_data_df.info():')
 print(resolution_data_df.info())
 print()
 
+# ==========================
+# DEMONSTRATE INVERTIBILITY:
+# ==========================
 # Henceforth we can easily and simply prove the invertibility of the numeric
 # value mapping by leveraging the "Master Mapping Table" index like so:
-
-# This is the best way to get an 'invertible'
-                                    # mapping from our EncodedPixelCounts to 'your
-                                    # intended logical value-based approach...'.
+for current_row in zip(resolution_data_df.index, 
+                       resolution_data_df['NumericValueMapping'], 
+                       resolution_data_df['EncodedPixelCounts'],
+                       resolution_data_df['OriginalScreenResolution']):
+    # Essentially the "Master Mapping Table" has already captured all that
+    # info for us. No other complex operations to perform to get the inverse required:
+    print('NumericValueMapping: {}'.format(current_row[1]))
+    print('EncodedPixelCounts: {}'.format(current_row[2]))
+    print('OriginalScreenResolution: {}'.format(current_row[3]))
+    print()
 
 # ======================================================================
 # Option 2 for encoding and decoding, which might, make more sense. Of
