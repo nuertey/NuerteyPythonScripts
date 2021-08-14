@@ -100,9 +100,7 @@ hypothetical_resolution_not_in_dictionary = 'Bogdan Old McMaster Monitor 800x600
 #
 # So, add it to our 'set' with these following steps:
 
-hypothetical_resolution_df = pd.DataFrame(hypothetical_resolution_not_in_dictionary)
-
-laptops_data_df.append({'ScreenResolution':hypothetical_resolution_df}, ignore_index=True)
+laptops_data_df.append({'ScreenResolution':hypothetical_resolution_not_in_dictionary}, ignore_index=True)
 
 # Everything can now proceed as it was and it will all work. Nothing else to be done.
 # ======================================================================
