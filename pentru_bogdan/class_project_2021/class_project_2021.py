@@ -100,6 +100,15 @@ hypothetical_resolution_not_in_dictionary = 'Bogdan Old McMaster Monitor 800x600
 #
 # So, add it to our 'set' with these following steps:
 
+# Bogdan, research more on this call as I have not been able to confirm
+# so far that this call is working. Basically you must add it to the input
+# dataset before constructing the mapping table.
+#
+# But think more on why you asked me that question? What scenario prompted it?
+# The scenario itself will give you clues on how properly to solve it. And
+# go over my solution to undertsand when you have time before we move on 
+# other questions. Okay brother, I am going back in the Sun to chill for
+# a bit.  
 laptops_data_df.append({'ScreenResolution':hypothetical_resolution_not_in_dictionary}, ignore_index=True)
 
 # Everything can now proceed as it was and it will all work. Nothing else to be done.
