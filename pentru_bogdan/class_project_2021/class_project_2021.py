@@ -84,6 +84,29 @@ def encode_decode_screen_resolution_option_2(laptop_resolution_input):
     
 laptops_data_df = pd.read_csv('laptops.csv')
 
+# ======================================================================
+# If you want to add new data it must be here before the "Master Mapping Table"
+# is created. otherwise you have to recreate it with the new data attached.
+# ======================================================================
+  
+# Answer to Mr. B's hypothetical question:
+hypothetical_resolution_not_in_dictionary = 'Bogdan Old McMaster Monitor 800x600'
+
+# First you must add it to the dictionary for like in Mathematics, the 
+# "set" must be bounded for one to be able to work with it. It cannot be
+# an infinite unbounded set and still provide you with "valid mappings".
+# I think this was one of the lemmas we studied in McMaster in the Complex
+# Imaginary Advanced Math class which textbook I still have :).
+#
+# So, add it to our 'set' with these following steps:
+
+hypothetical_resolution_df = pd.DataFrame(hypothetical_resolution_not_in_dictionary)
+
+laptops_data_df.append({'ScreenResolution':hypothetical_resolution_df}, ignore_index=True)
+
+# Everything can now proceed as it was and it will all work. Nothing else to be done.
+# ======================================================================
+
 print('laptops_data_df.head():')
 print(laptops_data_df.head())
 print()
@@ -190,10 +213,11 @@ for current_row in zip(resolution_data_df.index,
                        resolution_data_df['OriginalScreenResolution']):
     # Essentially the "Master Mapping Table" has already captured all that
     # info for us. No other complex operations to perform to get the inverse required:
-    print('NumericValueMapping: {}'.format(current_row[1]))
-    print('EncodedPixelCounts: {}'.format(current_row[2]))
-    print('OriginalScreenResolution: {}'.format(current_row[3]))
-    print()
+    #print('NumericValueMapping: {}'.format(current_row[1]))
+    #print('EncodedPixelCounts: {}'.format(current_row[2]))
+    #print('OriginalScreenResolution: {}'.format(current_row[3]))
+    #print()
+    pass
 
 # ======================================================================
 # Option 2 for encoding and decoding, which might, make more sense. Of
