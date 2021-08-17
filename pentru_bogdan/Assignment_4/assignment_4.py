@@ -78,7 +78,29 @@ print()
 # Begin your code here:
 # ======================================================================
 
-# Edges as disconnected lines in a single trace and nodes as a scatter trace:
+# Simpler plot...
+nx.draw(edgelist_graph_dataframe, with_labels=True)
+plt.show()
+
+
+# More complicated plotly plot that I still need to debug tomorrow...
+pos=nx.fruchterman_reingold_layout(edgelist_graph_dataframe)
+
+# Create Edges
+#
+# Add edges as disconnected lines in a single trace and nodes as a scatter trace
+
+edge_x = []
+edge_y = []
+for edge in edgelist_graph_dataframe.edges():
+    x0, y0 = edgelist_graph_dataframe.nodes[edge[0]]['pos']
+    x1, y1 = edgelist_graph_dataframe.nodes[edge[1]]['pos']
+    edge_x.append(x0)
+    edge_x.append(x1)
+    edge_x.append(None)
+    edge_y.append(y0)
+    edge_y.append(y1)
+    edge_y.append(None)
 
 edge_trace = go.Scatter(
     x=edge_x, y=edge_y,
@@ -86,6 +108,13 @@ edge_trace = go.Scatter(
     hoverinfo='none',
     mode='lines')
     
+node_x = []
+node_y = []
+for node in edgelist_graph_dataframe.nodes():
+    x, y = edgelist_graph_dataframe.nodes[node]['pos']
+    node_x.append(x)
+    node_y.append(y)    
+
 node_trace = go.Scatter(
     x=node_x, y=node_y,
     mode='markers',
@@ -108,8 +137,21 @@ node_trace = go.Scatter(
         ),
         line_width=2))
 
+# Color node points by the number of connections.
+#
+# Another option would be to size points by the number of connections i.e. node_trace.marker.size = node_adjacencies
+
+node_adjacencies = []
+node_text = []
+for node, adjacencies in enumerate(edgelist_graph_dataframe.adjacency()):
+    node_adjacencies.append(len(adjacencies[1]))
+    node_text.append('# of connections: '+str(len(adjacencies[1])))
+
+node_trace.marker.color = node_adjacencies
+node_trace.text = node_text
+
 # Create Network Graph:
-figure_1 = go.Figure(data=[edge_trace, node_trace],
+figure_2 = go.Figure(data=[edge_trace, node_trace],
              layout=go.Layout(
                 title='<br>Assignment 4: Data Mining Principles - Airlines Data Network Graph',
                 titlefont_size=16,
@@ -119,7 +161,7 @@ figure_1 = go.Figure(data=[edge_trace, node_trace],
                 xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
                 yaxis=dict(showgrid=False, zeroline=False, showticklabels=False))
                 )
-figure_1.show()
+figure_2.show()
 
 
 
