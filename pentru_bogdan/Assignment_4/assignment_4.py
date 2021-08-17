@@ -18,6 +18,11 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import plotly.graph_objects as go
 
+# Since the name of the method networkx.algorithms.clique.find_cliques
+# can seem confusing, even though it actually does return the maximal
+# cliques, let us rename it so that its name itself reflects what it is.
+from networkx.algorithms.clique import find_cliques as maximal_cliques
+
 pd.set_option('display.max_rows', 100)
 pd.set_option('display.min_rows', 100)
 pd.options.mode.chained_assignment = None
@@ -216,4 +221,50 @@ nx.average_degree_connectivity(edgelist_graph_dataframe) # For a node of degree 
 
 # Let us find all the paths available
 for path in nx.all_simple_paths(edgelist_graph_dataframe, source='JAX', target='DFW'):
- print(path)
+    print(path)
+
+# Let us find the dijkstra path from JAX to DFW.
+# You can read more in-depth on how dijkstra works from this resource - https://courses.csail.mit.edu/6.006/fall11/lectures/lecture16.pdf
+dijpath = nx.dijkstra_path(edgelist_graph_dataframe, source='JAX', target='DFW')
+
+print()
+print('Dijkstra path from JAX to DFW:')
+print(dijpath)
+
+# Let us try to find the dijkstra path weighted by airtime (approximate case)
+shortpath = nx.dijkstra_path(edgelist_graph_dataframe, source='JAX', target='DFW', weight='air_time')
+
+print()
+print('Dijkstra path from JAX to DFW approximately weighted by airtime:')
+print(shortpath)
+
+# ======================================================================
+# Further Answers to Questions Here Mr B:
+# ======================================================================
+
+# How many maximal cliques we can spot in this airline network? (20 Points)
+
+the_maximal_cliques_subgraph = maximal_cliques(edgelist_graph_dataframe)
+
+# "To obtain a list of all maximal cliques, use list(find_cliques(G)). 
+# However, be aware that in the worst-case, the length of this list can 
+# be exponential in the number of nodes in the graph. This function avoids
+# storing all cliques in memory by only keeping current candidate node 
+# lists in memory during its search.
+#
+# This implementation is based on the algorithm published by Bron and 
+# Kerbosch (1973) [1], as adapted by Tomita, Tanaka and Takahashi (2006)
+#  [2] and discussed in Cazals and Karande (2008) [3]. It essentially 
+# unrolls the recursion used in the references to avoid issues of recursion
+# stack depth (for a recursive implementation, see find_cliques_recursive()).
+#
+# This algorithm ignores self-loops and parallel edges, since cliques are
+# not conventionally defined with such edges."
+#
+# Reference: https://networkx.org/documentation/stable/reference/algorithms/generated/networkx.algorithms.clique.find_cliques.html#networkx.algorithms.clique.find_cliques
+
+the_maximal_cliques_list = list(the_maximal_cliques_subgraph)
+
+print()
+print("The Number of Maximal Cliques in this Airline Network is: %d" % len(the_maximal_cliques_list))
+print()
