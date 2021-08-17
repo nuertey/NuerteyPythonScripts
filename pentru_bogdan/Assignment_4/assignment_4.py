@@ -202,34 +202,6 @@ nx.algorithms.degree_centrality(edgelist_graph_dataframe) # Notice the 3 airport
 # Begin your code here:
 # ======================================================================
 
-degree_of_centrality_node_dictionary = nx.algorithms.degree_centrality(edgelist_graph_dataframe)
-degree_of_centrality_node_list = list(degree_of_centrality_node_dictionary.values())
-
-print('Dictionary of nodes with degree centrality as the value follows:')
-print(degree_of_centrality_node_dictionary)
-print()
-
-print('degree_of_centrality_node_list:')
-print(degree_of_centrality_node_list)
-print()
-
-print("degree_of_centrality_node_list size: %d" % len(degree_of_centrality_node_list))
-print()
-
-# Sorted so we see, as the professor put it: 
-#
-# "...the 3 airports from which all of our 100 rows of data originates..."
-
-sorted_degree_of_centrality = sorted(degree_of_centrality_node_dictionary.items(), key=lambda dictionary_item: dictionary_item[1], reverse=True)
-
-# Bogdan, it is thus obvious from this output that EWR, LGA, and JFK are
-# the 3 airports that the professor is referring to. This can also be 
-# visually confirmed by both of the graph plots. Check the diagrams again
-# for confirmation:
-print('sorted_degree_of_centrality:')
-print(sorted_degree_of_centrality)
-print()
-
 print("Name: %s" % edgelist_graph_dataframe.name)
 print("Type: %s" % type(edgelist_graph_dataframe).__name__)
 print("Frozen: %s" % nx.is_frozen(edgelist_graph_dataframe))
@@ -238,6 +210,7 @@ print("Density: %.17f" % nx.density(edgelist_graph_dataframe))
 print()
 print("Nodes: %s" % edgelist_graph_dataframe.number_of_nodes())
 print("Edges: %s" % edgelist_graph_dataframe.number_of_edges())
+print()
 
 # ======================================================================
 # End your code here:
@@ -270,8 +243,9 @@ print(shortpath)
 # Further Answers to Questions Here Mr B:
 # ======================================================================
 
-# How many maximal cliques we can spot in this airline network? (20 Points)
-
+# ======================================================================
+# 2. How many maximal cliques we can spot in this airline network? (20 Points)
+# ======================================================================
 the_maximal_cliques_subgraph = maximal_cliques(edgelist_graph_dataframe)
 
 # "To obtain a list of all maximal cliques, use list(find_cliques(G)). 
@@ -295,4 +269,35 @@ the_maximal_cliques_list = list(the_maximal_cliques_subgraph)
 
 print()
 print("The Number of Maximal Cliques in this Airline Network is: %d" % len(the_maximal_cliques_list))
+print()
+
+# ======================================================================
+# 3. List the most busiest/popular airport. (20 Points) 
+# ======================================================================
+degree_of_centrality_node_dictionary = nx.algorithms.degree_centrality(edgelist_graph_dataframe)
+degree_of_centrality_node_list = list(degree_of_centrality_node_dictionary.values())
+
+print('Dictionary of nodes with degree centrality as the value follows:')
+print(degree_of_centrality_node_dictionary)
+print()
+
+print('degree_of_centrality_node_list:')
+print(degree_of_centrality_node_list)
+print()
+
+print("degree_of_centrality_node_list size: %d" % len(degree_of_centrality_node_list))
+print()
+
+# Sorted so we see, as the professor put it: 
+#
+# "...the 3 airports from which all of our 100 rows of data originates..."
+
+sorted_degree_of_centrality = sorted(degree_of_centrality_node_dictionary.items(), key=lambda dictionary_item: dictionary_item[1], reverse=True)
+
+# Bogdan, it is thus obvious from this output that EWR, LGA, and JFK are
+# the 3 airports that the professor is referring to. This can also be 
+# visually confirmed by both of the graph plots. Check the diagrams again
+# for confirmation:
+print('sorted_degree_of_centrality:')
+print(sorted_degree_of_centrality)
 print()
