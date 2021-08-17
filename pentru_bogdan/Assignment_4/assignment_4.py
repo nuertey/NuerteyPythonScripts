@@ -92,7 +92,6 @@ print()
 # Create Edges
 #
 # Add edges as disconnected lines in a single trace and nodes as a scatter trace
-
 edge_x = []
 edge_y = []
 for edge in edgelist_graph_dataframe.edges():
@@ -161,7 +160,8 @@ node_trace = go.Scatter(
 
 # Color node points by the number of connections.
 #
-# Another option would be to size points by the number of connections i.e. node_trace.marker.size = node_adjacencies
+# Another option would be to size points by the number of connections i.e.
+# node_trace.marker.size = node_adjacencies
 
 node_adjacencies = []
 node_text = []
@@ -184,9 +184,36 @@ figure_2 = go.Figure(data=[edge_trace, node_trace],
                 yaxis=dict(showgrid=False, zeroline=False, showticklabels=False))
                 )
 figure_2.show()
+# ======================================================================
+# End your code here:
+# ======================================================================
 
+nx.algorithms.degree_centrality(edgelist_graph_dataframe) # Notice the 3 airports from which all of our 100 rows of data originates
+# Calculate average edge density of the Graph
 
+# your code is here
+
+# ======================================================================
+# Begin your code here:
+# ======================================================================
+
+print("Name: %s" % edgelist_graph_dataframe.name)
+print("Type: %s" % type(edgelist_graph_dataframe).__name__)
+print("Frozen: %s" % nx.is_frozen(edgelist_graph_dataframe))
+print()
+print("Density: %.17f" % nx.density(edgelist_graph_dataframe))
+print()
+print("Nodes: %s" % edgelist_graph_dataframe.number_of_nodes())
+print("Edges: %s" % edgelist_graph_dataframe.number_of_edges())
 
 # ======================================================================
 # End your code here:
 # ======================================================================
+
+nx.average_shortest_path_length(edgelist_graph_dataframe) # Average shortest path length for ALL paths in the Graph
+
+nx.average_degree_connectivity(edgelist_graph_dataframe) # For a node of degree k - What is the average of its neighbours' degree?
+
+# Let us find all the paths available
+for path in nx.all_simple_paths(edgelist_graph_dataframe, source='JAX', target='DFW'):
+ print(path)
