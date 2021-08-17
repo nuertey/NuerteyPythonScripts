@@ -16,6 +16,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import networkx as nx
+import plotly.graph_objects as go
 
 pd.set_option('display.max_rows', 100)
 pd.set_option('display.min_rows', 100)
@@ -76,6 +77,51 @@ print()
 # ======================================================================
 # Begin your code here:
 # ======================================================================
+
+# Edges as disconnected lines in a single trace and nodes as a scatter trace:
+
+edge_trace = go.Scatter(
+    x=edge_x, y=edge_y,
+    line=dict(width=0.5, color='#888'),
+    hoverinfo='none',
+    mode='lines')
+    
+node_trace = go.Scatter(
+    x=node_x, y=node_y,
+    mode='markers',
+    hoverinfo='text',
+    marker=dict(
+        showscale=True,
+        # colorscale options
+        #'Greys' | 'YlGnBu' | 'Greens' | 'YlOrRd' | 'Bluered' | 'RdBu' |
+        #'Reds' | 'Blues' | 'Picnic' | 'Rainbow' | 'Portland' | 'Jet' |
+        #'Hot' | 'Blackbody' | 'Earth' | 'Electric' | 'Viridis' |
+        colorscale='YlGnBu',
+        reversescale=True,
+        color=[],
+        size=10,
+        colorbar=dict(
+            thickness=15,
+            title='Node Connections',
+            xanchor='left',
+            titleside='right'
+        ),
+        line_width=2))
+
+# Create Network Graph:
+figure_1 = go.Figure(data=[edge_trace, node_trace],
+             layout=go.Layout(
+                title='<br>Assignment 4: Data Mining Principles - Airlines Data Network Graph',
+                titlefont_size=16,
+                showlegend=False,
+                hovermode='closest',
+                margin=dict(b=20,l=5,r=5,t=40),
+                xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                yaxis=dict(showgrid=False, zeroline=False, showticklabels=False))
+                )
+figure_1.show()
+
+
 
 # ======================================================================
 # End your code here:
