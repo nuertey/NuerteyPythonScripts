@@ -1,0 +1,58 @@
+(py37-venv) nuertey@nuertey-PC-LL850RSB:/media/nuertey/c24545b9-e61b-481b-8264-db16fd9b4ffc/home/rena/postgrestest/pentru_bogdan/Assignment_4$ python assignment_4.py 
+airlines_graph_data.shape:
+(100, 16)
+
+airlines_graph_data.head():
+   year  month  day  dep_time  sched_dep_time  dep_delay  arr_time  sched_arr_time  arr_delay carrier  flight tailnum origin dest  air_time  distance
+0  2013      2   26    1807.0            1630       97.0    1956.0            1837       79.0      EV    4411  N13566    EWR  MEM     144.0       946
+1  2013      8   17    1459.0            1445       14.0    1801.0            1747       14.0      B6    1171  N661JB    LGA  FLL     147.0      1076
+2  2013      2   13    1812.0            1815       -3.0    2055.0            2125      -30.0      AS       7  N403AS    EWR  SEA     315.0      2402
+3  2013      4   11    2122.0            2115        7.0    2339.0            2353      -14.0      B6      97  N656JB    JFK  DEN     221.0      1626
+4  2013      8    5    1832.0            1835       -3.0    2145.0            2155      -10.0      AA     269  N3EYAA    JFK  SEA     358.0      2422
+
+airlines_graph_data.info():
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 100 entries, 0 to 99
+Data columns (total 16 columns):
+ #   Column          Non-Null Count  Dtype  
+---  ------          --------------  -----  
+ 0   year            100 non-null    int64  
+ 1   month           100 non-null    int64  
+ 2   day             100 non-null    int64  
+ 3   dep_time        99 non-null     float64
+ 4   sched_dep_time  100 non-null    int64  
+ 5   dep_delay       99 non-null     float64
+ 6   arr_time        99 non-null     float64
+ 7   sched_arr_time  100 non-null    int64  
+ 8   arr_delay       99 non-null     float64
+ 9   carrier         100 non-null    object 
+ 10  flight          100 non-null    int64  
+ 11  tailnum         100 non-null    object 
+ 12  origin          100 non-null    object 
+ 13  dest            100 non-null    object 
+ 14  air_time        99 non-null     float64
+ 15  distance        100 non-null    int64  
+dtypes: float64(5), int64(7), object(4)
+memory usage: 12.6+ KB
+None
+
+Complex Networks Python Package Version:
+2.6.2
+
+
+
+
+assignment_4.py:47: FutureWarning: The default value of regex will change from True to False in a future version.
+  airlines_graph_data['std'] = airlines_graph_data.sched_dep_time.astype(str).str.replace('(\d{2}$)', '') + ':' + airlines_graph_data.sched_dep_time.astype(str).str.extract('(\d{2}$)', expand=False) + ':00'
+assignment_4.py:50: FutureWarning: The default value of regex will change from True to False in a future version.
+  airlines_graph_data['sta'] = airlines_graph_data.sched_arr_time.astype(str).str.replace('(\d{2}$)', '') + ':' + airlines_graph_data.sched_arr_time.astype(str).str.extract('(\d{2}$)', expand=False) + ':00'
+assignment_4.py:53: FutureWarning: The default value of regex will change from True to False in a future version.
+  airlines_graph_data['atd'] = airlines_graph_data.dep_time.fillna(0).astype(np.int64).astype(str).str.replace('(\d{2}$)', '') + ':' + airlines_graph_data.dep_time.fillna(0).astype(np.int64).astype(str).str.extract('(\d{2}$)', expand=False) + ':00'
+assignment_4.py:55: FutureWarning: The default value of regex will change from True to False in a future version.
+  airlines_graph_data['ata'] = airlines_graph_data.arr_time.fillna(0).astype(np.int64).astype(str).str.replace('(\d{2}$)', '') + ':' + airlines_graph_data.arr_time.fillna(0).astype(np.int64).astype(str).str.extract('(\d{2}$)', expand=False) + ':00'
+
+
+
+edgelist_graph_dataframe.nodes():
+['EWR', 'MEM', 'LGA', 'FLL', 'SEA', 'JFK', 'DEN', 'ORD', 'MIA', 'PBI', 'MCO', 'CMH', 'MSP', 'IAD', 'CLT', 'TPA', 'DCA', 'SJU', 'ATL', 'BHM', 'SRQ', 'MSY', 'DTW', 'LAX', 'JAX', 'RDU', 'MDW', 'DFW', 'IAH', 'SFO', 'STL', 'CVG', 'IND', 'RSW', 'BOS', 'CLE']
+
