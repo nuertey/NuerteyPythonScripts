@@ -82,9 +82,12 @@ print()
 nx.draw(edgelist_graph_dataframe, with_labels=True)
 plt.show()
 
-
-# More complicated plotly plot that I still need to debug tomorrow...
+# More complicated plotly plot...
 pos=nx.fruchterman_reingold_layout(edgelist_graph_dataframe)
+
+print('pos:')
+print(pos)
+print()
 
 # Create Edges
 #
@@ -93,14 +96,24 @@ pos=nx.fruchterman_reingold_layout(edgelist_graph_dataframe)
 edge_x = []
 edge_y = []
 for edge in edgelist_graph_dataframe.edges():
-    x0, y0 = edgelist_graph_dataframe.nodes[edge[0]]['pos']
-    x1, y1 = edgelist_graph_dataframe.nodes[edge[1]]['pos']
+    x0 = pos[edge[0]][0]
+    y0 = pos[edge[0]][1]
+    x1 = pos[edge[1]][0]
+    y1 = pos[edge[1]][1]
     edge_x.append(x0)
     edge_x.append(x1)
     edge_x.append(None)
     edge_y.append(y0)
     edge_y.append(y1)
     edge_y.append(None)
+
+#print('edge_x:')
+#print(edge_x)
+#print()
+
+#print('edge_y:')
+#print(edge_y)
+#print()
 
 edge_trace = go.Scatter(
     x=edge_x, y=edge_y,
@@ -111,9 +124,18 @@ edge_trace = go.Scatter(
 node_x = []
 node_y = []
 for node in edgelist_graph_dataframe.nodes():
-    x, y = edgelist_graph_dataframe.nodes[node]['pos']
+    x = pos[node][0]
+    y = pos[node][1]
     node_x.append(x)
     node_y.append(y)    
+
+#print('node_x:')
+#print(node_x)
+#print()
+
+#print('node_y:')
+#print(node_y)
+#print()
 
 node_trace = go.Scatter(
     x=node_x, y=node_y,
