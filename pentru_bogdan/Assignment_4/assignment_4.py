@@ -69,3 +69,14 @@ print('edgelist_graph_dataframe.nodes():')
 print(edgelist_graph_dataframe.nodes())
 print()
 
+print('edgelist_graph_dataframe.edges():')
+print(edgelist_graph_dataframe.edges())
+print()
+
+# ======================================================================
+# Begin your code here:
+# ======================================================================
+
+# ======================================================================
+# End your code here:
+# ======================================================================
