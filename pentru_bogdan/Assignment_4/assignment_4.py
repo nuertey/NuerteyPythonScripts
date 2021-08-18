@@ -360,11 +360,34 @@ for n, d in edgelist_graph_dataframe.nodes(data=True):
             # Increment recommended
             recommended[(n1, n2)] += 1
 
+# Print the whole dictionary:
 print(recommended)
 print()
 
 # Identify the top 10 pairs of users
-all_counts = sorted(recommended.values())
+all_counts = sorted(recommended.values(), reverse=True)
+unique_list = set(val for dic in recommended for val in recommended.values())
+
+print('unique_list:')
+print(unique_list)
+print()
+
+sorted_unique_list = sorted(unique_list, reverse=True)
+
+print('sorted_unique_list:')
+print(sorted_unique_list)
+print()
+
+#sorted_unique_df = pd.DataFrame(
+#    {'RecommendedValues': sorted_unique_list
+#    })
+#print('SORTED and UNIQUE DataFrame ... s:')
+#print(sorted_unique_df)
+#print()
+#
+#print(all_counts)
+#print()
+
 top10_pairs = [pair for pair, count in recommended.items() if count > all_counts[-6]]
 print(top10_pairs)
 print()
