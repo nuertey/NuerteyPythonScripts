@@ -122,7 +122,7 @@ for edge in edgelist_graph_dataframe.edges():
 edge_trace = go.Scatter(
     x=edge_x, y=edge_y,
     line=dict(width=0.5, color='#888'),
-    hoverinfo='none',
+    hoverinfo='text',
     mode='lines')
     
 node_x = []
@@ -164,10 +164,6 @@ node_trace = go.Scatter(
         line_width=2))
 
 # Color node points by the number of connections.
-#
-# Another option would be to size points by the number of connections i.e.
-# node_trace.marker.size = node_adjacencies
-
 node_adjacencies = []
 node_text = []
 for node, adjacencies in enumerate(edgelist_graph_dataframe.adjacency()):
@@ -175,7 +171,23 @@ for node, adjacencies in enumerate(edgelist_graph_dataframe.adjacency()):
     node_text.append('# of connections: '+str(len(adjacencies[1])))
 
 node_trace.marker.color = node_adjacencies
-node_trace.text = node_text
+
+# Bogdan you can use the below commented-out line to label the node 
+# trace graph with the number of connections. See output plots:
+# 
+# ├── figure_7-hover.png
+# ├── figure_8-hover.png
+# ├── figure_9-hover.png
+#
+#node_trace.text = node_text
+
+# Mr B, as an alternative, you can use the below 'active' line to label 
+# the node trace graph with the node names. See output plots:
+# 
+# ├── figure_4-hover.png
+# ├── figure_5-hover.png
+# ├── figure_6-hover.png
+node_trace.text = list(edgelist_graph_dataframe.nodes())
 
 # Create Network Graph:
 figure_2 = go.Figure(data=[edge_trace, node_trace],
@@ -189,6 +201,24 @@ figure_2 = go.Figure(data=[edge_trace, node_trace],
                 yaxis=dict(showgrid=False, zeroline=False, showticklabels=False))
                 )
 figure_2.show()
+
+# Another option is to size points by the number of connections i.e.
+# node_trace.marker.size = node_adjacencies
+node_trace.marker.size = node_adjacencies
+
+# Create Network Graph:
+figure_3 = go.Figure(data=[edge_trace, node_trace],
+             layout=go.Layout(
+                title='<br>Assignment 4: Data Mining Principles - Airlines Data Network Graph',
+                titlefont_size=16,
+                showlegend=False,
+                hovermode='closest',
+                margin=dict(b=20,l=5,r=5,t=40),
+                xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                yaxis=dict(showgrid=False, zeroline=False, showticklabels=False))
+                )
+figure_3.show()
+
 # ======================================================================
 # End your code here:
 # ======================================================================
