@@ -395,7 +395,6 @@ print('sorted_unique_value_list:')
 print(sorted_unique_value_list)
 print()
 
-
 print('sorted_unique_items_list:')
 for value, key in zip(sorted_unique_value_list, sorted_unique_key_list):
     print('Key :-> {}'.format(key))
