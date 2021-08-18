@@ -23,6 +23,10 @@ import plotly.graph_objects as go
 # cliques, let us rename it so that its name itself reflects what it is.
 from networkx.algorithms.clique import find_cliques as maximal_cliques
 
+# Import necessary modules
+from itertools import combinations
+from collections import defaultdict
+
 pd.set_option('display.max_rows', 100)
 pd.set_option('display.min_rows', 100)
 pd.options.mode.chained_assignment = None
@@ -330,4 +334,33 @@ sorted_degree_of_centrality = sorted(degree_of_centrality_node_dictionary.items(
 # for confirmation:
 print('sorted_degree_of_centrality:')
 print(sorted_degree_of_centrality)
+print()
+
+# ======================================================================
+# 4. As a thought leader, identify 6 new routes to recommend. 
+#
+# Hint: Think if the pairs are symmetric or not and make your 
+# assumption/observation accordingly i.e. whether ORD-LAX and LAX-ORD 
+# two separate routes? (50 Points)
+# ======================================================================
+
+# Initialize the defaultdict: recommended
+recommended = defaultdict(int)
+
+# Iterate over all the nodes in edgelist_graph_dataframe
+for n, d in edgelist_graph_dataframe.nodes(data=True):
+
+    # Iterate over all possible triangle relationship combinations
+    for n1, n2 in combinations(edgelist_graph_dataframe.neighbors(n), 2):
+    
+        # Check whether n1 and n2 do not have an edge
+        if not edgelist_graph_dataframe.has_edge(n1, n2):
+        
+            # Increment recommended
+            recommended[(n1, n2)] += 1
+
+# Identify the top 10 pairs of users
+all_counts = sorted(recommended.values())
+top10_pairs = [pair for pair, count in recommended.items() if count > all_counts[-10]]
+print(top10_pairs)
 print()
