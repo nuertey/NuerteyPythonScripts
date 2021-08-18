@@ -366,29 +366,34 @@ print()
 
 # Identify the top 10 pairs of users
 all_counts = sorted(recommended.values(), reverse=True)
-unique_list = set(val for dic in recommended for val in recommended.values())
 
-print('unique_list:')
-print(unique_list)
+unique_value_list = set(val for dic in recommended for val in recommended.values())
+unique_key_list = set(val for dic in recommended for val in recommended.keys())
+
+print('unique_value_list:')
+print(unique_value_list)
 print()
 
-sorted_unique_list = sorted(unique_list, reverse=True)
-
-print('sorted_unique_list:')
-print(sorted_unique_list)
+print('unique_key_list:')
+print(unique_key_list)
 print()
 
-#sorted_unique_df = pd.DataFrame(
-#    {'RecommendedValues': sorted_unique_list
-#    })
-#print('SORTED and UNIQUE DataFrame ... s:')
-#print(sorted_unique_df)
+sorted_unique_key_list = sorted(unique_key_list, reverse=True)
+sorted_unique_value_list = sorted(unique_value_list, reverse=True)
+
+print('sorted_unique_key_list:')
+print(sorted_unique_key_list)
+print()
+
+print('sorted_unique_value_list:')
+print(sorted_unique_value_list)
+print()
+
+#top10_pairs = [pair for pair, count in recommended.items() if count > all_counts[-6]]
+#print(top10_pairs)
 #print()
-#
-#print(all_counts)
+
+#answer = dict(sorted(recommended.items(), key=lambda item: item[1], reverse=True))
+#print('answer:')
+#print(answer)
 #print()
-
-top10_pairs = [pair for pair, count in recommended.items() if count > all_counts[-6]]
-print(top10_pairs)
-print()
-
