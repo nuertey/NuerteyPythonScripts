@@ -369,6 +369,7 @@ all_counts = sorted(recommended.values(), reverse=True)
 
 unique_value_list = set(val for dic in recommended for val in recommended.values())
 unique_key_list = set(val for dic in recommended for val in recommended.keys())
+unique_items_list = set(val for dic in recommended for val in recommended.items())
 
 print('unique_value_list:')
 print(unique_value_list)
@@ -378,8 +379,13 @@ print('unique_key_list:')
 print(unique_key_list)
 print()
 
+print('unique_items_list:')
+print(unique_items_list)
+print()
+
 sorted_unique_key_list = sorted(unique_key_list, reverse=True)
 sorted_unique_value_list = sorted(unique_value_list, reverse=True)
+sorted_unique_items_list = sorted(unique_items_list, reverse=True)
 
 print('sorted_unique_key_list:')
 print(sorted_unique_key_list)
@@ -388,6 +394,13 @@ print()
 print('sorted_unique_value_list:')
 print(sorted_unique_value_list)
 print()
+
+
+print('sorted_unique_items_list:')
+for value, key in zip(sorted_unique_value_list, sorted_unique_key_list):
+    print('Key :-> {}'.format(key))
+    print('Value :-> {}'.format(value))
+    print()
 
 #top10_pairs = [pair for pair, count in recommended.items() if count > all_counts[-6]]
 #print(top10_pairs)
