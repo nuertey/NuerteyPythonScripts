@@ -351,6 +351,7 @@ recommended = defaultdict(int)
 for n, d in edgelist_graph_dataframe.nodes(data=True):
 
     # Iterate over all possible triangle relationship combinations
+    # Return 2 length subsequences of elements from the nodes iterable.
     for n1, n2 in combinations(edgelist_graph_dataframe.neighbors(n), 2):
     
         # Check whether n1 and n2 do not have an edge
@@ -359,8 +360,12 @@ for n, d in edgelist_graph_dataframe.nodes(data=True):
             # Increment recommended
             recommended[(n1, n2)] += 1
 
+print(recommended)
+print()
+
 # Identify the top 10 pairs of users
 all_counts = sorted(recommended.values())
-top10_pairs = [pair for pair, count in recommended.items() if count > all_counts[-10]]
+top10_pairs = [pair for pair, count in recommended.items() if count > all_counts[-6]]
 print(top10_pairs)
 print()
+
