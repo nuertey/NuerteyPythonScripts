@@ -45,12 +45,21 @@ def plotcube(cube,x=None,y=None,z=None,normalize=False,plot_front=False):
     """Use contourf to plot cube marginals"""
     (Z,Y,X) = cube.shape
     (xy,xz,yz) = cube_marginals(cube,normalize=normalize)
-    if x == None: x = np.arange(X)
-    if y == None: y = np.arange(Y)
-    if z == None: z = np.arange(Z)
+    # Returns evenly spaced values between start and stop (ndarray), spaced by step.
+    if x is None: x = np.arange(0, X, 1)
+    if y is None: y = np.arange(0, Y, 1)
+    if z is None: z = np.arange(0, Z, 1)
 
     fig = plot.figure()
-    ax = fig.gca(projection='3d')
+    # MatplotlibDeprecationWarning: Calling gca() with keyword arguments
+    # was deprecated in Matplotlib 3.4. Starting two minor releases later,
+    # gca() will take no keyword arguments. The gca() function should 
+    # only be used to get the current axes, or if no axes exist, create 
+    # new axes with default keyword arguments. To create a new axes with
+    # non-default arguments, use plt.axes() or plt.subplot().
+
+    # ax = fig.gca(projection='3d')
+    ax = fig.add_subplot(projection='3d')
 
     # draw edge marginal surfaces
     offsets = (Z-1,0,X-1) if plot_front else (0, Y-1, 0)
@@ -73,17 +82,14 @@ def plotcube(cube,x=None,y=None,z=None,normalize=False,plot_front=False):
 
 (x,y,z) = np.mgrid[0:10,0:10, 0:10]
 data = np.exp(-((x-3)**2 + (y-5)**2 + (z-7)**2)**(0.5))
-#edge_yz = np.sum(data,axis=0)
-#edge_xz = np.sum(data,axis=1)
-#edge_xy = np.sum(data,axis=2)
-
-print('data.shape:')
-print(data.shape)
-print()
 
 print('data:')
 print(data)
 print()
 
-plotcube(cube=data,x=x,y=y,z=z,normalize=False,plot_front=True)
-plotcube(cube=data,x=x,y=y,z=z,normalize=False,plot_front=False)
+print('data.shape:')
+print(data.shape)
+print()
+
+plotcube(cube=data,x=None,y=None,z=None,normalize=False,plot_front=True)
+plotcube(cube=data,x=None,y=None,z=None,normalize=False,plot_front=False)
