@@ -17,6 +17,8 @@ import numpy as np
 import matplotlib.pyplot as plot
 import mpl_toolkits.mplot3d.axes3d as axes3d
 
+#from mayavi import mlab
+
 # =========
 # Option 1:
 # =========
@@ -93,3 +95,20 @@ print()
 
 plotcube(cube=data,x=None,y=None,z=None,normalize=False,plot_front=True)
 plotcube(cube=data,x=None,y=None,z=None,normalize=False,plot_front=False)
+
+# =========================
+# 3D Matrix Plots Option 2:
+# ========================= 
+#x, y, z = np.ogrid[-2:2:25j, -2:2:25j, -2:2:25j]
+#s = np.power(x, 10) + np.power(y, 10) + np.power(z, 10) - 100
+
+#mlab.figure(bgcolor=(1,1,1))
+#mlab.contour3d(s, contours=[2], color=(.5,.5,.5), transparent=True, opacity=.5)
+
+#ax = mlab.axes(nb_labels=5, ranges=(-2,2,-2,2,-2,2))
+#ax.axes.property.color = (0,0,0)
+#ax.axes.axis_title_text_property.color = (0,0,0)
+#ax.axes.axis_label_text_property.color = (0,0,0)
+#ax.axes.label_format='%.0f'
+
+#mlab.show()
