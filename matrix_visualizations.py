@@ -33,6 +33,21 @@ plot.matshow(np.random.random((5,5)));
 plot.colorbar()
 plot.show()
 
+# =========
+# Option 3:
+# =========
+flatted_input = [1, 1, 1, 1, 1]
+  
+# Diagonal array with values above on the diagonal:
+my_array = np.diagflat(flatted_input)
+print('my_array = np.diagflat(flatted_input):')
+print(my_array)
+print()
+  
+plot.matshow(my_array);
+plot.colorbar()
+plot.show()
+
 # ================
 # 3D Matrix Plots:
 # ================
