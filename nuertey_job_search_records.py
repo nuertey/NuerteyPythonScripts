@@ -64,7 +64,7 @@ job_search_records_df = nuertey_job_search_records_df.iloc[valid_data_indexes, :
 
 # Good teaching comment:
 #
-# "If your DataFrame is named df then use df.iloc[:, [0, 4]]. Usually if
+# "If your DataFrame is named df then use df.iloc[:, [0, 3]]. Usually if
 # you want this type of access pattern, you'll already know these particular
 # column names, and you can just use df.loc[:, ['name2', 'name5']] where
 # 'name2' and 'name5' are your column string names for the respective columns you want"
@@ -79,7 +79,7 @@ job_search_records_df = nuertey_job_search_records_df.iloc[valid_data_indexes, :
 #print()
 
 # Slice again to get only the columns that we are interested in:
-job_search_records_df = job_search_records_df.iloc[:, [0, 4]]
+job_search_records_df = job_search_records_df.iloc[:, [0, 3]]
 
 #print('job_search_records_df:')
 #print(job_search_records_df)
@@ -94,33 +94,35 @@ job_search_records_df = job_search_records_df.iloc[:, [0, 4]]
 # Option 1:
 
 #job_search_records_df.rename(columns={'Work Search Record for NUERTEY ODZEYEM':'DateApplied', 
-#                   'Unnamed: 4':'JobTitle'}, inplace=True)
+#                   'Unnamed: 3':'CompanyName'}, inplace=True)
        
 # Option 2 for renaming by column indexes in case the column names are unknown:
 column_indices = [0, 1]
-new_names = ['DateApplied', 'JobTitle']
+new_names = ['DateApplied', 'CompanyName'] # Prefer to work with columns that are just one word, no spaces!.
 old_names = job_search_records_df.columns[column_indices]
 job_search_records_df.rename(columns=dict(zip(old_names, new_names)), inplace=True)
            
 # Ensure the Date Applied column is actually a datetime object for plotly
-# My 'Date Applied' column is alread time data so the next step is not needed.
-# ValueError: time data '09/06/2021' does not match format '%m%d%Y' (match)
 job_search_records_df['DateApplied'] = pd.to_datetime(job_search_records_df['DateApplied'])
 
-
-
-# Verify datatype
-print(type(job_search_records_df.DateApplied))
-print()
+job_search_records_df['CompanyName'] = job_search_records_df['CompanyName'].astype(str)
 
 print(job_search_records_df.dtypes)
 print()
 
 # So as to graph chronologically:
-job_search_records_df.sort_values('DateApplied', ascending=True, ignore_index=True)
+job_search_records_df = job_search_records_df.sort_values(by='DateApplied', ignore_index=True)
 
 print('job_search_records_df:')
 print(job_search_records_df)
 print()
 
-
+# Let's visualize with plotly:
+figure_1 = px.scatter(job_search_records_df, 
+                      y="CompanyName", 
+                      x="DateApplied", 
+                      title="My Historical Job Search Data From illinoisjoblink.illinois.gov",
+                      color="CompanyName", 
+                      symbol="CompanyName")
+figure_1.update_traces(marker_size=10)
+figure_1.show()
