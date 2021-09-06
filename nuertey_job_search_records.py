@@ -64,7 +64,7 @@ job_search_records_df = nuertey_job_search_records_df.iloc[valid_data_indexes, :
 
 # Good teaching comment:
 #
-# "If your DataFrame is named df then use df.iloc[:, [0, 3]]. Usually if
+# "If your DataFrame is named df then use df.iloc[:, [0, 3, 4]]. Usually if
 # you want this type of access pattern, you'll already know these particular
 # column names, and you can just use df.loc[:, ['name2', 'name5']] where
 # 'name2' and 'name5' are your column string names for the respective columns you want"
@@ -79,7 +79,7 @@ job_search_records_df = nuertey_job_search_records_df.iloc[valid_data_indexes, :
 #print()
 
 # Slice again to get only the columns that we are interested in:
-job_search_records_df = job_search_records_df.iloc[:, [0, 3]]
+job_search_records_df = job_search_records_df.iloc[:, [0, 3, 4]]
 
 #print('job_search_records_df:')
 #print(job_search_records_df)
@@ -91,14 +91,16 @@ job_search_records_df = job_search_records_df.iloc[:, [0, 3]]
 
 # Now rename the columns to something befitting what they actually represent:
 #
+# Note to ALWAYS prefer to work with COLUMN NAMES that are just one word, no spaces!.
+#
 # Option 1:
 
 #job_search_records_df.rename(columns={'Work Search Record for NUERTEY ODZEYEM':'DateApplied', 
-#                   'Unnamed: 3':'CompanyName'}, inplace=True)
+#                   'Unnamed: 3':'CompanyName', 'Unnamed: 4':'JobTitle'}, inplace=True)
        
 # Option 2 for renaming by column indexes in case the column names are unknown:
-column_indices = [0, 1]
-new_names = ['DateApplied', 'CompanyName'] # Prefer to work with columns that are just one word, no spaces!.
+column_indices = [0, 1, 2]
+new_names = ['DateApplied', 'CompanyName', 'JobTitle'] 
 old_names = job_search_records_df.columns[column_indices]
 job_search_records_df.rename(columns=dict(zip(old_names, new_names)), inplace=True)
            
@@ -106,6 +108,7 @@ job_search_records_df.rename(columns=dict(zip(old_names, new_names)), inplace=Tr
 job_search_records_df['DateApplied'] = pd.to_datetime(job_search_records_df['DateApplied'])
 
 job_search_records_df['CompanyName'] = job_search_records_df['CompanyName'].astype(str)
+job_search_records_df['JobTitle'] = job_search_records_df['JobTitle'].astype(str)
 
 print(job_search_records_df.dtypes)
 print()
@@ -121,8 +124,14 @@ print()
 figure_1 = px.scatter(job_search_records_df, 
                       y="CompanyName", 
                       x="DateApplied", 
-                      title="My Historical Job Search Data From illinoisjoblink.illinois.gov",
+                      title="Nuertey Odzeyem's Historical Job Search Data From illinoisjoblink.illinois.gov",
                       color="CompanyName", 
-                      symbol="CompanyName")
+                      symbol="CompanyName",
+                      hover_name="CompanyName",        # Display this column in bold as the tooltip title.
+                      hover_data={'DateApplied':True,  # Add this column to hover tooltip with default formatting.
+                                  'CompanyName':False, # Remove this column from hover tooltip.
+                                  'JobTitle':True      # Add this column to hover tooltip with default formatting.
+                                 }
+                      )
 figure_1.update_traces(marker_size=10)
 figure_1.show()
