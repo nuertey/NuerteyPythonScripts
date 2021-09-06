@@ -48,9 +48,9 @@ print()
 # Select only range of indexes with valid data:
 valid_data_indexes = list(range(5, 145))
 
-print('valid_data_indexes:')
-print(valid_data_indexes)
-print()
+#print('valid_data_indexes:')
+#print(valid_data_indexes)
+#print()
 
 # Option 1:
 #job_search_records_df = nuertey_job_search_records_df[nuertey_job_search_records_df.index.isin(valid_data_indexes)]
@@ -70,41 +70,57 @@ job_search_records_df = nuertey_job_search_records_df.iloc[valid_data_indexes, :
 # 'name2' and 'name5' are your column string names for the respective columns you want"
 # * Note that unlike integer slicing, 'name5' is included in the columns):
 
-print('job_search_records_df:')
-print(job_search_records_df)
-print()
-
-print('job_search_records_df.info():')
-print(job_search_records_df.info())
-print()
+#print('job_search_records_df:')
+#print(job_search_records_df)
+#print()
+#
+#print('job_search_records_df.info():')
+#print(job_search_records_df.info())
+#print()
 
 # Slice again to get only the columns that we are interested in:
 job_search_records_df = job_search_records_df.iloc[:, [0, 4]]
 
-print('job_search_records_df:')
-print(job_search_records_df)
-print()
-
-print('job_search_records_df.info():')
-print(job_search_records_df.info())
-print()
+#print('job_search_records_df:')
+#print(job_search_records_df)
+#print()
+#
+#print('job_search_records_df.info():')
+#print(job_search_records_df.info())
+#print()
 
 # Now rename the columns to something befitting what they actually represent:
 #
 # Option 1:
 
-#job_search_records_df.rename(columns={'Work Search Record for NUERTEY ODZEYEM':'Date Applied', 
-#                   'Unnamed: 4':'Job Title'}, inplace=True)
+#job_search_records_df.rename(columns={'Work Search Record for NUERTEY ODZEYEM':'DateApplied', 
+#                   'Unnamed: 4':'JobTitle'}, inplace=True)
        
 # Option 2 for renaming by column indexes in case the column names are unknown:
 column_indices = [0, 1]
-new_names = ['Date Applied', 'Job Title']
+new_names = ['DateApplied', 'JobTitle']
 old_names = job_search_records_df.columns[column_indices]
 job_search_records_df.rename(columns=dict(zip(old_names, new_names)), inplace=True)
            
 # Ensure the Date Applied column is actually a datetime object for plotly
-job_search_records_df['Date Applied'] = pd.to_datetime(job_search_records_df['Date Applied'], format="%m%d%Y")
+# My 'Date Applied' column is alread time data so the next step is not needed.
+# ValueError: time data '09/06/2021' does not match format '%m%d%Y' (match)
+job_search_records_df['DateApplied'] = pd.to_datetime(job_search_records_df['DateApplied'])
+
+
+
+# Verify datatype
+print(type(job_search_records_df.DateApplied))
+print()
+
+print(job_search_records_df.dtypes)
+print()
+
+# So as to graph chronologically:
+job_search_records_df.sort_values('DateApplied', ascending=True, ignore_index=True)
 
 print('job_search_records_df:')
 print(job_search_records_df)
 print()
+
+
