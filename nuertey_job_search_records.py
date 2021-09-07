@@ -13,6 +13,7 @@
 #**********************************************************************/
 #!/usr/bin/env python
 
+import datetime
 import pandas as pd
 import plotly.graph_objects as go
 import plotly.express as px
@@ -121,17 +122,31 @@ print(job_search_records_df)
 print()
 
 # Let's visualize with plotly:
-figure_1 = px.scatter(job_search_records_df, 
-                      y="CompanyName", 
-                      x="DateApplied", 
-                      title="Nuertey Odzeyem's Historical Job Search Data From illinoisjoblink.illinois.gov",
-                      color="CompanyName", 
-                      symbol="CompanyName",
-                      hover_name="CompanyName",        # Display this column in bold as the tooltip title.
-                      hover_data={'DateApplied':True,  # Add this column to hover tooltip with default formatting.
-                                  'CompanyName':False, # Remove this column from hover tooltip.
-                                  'JobTitle':True      # Add this column to hover tooltip with default formatting.
-                                 }
-                      )
-figure_1.update_traces(marker_size=10)
-figure_1.show()
+#figure_1 = px.scatter(job_search_records_df, 
+#                      y="CompanyName", 
+#                      x="DateApplied", 
+#                      title="Nuertey Odzeyem's Historical Job Search Data From illinoisjoblink.illinois.gov",
+#                      color="CompanyName", 
+#                      symbol="CompanyName",
+#                      hover_name="CompanyName",        # Display this column in bold as the tooltip title.
+#                      hover_data={'DateApplied':True,  # Add this column to hover tooltip with default formatting.
+#                                  'CompanyName':False, # Remove this column from hover tooltip.
+#                                  'JobTitle':True      # Add this column to hover tooltip with default formatting.
+#                                 }
+#                      )
+#figure_1.update_traces(marker_size=10)
+#figure_1.show()
+
+# Further analysis ensues:
+monthly_analysis_df = job_search_records_df.copy()
+monthly_analysis_df['MonthOfYear'] = monthly_analysis_df['DateApplied'].dt.strftime('%B, %Y')
+
+print('monthly_analysis_df:')
+print(monthly_analysis_df)
+print()
+
+month_of_year_list = list(range())
+
+baseline_date = datetime.datetime.today()
+number_of_days = 100
+month_of_year_list = [baseline_date - datetime.timedelta(days=x) for x in range(numdays)]
