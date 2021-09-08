@@ -15,6 +15,7 @@
 import re
 import pandas as pd  
 from nose.tools import assert_equal
+from tqdm import tqdm
 
 pd.set_option('display.max_rows', 100)
 pd.set_option('display.min_rows', 100)
@@ -90,7 +91,7 @@ laptops_data_df = pd.read_csv('laptops.csv')
 # ======================================================================
   
 # Answer to Mr. B's hypothetical question:
-hypothetical_resolution_not_in_dictionary = 'Bogdan Old McMaster Monitor 800x600'
+#hypothetical_resolution_not_in_dictionary = 'Bogdan Old McMaster Monitor 800x600'
 
 # First you must add it to the dictionary for like in Mathematics, the 
 # "set" must be bounded for one to be able to work with it. It cannot be
@@ -109,7 +110,7 @@ hypothetical_resolution_not_in_dictionary = 'Bogdan Old McMaster Monitor 800x600
 # go over my previous solution to understand when you have time before we move on 
 # to other questions. Okay brother, I am going back in the Sun to chill for
 # a bit.  
-laptops_data_df.append({'ScreenResolution':hypothetical_resolution_not_in_dictionary}, ignore_index=True)
+#laptops_data_df.append({'ScreenResolution':hypothetical_resolution_not_in_dictionary}, ignore_index=True)
 
 # Everything can now proceed as it was and it will all work. Nothing else to be done.
 # ======================================================================
@@ -127,7 +128,10 @@ print(laptops_data_df['ScreenResolution'])
 print()
 
 # Example of a list comprehension in Python which gives faster processing:
-[strip_text_from_numbers(laptop_resolution_string) for laptop_resolution_string in laptops_data_df['ScreenResolution']]
+# We are looping simply so we can display a progress bar on the execution
+# of the list comprehension:
+for i in tqdm(range(1)):
+    [strip_text_from_numbers(laptop_resolution_string) for laptop_resolution_string in laptops_data_df['ScreenResolution']]
 
 # Uncomment to view output for debug and further understanding:
 #print('laptops_resolution_horizontal_data:')
@@ -174,16 +178,17 @@ temporary_list = []
 
 # Store the equivalent NumericValueMapping in our DataFrame that we are
 # going to be using as our "Master Mapping Table" going forward:
-for current_row in zip(resolution_data_df.index, resolution_data_df['EncodedPixelCounts']):
-    # Leverage a simple dictionary-like approach of key='sorted EncodedPixelCounts',
-    # value='value-based approach number signifying better resolution'
-    temporary_index = sorted_unique_df.index[sorted_unique_df['EncodedPixelCounts'] == current_row[1]].values
-    
-    # This should effectively give us, 'higher resolution, higher numeric
-    # value mapping': 
-    temporary_list.append((temporary_index[0] + 1))
-    # You can access the current index if you need to with the following:
-    # current_row[0]
+for i in tqdm(range(1)):
+    for current_row in zip(resolution_data_df.index, resolution_data_df['EncodedPixelCounts']):
+        # Leverage a simple dictionary-like approach of key='sorted EncodedPixelCounts',
+        # value='value-based approach number signifying better resolution'
+        temporary_index = sorted_unique_df.index[sorted_unique_df['EncodedPixelCounts'] == current_row[1]].values
+        
+        # This should effectively give us, 'higher resolution, higher numeric
+        # value mapping': 
+        temporary_list.append((temporary_index[0] + 1))
+        # You can access the current index if you need to with the following:
+        # current_row[0]
 
 resolution_data_df['NumericValueMapping'] = temporary_list
 
@@ -214,17 +219,18 @@ print()
 # ==========================
 # Henceforth we can easily and simply prove the invertibility of the numeric
 # value mapping by leveraging the "Master Mapping Table" index like so:
-for current_row in zip(resolution_data_df.index, 
-                       resolution_data_df['NumericValueMapping'], 
-                       resolution_data_df['EncodedPixelCounts'],
-                       resolution_data_df['OriginalScreenResolution']):
-    # Essentially the "Master Mapping Table" has already captured all that
-    # info for us. No other complex operations to perform to get the inverse required:
-    #print('NumericValueMapping: {}'.format(current_row[1]))
-    #print('EncodedPixelCounts: {}'.format(current_row[2]))
-    #print('OriginalScreenResolution: {}'.format(current_row[3]))
-    #print()
-    pass
+for i in tqdm(range(1)):
+    for current_row in zip(resolution_data_df.index, 
+                           resolution_data_df['NumericValueMapping'], 
+                           resolution_data_df['EncodedPixelCounts'],
+                           resolution_data_df['OriginalScreenResolution']):
+        # Essentially the "Master Mapping Table" has already captured all that
+        # info for us. No other complex operations to perform to get the inverse required:
+        #print('NumericValueMapping: {}'.format(current_row[1]))
+        #print('EncodedPixelCounts: {}'.format(current_row[2]))
+        #print('OriginalScreenResolution: {}'.format(current_row[3]))
+        #print()
+        pass
 
 # ======================================================================
 # Option 2 for encoding and decoding, which might, make more sense. Of
@@ -233,7 +239,8 @@ for current_row in zip(resolution_data_df.index,
 # too big. Such encodings and decodings "is more logical" than the manual
 # stripping you had wanted me to do. Of course, your mileage may vary:
 # ======================================================================
-[encode_decode_screen_resolution_option_2(laptop_resolution_string) for laptop_resolution_string in laptops_data_df['ScreenResolution']]
+for i in tqdm(range(1)):
+    [encode_decode_screen_resolution_option_2(laptop_resolution_string) for laptop_resolution_string in laptops_data_df['ScreenResolution']]
 
 # Creating a DataFrame for easier manipulation, analysis and processing:
 option_2_data_df = pd.DataFrame(
