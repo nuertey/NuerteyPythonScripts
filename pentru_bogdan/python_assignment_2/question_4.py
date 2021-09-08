@@ -148,6 +148,9 @@ ax.set_xlabel('df_pca[:, 1]')
 
 plt.scatter(xs_pca, ys_pca, c=cluster_labels)
 
+origin = np.array([0,0]) # origin point
+plt.quiver(*origin, pca.explained_variance_[0], pca.explained_variance_[1], color=['r','b','g'], scale=21)
+
 plt.show()
 
 # ----------------------------------------------------------------------

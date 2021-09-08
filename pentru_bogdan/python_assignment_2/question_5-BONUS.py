@@ -71,7 +71,8 @@ print()
 plt.title('Hierarchical Clustering Dendrogram')
 
 # plot the top three levels of the dendrogram
-#plot_dendrogram(model, truncate_mode='level', p=3)
+plot_dendrogram(model, truncate_mode='level', p=3)
+plt.show()
 
 # plot the all levels of the dendrogram
 plot_dendrogram(model)
