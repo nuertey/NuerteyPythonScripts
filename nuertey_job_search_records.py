@@ -22,6 +22,12 @@ from nose.tools import assert_equal
 
 pd.set_option('display.max_rows', 100)
 pd.set_option('display.min_rows', 100)
+
+# Warning
+# 
+# Whether a copy or a reference is returned for a setting operation, may
+# depend on the context. This is sometimes called chained assignment and
+# should be avoided. See Returning a View versus Copy. [dataframe_loop_example.py]
 pd.options.mode.chained_assignment = None
 
 # To read native Excel files (.xls), ensure you install the following 
@@ -62,7 +68,7 @@ valid_data_indexes = list(range(5, 145))
 #
 # Alternatively, pass the index to the row indexer/slicer of .loc
 # Ensure to specify the culprit columns as well. [indexes, :] for all columns.
-# And note that Python slices exclude the ending index.
+# And note that Python slices with iloc, exclude the ending index.
 job_search_records_df = nuertey_job_search_records_df.iloc[valid_data_indexes, :]
 
 # Good teaching comment:
@@ -153,6 +159,8 @@ print('monthly_analysis_df:')
 print(monthly_analysis_df)
 print()
 
+# An example of generating DataFrame indexes with date types can also be
+# found in your script, dataframe_tutorial.py line 168.
 frequency_analysis_df = monthly_analysis_df.groupby('MonthOfYear').count()
 frequency_analysis_df.rename(columns={'DateApplied':'FrequencyCount'}, inplace=True)
 
