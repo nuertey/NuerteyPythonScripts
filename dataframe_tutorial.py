@@ -56,6 +56,7 @@ print(s1.isin(pd.to_numeric(s2, errors='coerce')))
 arr = np.array([[1, 2, 3, 4], [5, 6, 7, 8]])
 
 print(arr)
+print()
 print(arr.shape)
 print()
 
@@ -114,7 +115,7 @@ print()
 # self.biases = [np.random.randn(y, 1) for y in sizes[1:]]
 # self.weights = [np.random.randn(y, x) for x, y in zip(sizes[:-1], sizes[1:])]
 
-# Refer to nuertey_covid19_final.py for an excellent example.
+# Refer to nuertey_covid19_final.py or class_project_2021.py for an excellent example.
 
 # [f(v) for (n, f), v in zip(cls.all_slots, values)]
 
@@ -303,7 +304,10 @@ except Exception as e:
 # String likes in slicing can be convertible to the type of the index and lead to natural slicing.
 #
 # Nuertey Odzeyem Addendum: Very good behavior indeed above! Take advantage of it in your slicing.
-dfl.loc['20130102':'20130104']
+df_x = dfl.loc['20130102':'20130104'] # Those row indices are einclusive.
+
+print(df_x)
+print()
 
 # Warning
 # 
@@ -329,7 +333,7 @@ s1 = pd.Series(np.random.randn(6), index=list('abcdef'))
 print(s1)
 print()
 
-print(s1.loc['c':])
+print(s1.loc['c':]) # Row c to the end of the rows.
 print()
 
 print(s1.loc['b'])
