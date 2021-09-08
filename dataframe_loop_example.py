@@ -8,13 +8,16 @@
 # ======================================================================
 #!/usr/bin/env python
 import sys
-import tqdm
+import tqdm # tqdm is a Python library that allows you to output a smart
+            # progress bar by wrapping around any iterable. A tqdm progress
+            # bar not only shows you how much time has elapsed, but also
+            # shows the estimated time remaining for the iterable.
 import time
 import pandas as pd
 
 B = []
 t = pd.DataFrame({'a': range(0, 10000), 'b': range(10000, 20000)})
-for _ in tqdm.tqdm(range(10)):
+for _ in tqdm.tqdm(range(10)): # Wrapping the iterable, i.e. 'run the test 10 times'.
     C = []
     A = time.time()
     for i,r in t.iterrows():
@@ -30,7 +33,7 @@ for _ in tqdm.tqdm(range(10)):
     C = []
     A = time.time()
     # Nuertey Odzeyem addendum: the following zip() approach also works
-    # for getting at the index of the DataFrame:
+    # for getting at the index of the DataFrame, r being the row(s):
     for r in zip(t.index, t['a'], t['b']):
         C.append((r[1], r[2]))
         #print("t.index")
@@ -60,6 +63,9 @@ for _ in tqdm.tqdm(range(10)):
 print()
 print(f'Python {sys.version} on {sys.platform}')
 print(f"Pandas version {pd.__version__}")
+
+# Create a DataFrame from the list of dictionary values, and then groupby
+# the culprit column "method". 
 print(
     pd.DataFrame(B).groupby("method").agg(["mean", "std"]).xs("time", axis=1).sort_values("mean")
 )
