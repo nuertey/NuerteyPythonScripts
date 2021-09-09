@@ -450,6 +450,23 @@ print()
 # For example:
 #
 # a[start:stop:step] # start through not past stop, by step 
+#
+# The key point to remember is that the :stop value represents the first value that is not in the selected slice. So, the difference between stop and start is the number of elements selected (if step is 1, the default).
+#
+# The other feature is that start or stop may be a negative number, which means it counts from the end of the array instead of the beginning. So:
+# 
+# a[-1]    # last item in the array
+# a[-2:]   # last two items in the array
+# a[:-2]   # everything except the last two items
+#
+# Similarly, step may be a negative number:
+#
+# a[::-1]    # all items in the array, reversed
+# a[1::-1]   # the first two items, reversed
+# a[:-3:-1]  # the last two items, reversed
+# a[-3::-1]  # everything except the last two items, reversed
+#
+# More at https://stackoverflow.com/questions/509211/understanding-slice-notation
 
 # Slice object with positions from beginning to the position before 3 = 2.
 #
