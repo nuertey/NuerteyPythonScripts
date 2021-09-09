@@ -1,6 +1,7 @@
 import random
 import numpy as np
 import pandas as pd
+from nose.tools import assert_equal
 
 pd.set_option('display.max_rows', 100)
 
@@ -383,8 +384,9 @@ print()
 # Slicing with labels
 # 
 # When using .loc with slices, if both the start and the stop labels are present in the index, then elements located between the two (including them) are returned:
-s = pd.Series(list('abcde'), index=[0, 3, 2, 5, 4])
+s = pd.Series(list('abcde'), index=[0, 3, 2, 5, 4]) # Specifying index manually...
 
+print("page 388:")
 print(s)
 print()
 
@@ -434,10 +436,29 @@ s1 = pd.Series(np.random.randn(5), index=list(range(0, 10, 2)))
 print(s1)
 print()
 
-print(s1.iloc[:3])
+# Nuertey Odzeyem Addendum: 
+# 
+# Slice Notation:
+#
+# a[start:stop]  # items start through stop-1
+# a[start:]      # items start through the rest of the array
+# a[:stop]       # items from the beginning through stop-1
+# a[:]           # a copy of the whole array
+#
+# There is also the step value, which can be used with any of the above.
+#
+# For example:
+#
+# a[start:stop:step] # start through not past stop, by step 
+
+# Slice object with positions from beginning to the position before 3 = 2.
+#
+print(s1.iloc[:3]) # The important thing to note here is that the indexing is 0-based,
+                   # so therefore positions = 0, 1, 2, 3 (with 3 excluded), 
+                   # which translates into the labels: 0, 2, 4 (with 6 excluded).  
 print()
 
-print(s1.iloc[3])
+print(s1.iloc[3]) # Position 3 in particular, therefore label = 6
 print()
 
 # Note that setting works as well:
@@ -446,20 +467,31 @@ s1.iloc[:3] = 0
 print(s1)
 print()
 
-# With a DataFrame:
-df1 = pd.DataFrame(np.random.randn(6, 4), index=list(range(0, 12, 2)), columns=list(range(0, 8, 2)))
+row_dimension = 6
+column_dimension = 4
+the_indexes = list(range(0, 12, 2))
+the_columns = list(range(0, 8, 2))
 
+# For peace-of-mind validations:
+assert_equal(row_dimension, len(the_indexes))
+assert_equal(column_dimension, len(the_columns))
+
+# With a DataFrame:
+df1 = pd.DataFrame(np.random.randn(row_dimension, column_dimension),
+                   index=the_indexes, 
+                   columns=the_columns)
+print('Page 483:')                
 print(df1)
 print()
 
-print(df1.iloc[:3])
+print(df1.iloc[:3]) # Recall iloc refers to [index] POSITION not rows and columns!
 print()
 
 print(df1.iloc[1:5, 2:4])
 print()
 
 # Select via integer list:
-print(df1.iloc[[1, 3, 5], [1, 3]])
+print(df1.iloc[[1, 3, 5], [1, 3]]) # All are individually selected, no exclusions.
 print()
 
 print("nuertey")

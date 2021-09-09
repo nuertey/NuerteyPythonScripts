@@ -87,7 +87,7 @@ job_search_records_df = nuertey_job_search_records_df.iloc[valid_data_indexes, :
 #print(job_search_records_df.info())
 #print()
 
-# Slice again to get only the columns that we are interested in:
+# Slice again to get only the column index positions that we are interested in:
 job_search_records_df = job_search_records_df.iloc[:, [0, 3, 4]]
 
 #print('job_search_records_df:')
