@@ -250,7 +250,7 @@ print()
 figure_2 = px.bar(frequency_count_data_df, 
                         x="MonthOfYear", 
                         y="NumberOfApplications", 
-                        title="Nuertey Odzeyem's Historical Job Search Frequency Distribution - Obtained Via illinoisjoblink.illinois.gov",
+                        title="Nuertey Odzeyem's Historical Job Search Frequency Bar Chart - Obtained Via illinoisjoblink.illinois.gov",
                         hover_data=['MonthOfYear', 'NumberOfApplications'],
                         color='NumberOfApplications',
                         labels={'MonthOfYear':'Year and Month of Job Application'}
@@ -262,7 +262,7 @@ figure_3 = px.histogram(frequency_count_data_df,
                         x="MonthOfYear", 
                         y="NumberOfApplications", 
                         histfunc='avg',
-                        title="Nuertey Odzeyem's Historical Job Search Histogram - Obtained Via illinoisjoblink.illinois.gov",
+                        title="Nuertey Odzeyem's Historical Job Search Average Histogram - Obtained Via illinoisjoblink.illinois.gov",
                         hover_data=['MonthOfYear', 'NumberOfApplications'],
                         color=frequency_count_data_df.NumberOfApplications
                         )
@@ -272,7 +272,7 @@ figure_3.show()
 # raw data with the count() function instead of manually as I did above:
 figure_4 = px.histogram(monthly_analysis_df, 
                         x="MonthOfYear", 
-                        title="Nuertey Odzeyem's Historical Job Search Distribution - Obtained Via illinoisjoblink.illinois.gov",
+                        title="Nuertey Odzeyem's Historical Job Search Histogram - Obtained Via illinoisjoblink.illinois.gov",
                         hover_data=['MonthOfYear'], # Counts is not accessible here. See later example.
                         color=monthly_analysis_df.DateApplied,
                         labels={'MonthOfYear':'Year and Month of Job Application'}
