@@ -16,6 +16,7 @@
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 import pandas as pd
+import numpy as np
 import plotly.graph_objects as go
 import plotly.express as px
 from nose.tools import assert_equal
@@ -135,6 +136,7 @@ figure_1 = px.scatter(job_search_records_df,
                       x="DateApplied", 
                       title="Nuertey Odzeyem's Historical Job Search Details - Obtained Via illinoisjoblink.illinois.gov",
                       color="CompanyName", 
+                      labels={'DateApplied':'Year, Month and Day of Job Application'},
                       symbol="CompanyName",
                       hover_name="CompanyName",        # Display this column in bold as the tooltip title.
                       hover_data={'DateApplied':True,  # Add this column to hover tooltip with default formatting.
@@ -254,3 +256,64 @@ figure_2 = px.bar(frequency_count_data_df,
                         labels={'MonthOfYear':'Year and Month of Job Application'}
                         )
 figure_2.show()
+
+# Compare histograms to bar charts for the same dataset:
+figure_3 = px.histogram(frequency_count_data_df, 
+                        x="MonthOfYear", 
+                        y="NumberOfApplications", 
+                        histfunc='avg',
+                        title="Nuertey Odzeyem's Historical Job Search Histogram - Obtained Via illinoisjoblink.illinois.gov",
+                        hover_data=['MonthOfYear', 'NumberOfApplications'],
+                        color=frequency_count_data_df.NumberOfApplications
+                        )
+figure_3.show()
+
+# Let Plotly Express perform the aggregation itself automatically on the
+# raw data with the count() function instead of manually as I did above:
+figure_4 = px.histogram(monthly_analysis_df, 
+                        x="MonthOfYear", 
+                        title="Nuertey Odzeyem's Historical Job Search Distribution - Obtained Via illinoisjoblink.illinois.gov",
+                        hover_data=['MonthOfYear'], # Counts is not accessible here. See later example.
+                        color=monthly_analysis_df.DateApplied,
+                        labels={'MonthOfYear':'Year and Month of Job Application'}
+                        )
+figure_4.show()
+
+# ======================================================================
+# Histogram Plotly Express Example(s):
+# ======================================================================
+df = px.data.tips()
+
+print('df = px.data.tips().shape:')
+print(df.shape)
+print()
+
+print('df = px.data.tips():')
+print(df)
+print()
+
+print('df = px.data.tips().info():')
+print(df.info())
+print()
+
+# Two superimposed histograms will be observed distinguished by the color
+# "sex", since for our interested dataset, there exists a column sex=
+# Male or Female that further qualifies the "total_bill" column. 
+figure_5 = px.histogram(df, x="total_bill", color="sex")
+figure_5.show()
+
+# Accessing the counts (y-axis) values
+#
+# JavaScript calculates the y-axis (count) values on the fly in the browser,
+# so it's not accessible in the fig. You can manually calculate it using
+# np.histogram.
+df = px.data.tips()
+# create the bins
+counts, bins = np.histogram(df.total_bill, bins=range(0, 60, 5))
+bins = 0.5 * (bins[:-1] + bins[1:])
+
+figure_6 = px.bar(x=bins, 
+                  y=counts,
+                  color=bins, 
+                  labels={'x':'total_bill', 'y':'count'})
+figure_6.show()
