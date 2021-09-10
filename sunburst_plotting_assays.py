@@ -188,18 +188,19 @@ object_parents = ["", "SharedInputNotifier", "SharedInputNotifier",
                   "eSocket", "WriteableDevice", "ReadableDevice", 
                   "WriteableDevice", "WriteableDevice", "ReadableDevice", 
                   "WriteableDevice", "WriteableDevice", "WriteableDevice", 
-                  "WriteableDevice", "eSocket", "ReadableDevice",
+                  "WriteableDevice", "eDevice", "ReadableDevice",
                   "eDeviceHandler", "eDeviceHandler", "eDevice", 
                   "EPOLL_NOTIFICATION_MODE", "EPOLL_NOTIFICATION_MODE"]
 
-object_weights = [10, 8, 4, 
-                  5, 5, 3, 
-                  5, 5, 2, 2, 
-                  3, 3, 1, 
-                  1, 2, 3, 
-                  4, 4, 3,
-                  5, 5, 8, 
-                  5, 5]
+# The weights also seem to determine the heirarchy level:
+object_weights = [10, 6, 6, 
+                  5, 5, 4, 
+                  3, 3, 3, 3, 
+                  3, 3, 3, 
+                  3, 3, 3, 
+                  3, 3, 3,
+                  3, 3, 2, 
+                  1, 1]
 
 assert_equal(len(object_labels), len(object_parents))
 assert_equal(len(object_labels), len(object_weights))
