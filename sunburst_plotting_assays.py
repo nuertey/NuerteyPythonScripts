@@ -164,3 +164,56 @@ figure_3 = px.sunburst(df,
                        color_continuous_midpoint=np.average(df['lifeExp'], weights=df['pop'])
                       )
 figure_3.show()
+
+# ======================================================================
+# Visualizing Nuertey Odzeyem's SharedInputNotifier OS Abstraction Heirarchy:
+# ======================================================================
+
+print('# ========================================================')
+print('# Nuertey\'s SharedInputNotifier OS Abstraction Heirarchy:')
+print('# ========================================================')
+print()
+
+object_labels = ["SharedInputNotifier", "eDevice", "eDeviceHandler", 
+                 "ReadableDevice", "WriteableDevice", "eSocket", 
+                 "ClientSocket", "ServerSocket", "CANSocket", "eTimer",
+                 "GenericSharedMemory", "I2CDevice", "InputGPIODevice",
+                 "OutputGPIODevice","InputOutputGPIODevice", "MessageQueue",
+                  "SPIDevice", "TermDevice", "USBHotplugDevice", "GPIODeviceHandler",
+                  "LostHeartBeatTimerHandler", "EPOLL_NOTIFICATION_MODE",
+                  "LEVEL_TRIGGERED", "EDGE_TRIGGERED"]
+                  
+object_parents = ["", "SharedInputNotifier", "SharedInputNotifier", 
+                  "eDevice", "eDevice", "WriteableDevice", "eSocket", 
+                  "eSocket", "WriteableDevice", "ReadableDevice", 
+                  "WriteableDevice", "WriteableDevice", "ReadableDevice", 
+                  "WriteableDevice", "WriteableDevice", "WriteableDevice", 
+                  "WriteableDevice", "eSocket", "ReadableDevice",
+                  "eDeviceHandler", "eDeviceHandler", "eDevice", 
+                  "EPOLL_NOTIFICATION_MODE", "EPOLL_NOTIFICATION_MODE"]
+
+object_weights = [10, 8, 4, 
+                  5, 5, 3, 
+                  5, 5, 2, 2, 
+                  3, 3, 1, 
+                  1, 2, 3, 
+                  4, 4, 3,
+                  5, 5, 8, 
+                  5, 5]
+
+assert_equal(len(object_labels), len(object_parents))
+assert_equal(len(object_labels), len(object_weights))
+
+data = dict(
+    character=object_labels,
+    parent=object_parents,
+    value=object_weights)
+
+figure_4 = px.sunburst(
+    data,
+    names='character',
+    parents='parent',
+    values='value',
+)
+
+figure_4.show()
