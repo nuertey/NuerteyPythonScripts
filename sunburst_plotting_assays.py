@@ -42,7 +42,15 @@ print()
 # The comparison uses lexicographical ordering: first the first two items
 # are compared, and if they differ this determines the outcome of the 
 # comparison; if they are equal, the next two items are compared, and 
-# so on, until either sequence is exhausted. 
+# so on, until either sequence is exhausted. Hence the pair of items at
+# each index are compared in turn.
+#
+# A corollary of this is, two lists will only compare as equal if and only
+# if they possess the same length and all pairs of items compare as equal.
+#
+# Note that the comparison of pairs will stop when either an unequal pair
+# of items is found or--if the lists are of different lengths--the end of 
+# the shorter list is reached.
 assert version_to_int_list(plotly.__version__) >= version_to_int_list('3.8.0'), 'Sunburst plots require Plotly >= 3.8.0'
 
 pd.set_option('display.max_rows', 100)
@@ -59,6 +67,11 @@ pd.options.mode.chained_assignment = None
 # Example 1:
 # ======================================================================
 
+print('# =================')
+print('# Example 1:       ')
+print('# =================')
+print()
+
 # With px.sunburst, each row of the DataFrame is represented as a sector
 # of the sunburst. Furthermore, the sunburst plot requires weights (values),
 # labels, and parent. Here we compose with a dictionary:
@@ -67,7 +80,7 @@ data = dict(
     parent=["", "Eve", "Eve", "Seth", "Seth", "Eve", "Eve", "Awan", "Eve" ],
     value=[10, 14, 12, 10, 2, 6, 6, 4, 4]) # Weights.
 
-figure_1 =px.sunburst(
+figure_1 = px.sunburst(
     data,
     names='character',
     parents='parent',
@@ -75,3 +88,79 @@ figure_1 =px.sunburst(
 )
 
 figure_1.show()
+
+# ======================================================================
+# Example 2:
+# ======================================================================
+
+print('# =================')
+print('# Example 2:       ')
+print('# =================')
+print()
+
+# Sunburst of a rectangular DataFrame with plotly.express
+# 
+# Hierarchical data are often stored as a rectangular dataframe, with 
+# different columns corresponding to different levels of the hierarchy.
+# px.sunburst can take a path parameter corresponding to a list of columns.
+# Note that id and parent should not be provided if path is given.
+df = px.data.tips()
+
+print('df.shape:')
+print(df.shape)
+print()
+
+print('df = px.data.tips():')
+print(df)
+print()
+
+print('df.info():')
+print(df.info())
+print()
+
+# path = parent, children, grandchildren, ...
+# values = the column that would determine weights or (pizza) slice widths of segments.
+#
+# And the implication in this case is that the aggregation and groupby
+# operations to determine the 'pizza slices' are internally and automagically
+# performed by plotly itself.
+figure_2 = px.sunburst(df, path=['day', 'time', 'sex'], values='total_bill')
+figure_2.show()
+
+# ======================================================================
+# Example 3:
+# ======================================================================
+
+print('# =================')
+print('# Example 3:       ')
+print('# =================')
+print()
+
+# Sunburst of a rectangular DataFrame with continuous color argument in
+# px.sunburst
+#
+# If a color argument is passed, the color of a node is computed as the
+# average of the color values of its children, weighted by their values.
+df = px.data.gapminder().query("year == 2007")
+
+print('df.shape:')
+print(df.shape)
+print()
+
+print('df = px.data.gapminder().query(\"year == 2007\"):')
+print(df)
+print()
+
+print('df.info():')
+print(df.info())
+print()
+
+figure_3 = px.sunburst(df, 
+                       path=['continent', 'country'], 
+                       values='pop',
+                       color='lifeExp', 
+                       hover_data=['iso_alpha'],
+                       color_continuous_scale='RdBu',
+                       color_continuous_midpoint=np.average(df['lifeExp'], weights=df['pop'])
+                      )
+figure_3.show()
