@@ -1,7 +1,8 @@
 #***********************************************************************
 # @file
 #
-# Advancing on plotly sunburst plots by assaying some. 
+# Advancing on plotly sunburst plots by assaying some. Other plots have
+# since been added to this script/module as well.
 #
 # @note 
 #   Sunburst plots visualize hierarchical data spanning outwards radially
@@ -23,7 +24,10 @@ import plotly # Plotly.js is an open source charting library written in javascri
               # One of the coolest things about these charts is that all of them are interactive, as you can see in the example below. You can Zoom in and out, resize and move the axis, and much more.
 import plotly.graph_objects as go
 import plotly.express as px
+from numpy import array
 from nose.tools import assert_equal
+from sklearn.datasets import load_iris, load_wine
+from sklearn.preprocessing import MinMaxScaler
 
 def version_to_int_list(version):
     return [int(s) for s in version.split('.')]
@@ -87,8 +91,7 @@ figure_1 = px.sunburst(
     parents='parent',
     values='value',
 )
-
-figure_1.show()
+#figure_1.show()
 
 # ======================================================================
 # Example 2:
@@ -126,7 +129,7 @@ print()
 # operations to determine the 'pizza slices' are internally and automagically
 # performed by plotly itself.
 figure_2 = px.sunburst(df, path=['day', 'time', 'sex'], values='total_bill')
-figure_2.show()
+#figure_2.show()
 
 # ======================================================================
 # Example 3:
@@ -164,7 +167,7 @@ figure_3 = px.sunburst(df,
                        color_continuous_scale='RdBu',
                        color_continuous_midpoint=np.average(df['lifeExp'], weights=df['pop'])
                       )
-figure_3.show()
+#figure_3.show()
 
 # ======================================================================
 # Visualizing Nuertey Odzeyem's SharedInputNotifier OS Abstraction Heirarchy:
@@ -218,11 +221,10 @@ figure_4 = px.sunburst(
     values='WeightValue',
     #color='WeightValue',
 )
-
-figure_4.show()
+#figure_4.show()
 
 # ======================================================================
-# Example 4: Other Plotly Plot Types
+# Example 4: Other Plotly Plot Types, Bubble Chart.
 # ======================================================================
 
 print('# =================')
@@ -257,4 +259,107 @@ print()
 figure_5 = px.scatter(df.query("year==2007"), x="gdpPercap", y="lifeExp",
                       size="pop", color="continent", hover_name="country", 
                       log_x=True, size_max=60)
-figure_5.show()
+#figure_5.show()
+
+# ======================================================================
+# Example 5: Other Plotly Plot Types, Radar Chart.
+# ======================================================================
+
+print('# =================')
+print('# Example 5:       ')
+print('# =================')
+print()
+
+# The radar chart is a technique to display multivariate data on the 
+# two-dimensional plot where three or more quantitative variables are 
+# represented by axes starting from the same point. The relative position
+# and angle of lines are of no importance. Each observation is represented
+# by a single point on all axes. All points representing each quantitative
+# variable is connected in order to generate a polygon. All quantitative
+# variables of data are scaled to the same level for comparison. We can
+# look at the single observation of data to look at how each quantitative
+# variable representing that samples are laid out on the chart.
+ 
+# The radar chart can be useful in identifying and comparing the behavior
+# of observations. We can identify which observations are similar as well
+# as outliers. The radar charts can be used at various places like sports
+# to compare player performance, employee performance comparison, comparison
+# of various programs based on different attributes, etc.
+
+# The radar chart is also commonly referred to as a web chart, spider chart,
+# spider web chart, star chart, star plot, cobweb chart, polar chart, etc.
+
+# Radar charts also have limitations which are worth pointing out. If there
+# be many observations to be displayed then radar charts become crowded.
+# As more polygons are layered on top of each other, distinguishing 
+# observations becomes difficult. Each axis of the radar chart has the
+# same scale which means that we need to scale data and bring all columns
+# to the same scale. The alternative charts to avoid pitfalls of radar
+# charts are parallel coordinate charts and bar charts.
+
+# The parallel coordinates chart is almost the same chart as the radar chart
+# excepting that it lays out quantitative variables in parallel vertically
+# unlike the radar chart which lays them out radially. 
+
+# IRIS Flowers Dataset: It has dimensions measured for 3 different IRIS 
+# flower types.
+iris = load_iris()
+
+i = array(iris)
+print('np.array(iris).shape:')
+print(i.shape)
+print()
+
+# Scale data so that each column’s data gets into the range [0-1]. Once
+# data is such a range for all quantitative variables, it becomes
+# straightforward to observe their inter-dependencies.
+iris_data = MinMaxScaler().fit_transform(iris.data)
+iris_data = np.hstack((iris_data, iris.target.reshape(-1,1)))
+
+# In the process of creating the DataFrame, ensure to name last column
+# as "FlowerType":
+iris_df = pd.DataFrame(data=iris_data, columns=iris.feature_names + ["FlowerType"])
+
+print('iris_df.shape:')
+print(iris_df.shape)
+print()
+
+print('iris_df:')
+print(iris_df)
+print()
+
+print('iris_df.info():')
+print(iris_df.info())
+print()
+
+# Wine Dataset: It has information about various ingredients of wine such 
+# as alcohol, malic acid, ash, magnesium, etc. for three different wine
+# categories.
+wine = load_wine()
+
+w = array(wine)
+print('np.array(wine).shape:')
+print(w.shape)
+print()
+
+# Scale data so that each column’s data gets into the range [0-1]. Once
+# data is such a range for all quantitative variables, it becomes
+# straightforward to observe their inter-dependencies.
+wine_data = MinMaxScaler().fit_transform(wine.data)
+wine_data = np.hstack((wine_data, wine.target.reshape(-1,1)))
+
+# In the process of creating the DataFrame, ensure to name last column
+# as "WineCat":
+wine_df = pd.DataFrame(data=wine_data, columns=wine.feature_names + ["WineCat"])
+
+print('wine_df.shape:')
+print(wine_df.shape)
+print()
+
+print('wine_df:')
+print(wine_df)
+print()
+
+print('wine_df.info():')
+print(wine_df.info())
+print()
