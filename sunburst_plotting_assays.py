@@ -19,7 +19,8 @@
 
 import numpy as np
 import pandas as pd
-import plotly
+import plotly # Plotly.js is an open source charting library written in javascript.
+              # One of the coolest things about these charts is that all of them are interactive, as you can see in the example below. You can Zoom in and out, resize and move the axis, and much more.
 import plotly.graph_objects as go
 import plotly.express as px
 from nose.tools import assert_equal
@@ -188,11 +189,11 @@ object_parents = ["", "SharedInputNotifier", "SharedInputNotifier",
                   "eSocket", "WriteableDevice", "ReadableDevice", 
                   "WriteableDevice", "WriteableDevice", "ReadableDevice", 
                   "WriteableDevice", "WriteableDevice", "WriteableDevice", 
-                  "WriteableDevice", "eDevice", "ReadableDevice",
+                  "WriteableDevice", "WriteableDevice", "ReadableDevice",
                   "eDeviceHandler", "eDeviceHandler", "eDevice", 
                   "EPOLL_NOTIFICATION_MODE", "EPOLL_NOTIFICATION_MODE"]
 
-# The weights also seem to determine the heirarchy level:
+# The weights also seem to determine the hierarchy level:
 object_weights = [10, 6, 6, 
                   5, 5, 4, 
                   3, 3, 3, 3, 
@@ -206,15 +207,54 @@ assert_equal(len(object_labels), len(object_parents))
 assert_equal(len(object_labels), len(object_weights))
 
 data = dict(
-    character=object_labels,
-    parent=object_parents,
-    value=object_weights)
+    ClassObject=object_labels,
+    ParentObject=object_parents,
+    WeightValue=object_weights)
 
 figure_4 = px.sunburst(
     data,
-    names='character',
-    parents='parent',
-    values='value',
+    names='ClassObject',
+    parents='ParentObject',
+    values='WeightValue',
+    #color='WeightValue',
 )
 
 figure_4.show()
+
+# ======================================================================
+# Example 4: Other Plotly Plot Types
+# ======================================================================
+
+print('# =================')
+print('# Example 4:       ')
+print('# =================')
+print()
+
+# Bubble chart with plotly.express
+# 
+# A bubble chart is a scatter plot in which a third dimension of the data
+# is shown through the size of markers. For other types of scatter plot,
+# see the scatter plot documentation.
+# 
+# We first show a bubble chart example using Plotly Express. Plotly Express
+# is the easy-to-use, high-level interface to Plotly, which operates on a
+# variety of types of data and produces easy-to-style figures. The size of
+# markers is set from the dataframe column given as the size parameter.
+df = px.data.gapminder()
+
+print('df.shape:')
+print(df.shape)
+print()
+
+print('df = px.data.gapminder():')
+print(df)
+print()
+
+print('df.info():')
+print(df.info())
+print()
+
+figure_5 = px.scatter(df.query("year==2007"), x="gdpPercap", y="lifeExp",
+                      size="pop", color="continent", hover_name="country", 
+                      log_x=True, size_max=60)
+figure_5.show()
