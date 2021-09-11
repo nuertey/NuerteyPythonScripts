@@ -85,9 +85,9 @@ print()
 ghana_figure_1 = px.scatter(ghana_population_data_df, 
                             x="City", 
                             y="Population",
-                            title="Ghana Population by City",
+                            title="Ghana - Population by City - Bubble Chart",
                             size="Population", 
-                            size_max=60, # size_max (int (default 20)) – Set the maximum mark size when using size
+                            size_max=100, # size_max (int (default 20)) – Set the maximum mark size when using size
                             color="City",
                             hover_name="City",
                             hover_data={'Population':True,
@@ -96,3 +96,11 @@ ghana_figure_1 = px.scatter(ghana_population_data_df,
                                     }
                             )
 ghana_figure_1.show()
+
+ghana_figure_2 = px.sunburst(ghana_population_data_df, 
+                       path=['Region', 'City'], 
+                       values='Population',
+                       title="Ghana - Population by City - Sunburst Plot",
+                       color='City'
+                      )
+ghana_figure_2.show()
