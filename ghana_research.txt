@@ -1,0 +1,15 @@
+GHA Tertiary education, academic staff (% female)   SE.TER.TCHR.FE.ZS
+GHA Educational attainment, at least Bachelor's or equivalent, population 25+, female (%) (cumulative)  SE.TER.CUAT.BA.FE.ZS
+GHA Progression to secondary school (%) SE.SEC.PROG.ZS
+GHA Secondary education, general pupils SE.SEC.ENRL.GC
+GHA Lower secondary school starting age (years) SE.SEC.AGES
+GHA Repeaters, primary, male (% of male enrollment) SE.PRM.REPT.MA.ZS
+GHA School enrollment, primary, female (% net)  SE.PRM.NENR.FE
+GHA Primary completion rate, male (% of relevant age group) SE.PRM.CMPT.MA.ZS
+GHA Literacy rate, adult total (% of people ages 15 and above)  SE.ADT.LITR.ZS
+
+GHA Population, male (% of total population)    SP.POP.TOTL.MA.ZS
+GHA Population ages 70-74, male (% of male population)  SP.POP.7074.MA.5Y
+GHA Population ages 45-49, male (% of male population)  SP.POP.4549.MA.5Y
+GHA Population ages 15-64, female (% of female population)  SP.POP.1564.FE.ZS
+
