@@ -336,7 +336,7 @@ print(avg_iris)
 print()
 
 figure_6 = px.line_polar(
-                    r=avg_iris.loc[0].values, # flower types
+                    r=avg_iris.loc[0].values, # Flower type 0.0
                     theta=avg_iris.columns,   # variables
                     line_close=True,   # connect end variables to create a polygon
                     range_r = [0,1.0], # As all variables have been scaled between 0-1 earlier.
@@ -352,7 +352,7 @@ figure_6.show()
 # where we want to start plotting quantitative variables by setting the
 # start_angle attribute. The default for start_angle is 90.
 figure_7 = px.line_polar(
-                    r=avg_iris.loc[1].values,
+                    r=avg_iris.loc[1].values, # Flower type 1.0
                     theta=avg_iris.columns,
                     line_close=True,
                     range_r = [0,1.0],
@@ -363,6 +363,7 @@ figure_7 = px.line_polar(
 figure_7.update_traces(fill='toself')
 figure_7.show()
 
+# ----------------------------------------------------------------------
 # Wine Dataset: It has information about various ingredients of wine such 
 # as alcohol, malic acid, ash, magnesium, etc. for three different wine
 # categories.
@@ -405,7 +406,7 @@ print()
 # Below we have plotted the radar chart for Wine of class 0. The wine 
 # dataset has 13 variables to compare:
 figure_8 = px.line_polar(
-                    r=avg_wine.loc[0].values,
+                    r=avg_wine.loc[0].values, # Wine category 0.0
                     theta=avg_wine.columns,
                     line_close=True,
                     range_r = [0,1.0],
@@ -416,7 +417,7 @@ figure_8.update_traces(fill='toself')
 figure_8.show()
 
 figure_9 = px.line_polar(
-                    r=avg_wine.loc[1].values,
+                    r=avg_wine.loc[1].values, # Wine category 1.0
                     theta=avg_wine.columns,
                     line_close=True,
                     title="WINE - %s"%wine.target_names[1],
@@ -430,3 +431,133 @@ figure_9.show()
 # category 0 compared to wine category 1. The ash is also more in wine
 # category 0 compared to wine category 1. We can compare all different 
 # quantitative variables this way.
+
+# ======================================================================
+# The second method provided by plotly is Scatterpolar available as a part
+# of the graph_objects module of plotly. It has almost the same parameter
+# requirement as that of line_polar() for creating radar charts. It expects
+# that we provide parameter r and theta for generating radar charts. We 
+# can specify fill color, line color, fill, etc attributes by passing 
+# them directly to this method.
+
+# Below we are using Scatterpolar to generate radar chart for IRIS flower
+# type verginica:
+figure_10 = go.Figure()
+figure_10.add_trace(
+                go.Scatterpolar(
+                                r=avg_iris.loc[2].values, # Flower type 2.0
+                                theta=avg_iris.columns,
+                                fill='toself',
+                                name="IRIS-%s"%iris.target_names[2],
+                                fillcolor="orange", opacity=0.6, line=dict(color="orange")
+                                )
+                )
+
+figure_10.update_layout(
+    polar=dict(
+        radialaxis=dict(
+          visible=True
+        ),
+      ),
+    showlegend=False,
+    title="IRIS-%s"%iris.target_names[2]
+)
+
+figure_10.show()
+
+# Combining polygon for all 3 different iris flower types in a single 
+# radar chart. We are not filling color in the radar chart. We also have
+# repeated first value 2 times in our logic in order to join ends of
+# polygons of a radar chart.
+figure_11 = go.Figure()
+
+for i in range(3): # 0, 1, 2
+    figure_11.add_trace(
+            go.Scatterpolar(
+                            r=avg_iris.loc[i].values.tolist() + avg_iris.loc[i].values.tolist()[:1],
+                            theta=avg_iris.columns.tolist() + avg_iris.columns.tolist()[:1],
+                            name="IRIS-%s"%iris.target_names[i],
+                            showlegend=True,
+                            )
+            )
+
+figure_11.update_layout(
+    polar=dict(
+        radialaxis=dict(
+                        visible=True,
+                        range=[0, 1]
+                    )
+            ),
+
+    title="IRIS Flower Variables According to Flower Categories"
+)
+
+figure_11.show()
+# We can easily compare quantitative variables of different flower types
+# easily now. We can see that iris setosa has on an average more sepal
+# width compared to the other two. Iris versicolor is smaller in size
+# compared to iris virginica. Iris virginica has the biggest petal length,
+# petal width, and sepal length compared to the other two.
+
+# Below we are again plotting three different iris flowers with their
+# polygon filled in this time:
+figure_12 = go.Figure()
+
+colors = ["tomato", "dodgerblue", "yellow"]
+for i in range(3):
+    figure_12.add_trace(
+                go.Scatterpolar(
+                                r=avg_iris.loc[i].values.tolist() + avg_iris.loc[i].values.tolist()[:1],
+                                theta=avg_iris.columns.tolist() + avg_iris.columns.tolist()[:1],
+                                fill='toself',
+                                name="IRIS-%s"%iris.target_names[i],
+                                fillcolor=colors[i], line=dict(color=colors[i]),
+                                showlegend=True, opacity=0.6
+                                )
+                )
+
+figure_12.update_layout(
+    polar=dict(
+        radialaxis=dict(
+                        visible=True,
+                        range=[0, 1]
+                    )
+            ),
+    title="IRIS Flower Variables According to Flower Categories"
+)
+
+figure_12.show()
+
+# Below we are plotting three different wine types on a single radar 
+# chart. We can easily compare different quantitative variables across
+# different wine types now.
+figure_13 = go.Figure()
+
+for i in range(3):
+    figure_13.add_trace(
+                go.Scatterpolar(
+                                r=avg_wine.loc[i].values,
+                                theta=avg_wine.columns,
+                                fill='toself',
+                                name="WINE-%s"%wine.target_names[i],
+                                showlegend=True,
+                                )
+                )
+
+figure_13.update_layout(
+    polar=dict(
+        radialaxis=dict(
+                        visible=True,
+                        range=[0, 1]
+                    )
+            ),
+    title="Wine Variables According to Wine Categories"
+)
+
+figure_13.show()
+# We can notice from the above chart that wine class 0 has the highest
+# amount of alcohol. Wine class 0 also has more proline, magnesium,
+# phenols, flavonoids, proanthocyanins, and od280/od315 compared to the
+# other two wine types. Wine class 2 has more malic acid, the alkalinity
+# of ash, non-flavonoid phenols, and color intensity compared to the
+# other two wine types.
