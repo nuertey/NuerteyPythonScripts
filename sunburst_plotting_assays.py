@@ -91,7 +91,7 @@ figure_1 = px.sunburst(
     parents='parent',
     values='value',
 )
-#figure_1.show()
+figure_1.show()
 
 # ======================================================================
 # Example 2:
@@ -129,7 +129,7 @@ print()
 # operations to determine the 'pizza slices' are internally and automagically
 # performed by plotly itself.
 figure_2 = px.sunburst(df, path=['day', 'time', 'sex'], values='total_bill')
-#figure_2.show()
+figure_2.show()
 
 # ======================================================================
 # Example 3:
@@ -167,7 +167,7 @@ figure_3 = px.sunburst(df,
                        color_continuous_scale='RdBu',
                        color_continuous_midpoint=np.average(df['lifeExp'], weights=df['pop'])
                       )
-#figure_3.show()
+figure_3.show()
 
 # ======================================================================
 # Visualizing Nuertey Odzeyem's SharedInputNotifier OS Abstraction Heirarchy:
@@ -221,7 +221,7 @@ figure_4 = px.sunburst(
     values='WeightValue',
     #color='WeightValue',
 )
-#figure_4.show()
+figure_4.show()
 
 # ======================================================================
 # Example 4: Other Plotly Plot Types, Bubble Chart.
@@ -259,7 +259,7 @@ print()
 figure_5 = px.scatter(df.query("year==2007"), x="gdpPercap", y="lifeExp",
                       size="pop", color="continent", hover_name="country", 
                       log_x=True, size_max=60)
-#figure_5.show()
+figure_5.show()
 
 # ======================================================================
 # Example 5: Other Plotly Plot Types, Radar Chart.
@@ -341,7 +341,7 @@ figure_6 = px.line_polar(
                     line_close=True,   # connect end variables to create a polygon
                     range_r = [0,1.0], # As all variables have been scaled between 0-1 earlier.
                     title="IRIS - %s"%iris.target_names[0])
-#figure_6.show()
+figure_6.show()
 
 # Below we are using same line_polar() function to plot radar chart for
 # IRIS Versicolor flower type. We can also later update chart attributes
@@ -361,7 +361,7 @@ figure_7 = px.line_polar(
                     )
 
 figure_7.update_traces(fill='toself')
-#figure_7.show()
+figure_7.show()
 
 # Wine Dataset: It has information about various ingredients of wine such 
 # as alcohol, malic acid, ash, magnesium, etc. for three different wine
@@ -413,7 +413,7 @@ figure_8 = px.line_polar(
                     )
 
 figure_8.update_traces(fill='toself')
-#figure_8.show()
+figure_8.show()
 
 figure_9 = px.line_polar(
                     r=avg_wine.loc[1].values,
