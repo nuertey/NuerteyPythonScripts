@@ -305,11 +305,6 @@ print()
 # flower types.
 iris = load_iris()
 
-i = array(iris)
-print('np.array(iris).shape:')
-print(i.shape)
-print()
-
 # Scale data so that each column’s data gets into the range [0-1]. Once
 # data is such a range for all quantitative variables, it becomes
 # straightforward to observe their inter-dependencies.
@@ -332,15 +327,46 @@ print('iris_df.info():')
 print(iris_df.info())
 print()
 
+# Group by flower type and then take mean of each column. This will give
+# us the average value of each data dimension for each flower type.
+avg_iris = iris_df.groupby("FlowerType").mean()
+
+print('avg_iris:')
+print(avg_iris)
+print()
+
+figure_6 = px.line_polar(
+                    r=avg_iris.loc[0].values, # flower types
+                    theta=avg_iris.columns,   # variables
+                    line_close=True,   # connect end variables to create a polygon
+                    range_r = [0,1.0], # As all variables have been scaled between 0-1 earlier.
+                    title="IRIS - %s"%iris.target_names[0])
+#figure_6.show()
+
+# Below we are using same line_polar() function to plot radar chart for
+# IRIS Versicolor flower type. We can also later update chart attributes
+# by using the update_traces() method. We are filling radar chart polygon
+# this time by setting fill attribute value to toself. We can also change
+# the direction of quantitative variables layout by setting the direction
+# attribute to counterclockwise. We can also set the start angle from 
+# where we want to start plotting quantitative variables by setting the
+# start_angle attribute. The default for start_angle is 90.
+figure_7 = px.line_polar(
+                    r=avg_iris.loc[1].values,
+                    theta=avg_iris.columns,
+                    line_close=True,
+                    range_r = [0,1.0],
+                    title="IRIS - %s"%iris.target_names[1],
+                    direction="counterclockwise", start_angle=45
+                    )
+
+figure_7.update_traces(fill='toself')
+#figure_7.show()
+
 # Wine Dataset: It has information about various ingredients of wine such 
 # as alcohol, malic acid, ash, magnesium, etc. for three different wine
 # categories.
 wine = load_wine()
-
-w = array(wine)
-print('np.array(wine).shape:')
-print(w.shape)
-print()
 
 # Scale data so that each column’s data gets into the range [0-1]. Once
 # data is such a range for all quantitative variables, it becomes
@@ -363,3 +389,44 @@ print()
 print('wine_df.info():')
 print(wine_df.info())
 print()
+
+# We have grouped the wine dataset by wine categories and have then taken
+# the mean of each column. This will give us the average value of each 
+# data dimension for each wine category that we'll use to plot radar 
+# charts. We can take an individual samples and create a radar chart from
+# it as well but here we'll be creating a radar chart of the average of 
+# each category so that we'll get an idea about each category as a whole.
+avg_wine = wine_df.groupby("WineCat").mean()
+
+print('avg_wine:')
+print(avg_wine)
+print()
+
+# Below we have plotted the radar chart for Wine of class 0. The wine 
+# dataset has 13 variables to compare:
+figure_8 = px.line_polar(
+                    r=avg_wine.loc[0].values,
+                    theta=avg_wine.columns,
+                    line_close=True,
+                    range_r = [0,1.0],
+                    title="WINE - %s"%wine.target_names[0]
+                    )
+
+figure_8.update_traces(fill='toself')
+#figure_8.show()
+
+figure_9 = px.line_polar(
+                    r=avg_wine.loc[1].values,
+                    theta=avg_wine.columns,
+                    line_close=True,
+                    title="WINE - %s"%wine.target_names[1],
+                    range_r = [0,1.0]
+                    )
+
+figure_9.update_traces(fill='toself')
+figure_9.show()
+
+# We can see from the above two figures that alcohol is more in wine 
+# category 0 compared to wine category 1. The ash is also more in wine
+# category 0 compared to wine category 1. We can compare all different 
+# quantitative variables this way.
