@@ -221,3 +221,10 @@ df1.iplot(kind="hist",
               yTitle="Population on Dating Sites", 
               title="Proportion of Male versus Female on Dating Sites by Age - Histogram",
               )
+
+# Create a ratio chart of Male and Female stats in the Dating data. 
+df1.iplot(kind="ratio", 
+               x="Age",
+               keys=["Male", "Female",],
+               title="Proportion of Male versus Female on Dating Sites by Age - Ratio Chart"
+              )

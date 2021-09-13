@@ -524,11 +524,9 @@ iris_df.corr().iplot(kind="heatmap",
 apple_df.iplot(kind="candle", keys=["Open", "High", "Low", "Close"])
 
 # Below we have created another example of a candlestick chart where we
-# are plotting candles for only Apr-2019 data.
-#culprit_date = '2019-04'
-#culprit_datapoint = datetime.strptime(culprit_date, '%Y-%m').date()
+# are plotting candles for only Apr-2021 data.
 
-mask = (apple_df['Date'] >= '2019-04-1') & (apple_df['Date'] < '2019-05-1')
+mask = (apple_df.index >= '2021-04-01') & (apple_df.index <= '2021-04-30')
 test_date_df = apple_df.loc[mask]
 
 print('test_date_df:')
@@ -540,14 +538,117 @@ print(test_date_df.info())
 print()
 
 test_date_df.iplot(kind="candle",
-                          keys=["Open", "High", "Low", "Close"],
-                          )
+                   keys=["Open", "High", "Low", "Close"],
+                  )
 
 # We can create an OHLC chart exactly the same way as a candlestick chart
 # with the only difference which is we need to set the kind parameter as
 # ohlc.
 test_date_df.iplot(kind="ohlc",
-                          keys=["Open", "High", "Low", "Close"])
+                   keys=["Open", "High", "Low", "Close"])
+
+# ======================================================================
+# Bubble Chart
+# 
+# The tenth chart type that we'll plot using cufflinks is a bubble chart.
+# The bubble chart can be used to represent three dimensions of data. The 
+# two-dimension are used to create a scatter plot and the third dimension 
+# is used to decide the sizes of points in the scatter plot.
+# ======================================================================
+
+# Below we have created a bubble chart on the iris dataframe's first 50
+# samples by setting the kind parameter to bubble. We have used sepal
+# length and sepal width as x and y dimension and petal width as size
+# dimension:
+iris_df[:50].iplot(kind="bubble", 
+                   x="sepal length (cm)", 
+                   y="sepal width (cm)", 
+                   size="petal width (cm)",
+                   colors=["tomato"],
+                   xTitle="Sepal Length (CM)", 
+                   yTitle="Sepal Width (CM)",
+                   title="Sepal Length vs Sepal Width Bubble Chart"
+                  )
+
+# ======================================================================
+# 3D Bubble Chart
+# 
+# We can also create a 3D bubble chart that can be used to represent 4 
+# dimensions of data. The first three dimensions of data will be used to 
+# create a 3D scatter chart and 4th dimension will be used to decide the 
+# size of the point (bubble) in a scatter plot.
+# ======================================================================
+
+# We are creating a 3D bubble chart by setting the kind parameter to 
+# bubble3d in iplot() method. We have used sepal length, sepal width and 
+# petal width to create a 3D scatter chart and petal length to decide the 
+# sizes of points in a 3D scatter chart. We have also color encoded points 
+# in scatter plot based on flower types.
+iris_df.iplot(kind="bubble3d",
+              x="sepal length (cm)", 
+              y="sepal width (cm)", 
+              z="petal width (cm)",
+              size="petal length (cm)",
+              colors=["dodgerblue", "lime", "tomato"], 
+              categories="FlowerType",
+              xTitle="Sepal Length (CM)", 
+              yTitle="Sepal Width (CM)", 
+              zTitle="Petal Width (CM)",
+              title="Sepal Length vs Sepal Width vs Petal Width Bubble 3D Chart"
+             )
+
+# ======================================================================
+# 3D Scatter Chart
+# 
+# We can create 3d scatter charts as well as using cufflinks. We need to 
+# set kind parameter to scatter3d in iplot() method. 
+# ======================================================================
+
+# We are creating 3d scatter chart of sepal length, sepal width, and 
+# petal width. We even have color encoded points in 3d scatter chart 
+# according to flower type.
+iris_df.iplot(kind="scatter3d",
+              x="sepal length (cm)", 
+              y="sepal width (cm)", 
+              z="petal width (cm)",
+              size=5,
+              colors=["dodgerblue", "lime", "tomato"], 
+              categories="FlowerType",
+              xTitle="Sepal Length (CM)", 
+              yTitle="Sepal Width (CM)", 
+              zTitle="Petal Width (CM)",
+              title="Sepal Length vs Sepal Width vs Petal Width Scatter Chart"
+             )
+
+# ======================================================================
+# Spread Chart
+# 
+# The thirteenth chart type that we'll introduce is spread chart. 
+# ======================================================================
+
+# Below we are creating a spread chart of high and low prices by setting
+# the kind parameter to spread.
+apple_df.iplot(kind="spread", 
+               keys=["High", "Low"],
+               title="High and Low Price Spread Chart"
+              )
+
+# ======================================================================
+# Ratio Chart
+# 
+# The fourteenth and last chart type that we'll introduce is the ratio 
+# chart. We can create a ratio chart by setting the kind parameter to ratio.
+# ======================================================================
+
+# We are creating a ratio chart of open and close prices of apple 
+# OHLC data.
+apple_df.iplot(kind="ratio", 
+               keys=["Open", "Close",],
+               title="Open & Close Price Ratio Chart"
+              )
+
+# This concludes our small tutorial explaining how to use cufflinks to
+# create plotly charts directly from the pandas dataframe.
 
 
 
