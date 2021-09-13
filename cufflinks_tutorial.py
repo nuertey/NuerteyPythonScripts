@@ -82,8 +82,11 @@ print()
 
 cf.set_config_file(theme='pearl', sharing='public', offline=True)
 
+# ======================================================================
+# Example cufflinks plot:
 cf.datagen.lines(1, 500).ta_plot(study="sma", periods=[13, 21, 55])
 
+# ======================================================================
 iris = load_iris()
 
 iris_df = pd.DataFrame(data=iris.data, columns=iris.feature_names)
@@ -273,7 +276,14 @@ ax2.annotate('average',(-0.4,23.5))
 ax2.legend(["AAA", "BBB"]);
 plt.show()
 
-# ----------------------------------------------------------------------
+# ======================================================================
+# Line Charts
+#
+# The third chart type that we'll introduce is a line chart. We can easily
+# create a line chart by just calling iplot() method on the dataframe
+# and giving which column to use for the x and y-axis. 
+# ======================================================================
+
 # Apple OHLC Dataset: It has information about Apple OHLC(Open, High, Low
 # & Close) data from Apr 2019 - Mar 2020. The dataset can be easily 
 # downloaded from yahoo finance as CSV.
@@ -286,3 +296,38 @@ print()
 print('apple_df.info():')
 print(apple_df.info())
 print()
+
+# If we don't give  value for the x-axis then it'll use the index of the
+# dataframe as the x-axis. In our case, the index of the dataframe is the
+# date for prices. We have plotted below the line chart of Open price over the whole period.
+apple_df.iplot(y="Open",
+               xTitle="Date", 
+               yTitle="Price ($)", 
+               title="Open Price From Apr,2019 - Mar,2020"
+              )
+
+# We can plot more than one line on the chart by passing a list of column
+# names from the dataframe as a list to the y parameter and it'll add 
+# one line per column to the chart.
+apple_df.iplot(y=["Open", "High", "Low", "Close"],
+               width=2.0,
+               xTitle="Date", 
+               yTitle="Price ($)", 
+               title="OHLC Price From Apr,2019 - Mar,2020"
+              )
+              
+# Below we have created a line chart with two-line where 2nd line has a
+# separate y-axis on the right side. We can set the secondary parameter
+# by giving the column name to the secondary_y parameter and the axis 
+# title for the secondary y-axis to secondary_y_title. This can be very
+# useful when the quantities which we want to plot are on a different scale.
+apple_df.iplot(y="Open",
+               secondary_y="Close", 
+               secondary_y_title="Close Price ($)",
+               xTitle="Date", 
+               yTitle="Open Price ($)", 
+               title="Open Price From Apr,2019 - Mar,2020"
+              )
+
+
+
