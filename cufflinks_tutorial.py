@@ -26,6 +26,8 @@ import plotly
 import plotly.graph_objects as go
 import plotly.express as px
 
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 from numpy import array
 from matplotlib.pyplot import *
 from nose.tools import assert_equal
@@ -507,6 +509,45 @@ iris_df.corr().iplot(kind="heatmap",
                    colorscale="Reds",
                    #dimensions=(500,500)
                    )
+
+# ======================================================================
+# CandleStick & OHLC Charts
+# 
+# The ninth chart type that we'll introduce is the candlestick chart. We 
+# can easily create a candlestick chart from the dataframe by calling 
+# iplot() method on it and passing candle as value to the kind parameter.
+# ======================================================================
+
+# We also need to have Open, High, Low, and Close columns in the 
+# dataframe in that order. Below we have created a candlestick chart of
+# whole apple OHLC data.
+apple_df.iplot(kind="candle", keys=["Open", "High", "Low", "Close"])
+
+# Below we have created another example of a candlestick chart where we
+# are plotting candles for only Apr-2019 data.
+#culprit_date = '2019-04'
+#culprit_datapoint = datetime.strptime(culprit_date, '%Y-%m').date()
+
+mask = (apple_df['Date'] >= '2019-04-1') & (apple_df['Date'] < '2019-05-1')
+test_date_df = apple_df.loc[mask]
+
+print('test_date_df:')
+print(test_date_df)
+print()
+
+print('test_date_df.info():')
+print(test_date_df.info())
+print()
+
+test_date_df.iplot(kind="candle",
+                          keys=["Open", "High", "Low", "Close"],
+                          )
+
+# We can create an OHLC chart exactly the same way as a candlestick chart
+# with the only difference which is we need to set the kind parameter as
+# ohlc.
+test_date_df.iplot(kind="ohlc",
+                          keys=["Open", "High", "Low", "Close"])
 
 
 
