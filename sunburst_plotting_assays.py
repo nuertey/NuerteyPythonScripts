@@ -91,7 +91,7 @@ figure_1 = px.sunburst(
     parents='parent',
     values='value',
 )
-figure_1.show()
+#figure_1.show()
 
 # ======================================================================
 # Example 2:
@@ -129,7 +129,7 @@ print()
 # operations to determine the 'pizza slices' are internally and automagically
 # performed by plotly itself.
 figure_2 = px.sunburst(df, path=['day', 'time', 'sex'], values='total_bill')
-figure_2.show()
+#figure_2.show()
 
 # ======================================================================
 # Example 3:
@@ -167,7 +167,7 @@ figure_3 = px.sunburst(df,
                        color_continuous_scale='RdBu',
                        color_continuous_midpoint=np.average(df['lifeExp'], weights=df['pop'])
                       )
-figure_3.show()
+#figure_3.show()
 
 # ======================================================================
 # Visualizing Nuertey Odzeyem's SharedInputNotifier OS Abstraction Heirarchy:
@@ -221,7 +221,7 @@ figure_4 = px.sunburst(
     values='WeightValue',
     #color='WeightValue',
 )
-figure_4.show()
+#figure_4.show()
 
 # ======================================================================
 # Example 4: Other Plotly Plot Types, Bubble Chart.
@@ -259,7 +259,7 @@ print()
 figure_5 = px.scatter(df.query("year==2007"), x="gdpPercap", y="lifeExp",
                       size="pop", color="continent", hover_name="country", 
                       log_x=True, size_max=60)
-figure_5.show()
+#figure_5.show()
 
 # ======================================================================
 # Example 5: Other Plotly Plot Types, Radar Chart.
@@ -311,8 +311,8 @@ iris = load_iris()
 iris_data = MinMaxScaler().fit_transform(iris.data)
 iris_data = np.hstack((iris_data, iris.target.reshape(-1,1)))
 
-# In the process of creating the DataFrame, ensure to name last column
-# as "FlowerType":
+# In the process of creating the DataFrame, ensure to create a "FlowerType"
+# last column:
 iris_df = pd.DataFrame(data=iris_data, columns=iris.feature_names + ["FlowerType"])
 
 print('iris_df.shape:')
@@ -341,7 +341,7 @@ figure_6 = px.line_polar(
                     line_close=True,   # connect end variables to create a polygon
                     range_r = [0,1.0], # As all variables have been scaled between 0-1 earlier.
                     title="IRIS - %s"%iris.target_names[0])
-figure_6.show()
+#figure_6.show()
 
 # Below we are using same line_polar() function to plot radar chart for
 # IRIS Versicolor flower type. We can also later update chart attributes
@@ -361,7 +361,7 @@ figure_7 = px.line_polar(
                     )
 
 figure_7.update_traces(fill='toself')
-figure_7.show()
+#figure_7.show()
 
 # ----------------------------------------------------------------------
 # Wine Dataset: It has information about various ingredients of wine such 
@@ -375,8 +375,8 @@ wine = load_wine()
 wine_data = MinMaxScaler().fit_transform(wine.data)
 wine_data = np.hstack((wine_data, wine.target.reshape(-1,1)))
 
-# In the process of creating the DataFrame, ensure to name last column
-# as "WineCat":
+# In the process of creating the DataFrame, ensure to a "WineCat" last
+# column:
 wine_df = pd.DataFrame(data=wine_data, columns=wine.feature_names + ["WineCat"])
 
 print('wine_df.shape:')
@@ -414,7 +414,7 @@ figure_8 = px.line_polar(
                     )
 
 figure_8.update_traces(fill='toself')
-figure_8.show()
+#figure_8.show()
 
 figure_9 = px.line_polar(
                     r=avg_wine.loc[1].values, # Wine category 1.0
@@ -425,7 +425,7 @@ figure_9 = px.line_polar(
                     )
 
 figure_9.update_traces(fill='toself')
-figure_9.show()
+#figure_9.show()
 
 # We can see from the above two figures that alcohol is more in wine 
 # category 0 compared to wine category 1. The ash is also more in wine
@@ -463,7 +463,7 @@ figure_10.update_layout(
     title="IRIS-%s"%iris.target_names[2]
 )
 
-figure_10.show()
+#figure_10.show()
 
 # Combining polygon for all 3 different iris flower types in a single 
 # radar chart. We are not filling color in the radar chart. We also have
@@ -492,7 +492,7 @@ figure_11.update_layout(
     title="IRIS Flower Variables According to Flower Categories"
 )
 
-figure_11.show()
+#figure_11.show()
 # We can easily compare quantitative variables of different flower types
 # easily now. We can see that iris setosa has on an average more sepal
 # width compared to the other two. Iris versicolor is smaller in size
@@ -526,7 +526,7 @@ figure_12.update_layout(
     title="IRIS Flower Variables According to Flower Categories"
 )
 
-figure_12.show()
+#figure_12.show()
 
 # Below we are plotting three different wine types on a single radar 
 # chart. We can easily compare different quantitative variables across
@@ -554,7 +554,7 @@ figure_13.update_layout(
     title="Wine Variables According to Wine Categories"
 )
 
-figure_13.show()
+#figure_13.show()
 # We can notice from the above chart that wine class 0 has the highest
 # amount of alcohol. Wine class 0 also has more proline, magnesium,
 # phenols, flavonoids, proanthocyanins, and od280/od315 compared to the
