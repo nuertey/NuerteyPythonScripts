@@ -210,3 +210,14 @@ dating_profiles_data_df.iplot(
           yTitle="Population on Dating Sites", 
           title="Proportion of Male versus Female on Dating Sites by Age",
           )
+
+df1.iplot(kind="hist",
+              #bins=50, 
+              #colors=["red"],
+              #x="Age",
+              keys=["Male", "Female"],
+              #dimensions=(600, 400),
+              xTitle="Age",
+              yTitle="Population on Dating Sites", 
+              title="Proportion of Male versus Female on Dating Sites by Age - Histogram",
+              )

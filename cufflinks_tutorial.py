@@ -380,9 +380,133 @@ apple_df.iplot(
                fill=True,
                xTitle="Date", 
                yTitle="Price ($)", 
-               title="OHLC Price From Apr,2019 - Mar,2020"
+               title="OHLC Price From Open Price From September,2020 - September,2021"
               )
 
+# ======================================================================
+# Pie Charts
+# 
+# The fifth chart type is pie charts. 
+# ======================================================================
+
+# We'll be creating a new dataframe from the wine dataframe which has 
+# information about the count of samples per each wine category. We can 
+# create this dataframe by grouping the original wine dataframe based on
+# wine type and then calling the count() method on it to get a count of 
+# samples per wine type:
+wine_cnt = wine_df.groupby(by=["WineType"]).count()[["alcohol"]].rename(columns={"alcohol":"Count"}).reset_index()
+
+print('wine_cnt:')
+print(wine_cnt)
+print()
+
+print('wine_cnt.info():')
+print(wine_cnt.info())
+print()
+
+# We can easily create a pie chart by calling iplot() method on the 
+# dataframe passing it kind parameter as pie. We also need to pass which
+# column to use for labels and which column to use for values. Below we
+# have created a pie chart from the wine type count dataframe created in
+# the previous cell. We have also modified how labels should be displayed
+# by setting textinfo parameter.
+wine_cnt.iplot(kind="pie",
+               labels="WineType",
+               values="Count",
+               textinfo='percent+label', 
+               hole=.4,
+              )
+
+# Below we have created the same pie chart as the previous step with two
+# minor changes. We have removed the internal circle and we have pulled
+# out the class_2 wine type patch a little bit out to highlight it. We
+# need to pass the pull parameter list of floats which is the same size
+# as labels and only one float should be greater than 0.
+wine_cnt.reset_index().iplot(kind="pie",
+                             labels="WineType",
+                             values="Count",
+                             textinfo='percent+label',
+                             pull=[0, 0, 0.1],
+                             )
+
+# ======================================================================
+# Histograms
+# 
+# The sixth chart type that we'll introduce is the histogram. We can easily
+# create a histogram by setting the kind parameter to hist. We have passed
+# the column name as the keys parameter in order to create a histogram 
+# of that column.
+# ======================================================================
+
+wine_df.iplot(kind="hist",
+              bins=50, 
+              colors=["red"],
+              keys=["alcohol"],
+              #dimensions=(600, 400),
+              title="Alcohol Histogram"
+             )
+
+# Below we have created another example of the histogram where we are 
+# plotting a histogram of three quantities:
+wine_df.iplot(kind="hist",
+              bins=50, 
+              colors=["red", "blue", "green", "black"],
+              keys=["total_phenols", "flavanoids", "ash"],
+              title="Ash, Total Phenols & Flavanoids Histogram"
+             )
+             
+# ======================================================================
+# Box Plots
+# 
+# The seventh chart type that we'll introduce is the box plots. We can 
+# easily create a box plot from the pandas dataframe by setting the kind
+# parameter to box in iplot() method. 
+# ======================================================================
+
+# We have below created a box plot of four quantities of iris flowers. 
+# We have passed column names of four features of the iris flower to the
+# keys parameter as a list.
+iris_df.iplot(kind="box",
+              keys=iris.feature_names, 
+              boxpoints="outliers",
+              xTitle="Flower Features", 
+              title="IRIS Flower Features Box Plot"
+             )
+
+# ======================================================================
+# Heatmaps
+# 
+# The eight chart type is heatmaps. 
+# ======================================================================
+
+# We'll first create a correlation dataframe for the wine dataset by 
+# calling the corr() method on it.
+wine_corr_df = wine_df.corr()
+
+print('wine_corr_df:')
+print(wine_corr_df)
+print()
+
+print('wine_corr_df.info():')
+print(wine_corr_df.info())
+print()
+
+# Once we have the correlation dataframe ready, we can easily create a
+# heatmap by calling iplot() method on it and passing the kind parameter
+# value as heatmap. We have also provided colormap as Blues. We can also
+# set chart dimensions by passing width and height as tuple to the 
+# dimensions parameter.
+wine_corr_df.iplot(kind="heatmap",
+                   colorscale="Blues",
+                   #dimensions=(900,900)
+                  )
+
+# Below we have created another heatmap of the iris flowers dataset
+# showing a correlation between various features.
+iris_df.corr().iplot(kind="heatmap",
+                   colorscale="Reds",
+                   #dimensions=(500,500)
+                   )
 
 
 
