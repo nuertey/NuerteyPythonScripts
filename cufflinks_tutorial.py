@@ -1,12 +1,14 @@
 #***********************************************************************
 # @file
 #
-# Cufflinks plotting library tutorials.
+# Cufflinks - Create Plotly charts from Pandas DataFrame with just one
+#             line of code. Following are some cufflinks plotting library
+#             tutorials.
 #
 # @note 
 #   Cufflinks is a library that lets us generate interactive charts based
-#   on plotly directly from pandas dataframe by calling iplot() or 
-#   figure() method on it.
+#   on plotly directly from pandas dataframe by calling iplot() or the
+#   figure() method on the dataframe.
 #
 # @warning  None
 #
@@ -285,8 +287,10 @@ plt.show()
 # ======================================================================
 
 # Apple OHLC Dataset: It has information about Apple OHLC(Open, High, Low
-# & Close) data from Apr 2019 - Mar 2020. The dataset can be easily 
-# downloaded from yahoo finance as CSV.
+# & Close) data from September,2020 - September,2021. The dataset was 
+# downloaded from yahoo finance as CSV. URL:
+#
+# https://finance.yahoo.com/quote/AAPL/history?p=AAPL
 apple_df = pd.read_csv("AAPL.csv", index_col=0, parse_dates=True)
 
 print('apple_df:')
@@ -303,7 +307,7 @@ print()
 apple_df.iplot(y="Open",
                xTitle="Date", 
                yTitle="Price ($)", 
-               title="Open Price From Apr,2019 - Mar,2020"
+               title="Open Price From September,2020 - September,2021"
               )
 
 # We can plot more than one line on the chart by passing a list of column
@@ -313,7 +317,7 @@ apple_df.iplot(y=["Open", "High", "Low", "Close"],
                width=2.0,
                xTitle="Date", 
                yTitle="Price ($)", 
-               title="OHLC Price From Apr,2019 - Mar,2020"
+               title="OHLC Price From September,2020 - September,2021"
               )
               
 # Below we have created a line chart with two-line where 2nd line has a
@@ -326,8 +330,60 @@ apple_df.iplot(y="Open",
                secondary_y_title="Close Price ($)",
                xTitle="Date", 
                yTitle="Open Price ($)", 
-               title="Open Price From Apr,2019 - Mar,2020"
+               title="Open Price From September,2020 - September,2021"
               )
+
+# Below we have again created a line chart but this time using mode as
+# lines+markers which will add both line and points to the chart. We have
+# also modified the default gridcolor to black from gray.
+apple_df.iplot(y="Open",
+               mode="lines+markers", 
+               size=4.0,
+               colors=["dodgerblue"],
+               gridcolor="black",
+               xTitle="Date", 
+               yTitle="Price ($)", 
+               title="Open Price From September,2020 - September,2021"
+              )
+
+# Below is another another example with subplots:
+apple_df.iplot(y=["Open", "High", "Low", "Close"],
+               width=2.0,
+               subplots=True,
+               xTitle="Date", 
+               yTitle="Price ($)", 
+               title="OHLC Price From September,2020 - September,2021"
+              )
+
+# ======================================================================
+# Area Charts
+#
+# 
+# The fourth chart type that we'll introduce is area charts. We can easily
+# create an area chart using the same parameters as that of a line chart
+# with only one change. We need to set the fill parameter to True in 
+# order to create an area chart.
+# ======================================================================
+
+# Below we have created an area chart covering the area under the open
+# price of Apple stock:
+apple_df.iplot(y="Open",
+               fill=True,
+               xTitle="Date", 
+               yTitle="Price ($)", 
+               title="Open Price From September,2020 - September,2021",
+              )
+
+apple_df.iplot(
+               keys=["Open", "High", "Low", "Close"],
+               subplots=True,
+               fill=True,
+               xTitle="Date", 
+               yTitle="Price ($)", 
+               title="OHLC Price From Apr,2019 - Mar,2020"
+              )
+
+
 
 
 
