@@ -17,6 +17,7 @@
 
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 import cufflinks as cf
 
 import plotly
@@ -24,11 +25,14 @@ import plotly.graph_objects as go
 import plotly.express as px
 
 from numpy import array
+from matplotlib.pyplot import *
 from nose.tools import assert_equal
 from sklearn.datasets import load_iris, load_wine
 from sklearn.preprocessing import MinMaxScaler
 
 setattr(plotly.offline, "__PLOTLY_OFFLINE_INITIALIZED", True)
+
+matplotlib.use('TkAgg')
 
 def version_to_int_list(version):
     return [int(s) for s in version.split('.')]
@@ -210,8 +214,66 @@ avg_wine_df.iplot(kind="bar",
                   orientation="h"
                  )
 
+# Below we have created side by side bar chart by directly calling iplot()
+# on the whole dataframe. We have set sortbars parameter to True in order
+# to sort bars from the highest quantity to the lowest. We have also 
+# overridden the default chart theme from pearl to ggplot.
+avg_wine_df.iplot(kind="bar",
+                  sortbars=True,
+                  xTitle="Wine Type",
+                  yTitle="Average Ingredient Value", 
+                  title="Average Ingredients Per Wine Type",
+                  theme="ggplot"
+                  )
+
+# We can create a stacked bar chart easily by setting barmode parameter
+# to stack. Below we have created a stacked bar chart to show the average
+# distribution of ingredients per wine type.
+avg_wine_df.iplot(kind="bar",
+                  barmode="stack",
+                  xTitle="Wine Type",
+                  yTitle="Average Ingredient Value",  
+                  title="Average Ingredients Per Wine Type",
+                  opacity=1.0,
+                 )
+
+# We can create an individual bar chart for columns of the dataframe by
+# setting the subplots parameter to True. It'll create a different bar
+# charts for each column of the dataframe. We have set the keys parameter
+# to list of columns to use from the dataframe so that bar charts will
+# be created for these 4 columns. We can pass a list of columns to use
+# from the dataframe as a list to the keys parameter.
+avg_wine_df.iplot(kind="bar",
+                  subplots=True,
+                  sortbars=True,
+                  keys = ["ash", "total_phenols", "hue", "malic_acid"],
+                  xTitle="Wine Type",
+                  yTitle="Average Ingredient Value",
+                  title="Average Ingredients Per Wine Type",
+                  theme="henanigans"
+                  )
 
 
+
+# ----------------------------------------------------------------------
+# https://stackoverflow.com/questions/33149428/modify-the-legend-of-pandas-bar-plot/33150133
+
+fig, ax1 = plt.subplots()
+df = pd.DataFrame({'A':26, 'B':20}, index=['N'])
+df.plot(kind='bar', ax=ax1)
+#ax1 = df.plot(kind='bar') # "same" as above
+ax1.legend(["AAA", "BBB"]);
+plt.show()
+
+# Alternate way:
+df1 = pd.DataFrame({'A':26, 'B':20}, index=['N'])
+ax2 = df1.plot(kind='bar')
+ax2.hlines(23, -.5,.5, linestyles='dashed')
+ax2.annotate('average',(-0.4,23.5))
+ax2.legend(["AAA", "BBB"]);
+plt.show()
+
+# ----------------------------------------------------------------------
 # Apple OHLC Dataset: It has information about Apple OHLC(Open, High, Low
 # & Close) data from Apr 2019 - Mar 2020. The dataset can be easily 
 # downloaded from yahoo finance as CSV.
