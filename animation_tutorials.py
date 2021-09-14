@@ -418,21 +418,6 @@ figure_5.show()
 
 
 # ======================================================================
-wine  = load_wine()
 
-print("Dataset Features : ", wine.feature_names)
-print("Dataset Size : ", wine.data.shape)
 
-wine_df = pd.DataFrame(data=wine.data, columns=wine.feature_names)
-wine_df["Category"] = wine.target
 
-wine_df.head()
-
-fig = plt.figure(title="Alcohol vs Malic Acid Relation")
-
-scat = plt.scatter(x=wine_df["alcohol"], y=wine_df["malic_acid"])
-
-plt.xlabel("Alcohol")
-plt.ylabel("Malic Acid")
-
-plt.show()
