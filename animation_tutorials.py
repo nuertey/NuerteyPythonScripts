@@ -117,6 +117,20 @@ print('max_y:')
 print(max_y)
 print()
 
+# animation_frame 
+#
+# (str or int or Series or array-like) – Either a name of 
+# a column in data_frame, or a pandas Series or array_like object. Values 
+# from this column or array_like are used to assign marks to animation 
+# frames.
+
+# animation_group 
+#
+# (str or int or Series or array-like) – Either a name of a column in 
+# data_frame, or a pandas Series or array_like object. Values from this 
+# column or array_like are used to provide object-constancy across 
+# animation frames: rows with matching `animation_group`s will be treated
+# as if they describe the same object in each frame.
 figure_1 = px.scatter(gap_minder_df, 
            x="gdpPercap", 
            y="lifeExp", 

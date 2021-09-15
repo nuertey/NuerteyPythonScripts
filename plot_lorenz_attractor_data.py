@@ -29,13 +29,17 @@ print('lorenz_attractor_data_df.shape:')
 print(lorenz_attractor_data_df.shape)
 print()
 
-print('lorenz_attractor_data_df.head():')
-print(lorenz_attractor_data_df.head())
+print('lorenz_attractor_data_df:')
+print(lorenz_attractor_data_df)
 print()
 
 print('lorenz_attractor_data_df.info():')
 print(lorenz_attractor_data_df.info())
 print()
+
+fig = px.scatter_3d(lorenz_attractor_data_df, x='x', y='y', z='z',
+              color='time')
+fig.show()
 
 figure_1 = go.Figure(data=go.Scatter3d(
     x=lorenz_attractor_data_df['x'], y=lorenz_attractor_data_df['y'], z=lorenz_attractor_data_df['z'],
