@@ -22,7 +22,7 @@ pd.set_option('display.min_rows', 100)
 pd.options.mode.chained_assignment = None
 
 kalman_filter_data_df = pd.read_csv('kalman_filter_output.csv', 
-                                    #sep='\t',  
+                                    sep='\t',  
                                     lineterminator='\n')
 
 print('kalman_filter_data_df:')
@@ -34,10 +34,74 @@ print(kalman_filter_data_df.info())
 print()
 
 hist_data = [kalman_filter_data_df.z]
-group_labels = ['distplot'] # name of the dataset
+group_labels = ['Random Normal Observations (z)'] # name of the dataset
 the_colors_list = list(range(0, len(kalman_filter_data_df.index)))
 
+colors = ['rgb(0, 200, 200)']
+
 figure_1 = ff.create_distplot(hist_data, 
-                              group_labels
+                              group_labels,
+                              curve_type='normal', # override default 'kde'
+                              colors=colors
                              )
+figure_1.update_layout(title_text='<b>Distplot with Randutils Normal Distribution</b>')
 figure_1.show()
+
+#trace1 = go.Scatter(x=df.date, y=df.cp_setting, mode='lines', name='CP Setting')
+#trace2 = go.Scatter(x=df.date, y=df['20m_critical_power'], mode='markers', name='20m Power')
+#iplot(go.Figure([trace1, trace2]))
+
+figure_2 = go.Figure()
+
+figure_2.add_trace(go.Scatter(x=kalman_filter_data_df.step_vector, 
+                              y=kalman_filter_data_df.z,
+                              mode='markers',
+                              name='Noisy Measurements (z)')
+                  )
+figure_2.add_trace(go.Scatter(x=kalman_filter_data_df.step_vector, 
+                              y=kalman_filter_data_df.x_vector,
+                              mode='lines',
+                              name='Mean of \'Truth Value\' (x)')
+                  )
+figure_2.add_trace(go.Scatter(x=kalman_filter_data_df.step_vector, 
+                              y=kalman_filter_data_df.xhat,
+                              mode='lines+markers',
+                              name='<i>A Posteri</i> Estimate (xhat)')
+                  )
+figure_2.update_xaxes(title_text='Iteration Step')
+figure_2.update_yaxes(title_text='Voltage Value')
+figure_2.update_layout(title_text='<b>Kalman Filter: Estimate vs. Iteration Step</b>')
+figure_2.show()
+
+figure_3 = go.Figure()
+
+figure_3.add_trace(go.Scatter(x=kalman_filter_data_df.step_vector.iloc[1:], 
+                              y=kalman_filter_data_df.Pminus.iloc[1:],
+                              mode='lines+markers',
+                              name='<i>A priori</i> Error Estimate (Pminus)')
+                  )
+figure_3.update_xaxes(range=[0, len(kalman_filter_data_df.index)])
+figure_3.update_xaxes(title_text='Iteration Step')
+figure_3.update_yaxes(title_text='$<i>(Voltage)^2</i>$')
+figure_3.update_layout(title_text='<b>Estimated <i>A Priori</i> Error vs. Iteration Step</b>')
+figure_3.show()
+
+# ======================================================================
+# Examples:
+# ======================================================================
+#import numpy as np
+#
+## Add histogram data
+#x1 = np.random.randn(200)-2
+#x2 = np.random.randn(200)
+#x3 = np.random.randn(200)+2
+#x4 = np.random.randn(200)+4
+#
+## Group data together
+#hist_data = [x1, x2, x3, x4]
+#
+#group_labels = ['Group 1', 'Group 2', 'Group 3', 'Group 4']
+#
+## Create distplot with custom bin_size
+#fig = ff.create_distplot(hist_data, group_labels, bin_size=[.1, .25, .5, 1])
+#fig.show()

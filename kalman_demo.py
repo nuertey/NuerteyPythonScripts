@@ -59,19 +59,19 @@ for k in range(1,n_iter):
     P[k] = (1-K[k])*Pminus[k]
 
 plt.figure()
-plt.plot(z,'k+',label='noisy measurements')
-plt.plot(xhat,'b-',label='a posteri estimate')
-plt.axhline(x,color='g',label='truth value')
+plt.plot(z, 'k+', label='noisy measurements (z)')
+plt.plot(xhat, 'b-', label='a posteri estimate (xhat)')
+plt.axhline(x, color='g', label='truth value (x)')
 plt.legend()
 plt.title('Estimate vs. iteration step', fontweight='bold')
 plt.xlabel('Iteration')
 plt.ylabel('Voltage')
 
 plt.figure()
-valid_iter = range(1,n_iter) # Pminus not valid at step 0
-plt.plot(valid_iter,Pminus[valid_iter],label='a priori error estimate')
+valid_iter = range(1, n_iter) # Pminus not valid at step 0
+plt.plot(valid_iter, Pminus[valid_iter], label='a priori error estimate (Pminus)')
 plt.title('Estimated $\it{\mathbf{a \ priori}}$ error vs. iteration step', fontweight='bold')
 plt.xlabel('Iteration')
 plt.ylabel('$(Voltage)^2$')
-plt.setp(plt.gca(),'ylim',[0,.01])
+plt.setp(plt.gca(),'ylim', [0, .01])
 plt.show()
