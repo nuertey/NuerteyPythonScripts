@@ -11,6 +11,9 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+import plotly.express as px
+import plotly.graph_objects as go
+import plotly.figure_factory as ff
 
 plt.rcParams['figure.figsize'] = (10, 8)
 
@@ -31,6 +34,18 @@ K=np.zeros(sz)         # gain or blending factor
 
 R = 0.1**2 # estimate of measurement variance, change to see effect
 
+hist_data = [z]
+group_labels = ['Random Normal Observations (z)'] # name of the dataset
+colors = ['rgb(0, 200, 200)']
+
+figure_1 = ff.create_distplot(hist_data, 
+                              group_labels,
+                              curve_type='normal', # override default 'kde'
+                              colors=colors
+                             )
+figure_1.update_layout(title_text='<b>Distplot with Numpy Normal Distribution</b>')
+figure_1.show()
+
 print('sz:')
 print(sz)
 print()
@@ -39,10 +54,9 @@ print('z:')
 print(z)
 print()
 
-print('xhat:')
-print(xhat)
-print()
-
+#print('xhat:')
+#print(xhat)
+#print()
 
 # intial guesses
 xhat[0] = 0.0

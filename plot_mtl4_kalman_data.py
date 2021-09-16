@@ -16,6 +16,9 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import plotly.figure_factory as ff
+import matplotlib.pyplot as plt
+
+plt.rcParams['figure.figsize'] = (10, 8)
 
 pd.set_option('display.max_rows', 100)
 pd.set_option('display.min_rows', 100)
@@ -35,7 +38,7 @@ print()
 
 hist_data = [kalman_filter_data_df.z]
 group_labels = ['Random Normal Observations (z)'] # name of the dataset
-the_colors_list = list(range(0, len(kalman_filter_data_df.index)))
+#the_colors_list = list(range(0, len(kalman_filter_data_df.index)))
 
 colors = ['rgb(0, 200, 200)']
 
@@ -46,10 +49,6 @@ figure_1 = ff.create_distplot(hist_data,
                              )
 figure_1.update_layout(title_text='<b>Distplot with Randutils Normal Distribution</b>')
 figure_1.show()
-
-#trace1 = go.Scatter(x=df.date, y=df.cp_setting, mode='lines', name='CP Setting')
-#trace2 = go.Scatter(x=df.date, y=df['20m_critical_power'], mode='markers', name='20m Power')
-#iplot(go.Figure([trace1, trace2]))
 
 figure_2 = go.Figure()
 
@@ -85,6 +84,30 @@ figure_3.update_xaxes(title_text='Iteration Step')
 figure_3.update_yaxes(title_text='$<i>(Voltage)^2</i>$')
 figure_3.update_layout(title_text='<b>Estimated <i>A Priori</i> Error vs. Iteration Step</b>')
 figure_3.show()
+
+#-----------------------------------------------------------------------
+# Debugging the plots; comparing mathplotlib to plotly
+#-----------------------------------------------------------------------
+#n_iter = 50
+#x = -0.37727 # truth value (typo in example at top of p. 13 calls this z)
+#
+#plt.figure()
+#plt.plot(kalman_filter_data_df.z, 'k+', label='noisy measurements (z)')
+#plt.plot(kalman_filter_data_df.xhat, 'b-', label='a posteri estimate (xhat)')
+#plt.axhline(x, color='g', label='truth value (x)')
+#plt.legend()
+#plt.title('Estimate vs. iteration step', fontweight='bold')
+#plt.xlabel('Iteration')
+#plt.ylabel('Voltage')
+#
+#plt.figure()
+#valid_iter = range(1, n_iter) # Pminus not valid at step 0
+#plt.plot(valid_iter, kalman_filter_data_df.Pminus[valid_iter], label='a priori error estimate (Pminus)')
+#plt.title('Estimated $\it{\mathbf{a \ priori}}$ error vs. iteration step', fontweight='bold')
+#plt.xlabel('Iteration')
+#plt.ylabel('$(Voltage)^2$')
+#plt.setp(plt.gca(),'ylim', [0, .01])
+#plt.show()
 
 # ======================================================================
 # Examples:
