@@ -86,6 +86,6 @@ valid_iter = range(1, n_iter) # Pminus not valid at step 0
 plt.plot(valid_iter, Pminus[valid_iter], label='a priori error estimate (Pminus)')
 plt.title('Estimated $\it{\mathbf{a \ priori}}$ error vs. iteration step', fontweight='bold')
 plt.xlabel('Iteration')
-plt.ylabel('$(Voltage)^2$')
+plt.ylabel('$(Voltage)^2$') # LaTeX strings
 plt.setp(plt.gca(),'ylim', [0, .01])
 plt.show()

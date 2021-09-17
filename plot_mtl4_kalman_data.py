@@ -81,7 +81,7 @@ figure_3.add_trace(go.Scatter(x=kalman_filter_data_df.step_vector.iloc[1:],
                   )
 figure_3.update_xaxes(range=[0, len(kalman_filter_data_df.index)])
 figure_3.update_xaxes(title_text='Iteration Step')
-figure_3.update_yaxes(title_text='$<i>(Voltage)^2</i>$')
+figure_3.update_yaxes(title_text='Voltage<sup>2</sup>')
 figure_3.update_layout(title_text='<b>Estimated <i>A Priori</i> Error vs. Iteration Step</b>')
 figure_3.show()
 
