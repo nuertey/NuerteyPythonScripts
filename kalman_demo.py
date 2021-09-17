@@ -23,11 +23,11 @@ sz = (n_iter,) # size of array
 x = -0.37727 # truth value (typo in example at top of p. 13 calls this z)
 z = np.random.normal(x,0.1,size=sz) # observations (normal about x, sigma=0.1)
 
-Q = 1e-5 # process variance
+Q = 1e-5               # process variance
 
 # allocate space for arrays
-xhat=np.zeros(sz)      # a posteri estimate of x
-P=np.zeros(sz)         # a posteri error estimate
+xhat=np.zeros(sz)      # a posteriori estimate of x
+P=np.zeros(sz)         # a posteriori error estimate
 xhatminus=np.zeros(sz) # a priori estimate of x
 Pminus=np.zeros(sz)    # a priori error estimate
 K=np.zeros(sz)         # gain or blending factor
