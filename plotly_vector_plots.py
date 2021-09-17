@@ -41,3 +41,28 @@ v = np.sin(x)*y
 figure_1 = ff.create_quiver(x, y, u, v)
 figure_1.show()
 
+# Quiver Plot with Points:
+x, y = np.meshgrid(np.arange(-2, 2, .2),
+                   np.arange(-2, 2, .25))
+                  
+z = x*np.exp((-x)**2 - y**2)
+v, u = np.gradient(z, .2, .2)
+
+# Create quiver figure
+figure_2 = ff.create_quiver(x, y, u, v,
+                            scale=.25,
+                            arrow_scale=.4,
+                            name='quiver',
+                            line_width=1
+                           )
+
+# Add points to figure
+figure_2.add_trace(go.Scatter(x=[-.7, .75], 
+                              y=[0, 0],
+                              mode='markers',
+                              marker_size=12,
+                              name='points'))
+
+figure_2.show()
+
+
