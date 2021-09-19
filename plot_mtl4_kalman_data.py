@@ -24,7 +24,11 @@ pd.set_option('display.max_rows', 100)
 pd.set_option('display.min_rows', 100)
 pd.options.mode.chained_assignment = None
 
-kalman_filter_data_df = pd.read_csv('kalman_filter_output.csv', 
+#kalman_filter_data_df = pd.read_csv('kalman_filter_output.csv', 
+#                                    sep='\t',  
+#                                    lineterminator='\n')
+
+kalman_filter_data_df = pd.read_csv('TestCase_1.csv', 
                                     sep='\t',  
                                     lineterminator='\n')
 
@@ -63,9 +67,9 @@ figure_2.add_trace(go.Scatter(x=kalman_filter_data_df.step_vector,
                               name='Mean of \'Truth Value\' (x)')
                   )
 figure_2.add_trace(go.Scatter(x=kalman_filter_data_df.step_vector, 
-                              y=kalman_filter_data_df.xhat,
+                              y=kalman_filter_data_df.xhat_x,
                               mode='lines+markers',
-                              name='<i>A Posteriori</i> Estimate (xhat)')
+                              name='<i>A Posteriori</i> Estimate (xhat_x)')
                   )
 figure_2.update_xaxes(title_text='Iteration Step')
 figure_2.update_yaxes(title_text='Voltage Value')
