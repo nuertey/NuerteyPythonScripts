@@ -74,7 +74,7 @@ for k in range(1,n_iter):
 
 plt.figure()
 plt.plot(z, 'k+', label='noisy measurements (z)')
-plt.plot(xhat, 'b-', label='a posteri estimate (xhat)')
+plt.plot(xhat, 'b-', label='a posteriori estimate (xhat)')
 plt.axhline(x, color='g', label='truth value (x)')
 plt.legend()
 plt.title('Estimate vs. iteration step', fontweight='bold')
@@ -82,9 +82,9 @@ plt.xlabel('Iteration')
 plt.ylabel('Voltage')
 
 plt.figure()
-valid_iter = range(1, n_iter) # Pminus not valid at step 0
-plt.plot(valid_iter, Pminus[valid_iter], label='a priori error estimate (Pminus)')
-plt.title('Estimated $\it{\mathbf{a \ priori}}$ error vs. iteration step', fontweight='bold')
+valid_iter = range(1, n_iter) # P not valid at step 0
+plt.plot(valid_iter, P[valid_iter], label='a posteriori error estimate (Pminus)')
+plt.title('Estimated $\it{\mathbf{a \ posteriori}}$ error vs. iteration step', fontweight='bold')
 plt.xlabel('Iteration')
 plt.ylabel('$(Voltage)^2$') # LaTeX strings
 plt.setp(plt.gca(),'ylim', [0, .01])

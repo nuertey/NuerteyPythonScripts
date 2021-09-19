@@ -65,7 +65,7 @@ figure_2.add_trace(go.Scatter(x=kalman_filter_data_df.step_vector,
 figure_2.add_trace(go.Scatter(x=kalman_filter_data_df.step_vector, 
                               y=kalman_filter_data_df.xhat,
                               mode='lines+markers',
-                              name='<i>A Posteri</i> Estimate (xhat)')
+                              name='<i>A Posteriori</i> Estimate (xhat)')
                   )
 figure_2.update_xaxes(title_text='Iteration Step')
 figure_2.update_yaxes(title_text='Voltage Value')
@@ -75,14 +75,14 @@ figure_2.show()
 figure_3 = go.Figure()
 
 figure_3.add_trace(go.Scatter(x=kalman_filter_data_df.step_vector.iloc[1:], 
-                              y=kalman_filter_data_df.Pminus.iloc[1:],
+                              y=kalman_filter_data_df.P.iloc[1:],
                               mode='lines+markers',
-                              name='<i>A priori</i> Error Estimate (Pminus)')
+                              name='<i>A Posteriori</i> Error Estimate (P)')
                   )
 figure_3.update_xaxes(range=[0, len(kalman_filter_data_df.index)])
 figure_3.update_xaxes(title_text='Iteration Step')
 figure_3.update_yaxes(title_text='Voltage<sup>2</sup>')
-figure_3.update_layout(title_text='<b>Estimated <i>A Priori</i> Error vs. Iteration Step</b>')
+figure_3.update_layout(title_text='<b>Estimated <i>A Posteriori</i> Error vs. Iteration Step</b>')
 figure_3.show()
 
 #-----------------------------------------------------------------------
