@@ -56,7 +56,7 @@ print(nuertey_job_search_records_df.info())
 print()
 
 # Select only range of indexes with valid data:
-valid_data_indexes = list(range(5, 151))
+valid_data_indexes = list(range(5, 158))
 
 #print('valid_data_indexes:')
 #print(valid_data_indexes)
