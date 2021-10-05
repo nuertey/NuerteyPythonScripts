@@ -224,6 +224,156 @@ figure_4 = px.sunburst(
 #figure_4.show()
 
 # ======================================================================
+# Visualizing Nuertey Odzeyem's SharedInputNotifier OS Abstraction Heirarchy:
+# ======================================================================
+
+print('# ========================================================')
+print('# Modern C++ Type Classification Heirarchy:'               )
+print('# ========================================================')
+print()
+
+object_labels = ["std::is_fundamental",           
+                 "std::is_object", 
+                 "std::is_compound", 
+                 "std::is_void",
+                 "std::is_arithmetic", 
+                 "std::nullptr_t", 
+                 "std::is_scalar",
+                 "std::is_array", 
+                 "std::is_union", 
+                 "std::is_class",
+                 "std::is_reference", 
+                 "std::is_function", 
+                 "std::is_floating_point",
+                 "std::is_integral", 
+                 "std::is_member_pointer", 
+                 "std::is_member_object_pointer", 
+                 "std::is_member_function_pointer", 
+                 "std::is_pointer", 
+                 "std::is_enum",
+                 "std::is_lvalue_reference", 
+                 "std::is_rvalue_reference", 
+                 "float",
+                 "double", 
+                 "long double",
+                 "bool",
+                 "char", 
+                 "signed char",     
+                 "unsigned char",
+                 "wchar_t", 
+                 "char8_t (C++20)",
+                 "char16_t (C++11)",
+                 "char32_t (C++11)", 
+                 "short",
+                 "unsigned short",
+                 "int", 
+                 "unsigned int",
+                 "long",
+                 "unsigned long", 
+                 "long long (C++11)",
+                 "unsigned long long (C++11)"]
+                  
+object_parents = ["", 
+                  "", 
+                  "", 
+                  "std::is_fundamental", 
+                  "std::is_fundamental", 
+                  "std::is_fundamental", 
+                  "std::is_object", 
+                  "std::is_object", 
+                  "std::is_object", 
+                  "std::is_object", 
+                  "std::is_compound", 
+                  "std::is_compound", 
+                  "std::is_arithmetic", 
+                  "std::is_arithmetic", 
+                  "std::is_scalar", 
+                  "std::is_member_pointer", 
+                  "std::is_member_pointer", 
+                  "std::is_scalar", 
+                  "std::is_scalar", 
+                  "std::is_reference", 
+                  "std::is_reference", 
+                  "std::is_floating_point", 
+                  "std::is_floating_point", 
+                  "std::is_floating_point",
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral",
+                  "std::is_integral"]
+
+# The weights also seem to determine the hierarchy level:
+object_weights = [10, 
+                  10, 
+                  10, 
+                   8, 
+                   8, 
+                   8, 
+                   9, 
+                   5, 
+                   5, 
+                   5, 
+                   7, 
+                   9, 
+                   6, 
+                   6, 
+                   7, 
+                   6, 
+                   6, 
+                   6, 
+                   5,
+                   4, 
+                   4, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2,
+                   2]
+
+assert_equal(len(object_labels), len(object_parents))
+assert_equal(len(object_labels), len(object_weights))
+
+data = dict(
+    ClassObject=object_labels,
+    ParentObject=object_parents,
+    WeightValue=object_weights)
+
+figure_4_2 = px.sunburst(
+    data,
+    names='ClassObject',
+    parents='ParentObject',
+    values='WeightValue',
+    #color='WeightValue',
+)
+figure_4_2.show()
+
+# ======================================================================
 # Example 4: Other Plotly Plot Types, Bubble Chart.
 # ======================================================================
 
