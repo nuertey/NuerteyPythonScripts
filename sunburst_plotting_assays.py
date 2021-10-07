@@ -221,10 +221,10 @@ figure_4 = px.sunburst(
     values='WeightValue',
     #color='WeightValue',
 )
-#figure_4.show()
+figure_4.show()
 
 # ======================================================================
-# Visualizing Nuertey Odzeyem's SharedInputNotifier OS Abstraction Heirarchy:
+# Visualizing Modern C++ Type Classification Heirarchyy:
 # ======================================================================
 
 print('# ========================================================')
@@ -372,6 +372,181 @@ figure_4_2 = px.sunburst(
     #color='WeightValue',
 )
 figure_4_2.show()
+
+# ======================================================================
+# Visualizing Nuertey Odzeyem's Solution to Markem Imajem Design Exercise
+# Heirarchy:
+# ======================================================================
+
+print('# ========================================================')
+print('# Markem Imajem Design Exercise Heirarchy:'                )
+print('# ========================================================')
+print()
+
+object_labels = ["TemperatureReadoutApplication",           
+                 "SessionManager", 
+                 "Common::", 
+                 "Common::boost::asio::executor_work_guard",
+                 "Common::boost::asio::io_context", 
+                 "Common::std::thread", 
+                 "SensorNode_t", 
+                 "std::string",
+                 "std::unique_ptr<boost::asio::ip::tcp::socket>", 
+                 "TcpData_t",
+                 "std::array<char, M>", 
+                 "std::string m_CurrentTemperatureReading"
+                 "std::chrono::system_clock::time_point", 
+                 "SessionManager",
+                 "std::enable_shared_from_this<SessionManager>", 
+                 "SensorPack_t", 
+                 "std::array<SensorNode_t, N>", 
+                 "std::mutex", 
+                 "std::chrono::system_clock::time_point", 
+                 "boost::asio::ip::tcp::resolver",
+                 "boost::asio::ip::tcp::resolver::query", 
+                 "boost::asio::ip::tcp::v4()", 
+                 "boost::asio::ip::tcp::resolver::iterator",
+                 "boost::asio::ip::tcp::resolver::iterator()",
+                 "boost::asio::ip::tcp::endpoint",
+                 "Real-Time Readout Customer Display := std::cout", 
+                 "boost::asio::buffer",
+                 "boost::system::error_code",
+                 "boost::asio::post()", 
+                 "std::chrono::system_clock::now()",     
+                 "std::chrono::seconds(MINIMUM_DISPLAY_INTERVAL_SECONDS)",
+                 "std::chrono::minutes(STALE_READING_DURATION_MINUTES", 
+                 "double averageTemperature",
+                 "TestArtifactSensorNode",
+                 "boost::asio::io_context", 
+                 "boost::asio::ip::tcp::acceptor",
+                 "boost::asio::ip::tcp::endpoint",
+                 "boost::asio::ip::tcp::v4()",
+                 "boost::asio::ip::tcp::socket",
+                 "boost::system::error_code", 
+                 "TCPSession",
+                 "std::enable_shared_from_this<TCPSession>",
+                 "boost::asio::ip::tcp::socket", 
+                 "randomTemperatureReading = Utility::gs_theRNG.uniform(static_cast<double>(-50.00), static_cast<double>(50.00))",
+                 "boost::asio::write()",
+                 "temperatureString = std::to_string(randomTemperatureReading)",
+                 "boost::asio::buffer",
+                 "currentChoice = Utility::gs_theRNG.pick({SensorMode_t::SENSOR_PERIODIC_MODE, SensorMode_t::SENSOR_RANDOM_CHANGE})",
+                 "randomDurationForNextTempChange = Utility::gs_theRNG.uniform(static_cast<uint8_t>(SENSOR_RANDOM_CHANGE_MIN_SECONDS), static_cast<uint8_t>(SENSOR_RANDOM_CHANGE_MAX_SECONDS - 1))",
+                 "std::chrono::seconds(holdoffTime)",
+                 "std::this_thread::sleep_for()",
+                 "static thread_local randutils::mt19937_rng gs_theRNG"]
+                  
+object_parents = ["", 
+                  "", 
+                  "", 
+                  "std::is_fundamental", 
+                  "std::is_fundamental", 
+                  "std::is_fundamental", 
+                  "std::is_object", 
+                  "std::is_object", 
+                  "std::is_object", 
+                  "std::is_object", 
+                  "std::is_compound", 
+                  "std::is_compound", 
+                  "std::is_arithmetic", 
+                  "std::is_arithmetic", 
+                  "std::is_scalar", 
+                  "std::is_member_pointer", 
+                  "std::is_member_pointer", 
+                  "std::is_scalar", 
+                  "std::is_scalar", 
+                  "std::is_reference", 
+                  "std::is_reference", 
+                  "std::is_floating_point", 
+                  "std::is_floating_point", 
+                  "std::is_floating_point",
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral", 
+                  "std::is_integral",
+                  "std::is_integral"]
+
+# The weights also seem to determine the hierarchy level:
+object_weights = [10, 
+                  10, 
+                  10, 
+                   8, 
+                   8, 
+                   8, 
+                   9, 
+                   5, 
+                   5, 
+                   5, 
+                   7, 
+                   9, 
+                   6, 
+                   6, 
+                   7, 
+                   6, 
+                   6, 
+                   6, 
+                   5,
+                   4, 
+                   4, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2, 
+                   2,
+                   2]
+
+assert_equal(len(object_labels), len(object_parents))
+assert_equal(len(object_labels), len(object_weights))
+
+data = dict(
+    ClassObject=object_labels,
+    ParentObject=object_parents,
+    WeightValue=object_weights)
+
+figure_4_3 = px.sunburst(
+    data,
+    names='ClassObject',
+    parents='ParentObject',
+    values='WeightValue',
+    #color='WeightValue',
+)
+figure_4_3.show()
 
 # ======================================================================
 # Example 4: Other Plotly Plot Types, Bubble Chart.
