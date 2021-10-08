@@ -207,6 +207,16 @@ figure_3_2 = px.sunburst(world_countries_data,
                   )
                   
 # Northern Africa color coding seems incorrect perhaps due to GDP value being null:
+
+# Substituting NaN values.
+# Posted in Countries of the World 3 years ago
+# 
+# What would be the best approach to substitute NaN values? My take on this is to take the mean values over region in which the country is located. 
+
+# Soumitri • 3 years ago • Options • Report • Reply
+#
+# My approach is to use he imputer and derive the median, substitute the median for the nan
+
 #figure_3_2.show()
 
 
@@ -228,6 +238,7 @@ figure_5 = px.sunburst(world_countries_data,
 # Plotly Graph Objects¶
 # 
 # The second way of creating a sunburst chart using plotly is using the Sunburst() method of the graph_objects module. We need to provide it a list of all possible combination of parent and child combination and their values in order to create a chart using this method.
+
 # World Population Per Country Per Region Sunburst Chart
 
 # In order to create a sunburst chart using graph_objects.Sunburst() method, we have done little preprocessing with data. The Sunburst() method expects that we provided all possible parent-child relationship labels and their values to it. We have region-country relation labels and values ready in the dataset but for getting world-region relationship labels and values we have grouped dataframe according to the region in order to get region-wise population counts. We have then combined labels in order to generate all possible parent-child relationship labels as well as values.
@@ -271,5 +282,65 @@ figure_6 = go.Figure(go.Sunburst(
 figure_6.update_layout(title="World Population Per Country Per Region",
                   width=700, height=700)
 
-figure_6.show()
+#figure_6.show()
 
+# World Population Per Country Per Region Sunburst Chart
+
+# Below we have again created a sunburst chart of population distribution but this time it looks completely like the plotly.express module. We have set the branchvalues parameter to string value "total" which fills the whole circle. By default, the Sunburst() method does not create full circle sunburst charts.
+
+region_wise_pop = world_countries_data.groupby(by="Region").sum()[["Population"]].reset_index()
+
+parents = [""] + ["World"] *region_wise_pop.shape[0] + world_countries_data["Region"].values.tolist()
+labels = ["World"] + region_wise_pop["Region"].values.tolist() + world_countries_data["Country"].values.tolist()
+values  = [world_countries_data["Population"].sum()] + region_wise_pop["Population"].values.tolist() + world_countries_data["Population"].values.tolist()
+
+figure_7 = go.Figure(go.Sunburst(
+    parents=parents,
+    labels=labels,
+    values=values,
+    branchvalues="total",
+))
+
+figure_7.update_layout(title="World Population Per Country Per Region",
+                  width=700, height=700)
+
+# figure_7.show()
+
+# World Population and Area Distribution Per Country Per Region Sunburst Chart Subplots
+
+# Below we have combined two sunburst charts into a single figure. One sunburst chart is about world population distribution per country per region and another is about area distribution per country per region. We can combine many related sunburst charts this way to show possible relationships. Please go through code to understand little preprocessing in order to create charts.
+
+figure_8 = go.Figure()
+
+parents = [""] + ["World"] *region_wise_pop.shape[0] + world_countries_data["Region"].values.tolist()
+labels = ["World"] + region_wise_pop["Region"].values.tolist() + world_countries_data["Country"].values.tolist()
+values  = [world_countries_data["Population"].sum()] + region_wise_pop["Population"].values.tolist() + world_countries_data["Population"].values.tolist()
+
+figure_8.add_trace(go.Sunburst(
+    parents=parents,
+    labels= labels,
+    values= values,
+    domain=dict(column=0),
+    name="Population Distribution"
+))
+
+region_wise_area = world_countries_data.groupby(by="Region").sum()[["Area (sq. mi.)"]].reset_index()
+
+parents = [""] + ["World"] *region_wise_area.shape[0] + world_countries_data["Region"].values.tolist()
+labels = ["World"] + region_wise_area["Region"].values.tolist() + world_countries_data["Country"].values.tolist()
+values  = [world_countries_data["Area (sq. mi.)"].sum()] + region_wise_area["Area (sq. mi.)"].values.tolist() + world_countries_data["Area (sq. mi.)"].values.tolist()
+
+figure_8.add_trace(go.Sunburst(
+    parents=parents,
+    labels= labels,
+    values= values,
+    domain=dict(column=1)
+))
+
+figure_8.update_layout(
+    grid= dict(columns=2, rows=1),
+    margin = dict(t=0, l=0, r=0, b=0),
+    width=900, height=700
+)
+
+figure_8.show()
