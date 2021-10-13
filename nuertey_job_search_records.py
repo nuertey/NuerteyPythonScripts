@@ -40,6 +40,32 @@ pd.options.mode.chained_assignment = None
 # ensure you install the following a priori:
 #
 #pip install odfpy
+
+# ======================================================================
+# Test:
+temperature_records_df = pd.read_excel("TemperatureReadouts.ods", 
+                            engine="odf", 
+                            header=None, 
+                            names=['TemperatureReadout'])
+
+print('temperature_records_df:')
+print(temperature_records_df)
+print()
+
+print('temperature_records_df.info():')
+print(temperature_records_df.info())
+print()
+
+# Let's visualize with plotly:
+figure_0 = px.scatter(temperature_records_df, 
+                      y="TemperatureReadout", 
+                      x=temperature_records_df.index, 
+                      title="Temperature Readout DataFrame",
+                      )
+figure_0.update_traces(marker_size=10)
+figure_0.show()
+
+# ======================================================================
 nuertey_job_search_records_df = pd.read_excel("nuertey_job_search_records.ods",
                                               engine="odf")
 
@@ -56,7 +82,7 @@ print(nuertey_job_search_records_df.info())
 print()
 
 # Select only range of indexes with valid data:
-valid_data_indexes = list(range(5, 177))
+valid_data_indexes = list(range(5, 180))
 
 #print('valid_data_indexes:')
 #print(valid_data_indexes)
