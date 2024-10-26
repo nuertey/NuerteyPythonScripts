@@ -31,6 +31,11 @@ class LFSR:
             output.append(self.step())
         return output
 
+# Key Points:
+# 
+#     The tap positions determine the feedback polynomial, which affects the properties of the generated sequence.
+#     To achieve maximal period, the feedback polynomial should be primitive.
+#     You can use the pylfsr library for more advanced LFSR implementations and analysis.
 if __name__ == "__main__":
     # Example usage
     lfsr = LFSR([1, 0, 1, 0], [3, 2])  # Seed: 1010, Taps: 3, 2
