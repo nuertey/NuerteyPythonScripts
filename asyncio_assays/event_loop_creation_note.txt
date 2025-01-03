@@ -1,0 +1,44 @@
+
+In Python's asyncio library, new_event_loop and get_event_loop serve different purposes:
+asyncio.new_event_loop():
+
+    Creates a new event loop object. This is useful when you need to:
+        Run an event loop in a separate thread.
+        Use a custom event loop policy.
+        Have multiple event loops in a single application. 
+
+asyncio.get_event_loop():
+
+    Gets the current event loop for the current thread. If no event loop exists, it creates one (depending on the policy and Python version).
+    Deprecated in Python 3.10+: Use get_running_loop() within coroutines and callbacks instead.
+    Use with caution: In complex scenarios or with custom policies, get_event_loop() can lead to unexpected behavior. 
+
+Recommendation:
+
+    For most cases, use asyncio.run():
+    This high-level function handles creating and closing the event loop automatically, making your code cleaner and easier to manage.
+    For advanced scenarios:
+        Use get_running_loop() within coroutines and callbacks.
+        Use new_event_loop() to create separate event loops in specific threads or with custom policies. 
+
+Example:
+Python
+Execution output
+
+import asyncio
+
+async def main():
+    print("Hello from coroutine")
+
+if __name__ == "__main__":
+    asyncio.run(main())
+
+Hello from coroutine
+Key differences:
+
+    Creation:
+    new_event_loop creates a new loop, while get_event_loop gets the current one (or creates one if none exists).
+    Deprecation:
+    get_event_loop is deprecated in favor of get_running_loop in coroutines and callbacks.
+    Recommended use:
+    asyncio.run is recommended for most cases, while new_event_loop and get_running_loop are for specific scenarios. 
