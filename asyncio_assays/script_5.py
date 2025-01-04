@@ -9,24 +9,26 @@
 #     Did we mention no more callbacks?
 import threading
 import asyncio
-from asyncio_mqtt import Client
+from aiomqtt import Client
 
 async def subscriber_coroutine():
     async with Client("test.mosquitto.org") as client:
         topic = "humidity/#"
-        async with client.filtered_messages(topic) as messages:
-            print(f"Subscribing to topic: {topic} ...")
-            await client.subscribe(topic)
-            async for message in messages:
-                try:
-                    print(f"Received message: {message.payload.decode()}")
-                except:
-                    print(f"Received message: {message.payload}")
+        
+        print(f"Subscribing to topic: {topic} ...")
+        await client.subscribe(topic)
+        
+        async for message in client.messages:
+            try:
+                print(f"Received message: {message.payload.decode()}")
+            except:
+                print(f"Received message: {message.payload}")
 
 async def publisher_coroutine():
     async with Client("test.mosquitto.org") as client:
         topic = "humidity/outside"
         payload = 0.38
+        
         print(f"Publishing ...\n\ttopic = {topic}\n\tpayload = {payload}")
         await client.publish(topic, payload=payload)
 
