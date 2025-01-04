@@ -13,6 +13,8 @@ async def io_related_coroutine(name):
     return name
 
 async def test_1():
+    # When a coroutine is wrapped into a Task with functions like asyncio.create_task() 
+    # the coroutine is automatically scheduled to run soon
     task1 = asyncio.create_task(io_related_coroutine("first"))
     task2 = asyncio.create_task(io_related_coroutine("second"))
     task3 = asyncio.create_task(io_related_coroutine("third"))
@@ -31,7 +33,7 @@ async def test_1():
                                    task5,
                                    task6
                                   )
-
+    
     # Returns: A list of results, one for each awaitable passed to gather. 
     # The order of results corresponds to the order of the awaitables. 
     print(results)
