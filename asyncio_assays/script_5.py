@@ -13,6 +13,12 @@ import threading
 import asyncio
 from aiomqtt import Client
 
+# Python coroutines employ a strategy termed cooperative multitasking.
+#
+# async: declare a coroutine
+#
+# await: execute the coroutine
+
 async def sleep():
     print(f'Time: {time.time() - start:.2f}')
     await asyncio.sleep(1)
@@ -52,7 +58,9 @@ def publisher():
 
 if __name__ ==  '__main__':
     start = time.time() 
-    
+
+    # Concurrency encompasses both multiprocessing (ideal for CPU-bound tasks),
+    # and threading (suited for IO-bound tasks).
     thread_1 = threading.Thread(target=subscriber, name="MQTT_Subscriber")
     thread_1.daemon = True 
     thread_1.start()
