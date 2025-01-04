@@ -26,7 +26,7 @@ async def subscriber_coroutine():
         
         async for message in client.messages:
             try:
-                print(f"Received message: {message.payload.decode()}")
+                print(f"Received message needing decoding: {message.payload.decode()}")
             except:
                 print(f"Received message: {message.payload}")
 
