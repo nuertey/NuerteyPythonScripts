@@ -17,6 +17,7 @@ async def sleep():
     print(f'Time: {time.time() - start:.2f}')
     await asyncio.sleep(1)
 
+# Coroutines (specialized generator functions) are the heart of async IO in Python.
 async def subscriber_coroutine():
     async with Client("test.mosquitto.org") as client:
         topic = "humidity/#"
@@ -30,6 +31,7 @@ async def subscriber_coroutine():
             except:
                 print(f"Received message: {message.payload}")
 
+# Coroutines (specialized generator functions) are the heart of async IO in Python.
 async def publisher_coroutine():
     async with Client("test.mosquitto.org") as client:
         topic = "humidity/outside"
