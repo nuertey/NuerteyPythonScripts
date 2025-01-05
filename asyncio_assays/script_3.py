@@ -38,9 +38,16 @@ import asyncio
 import websockets
 
 async def hello():
-    async with websockets.connect("ws://localhost:8765") as websocket:
-        await websocket.send("Hello, server!")
-        greeting = await websocket.recv()
-        print(f"Received: {greeting}")
+    try:
+        async with websockets.connect("ws://ws.ifelse.io:80") as websocket:
+            await websocket.send("Hello, server!")
+            greeting = await websocket.recv()
+            print(f"Received message:-> {greeting}")
+    except Exception as e:
+        print(f' Exception exercising websockets connection!')
+        print(f' {type(e)}')  # the exception type.
+        print(f' {e.args}')   # arguments stored in .args
+        print(f' {e}\n')      # __str__ allows args to be printed directly, but may be overridden in exception subclasses   
 
-asyncio.run(hello())
+if __name__ ==  '__main__':
+    asyncio.run(hello())
