@@ -2,6 +2,7 @@
 
 import aiohttp
 import asyncio
+import pprint
 
 async def session_coroutine():
     try:
@@ -12,7 +13,10 @@ async def session_coroutine():
                 print("Content-type:", response.headers['content-type'])
 
                 html = await response.text()
-                print("Body:", html[:15], "...")
+                print("Body:", html[:15], "...\n\n")
+                
+                #print(f"Response Header:\n\t{pprint.pprint(response)}\n")
+                #print(f"Response Body:\n\t{pprint.pprint(html)}\n\n")
     except Exception as e:
         print(f' Exception exercising aiohttp client session!')
         print(f' {type(e)}')  # the exception type.
