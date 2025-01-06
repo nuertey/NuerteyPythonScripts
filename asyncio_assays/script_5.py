@@ -31,6 +31,8 @@ async def subscriber_coroutine():
         print(f"Subscribing to topic: {topic} ...")
         await client.subscribe(topic)
         
+        # It is less common (and only recently legal in Python) to use yield in an 'async def'
+        # block. This creates an asynchronous generator, which you iterate over with 'async for'. 
         async for message in client.messages:
             try:
                 print(f"Received message needing decoding: {message.payload.decode()}")
