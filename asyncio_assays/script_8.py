@@ -13,6 +13,10 @@ async def count():
     print("Two")
 
 async def main():
+    # Presumably, the below is the better way to invoke asyncio.gather().
+    # The thing to note is that a task does not have to be created and launched
+    # (create_task()) before composing asyncio.gather(). The coroutines can
+    # be 'asyncio gathered' directly.
     await asyncio.gather(count(), count(), count())
 
 if __name__ == "__main__":

@@ -22,6 +22,13 @@ async def test_1():
     task5 = asyncio.create_task(io_related_coroutine("fifth"))
     task6 = asyncio.create_task(io_related_coroutine("sixth"))
     
+    #await task1
+    #await task2
+    #await task3
+    #await task4
+    #await task5
+    #await task6
+    
     # Do other things while tasks run in the background
     # ...
     
