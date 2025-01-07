@@ -182,3 +182,9 @@ if __name__ == "__main__":
 #     This script also uses async with, which works with an asynchronous context manager. I haven’t devoted a whole section to this concept because the transition from synchronous to asynchronous context managers is fairly straightforward. The latter has to define .__aenter__() and .__aexit__() rather than .__exit__() and .__enter__(). As you might expect, async with can only be used inside a coroutine function declared with async def.
 # 
 # If you’d like to explore a bit more, the companion files for this tutorial up at GitHub have comments and docstrings attached as well.
+
+# https://realpython.com/async-io-python/
+# 
+# Next Steps: If you’d like to up the ante, make this webcrawler recursive. You can use aio-redis to keep track of which URLs have been crawled within the tree to avoid requesting them twice, and connect links with Python’s networkx library.
+
+Remember to be nice. Sending 1000 concurrent requests to a small, unsuspecting website is bad, bad, bad. There are ways to limit how many concurrent requests you’re making in one batch, such as in using the sempahore objects of asyncio or using a pattern like this one. If you don’t heed this warning, you may get a massive batch of TimeoutError exceptions and only end up hurting your own program.
