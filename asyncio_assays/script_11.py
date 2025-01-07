@@ -87,4 +87,10 @@ if __name__ == "__main__":
     elapsed = time.perf_counter() - start
     print(f"Program completed in {elapsed:0.5f} seconds.")
 
-
+# In this case, the items process in fractions of a second. A delay can be due to two reasons:
+# 
+#     Standard, largely unavoidable overhead
+#     Situations where all consumers are sleeping when an item appears in the queue
+# 
+# With regards to the second reason, luckily, it is perfectly normal to scale to hundreds or thousands of consumers. You should have no problem with python3 asyncq.py -p 5 -c 100. The point here is that, theoretically, you could have different users on different systems controlling the management of producers and consumers, with the queue serving as the central throughput.
+# 
